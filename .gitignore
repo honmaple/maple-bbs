@@ -1,0 +1,11 @@
+venv/
+config/
+migrations/
+backup/
+fabfile.py
+**/__pycache__/
+*.swp
+*.log
+*.pyc
+**/.webassets-cache/
+**/admin/
