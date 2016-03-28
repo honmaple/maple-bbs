@@ -1,0 +1,19 @@
+{% extends 'index/base.html' %}
+{% block title %}社区主页 - 河海大学论坛{% endblock %}
+{% block content %}
+{% import 'base/link.html' as link %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active"><a href="{{ url_for('forums.tag') }}">所有标签</a></li>
+</ol>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        所有标签
+    </div>
+    <div class="panel-body">
+        {% for tag in tags %}
+        <span class="label label-primary" style="display: inline-block;background:rgba(1,126,102,.08);">{{ link.tag(tag[0]) }}</span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    function SortFuntion(){
+        $.ajax ({
+            type : "POST",
+            url : "{{ url_for('campus.order',by=g.tag_url) }}",
+            data:JSON.stringify({
+                display: $('#display').val(),
+                sort: $('#sort').val(),
+                st: $('#st').val()
+            }),
+            contentType: 'application/json;charset=UTF-8',
+            success: function(data) {
+                $('#showsort').html(data)
+            }
+        });
+    }
+    $('#display').change(function() {
+        SortFuntion();
+    });
+    $('#sort').change(function() {
+        SortFuntion();
+    });
+    $('#st').change(function() {
+        SortFuntion();
+    });
+});
+</script>

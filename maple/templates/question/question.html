@@ -1,0 +1,19 @@
+{% extends 'index/base.html' %}
+{% block content %}
+{% import 'base/panel.html' as panel %}
+{% include 'question/question_js.html' %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li><a href="{{ url_for('board.board') }}">{{ board.board_f.chname_f }}</a></li>
+    <li><a href="{{ url_for('board.board',class_url=board.enname_s) }}">{{ board.chname_s }}</a></li>
+    <li class="active">发帖</li>
+</ol>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        发帖
+    </div>
+    {% include 'base/question.html' %}
+    <div class="panel-body col-sm-offset-2" id="showPreview">
+    </div>
+</div>
+{% endblock %}

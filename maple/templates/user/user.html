@@ -1,0 +1,48 @@
+{% extends 'index/base.html' %}
+{% block title %}{{ g.user_url }} - 河海大学论坛{% endblock %}
+{% block content %}
+{% import 'base/link.html' as link %}
+<style type="text/css" media="all">
+    .fl {
+        border-bottom:3px solid #337ab7;
+    }
+</style>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    var kind = '{{ category }}';
+    if (kind == 'collect') {
+        $('#collect').addClass("fl") ;
+    }
+    else if (kind == 'rep'){
+        $('#rep').addClass("fl") ;
+    }
+    else if (kind == 'ntb'){
+        $('#ntb').addClass("fl") ;
+    }
+    else{
+        $('#topic').addClass("fl") ;
+    }
+})
+</script>
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active">{{ g.user_url }}</li>
+</ol>
+{% if g.user.is_authenticated %}
+<div class="col-sm-9" style="padding:0 5px 0 0;">
+    {% include 'user/user_header.html' %}
+    {% include 'user/user_body.html' %}
+</div>
+<div class="col-sm-3" style="padding:0 0 0 5px;">
+    {% include 'user/user_panel.html'%}
+    <div class="list-group">
+        <div class="list-group-item">
+            热门帖子推荐
+        </div>
+    </div>
+</div>
+{% else %}
+{% include 'user/user_header.html' %}
+{% include 'user/user_body.html' %}
+{% endif %}
+{% endblock %}

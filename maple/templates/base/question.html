@@ -1,0 +1,91 @@
+<script src="{{url_for('static', filename='style/editor.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='style/editor.css')}}">
+<div class="panel-body" style="border-bottom:1px solid #f6e1e1;padding:10px 0;">
+    <div class="alert alert-info" id="showerror" style="padding:8px;">
+        <button type="button" class="close" id="hide">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul>
+            <li id="error"></li>
+        </ul>
+    </div>
+    <div class="row" style="margin:0;padding:0;">
+        <div class="col-sm-2">
+            {{ form.title.label(class="control-label") }}
+            <span style="font-size:12px;color:#999">
+                (请用简短的话语描述你的问题)
+            </span>
+        </div>
+        <div class="col-sm-10" style="margin-bottom:8px;">
+            {{ form.title(class="form-control") }}
+        </div>
+        <div class="col-sm-2">
+            {{ form.tags.label(class="control-label") }}
+            <span style="font-size:12px;color:#999">
+                (请选择节点)
+            </span>
+        </div>
+        <div class="col-sm-10" style="margin-bottom:8px;">
+            {{ form.tags(class="form-control",placeholder="节点请以逗号,空格隔开.请勿输入超过4个节点") }}
+        </div>
+        <div class="col-sm-2">
+            {{ form.content.label(class="control-label") }}
+            <table style="font-size:12px;color:#999">
+                <tr>
+                    <th colspan="2">默认语法支持部分html标签</th>
+                </tr>
+                {{ panel.html() }}
+            </table>
+        </div>
+        <div class="col-sm-10" style="margin-bottom:8px;">
+            <span style="float:right">
+                {{ form.choice.label(style="font-size:12px;") }}
+                {{ form.choice(class="input-sm",style="width:120px;padding:0px;") }}
+            </span>
+            <ul class="list-inline editor-title" style="margin:0">
+                <li> <a href="javascript:void(0)" id="editor-b" title="加粗">
+                        <span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-i" title="倾斜">
+                        <span class="glyphicon glyphicon-italic" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-a" title="链接">
+                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-bq" title="引用">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-c" title="代码">
+                        <span class="glyphicon glyphicon-console" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-h" title="标题">
+                        <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-hr" title="分割线">
+                        <span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li>
+                    <form id="uploadForm" method="post" enctype="multipart/form-data" style="margin:0;">
+                        {{ fileform.photo(class="upload-file",onchange="loadFile(event)" ,title="添加图片") }}
+                        <a href="javascript:void(0)">
+                            <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                        </a>
+                    </form>
+                </li> 
+            </ul>
+            {{ form.content(class="form-control",style="border-radius:0px;margin-top:0",rows="8",onchange="preview()",placeholder="上传图片功能暂未实现,敬请谅解") }}
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-sm btn-primary" id="ajax" type="button">提交问题</button>
+            <!-- <button class="btn btn-sm btn-primary" id="uploadFile" type="button">确认上传</button> -->
+            <div id="showPreview"></div>
+        </div>
+    </div>
+</div>

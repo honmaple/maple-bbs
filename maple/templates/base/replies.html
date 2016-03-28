@@ -1,0 +1,37 @@
+{% if current_user.is_authenticated %}
+<div class="panel panel-info">
+    <div class="panel-heading">
+        添加一条新回复
+    </div>
+    <div class="panel-body row">
+        <div class="col-sm-2">
+            <table style="font-size:12px;color:#999">
+                <tr>
+                    <th colspan="2">回复支持部分html标签</th>
+                </tr>
+                {{ panel.html() }}
+            </table>
+        </div>
+        <div class="col-md-10">
+            <div class="alert alert-info" id="showerror" style="padding:8px;">
+                <button type="button" class="close" id="hide">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <ul>
+                    <li id="error"></li>
+                </ul>
+            </div>
+            <p id="quote"></p>
+            {{ form.content(class="form-control",rows=6,style="width:100%;") }}
+            <button type="botton" class="btn btn-sm" id="ajax" style="margin-top:10px;">发表回复</button>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
+    <span class="text-center" style="display:block;width:100%;color:#999">
+        <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
+        你需要<a href="{{ url_for('auth.login') }}">登陆</a>后才能发表回复
+    </span>
+</div>
+{% endif %}

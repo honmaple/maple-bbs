@@ -1,0 +1,75 @@
+{% extends "index/base.html" %}
+{% block content %}
+<script type=text/javascript>
+$(document).ready(function(){
+    $('a#clickCode').click(function() {
+        $("#changeCode").attr("src","/validcode?code=" + Math.random());
+    });
+    $('button#ajax').click(function() {
+        $.ajax ({
+            type : "POST",
+            url : "{{ url_for('auth.forget') }}",
+            data:JSON.stringify({
+                confirm_email: $('#confirm_email').val(),
+                code:$("#code").val()
+            }),
+            contentType: 'application/json;charset=UTF-8',
+            success: function(result) {
+                if (result.judge == true)
+                {
+                    window.location = '{{ url_for('auth.login') }}';
+                }
+                else 
+                {
+                    $("#showerror").show();
+                    $("#error").text(result.error);
+                }
+            }
+        });
+    });
+});
+</script>
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active">忘记密码</li>
+</ol>
+<div class="panel panel-primary">
+    <div class="panel-heading" style="background:#2e609b;">
+        <a href="{{ url_for('auth.forget') }}" style="color:#fff">忘记密码</a>
+    </div>
+    <div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
+        <table align="center" style="font-size:14px;">
+            <tr>
+                <td colspan="2">
+                    <div class="alert alert-info" id="showerror" style="padding:8px;">
+                        <button type="button" class="close" id="hide">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <ul>
+                            <li id="error"></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-right:5px;">{{ form.confirm_email.label }} </td>
+                <td style="padding-bottom:10px;"> {{ form.confirm_email(class="form-control",placeholder="email",style="width:240px;") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.code.label }}</td>
+                <td colspan="2" style="padding-bottom:10px;"> 
+                    {% include 'auth/validate.html' %}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="padding-bottom:10px;">
+                    <button type="button" class="btn btn-primary" id="ajax">确认</button> 
+                </td>    
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,44 @@
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{%- block title -%}{%- endblock -%}</title>
+        {% assets "home_js" -%}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {%- endassets %}
+        {% assets "home_css" -%}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" />
+        {%- endassets %}
+        <script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    $("#showerror").hide();
+    $('button#hide').click(function(){
+        $("#showerror").hide();
+    });
+    var csrftoken = "{{ csrf_token() }}"
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                }
+            }
+        });
+});
+        </script>
+        <style type="text/css" media="all">
+            li {
+                list-style-type:circle;
+            }
+            img {
+                width:100%;
+            }
+            .back {
+                background:url('{{ url_for('static',filename='images/maple1.png') }}');
+            }
+        </style>
+    </head>
+    <body class="back">
+        adasdsa
+    </body>
+</html>

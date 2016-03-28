@@ -1,0 +1,77 @@
+{% extends 'index/base.html' %}
+{% block title %}社区主页 - 河海大学论坛{% endblock %}
+{% block content %}
+{% import 'base/panel.html' as panel %}
+{% import 'base/link.html' as link %}
+{% import 'base/sort_js.html' as sort %}
+{{ sort.sort('group',group.id) }}
+<style type="text/css" media="all">
+ .tl {
+     color:#333;
+     padding-left:20px;
+     font-size:12px;
+ }
+</style>
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li> <a href="{{ url_for('group.index') }}">用户组</a></li>
+    <li class="active">{{ group.name }}</li>
+</ol>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        {{ group.name }}
+    </div>
+    <div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
+        <table style="font-size:14px">
+            <tr>
+                <th>用户组介绍:</th>
+                <td class="tl">{{ group.introduce }}</td>
+            </tr>
+            <tr>
+                <th>管理员:</th>
+                <td class="tl">{{ group.admin }}</td>
+            </tr>
+            <tr>
+                <th>创建者:</th>
+                <td class="tl">{{ group.create_author }}</td>
+            </tr>
+            <tr>
+                <th>创建时间:</th>
+                <td class="tl">{{ group.create_time }}</td>
+            </tr>
+            <tr>
+                <th>加入方式:</th>
+                <td class="tl">{{ group.join_mode }}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><button class="btn btn-info btn-sm"  style="margin-top:10px;" data-toggle="modal" data-target="#PrivacyModal" data-whatever="@mdo">申请加入:</button></td>
+            </tr>
+        </table>
+        <div class="modal fade" id="PrivacyModal" tabindex="-1" role="dialog" aria-labelledby="PrivacyModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="{{ url_for('group.groups',group=group.name) }}" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body" style="padding:5px 10px;">
+                            {{ form.csrf_token }}
+                            {{form.content(class="form-control",placeholder="填写申请理由")}}
+                        </div>
+                        <div class="modal-footer" style="padding:5px;">
+                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">取消申请</button>
+                            <button type="submit" class="btn btn-sm btn-primary">确认申请</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-primary" href="{{ url_for('group.question',group=group.name) }}" style="padding:2px 6px;">
+    发帖
+    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+</a>
+{% import 'base/view.html' as view %}
+{{ view.view(group.questions) }}
+{% endblock %}

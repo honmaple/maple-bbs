@@ -1,0 +1,13 @@
+{% extends 'index/base.html' %}
+{% block title %}社区主页 - 河海大学论坛{% endblock %}
+{% block content %}
+{% import 'base/sort_js.html' as sort %}
+{{ sort.sort('tags',tag) }}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li><a href="{{ url_for('forums.tag') }}">所有标签</a></li>
+    <li class="active">{{ tag }}</li>
+</ol>
+{% import 'base/view.html' as view %}
+{{ view.view(questions) }}
+{% endblock %}

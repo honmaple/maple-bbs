@@ -1,0 +1,90 @@
+<div class="panel panel-default">
+    <div class="panel-heading" id="topic_list" style="padding-bottom:2px;">
+        <span id="topic"><a href="{{ url_for('user.category',category='topic') }}">{{ g.user_url }}创建的主题</a></span>
+        <span id="rep"><a href="{{ url_for('user.category',category='rep') }}">{{ g.user_url }}的回复</a></span>
+        <span id="ntb"><a href="{{ url_for('user.category',category='ntb') }}">{{ g.user_url }}的笔记</a></span>
+        <span id="collect"><a href="{{ url_for('user.category',category='collect') }}">{{ g.user_url }}的收藏</a></span>
+    </div>
+    <div class="panel-body" style="border-bottom:1px solid #f6e1e1;padding:0">
+        {% import 'user/topic.html' as list %}
+        {% set collect_list = user.setting.collect_list %}
+        {% set topic_list = user.setting.topic_list %}
+        {% set ntb_list = user.setting.ntb_list %}
+        {% set rep_list = user.setting.rep_list %}
+
+        {% if not g.user.is_authenticated %}
+
+        {% if category == 'collect' %}
+        {% if collect_list == 1 %}
+        {{ list.collect(user) }}
+        {% else %}
+        {{ list.list() }}
+        {% endif %}
+
+        {% elif category == 'rep' %}
+        {% if rep_list == 1 %}
+        {{ list.replies(user) }}
+        {% else %}
+        {{ list.list() }}
+        {% endif %}
+
+        {% elif category == 'ntb' %}
+        {% if ntb_list == 1 %}
+        {{ list.ntb(user) }}
+        {% else %}
+        {{ list.list() }}
+        {% endif %}
+
+        {% else %}
+        {% if topic_list == 1 %}
+        {{ list.topic(user) }}
+        {% else %}
+        {{ list.list() }}
+        {% endif %}
+        {% endif %}
+
+        {% elif g.user.is_authenticated and current_user.name != g.user_url %}
+        {% if category == 'collect' %}
+        {% if collect_list == 1 or collect_list == 2 %}
+        {{ list.collect(user) }}
+        {% else %}
+        {{ list.list() }}
+        {% endif %}
+
+        {% elif category == 'rep' %}
+        {% if rep_list == 1 or rep_list == 2  %}
+        {{ list.replies(user) }}
+        {% else %}
+        {{ list.list() }}
+        {% endif %}
+
+        {% elif category == 'ntb'%}
+        {% if ntb_list == 1 or ntb_list == 2  %}
+        {{ list.ntb(user) }}
+        {% else %}
+        {{ list.list() }}
+        {% endif %}
+
+        {% else %}
+        {% if topic_list == 1 or topic_list == 2  %}
+        {{ list.topic(user) }}
+        {% else %}
+        {{ list.list() }}
+        {% endif %}
+        {% endif %}
+
+        {% else %}
+
+        {% if category == 'collect' %}
+        {{ list.collect(user) }}
+        {% elif category == 'rep' %}
+        {{ list.replies(user) }}
+        {% elif category == 'ntb'%}
+        {{ list.ntb(user) }}
+        {% else %}
+        {{ list.topic(user) }}
+        {% endif %}
+
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,24 @@
+img {
+    width:160px;
+    width:120px;
+}
+.upload-file {
+    position: absolute;
+    opacity: 0;
+    width: 10px;
+    height: 10px;
+    z-index: 10;
+    cursor: pointer;
+}
+blockquote {
+    font-size:12px;
+}
+.editor-title {
+    padding:5px 0;
+    margin:0;
+    border: 1px solid #ccc;
+}
+.editor-body {
+    border-radius:0px;
+    margin-top:0;
+}

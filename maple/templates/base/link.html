@@ -1,0 +1,24 @@
+{% macro question(question) -%}
+{% if question.is_group %}
+<a href="{{ url_for('group.view',group=question.group.name,qid=question.id) }}">{{ question.title }}</a>
+{% else %}
+<a href="{{ url_for('board.view',forums_url=question.board.board_f.enname_f,class_url=question.board.enname_s,qid=question.id) }}">{{ question.title }}</a>
+{% endif %}
+{%- endmacro %}
+
+{% macro user(user) -%}
+{% if user == 'honmaple' -%}
+<a href="{{ url_for('user.index',user_url=user)  }}" style="color:#aa0000;">{{ user  }}</a>
+{%- else %}
+<a href="{{ url_for('user.index',user_url=user)  }}">{{ user  }}</a>
+{% endif -%}
+{%- endmacro %}
+
+{% macro usergroup(group) -%}
+<a href="{{ url_for('group.group',group=group)  }}">{{ group }}</a>
+{%- endmacro %}
+
+{% macro tag(tag) -%}
+<a href="{{ url_for('forums.tag',tag=tag)  }}" style="font-weight:normal">{{ tag }}</a>
+{%- endmacro %}
+

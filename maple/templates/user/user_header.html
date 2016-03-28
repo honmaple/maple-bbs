@@ -1,0 +1,36 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <a href="{{ url_for('user.index',user_url=g.user_url) }}" style="color:#fff">个人主页</a>
+    </div>
+    <div class="panel-body" style="border-bottom:1px solid #f6e1e1;padding:0 10px;padding-left:0;">
+        <div class="col-sm-2 hidden-xs" style="margin:0;padding:0;">
+            <img src="{{ url_for('static',filename='images/Moo.png') }}" alt="moon" style="height:120px;width:96px;">
+        </div>
+        <div class="col-sm-10" style="margin-top:10px;">
+            <table style="font-size:14px;">
+                <tr>
+                    <th> 用户名: </th>
+                    <td>{{ user.name }} 
+                        <span style="font-size:12px;color:#999;">(离线)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"> 
+                        <span style="font-size:12px;color:#999;">
+                            HHUC论坛第{{ user.id }}号成员,加入时间{{ user.infor.registered_time.strftime('%Y-%m-%d') }}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">个性签名:</th>
+                    <td>
+                        <blockquote style="font-size:14px;">
+                            <p>{{ user.infor.word }}</p>
+                            <footer>{{ user.name }}<cite title="Source Title"></cite></footer>
+                        </blockquote>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

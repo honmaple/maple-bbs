@@ -1,0 +1,163 @@
+{% import 'base/link.html' as link %}
+{% import 'base/user.html' as user %}
+<style type="text/css" media="all">
+    img {
+        width:120px;
+        height:auto;
+    }
+    blockquote {
+        font-size:12px;
+        background:#f8f8f8;
+        border:1px solid #999;
+        border-radius:5px;
+        padding-bottom:0;
+    }
+</style>
+<div class="panel panel-default container-fluid" style="padding:0;">
+    {% if number == 1 %}
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-2">
+                {{ link.userlink(question.author) }}
+                {%- if question.author == 'honmaple' -%}
+                <span style="font-size:12px;color:#999">(网站管理员)</span>
+                {%- endif %}
+            </div>
+            {% if current_user.is_authenticated %}
+            <div class="col-md-10" style="font-size:12px;">
+                发表于 {{ question.time.strftime('%Y-%m-%d %H:%M:%S') }}
+                <div style="float:right;">
+                    <span> 1# </span>
+                    <span style="font-size:12px;"> 
+                        {% if question.id | judge('collect') %}
+                        {{ link.collect(question=question,mode='cancel',chname='取消收藏') }}
+                        {% else %}
+                        {{ link.collect(question=question,mode='join',chname='加入收藏') }}
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-md-9" style="font-size:12px;">
+                发表于 {{ question.time.strftime('%Y-%m-%d %H:%M:%S') }}
+            </div>
+            <div class="col-md-1">
+                1#
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="panel-body row">
+        {{ user.infor(question.author) }}
+        <div class="clearfix visible-xs-block"></div>
+        <div class="col-md-10">
+            {% if question.is_markdown %}
+            {{ question.content | safe_markdown }}
+            {% else %}
+            {{ question.content | safe_clean }}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {% if number == 1 %}
+    {%- set num = 2 -%}
+    {% else %}
+    {%- set num = (number-1)*12+2 -%}
+    {% endif %}
+    {% set a = (number-1)*12 %}
+    {% set b = (number-1)*12+12 %}
+    {% for reply in question.replies[a:b] %}
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-2">
+                {{ link.userlink(reply.author) }}
+            </div>
+            <div class="col-md-9" style="font-size:12px;">
+                发表于 {{ reply.time.strftime('%Y-%m-%d %H:%M:%S') }}
+            </div>
+            <div class="col-md-1">
+                {{ num }}#
+            </div>
+        </div>
+    </div>
+    <div class="panel-body row" style="padding-bottom:0;">
+        {{ user.infor(reply.author) }}
+        <div class="col-md-10">
+            {{ reply.quote | safe_clean }}
+            {{ reply.content | safe_clean }}
+        </div>
+    </div>
+    <span style="display:block;text-align:right;width:100%;padding-right:20px;"> 
+        <script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    $('a#{{ num }}').click(function(){
+        $.post("{{ url_for('tags.rreply',rid=reply.id) }}",
+                function(data) {
+                    $("#content").focus();
+                    $('#quote').html(data)
+                });
+    });
+});
+        </script>
+        {% if current_user.is_authenticated %}
+        <a class="btn btn-sm" id="{{ num }}" title="回复{{ reply.author }} "style="font-size:12px;margin-right:10px;padding:0;">回复</a>
+        {% if reply.id | judge('love') %}
+        {{ link.like(reply=reply,mode='unlike',chname='取消赞') }}
+        {% else %}
+        {{ link.like(reply=reply,mode='like',chname='赞一下') }}
+        {% endif %}
+        {% endif %}
+    </span>
+    {%- set num = num + 1 -%}
+    {% endfor %}
+</div>
+<div class="panel-body" style="padding:0;margin:0;">
+    <ul class="pager" style="margin:0;">
+        {% if number == 1 and pages ==1 %}
+        <li style="color:#999;">{{ number }}/{{ pages }}</li>
+        {% elif number == 1 and pages != 1 %}
+        <li style="color:#999;">{{ number }}/{{ pages }}</li>
+        <li class="next"><a href="{{ url_for('tags.view',qid=question.id,pid=number + 1) }}">下一页<span aria-hidden="true">&rarr;</span></a></li>
+        {% else %}
+        {% if number == pages %}
+        <li class="previous"><a href="{{ url_for('tags.view',qid=question.id,pid=number-1) }}"><span aria-hidden="true">&larr;</span>上一页</a></li>
+        <li style="color:#999;">{{ number }}/{{ pages }}</li>
+        {% else %}
+        <li class="previous"><a href="{{ url_for('tags.view',qid=question.id,pid=number-1) }}"><span aria-hidden="true">&larr;</span>上一页</a></li>
+        <li style="color:#999;">{{ number }}/{{ pages }}</li>
+        <li class="next"><a href="{{ url_for('tags.view',qid=question.id,pid=number + 1) }}">下一页<span aria-hidden="true">&rarr;</span></a></li>
+        {% endif %}
+        {% endif %}
+    </ul>
+</div>
+{% if current_user.is_authenticated %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        添加一条新回复
+    </div>
+    <div class="panel-body row">
+        <div class="col-sm-2">
+            <table style="font-size:12px;color:#999">
+                <tr>
+                    <th colspan="2">回复支持部分html标签</th>
+                </tr>
+                {% import 'base/panel.html' as panel -%}
+                {{ panel.html() }}
+            </table>
+        </div>
+        <div class="col-md-10">
+            <div class="alert alert-info" id="showerror" style="padding:8px;">
+                <button type="button" class="close" id="hide">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <ul>
+                    <li id="error"></li>
+                </ul>
+            </div>
+            <p id="quote"></p>
+            {{ form.content(class="form-control",rows=6,style="width:100%;") }}
+            <button type="botton" class="btn btn-sm" id="ajax" style="margin-top:10px;">发表回复</button>
+        </div>
+    </div>
+</div>
+{% endif %}

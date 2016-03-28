@@ -1,0 +1,53 @@
+{% extends 'index/base.html' %}
+{% set title = category | chname %}
+{% block title %}{{ title }} - 河海大学论坛{% endblock %}
+{% block content %}
+<style type="text/css">
+    select {
+        background-color: #fff;
+        border-color: #c6c6c6;
+        color: #141414;
+    }
+</style>
+{% if g.campus_url == 'hhu' or g.campus_url == 'hhuc' %}
+{% import 'campus/panel.html' as panel %}
+{{ panel.ol(category=category) }}
+<div class="panel panel-default">
+    {{ panel.header(category) }}
+    {{ panel.body(category) }}
+</div>
+{% else %}
+{% import 'forums/panel.html' as panel %}
+{{ panel.ol(category) }}
+<div class="panel panel-default">
+    {{ panel.header(category) }}
+    {{ panel.body(category) }}
+</div>
+{%- endif %}
+{% import 'forums/sort_js.html' as sort %}
+{{ sort.sort(category) }}
+{% include 'base/view.html' %}
+<div class="panel-body" style="padding:0 10px 0 25px;">
+    <ul class="pager" style="margin:0;">
+        {% if pages == 0 %}
+        没有帖子
+        {% else %}
+        {% if number == 1 and pages ==1 %}
+        <li style="color:#999;">{{ number }}/{{ pages }}</li>
+        {% elif number == 1 and pages != 1 %}
+        <li style="color:#999;">{{ number }}/{{ pages }}</li>
+        <li class="next"><a href="{{ url_for('campus.category',category=category,pid=number + 1) }}">下一页<span aria-hidden="true">&rarr;</span></a></li>
+        {% else %}
+        {% if number == pages %}
+        <li class="previous"><a href="{{ url_for('campus.category',category=category,pid=number-1) }}"><span aria-hidden="true">&larr;</span>上一页</a></li>
+        <li style="color:#999;">{{ number }}/{{ pages }}</li>
+        {% else %}
+        <li class="previous"><a href="{{ url_for('campus.category',category=category,pid=number-1) }}"><span aria-hidden="true">&larr;</span>上一页</a></li>
+        <li style="color:#999;">{{ number }}/{{ pages }}</li>
+        <li class="next"><a href="{{ url_for('campus.category',category=category,pid=number + 1) }}">下一页<span aria-hidden="true">&rarr;</span></a></li>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

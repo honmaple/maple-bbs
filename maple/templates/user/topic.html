@@ -1,0 +1,65 @@
+{% macro topic(user) -%}
+{% import 'base/link.html' as link %}
+{% for question in user.questions %}
+<div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
+    {{ link.question(question) }}
+    <div style="font-size:12px;color:#999;">
+        创建日期:{{ question.time.strftime('%Y-%m-%d %H:%M') }}
+        最后回复来自 
+        {{ link.user(question.last_author) }}
+    </div>
+</div>
+{% endfor %}
+{%- endmacro %}
+
+{% macro replies(user) -%}
+{% import 'base/link.html' as link %}
+{% for reply in user.replies %}
+<div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
+    <span style="font-size:12px;color:#999;">回复了 {{ link.user(reply.question.author.name) }} 创建的主题:
+        {{ link.question(reply.question) }}
+    </span>
+    <p>{{ reply.content }}</p>
+    <span style="font-size:12px;color:#999;">
+        回复日期:{{ reply.time.strftime('%Y-%m-%d %H:%M') }}
+    </span>
+</div>
+{% endfor %}
+{%- endmacro %}
+
+{% macro ntb(user) -%}
+{% import 'base/link.html' as link %}
+{% for question in user.questions %}
+<div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
+    {{ link.question(question) }}
+    <div style="font-size:12px;color:#999;">
+        创建日期:{{ question.time.strftime('%Y-%m-%d %H:%M') }}
+        最后回复来自 
+        {{ link.user(question.last_author) }}
+    </div>
+</div>
+{% endfor %}
+{%- endmacro %}
+
+{% macro collect(user) -%}
+{% import 'base/link.html' as link %}
+{% for question in user.collect_questions %}
+<div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
+    <span style="font-size:12px;color:#999;">收藏了 {{ link.user(question.author.name) }} 创建的主题:
+        {{ link.question(question) }}
+    </span>
+    <div style="font-size:12px;color:#999;">
+        收藏日期:{{ question.time.strftime('%Y-%m-%d %H:%M') }}
+    </div>
+</div>
+{% endfor %}
+{%- endmacro %}
+
+{% macro list() -%}
+<div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
+    <span class="text-center" style="display:block;width:100%;color:#999">
+        <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
+        根据用户设置,列表被隐藏
+    </span>
+</div>
+{%- endmacro %}

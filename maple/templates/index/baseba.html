@@ -1,0 +1,120 @@
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{%- block title -%}{%- endblock -%}</title>
+        {% assets "home_js" -%}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {%- endassets %}
+        {% assets "home_css" -%}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" />
+        {%- endassets %}
+        <script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    $("#showerror").hide();
+    $('button#hide').click(function(){
+        $("#showerror").hide();
+    });
+    var csrftoken = "{{ csrf_token() }}"
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                }
+            }
+        });
+});
+        </script>
+        <style type="text/css" media="all">
+            html,body{height:100%}
+            img {width:100%}
+            .container {width:100%;}
+            .footer {margin-top:-30px;height:30px;}
+            .wrap{min-height:100%}
+            .main{padding-bottom:30px;overflow:hidden;}
+            li {
+                list-style-type:none;
+            }
+            .category {
+                margin-bottom:15px;
+                padding:15px;
+                background:#fff;
+                border:1px solid #ddd;
+                box-shadow:0px 0px 1px #ddd;
+                border-radius: 3px;
+            }
+            .tags {
+                color:#999;
+            }
+        </style>
+    </head>
+    <body style="background:#f8f8f8;">
+        <div class="wrap">
+            <div class="main">
+                <nav class="navbar navbar-default  col-md-offset-1 col-md-10" style="background:url({{ url_for('static',filename='images/hello.jpg') }});padding:0;margin-bottom:0;">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-header" aria-expanded="false">
+                                <span class="sr-only"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="{{ url_for('forums.index') }}" style="color:#EB5424;">河海大学论坛</a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-header">
+                            <ul class="nav navbar-nav navbar-right">
+                                {% if current_user.is_authenticated %}
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{ current_user.name }} <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ url_for('user.index',user_url=current_user.name) }}">我的的主页</a></li>
+                                        <li><a href="{{ url_for('user.setting',user_url=current_user.name) }}">设置</a></li>
+                                        <li><a href="{{ url_for('auth.logout') }}">注销</a></li>
+                                    </ul>
+                                </li>
+                                {% else %}
+                                <li><a href="{{ url_for('auth.login') }}">登陆</a></li>
+                                <li><a href="{{ url_for('auth.register') }}">注册</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="col-md-offset-1 col-md-10" style="padding:0;">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <div class="alert alert-info" style="padding:8px">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <ul>
+                            {% for message in messages %}
+                            <li>{{ message }} </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <div class="footer col-md-offset-1 col-md-10" style="padding:0">
+            <span style="font-size:12px;color:#999;float:left">
+                <span>当前在线用户:<strong style="color:#333;">{{ 'all_counts' | load_online_users }}</strong></span>
+                <span style="margin-left:10px">注册用户:<strong style="color:#333;">{{ 'sign_counts' | load_online_users }}</strong></span>
+                <span style="margin-left:10px">当前访客:<strong style="color:#333;">{{ 'counts' | load_online_users }}</strong></span>
+                <span style="margin-left:10px">最高在线:<strong style="color:#333;">{{ 'high' | load_online_users }}</strong></span>
+                <span style="margin-left:10px">最高在线时间:<strong style="color:#333;">{{ 'high_time' | load_online_users }}</strong></span>
+            </span>
+            <span style="float:right">
+                Copyright © 2015-2016 honmaple. <br> All rights reserved.
+            </span>
+        </div>
+    </body>
+</html>
+

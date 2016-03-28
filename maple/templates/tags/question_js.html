@@ -1,0 +1,36 @@
+<script type=text/javascript>
+$(document).ready(function(){
+    $('button#ajax').click(function() {
+        $.ajax ({
+            type : "POST",
+            url : "{{ url_for('tags.question') }}",
+            data:JSON.stringify({
+                title: $('#title').val(),
+                content: $('#content').val(),
+                category: $('#category').val(),
+                choice: $('#choice').val()
+            }),
+            contentType: 'application/json;charset=UTF-8',
+            success: function(result) {
+                if (result.judge == true)
+                {
+                    window.location = '{{ url_for('tags.index') }}';
+                }
+                else 
+                {
+                    $("#showerror").show();
+                    $("#error").text(result.error);
+                }
+            }
+        });
+    });
+    $('button#preview').click(function() {
+        $.post("{{ url_for('index.preview') }}", {
+            content: $("#content").val(),
+            choice: $("#choice").val()
+        }, function(data) {
+            $("#showPreview").html(data);
+        });
+    });
+});
+</script>

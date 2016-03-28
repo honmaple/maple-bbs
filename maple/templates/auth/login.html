@@ -1,0 +1,91 @@
+{% extends "index/base.html" %}
+{% block title %}登陆 - 河海大学论坛{% endblock %}
+{%- block content -%}
+<script type=text/javascript>
+$(document).ready(function(){
+    $('a#clickCode').click(function() {
+        $("#changeCode").attr("src","/validcode?code=" + Math.random());
+    });
+    $('button#ajax').click(function() {
+        $.ajax ({
+            type : "POST",
+            url : "{{ url_for('auth.login') }}",
+            data:JSON.stringify({
+                name: $('#name').val(),
+                passwd: $('#passwd').val(),
+                remember: $("#remember").is(':checked'),
+                code:$("#code").val()
+            }),
+            contentType: 'application/json;charset=UTF-8',
+            success: function(result) {
+                if (result.judge == true)
+                {
+                    window.location = '{{ request.args.get('next') or '/' }}';
+                }
+                else 
+                {
+                    $("#showerror").show();
+                    $("#error").text(result.error);
+                }
+            }
+        });
+    });
+});
+</script>
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active">登陆</li>
+</ol>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <a href="{{ url_for('auth.login') }}" style="color:#fff">登陆页</a>
+    </div>
+    <div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
+        <table align="center" style="font-size:14px;">
+            <tr>
+                <td colspan="2">
+                    <div class="alert alert-info" id="showerror" style="padding:8px;">
+                        <button type="button" class="close" id="hide">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <ul>
+                            <li id="error"></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form.name.label }}</td>
+                <td style="padding-bottom:10px;"> {{ form.name(class="form-control",placeholder="name",style="width:240px") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.passwd.label }}</td>
+                <td style="padding-bottom:10px;">{{ form.passwd(class="form-control",placeholder="password",style="width:240px") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.code.label }}</td>
+                <td colspan="2" style="padding-bottom:10px;"> 
+                    {% include 'auth/validate.html' %}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="padding-bottom:10px;">
+                    <button type="button" class="btn btn-primary" id="ajax">登陆</button> 
+                    <a href="{{ url_for('auth.forget') }}">忘记密码?</a>
+                </td>    
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{ form.remember() }} 记住我</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><a href="{{ url_for('auth.register') }}">还未注册</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+

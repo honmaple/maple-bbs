@@ -1,0 +1,15 @@
+{% extends 'index/base.html' %}
+{% block title %}{{ question.title }} - 河海大学论坛{% endblock %}
+{% block content %}
+{% include 'tags/replies_js.html' %}
+
+{% if g.campus_url == 'hhu' or g.campus_url == 'hhuc' %}
+{% import 'campus/panel.html' as panel %}
+{{ panel.ol(category=g.class_url,content=question.title) }}
+{% else %}
+{% import 'base/panel.html' as ol %}
+{{ ol.ol(content=question.title) }}
+{% endif %}
+
+{% include 'base/content.html' %}
+{% endblock %}

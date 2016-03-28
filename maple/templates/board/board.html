@@ -1,0 +1,17 @@
+{% extends 'index/base.html' %}
+{% block title %}社区主页 - 河海大学论坛{% endblock %}
+{% block content %}
+{% import 'base/panel.html' as panel %}
+{% import 'base/sort_js.html' as sort %}
+{{ sort.sort('board_f',board.id) }}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active">{{ board.chname_f }}</li>
+</ol>
+<div class="panel panel-primary">
+    {{ panel.header(board) }}
+    {{ panel.body(board) }}
+</div>
+{% import 'base/view.html' as view %}
+{{ view.view(questions) }}
+{% endblock %}
