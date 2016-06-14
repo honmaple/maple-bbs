@@ -1,0 +1,28 @@
+<div class="list-group">
+    <div class="media list-group-item">
+        <div class="media-left">
+            <img class="media-object img-circle" src="{{ url_for('static',filename='images/Moo.png')}}" alt="..." style="width:64px;height:64px">
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">{{ user.username}}</h4>
+            <small style="color:#999">
+                <span>第{{ user.id}}号会员</span>/
+                <span>{{user.register_time}}2016-03-33</span>
+                <br/>
+                <span>13篇主题</span> |
+                <span>13条回复</span>
+            </small>
+        </div>
+        <blockquote style="font-size:14px;">
+            <p>{{ user.infor.word }}</p>
+            <footer>Someone famous in <cite title="Source Title">{{ user.infor.school }}</cite></footer>
+        </blockquote>
+        <table  style="font-size:12px;width:100%" align="center">
+            <tr>
+                <td align="center" style="border-right:1px solid #AACCEE;"><p>1</p>积分</td>
+                <td align="center" style="border-right:1px solid #AACCEE;"><p>1</p>粉丝</td>
+                <td align="center"><p>1</p>用户</td>
+            </tr>
+        </table>
+    </div>
+</div>

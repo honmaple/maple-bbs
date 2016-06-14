@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+</ol>
+<div class="row">
+    <div class="col-md-9">
+        <ul class="nav nav-tabs">
+            <li role="presentation">{{ link_base.following_topic()}}</li>
+            <li role="presentation">{{ link_base.following_tag()}}</li>
+            <li role="presentation">{{ link_base.following_user()}}</li>
+            <li role="presentation"  class="active">{{ link_base.following_collect()}}</li>
+        </ul>
+        <div class="panel-panel-default">
+            {% for collect in current_user.following_collects %}
+            <div class="panel-body" style="border-bottom:1px solid #eee">
+                <span style="float:right">
+                    <button class="btn btn-sm btn-default collectfollow active" id="{{ collect.id}}" style="padding:0 5px">取消关注</button>
+                </span>
+                {{ link_base.collect(collect)}}
+            </div>
+            {% endfor  %}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {% include 'base/panel.html' %}
+    </div>
+</div>
+{% endblock %}

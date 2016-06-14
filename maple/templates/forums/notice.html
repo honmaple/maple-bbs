@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+{% import 'base/link.html' as link %}
+{% block content %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active">消息通知</li>
+</ol>
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                消息通知
+            </div>
+            {% if notices.items %}
+            <div class="panel-body">
+                {% for notice in notices.items %}
+                {{ notice }}
+                {% endfor %}
+            </div>
+            {% if notices.pages > 1 %}
+            <div class="panel-footer">
+                {{paginate(notices, 'forums.notice')}}
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="panel-body">
+                <span class="text-center" style="display:block;width:100%;color:#999">
+                    没有通知
+                </span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {% include 'base/panel.html' %}
+    </div>
+</div>
+{% endblock %}

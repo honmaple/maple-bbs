@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% import 'base/link.html' as link %}
+{% block content %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active">所有用户</li>
+</ol>
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                所有用户
+            </div>
+            {% for user in users.items %}
+            <div class="panel-body" style="border-bottom:1px solid #eee">
+                {{ user.username }}
+            </div>
+            {% endfor %}
+            {% if users.pages > 1 %}
+            <div class="panel-footer">
+                {{paginate(users, 'forums.userlist')}}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-3">
+        {% include 'base/panel.html' %}
+    </div>
+</div>
+{% endblock %}

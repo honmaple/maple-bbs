@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+</ol>
+<div class="row">
+    <div class="col-md-9">
+        <ul class="nav nav-tabs">
+            <li role="presentation">{{ link_base.collect_list() }}</li>
+            <li role="presentation" class="active">{{ link_base.collect_following() }}</li>
+        </ul>
+        <div>
+            {% for collect in collects.items %}
+            <a href="{{ url_for('mine.collect',uid=collect.id)}}">{{ collect.name}}</a>
+            {% endfor %}
+            <div class="panel-footer">
+                {{ paginate(collects,'mine.collect')}}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {% include 'base/panel.html' %}
+    </div>
+</div>
+{% endblock %}

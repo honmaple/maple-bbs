@@ -1,0 +1,55 @@
+{% if topics.items %}
+<div class="panel-body" style="padding-top:0;">
+    {% for topic in topics.items %}
+    <div class="row" style="padding:5px 0;border-bottom:1px solid #f6e1e1;">
+        <div class="col-md-6 media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object img-circle" src="{{ url_for('static',filename='images/Moo.png')}}" alt="..." style="width:48px;height:48px">
+                </a>
+            </div>
+            <div class="media-body">
+                <div class="media-heading"> <a href="{{url_for('topic.topic',uid=topic.uid)}}">{{ topic.title}}</a></div>
+                {% for tag in topic.tags %}
+                <span class="label label-default" style="font-size:12px;background:rgba(1,126,102,.08);color:#337ab7;display: inline-block">
+                    <a href="{{ url_for('tag.tag',tag = tag.tagname) }}" style="font-weight:normal">{{ tag.tagname }}</a>
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-2" style="padding:5px;margin:0">
+            <span style="font-size:12px">{{ user(topic.author.username) }}</span>
+            <br/>
+            <span style="font-size:12px;color:#999;">
+                {{ topic.publish.strftime('%Y-%m-%d') }}
+            </span>
+        </div>
+        <div class="col-md-2  hidden-xs" style="padding:5px 5px 5px 20px;margin:0">
+            {% set rep,read = topic.id | get_read_count %}
+            <span>{{ rep }}</span> /
+            <span style="font-size:12px;color:#999;">
+                {{ read }}
+            </span>
+        </div>
+        <div class="col-md-2 hidden-xs" style="padding:5px;margin:0;">
+            {% set last_reply = topic.replies.first() %}
+            {% if last_reply %}
+            <span style="font-size:12px">{{ user(last_reply.author.username) }}</span>
+            <br/>
+            <span style="font-size:12px;color:#999;">{{ last_reply.publish.strftime('%Y-%m-%d') }}</span>
+            {% else %}
+            <span style="font-size:12px">{{ user(topic.author.username) }}</span>
+            <br/>
+            <span style="font-size:12px;color:#999;">{{ topic.publish.strftime('%Y-%m-%d') }}</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="panel-body">
+    <span class="text-center" style="display:block;width:100%;color:#999">
+        没有帖子
+    </span>
+</div>
+{% endif %}

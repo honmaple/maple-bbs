@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        ds
+    </div>
+    {% for follower in followers.items %}
+    <div class="panel-body" style="border-bottom:1px solid #eee">
+        {{ follower.username }}
+    </div>
+    {% endfor  %}
+    {% if followers.pages > 1 %}
+    <div class="panel-footer">
+        {{ paginate(followers,'user.follower')}}
+    </div>
+    {% endif %}
+</div>

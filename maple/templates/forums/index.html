@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+</ol>
+<div class="panel panel-default hidden-xs">
+    <div class="panel-body" style="text-align: center;">
+        <div class="media" style="width: 480px; margin:0px auto; text-align: left;">
+            <div class="media-left">
+                <i class="icon-gift media-object" style="font-size: 55px; width: 55px; color: #333;"></i>
+            </div>
+            <div class="media-body" style="line-height: 200%; text-align: center;">
+                <div style="font-size: 15px">
+                    Maple 官方网站源码 <a href="https://github.com/honmaple/maple-maple" target="_blank">Maple</a> 正式上线！
+                </div>
+                <div>
+                    <code style="padding: 4px 10px;">git clone git@github.com:honmaple/maple-maple.git</code>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% macro item(name,url,icon,color="#337ab7") %}
+<div class="col-md-3">
+    <div class="panel panel-default">
+        <a href="{{ url }}">
+            <div class="panel-body text-center">
+                <i class="{{ icon }}" style="font-size:55px;color:{{ color }}"></i>
+            </div>
+        </a>
+        <a href="{{ url }}">
+            <div class="panel-footer">
+                {{ name }}
+                <i class="pull-right icon-arrow-right"></i>
+            </div>
+        </a>
+    </div>
+</div>
+{%- endmacro %}
+<div class="row">
+    {{ item("社区",url_for('forums.forums'),"icon-comments","#F86334")}}
+    {{ item("文档",url_for('forums.forums'),"icon-book","#eeccaa")}}
+    {{ item("博客",url_for('forums.forums'),"icon-tasks")}}
+    {{ item("精华文章",url_for('forums.forums'),"icon-globe","#017e66")}}
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            {% from 'topic/topic_list.html' import view_no_form as board_view %}
+            {{ board_view(topics)}}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {% include 'base/panel.html' %}
+    </div>
+</div>
+{% endblock %}

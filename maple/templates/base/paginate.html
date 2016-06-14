@@ -1,0 +1,39 @@
+{% macro paginate(pagination, endpoint,kw=None) %}
+  <ul class="pagination" style="margin:0">
+    {% if pagination.items and pagination.pages > 1 -%}
+      {%- if pagination.has_prev -%}
+        {%- if not kw -%}
+          <li><a href="{{ url_for(endpoint,page=pagination.page-1)}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+        {%- else -%}
+          <li><a href="{{ url_for(endpoint,page=pagination.page-1,**kw)}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+        {% endif -%}
+      {%- else %}
+        <li class="disabled"> <span><span aria-hidden="true">&laquo;</span></span></li>
+      {% endif -%}
+      {%- for page in pagination.iter_pages(left_edge=1, left_current=2, right_current=3, right_edge=1) %}
+        {%- if page -%}
+          {%- if page == pagination.page -%}
+            <li class="active"><a >{{ page}}</a></li>
+          {%- else -%}
+            {%- if not kw %}
+              <li> <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a> </li>
+            {%- else -%}
+              <li> <a href="{{ url_for(endpoint, page=page,**kw) }}">{{ page }}</a> </li>
+            {%- endif -%}
+          {%- endif -%}
+        {% else -%}
+          <li class="disabled"><a href="#">·····</a></li>
+        {%- endif %}
+      {%- endfor %}
+      {%- if pagination.has_next -%}
+        {%- if not kw %}
+          <li> <a href="{{ url_for(endpoint,page=pagination.page + 1)}}" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
+        {%- else %}
+          <li> <a href="{{ url_for(endpoint,page=pagination.page + 1,**kw)}}" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
+        {% endif -%}
+      {%- else -%}
+        <li class="disabled"> <span><span aria-hidden="true">&raquo;</span></span>  </li>
+      {% endif -%}
+    {%- endif -%}
+  </ul>
+{%- endmacro %}

@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% import 'base/link.html' as link %}
+{% block content %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active">资料修改</li>
+</ol>
+<div class="row">
+    <div class="col-md-3" style="padding-right:0">
+        <div class="list-group">
+            <a href="{{ url_for('setting.setting')}}" class="list-group-item active">
+                个人资料
+            </a>
+            <a href="{{ url_for('setting.password')}}" class="list-group-item">密码修改</a>
+            <a href="{{ url_for('setting.privacy')}}" class="list-group-item">隐私设置</a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                资料修改
+            </div>
+            <div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
+                <form action="{{ url_for('setting.setting')}}" method="POST">
+                {% from 'base/form.html' import forms %}
+                {{ forms(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

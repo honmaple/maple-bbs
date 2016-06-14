@@ -1,102 +1,49 @@
-{% macro ol(kind,question) -%}
-{% if kind == 'group' %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li><a href="{{ url_for('group.index') }}">用户组</a></li>
-    <li><a href="{{ url_for('group.group',group=question.group.name) }}">{{ question.group.name }}</a></li>
-    <li class="active">{{ question.title }}</li>
-</ol>
-{% else %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li><a href="{{ url_for('board.board') }}">{{ question.board.board_f.chname_f }}</a></li>
-    <li><a href="{{ url_for('board.board',class_url=question.board.enname_s) }}">{{ question.board.chname_s }}</a></li>
-    <li class="active">{{ question.title }}</li>
-</ol>
-{% endif %}
-{%- endmacro %}
-
-{% macro header(board) -%}
-<div class="panel-heading">
-    <a href="{{ url_for('board.board',forums_url=board.enname_f) }}" style="color:#fff">{{ board.chname_f }}</a>
+{% if g.user.is_authenticated %}
+<ul class="list-group">
+    <a class="list-group-item list-group-item-info" href="{{ url_for('topic.ask')}}">
+        <span class="btn btn-info btn-block">提问</span>
+    </a>
+</ul>
+<div class="list-group">
+    <a href="{{ url_for('mine.collect')}}" class="list-group-item">
+        我的收藏
+        <span class="badge">14</span>
+    </a>
+    <a href="{{ url_for('mine.follow')}}" class="list-group-item">
+        我关注的
+        <span class="badge">14</span>
+    </a>
 </div>
-{%- endmacro %}
-
-{% macro body(board) -%}
-{% for board_s in board.board_s %}
-<div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
-    <div class="row" style="padding:0;margin:0;"> 
-        <div class="col-sm-2" style="font-size:12px;"> 
-            <dl style="margin:0;"> 
-                <dd><a href="{{ url_for('board.board',forums_url=board.enname_f,class_url=board_s.enname_s) }}" style="font-size:14px;"> {{ board_s.chname_s }} </a></dd>
-                <dd>
-                <span style="color:#999;">主题:</span>
-                <span>{{ board_s.count.topic }}</span>
-                <span style="color:#999;">帖子:</span>
-                <span>{{ board_s.count.all_topic }}</span>
-                </dd>
-            </dl>
-        </div>
-        <div class="col-sm-offset-8 col-sm-2" style="font-size:12px;">
-            {% import 'base/link.html' as link %}
-            {% set question = board_s.questions.first() %}
-            {% if question %}
-            <dl style="margin:0;">
-                <dt>{{ link.question(question) }}</dt>
-                <dd>由{{ link.user(question.author.name) }}发表</dd>
-                <dd>{{ board_s.questions.first().time.strftime('%Y-%m-%d %H:%M') }}</dd>
-            </dl>
-            {% else %}
-            没有帖子
-            {% endif %}
-        </div>
+{% else %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        maplebb
+    </div>
+    <div class="panel-body text-center">
+        <a class="btn btn-primary" href="{{ url_for('auth.register')}}">
+            <i class="icon-user"></i>
+            现在注册
+        </a>
+    </div>
+    <div class="panel-footer text-center">
+        已注册用户请 <a href="{{ url_for('auth.login')}}">登陆</a>
     </div>
 </div>
-{% endfor %}
-{%- endmacro %}
-
-{% macro infor(author) -%}
-<table style="font-size:12px;">
-    <tr>
-        <td>称号:</td>
-        <td>{{ author.name }}</td>
-    </tr>
-    <tr>
-        <td>注册时间:</td>
-        <td>{{ author.infor.registered_time.strftime('%Y-%m-%d') }}</td>
-    </tr>
-    <tr>
-        <td>积分:</td>
-        <td>{{ author.infor.score }}</td>
-    </tr>
-    <tr>
-        <td>等级:</td>
-        <td>{{ author.roles.first().name }}</td>
-    </tr>
-    <tr>
-        <td>帖子:</td>
-        <td><a href="{{ url_for('user.index',user_url=author.name,_anchor='topic_list') }}">2</a></td>
-    </tr>
-</table>
-{%- endmacro %}
-
-{% macro html() -%}
-<tr>
-    <td>b:</td> 
-    <td>加粗</td>
-</tr>
-<tr>
-    <td>i:</td>
-    <td>倾斜</td>
-</tr>
-<tr>
-    <td>br:</td>
-    <td>换行</td>
-</tr>
-<tr>
-    <td valign="top">font:</td>
-    <td> 设置字体(目前仅允许设置字体颜色)
-        <p>注:字体颜色请勿设置成白色或与白色相近的颜色</p>
-    </td>
-</tr>
-{%- endmacro %}
+{% endif %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        推荐帖子
+    </div>
+    <div class="panel-body text-center">
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        统计信息
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">社区会员: 26972 人</li>
+        <li class="list-group-item">帖子数: 30235 个</li>
+        <li class="list-group-item">回帖数: 297982 条</li>
+    </ul>
+</div>

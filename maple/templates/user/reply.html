@@ -1,0 +1,43 @@
+{% from 'base/paginate.html' import paginate %}
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <span style="float:right">
+            排序:
+            <div class="btn-group btn-group-xs" role="group">
+                <a href="" class="btn btn-default active">时间</a>
+                <a href="" class="btn btn-default">投票</a>
+            </div>
+        </span>
+    </div>
+    {% if replies.items %}
+    {% if setting.reply_list == 1 or (setting.reply_list == 2 and g.user.is_authenticated) or (g.user.is_authenticated and g.user.username == g.user_url) %}
+    {% for reply in replies.items %}
+    <div class="panel-body" style="border-bottom:1px solid #eee">
+        <span style="font-size:12px;color:#999;">回复了 {{ reply.username }} 创建的主题:
+            <a href="{{ url_for('topic.topic',uid=reply.topic.uid)}}">{{ reply.topic.title}}</a>
+        </span>
+        <p>{{ reply.content }}</p>
+        <span style="font-size:12px;color:#999;">
+            回复日期:{{ reply.publish.strftime('%Y-%m-%d %H:%M') }}
+        </span>
+    </div>
+    {% endfor  %}
+    {% if replies.pages > 1 %}
+    <div class="panel-footer">
+        {{ paginate(replies,'user.reply')}}
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
+        <span class="text-center" style="display:block;width:100%;color:#999">
+            <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
+            根据用户设置,列表被隐藏
+        </span>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="panel-body text-center">
+       没有回复
+    </div>
+    {% endif %}
+</div>

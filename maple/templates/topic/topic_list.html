@@ -1,0 +1,60 @@
+{% macro view(topics) -%}
+<style>
+ select {
+     background-color: #fff;
+     border-color: #c6c6c6;
+     color: #141414;
+ }
+</style>
+{% from 'base/link.html' import user %}
+<div class="panel-heading" style="font-size:12px;">
+    {{ form() }}
+</div>
+<div class="topiclist">
+    {% include 'topic/topic_list_base.html' %}
+</div>
+{%- endmacro %}
+
+{% macro view_no_form(topics) -%}
+{% from 'base/link.html' import user %}
+<div class="panel-heading" style="font-size:12px;">
+    <div class="row">
+    <div class="col-sm-6">
+        社区精华帖
+    </div>
+    <div class="col-sm-2">
+        作者
+    </div>
+    <div class="col-sm-2 hidden-xs">
+        回复/查看
+    </div>
+    <div class="col-sm-2 hidden-xs">
+        最后发表
+    </div>
+    </div>
+</div>
+<div class="topiclist">
+    {% include 'topic/topic_list_base.html' %}
+</div>
+{%- endmacro %}
+
+{% macro form() %}
+<div class="row">
+    <div class="col-sm-6">
+        筛选:
+        {{ g.sort_form.display() }}
+        排序:
+        {{ g.sort_form.sort() }}
+        {{ g.sort_form.st() }}
+    </div>
+    <div class="col-sm-2">
+        作者
+    </div>
+    <div class="col-sm-2 hidden-xs">
+        回复/查看
+    </div>
+    <div class="col-sm-2 hidden-xs">
+        最后发表
+    </div>
+</div>
+{% endmacro %}

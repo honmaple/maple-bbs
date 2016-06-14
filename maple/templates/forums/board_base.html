@@ -1,0 +1,32 @@
+{% macro body(boards) -%}
+{% import 'base/link.html' as link_base %}
+{% for board in boards %}
+<div class="panel-body" style="border-bottom:1px solid #eea">
+    <div class="row" style="padding:0;margin:0;">
+        <div class="col-md-2">
+            <dl style="margin:0;">
+                <dd>{{ link_base.board(board)}}</dd>
+                <dd style="font-size:12px;">
+                    <span style="color:#999;">主题:</span>
+                    <span>{{ board.count.topics }}</span>
+                    <span style="color:#999;">帖子:</span>
+                    <span>{{board.count.all_topics }}</span>
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-offset-8 col-md-2" style="font-size:12px">
+            {% set last_topic = board.topics.first() %}
+            {% if last_topic  %}
+            <dl style="margin:0;">
+                <dt style="word-wrap: break-word;word-break: normal;">{{ link_base.topic(last_topic)}}</dt>
+                <dd>由{{ link_base.user(last_topic.author.username) }}发表</dd>
+                <dd>{{ last_topic.publish.strftime('%Y-%m-%d %H:%M') }}</dd>
+            </dl>
+            {% else %}
+            没有帖子
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{%- endmacro %}

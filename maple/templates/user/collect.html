@@ -1,0 +1,48 @@
+{% import 'base/link.html' as link_base %}
+{% from 'base/paginate.html' import paginate %}
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <span style="float:right">
+            排序:
+            <div class="btn-group btn-group-xs" role="group">
+                <a href="" class="btn btn-default active">时间</a>
+                <a href="" class="btn btn-default">投票</a>
+            </div>
+        </span>
+    </div>
+    {% if collects.items %}
+    {% if setting.collect_list == 1 or (setting.collect_list == 2 and g.user.is_authenticated) or (g.user.is_authenticated and g.user.username == g.user_url) %}
+    {% for collect in collects.items %}
+    <div class="panel-body" style="border-bottom:1px solid #eee">
+        <div class="row" style="margin:0">
+            <div class="col-md-9">
+                {{ link_base.collect(collect) }}
+            </div>
+            <div class="col-md-2">
+                {{ collect.is_privacy }}
+            </div>
+            <div class="col-md-1">
+                1
+            </div>
+        </div>
+    </div>
+    {% endfor  %}
+    {% if collects.pages > 1 %}
+    <div class="panel-footer">
+        {{ paginate(collects,'user.collect')}}
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
+        <span class="text-center" style="display:block;width:100%;color:#999">
+            <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
+            根据用户设置,列表被隐藏
+        </span>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="panel-body text-center">
+       没有收藏
+    </div>
+    {% endif %}
+</div>

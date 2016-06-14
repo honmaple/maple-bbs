@@ -1,0 +1,77 @@
+{% extends 'maple/base.html' %}
+{% from 'base/paginate.html' import paginate %}
+{% import 'base/link.html' as link_base %}
+{% block script %}
+{{ super()}}
+<script type="text/javascript" src="{{ url_for('static',filename='styles/order.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='styles/mine.js')}}"></script>
+{% endblock %}
+{% block main %}
+<style>
+ .breadcrumb {
+     background:#fff
+ }
+</style>
+<nav class="navbar navbar-default navbar-fixed-top" style="background:#fff">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+        <div class="navbar-header" style="padding-top:5px;">
+            <a class="navbar-brand" href="{{ url_for('forums.index')}}" style="padding:0px">
+                <img alt="Brand" src="{{url_for('static',filename='images/header.png')}}" style="width:42px;">
+            </a>
+            <div class="navbar-brand" style="padding-top:2;padding-left:30px">
+                <span style="font-size:20px;color:#EB5424"><b class="text-capitalize">{{ Title.title}}</b></span>
+                <br/>
+                <small style="font-size:12px">{{ Title.description}}</small>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('forums.forums')}}">社区</a></li>
+                <li><a href="#">文档</a></li>
+                <li><a href="#">博客</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">注册</a></li>
+                <li><a href="#">登陆</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="col-md-offset-1 col-md-10" style="padding:0;margin-top:60px">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-info" style="padding:8px">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }} </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% endwith %}
+    {% if g.user.is_authenticated %}
+    <div class="btn-group" style="float:right">
+        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ current_user.username }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="{{ url_for('user.user',user_url=current_user.username) }}">我的主页</a></li>
+            <li><a href="{{ url_for('setting.setting') }}">帐号设置</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ url_for('auth.logout') }}">退出</a></li>
+        </ul>
+    </div>
+    {% else  %}
+    <a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-primary" style="float:right;">注册</a>
+    <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-primary" style="float:right">登陆</a>
+    {% endif %}
+    <a href="{{ url_for('tag.tag')}}" ><span class="btn btn-sm btn-primary" style="float:right">所有标签</span></a>
+    <a href="{{ url_for('forums.userlist')}}"><span class="btn btn-sm btn-primary" style="float:right">用户列表</span></a>
+    <a href="{{ url_for('forums.notice')}}"><span class="btn btn-sm btn-primary" style="float:right">消息通知</span></a>
+    <a href="{{ url_for('forums.help')}}"><span class="btn btn-sm btn-primary" style="float:right">帮助中心</span></a>
+    {% block content %}{% endblock %}
+</div>
+{% endblock %}

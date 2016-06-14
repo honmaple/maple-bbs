@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active">我的关注</li>
+</ol>
+<div class="row">
+    <div class="col-md-3" style="padding-right:0">
+        {% include 'user/infor.html' %}
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><a href="{{ url_for('user.topic')}}">我的主题</a></li>
+            <li role="presentation"><a href="{{ url_for('user.reply')}}">我的回复</a></li>
+            <li role="presentation"><a href="{{ url_for('user.collect')}}">我的收藏</a></li>
+            <li role="presentation"><a href="{{ url_for('user.notebook')}}">我的笔记</a></li>
+            <li style="border-bottom: 1px solid #eee;"></li>
+            <li role="presentation" class="active"><a href="{{ url_for('user.following')}}">我的关注</a></li>
+            <li role="presentation"><a href="{{ url_for('user.follower')}}">我的粉丝</a></li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <span style="float:right"> 排序1 / 排序2</span>
+            </div>
+            {% for following in followings.items %}
+            <div class="panel-body" style="border-bottom:1px solid #eee">
+                {{ following.content}}
+                {{ following}}
+            </div>
+            {% endfor  %}
+            <div class="panel-footer">
+                {{ paginate(followings,'user.following')}}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

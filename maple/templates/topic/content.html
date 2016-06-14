@@ -1,0 +1,46 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    {% set board = topic.board %}
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li><a href="{{ url_for('board.board',parent_b=board.parent_board)}}">{{ board.parent_board }}</a></li>
+    <li><a href="{{ url_for('board.board',parent_b=board.parent_board,child_b=board.board)}}">{{ board.board }}</a></li>
+    <li class="active">{{ topic.title }}</li>
+</ol>
+{% set last_reply = topic.replies.first() %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading media ">
+                <div class="media-body">
+                    <h2 class="media-heading">{{ topic.title}}</h2>
+                    <small style="color:#999">
+                        {% for tag in topic.tags %}
+                        {{ link_base.tag(tag) }}
+                        {% endfor %}
+                        <br/>
+                        {{ link_base.user(topic.author.username )}}
+                        于 <abbr class="timeago" title="{{ topic.publish}}">{{ topic.publish}}</abbr>发布
+                        {% if last_reply %}
+                        最后由{{ link_base.user(last_reply.author.username )}}于
+                        <abbr class="timeago" title="{{ topic.publish}}">{{ last_reply.publish}}</abbr>回复
+                        {% endif %}
+                    </small>
+                </div>
+                <div class="media-right">
+                    <a href="{{ url_for('user.user',user_url=topic.author.username)}}">
+                        <img class="media-object img-circle" src="{{ url_for('static',filename='images/Moo.png')}}" alt="..." style="width:64px;height:64px">
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+                {{ topic.content}}
+            </div>
+        </div>
+        {% include 'topic/replies.html' %}
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {% include 'topic/panel.html' %}
+    </div>
+</div>
+{% endblock %}

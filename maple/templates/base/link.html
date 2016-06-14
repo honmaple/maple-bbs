@@ -1,24 +1,35 @@
-{% macro question(question) -%}
-{% if question.is_group %}
-<a href="{{ url_for('group.view',group=question.group.name,qid=question.id) }}">{{ question.title }}</a>
-{% else %}
-<a href="{{ url_for('board.view',forums_url=question.board.board_f.enname_f,class_url=question.board.enname_s,qid=question.id) }}">{{ question.title }}</a>
-{% endif %}
-{%- endmacro %}
-
-{% macro user(user) -%}
-{% if user == 'honmaple' -%}
-<a href="{{ url_for('user.index',user_url=user)  }}" style="color:#aa0000;">{{ user  }}</a>
-{%- else %}
-<a href="{{ url_for('user.index',user_url=user)  }}">{{ user  }}</a>
-{% endif -%}
-{%- endmacro %}
-
-{% macro usergroup(group) -%}
-<a href="{{ url_for('group.group',group=group)  }}">{{ group }}</a>
-{%- endmacro %}
-
 {% macro tag(tag) -%}
-<a href="{{ url_for('forums.tag',tag=tag)  }}" style="font-weight:normal">{{ tag }}</a>
+<span class="label label-default" style="font-size:12px;background:rgba(1,126,102,.08);color:#337ab7;display: inline-block">
+    <a href="{{ url_for('tag.tag',tag=tag.tagname)}}" style="font-weight:normal">{{ tag.tagname }}</a>
+</span>
 {%- endmacro %}
-
+{% macro topic(topic) -%}
+<a href="{{ url_for('topic.topic',uid=topic.uid)}}">{{ topic.title}}</a>
+{%- endmacro %}
+{% macro user(username) -%}
+<a href="{{ url_for('user.user',user_url=username)}}">{{ username}}</a>
+{%- endmacro %}
+{% macro board(board) -%}
+<a href="{{ url_for('board.board',parent_b=board.parent_board,child_b=board.board)}}">{{ board.board }}</a>
+{%- endmacro %}
+{% macro collect(collect) -%}
+<a href="{{ url_for('mine.collect',uid=collect.id)}}">{{ collect.name }}</a>
+{%- endmacro %}
+{% macro collect_list() -%}
+<a href="{{ url_for('mine.collect') }}">我创建的收藏夹</a>
+{%- endmacro %}
+{% macro collect_following() -%}
+<a href="{{ url_for('mine.collect_following')}}">我关注的收藏夹</a>
+{%- endmacro %}
+{% macro following_tag() -%}
+<a href="{{ url_for('mine.follow',type="tag")}}">关注的节点</a>
+{%- endmacro %}
+{% macro following_topic() -%}
+<a href="{{ url_for('mine.follow',type="topic")}}">关注的问题</a>
+{%- endmacro %}
+{% macro following_user() -%}
+<a href="{{ url_for('mine.follow',type="user")}}">关注的用户</a>
+{%- endmacro %}
+{% macro following_collect() -%}
+<a href="{{ url_for('mine.follow',type="collect")}}">关注的收藏夹</a>
+{%- endmacro %}

@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+{% import 'base/link.html' as link %}
+{% block content %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active">所有标签</li>
+</ol>
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                所有标签
+            </div>
+            {% if tags %}
+            <div class="panel-body">
+                {% for tag in tags %}
+                {{ link.tag(tag) }}
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="panel-body text-center">
+                暂无标签
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {% include 'base/panel.html' %}
+    </div>
+</div>
+{% endblock %}

@@ -1,154 +1,69 @@
 #!/usr/bin/env python
 # -*- coding=UTF-8 -*-
-#*************************************************************************
-#   Copyright © 2015 JiangLin. All rights reserved.
-#   File Name: app.py
-#   Author:JiangLin
-#   Mail:xiyang0807@gmail.com
-#   Created Time: 2016-03-14 21:04:34
-#*************************************************************************
-from flask import Flask
-from flask_assets import Environment, Bundle
-from flask_login import LoginManager, AnonymousUserMixin
-from config import load_config
-from redis import StrictRedis
-from flask_mail import Mail
-from flask_principal import Principal
-from itsdangerous import URLSafeTimedSerializer
+# **************************************************************************
+# Copyright © 2016 jianglin
+# File Name: __init__.py
+# Author: jianglin
+# Email: xiyang0807@gmail.com
+# Created: 2016-05-20 12:35:52 (CST)
+# Last Update:星期二 2016-6-14 23:20:15 (CST)
+#          By:jianglin
+# Description:
+# **************************************************************************
+from flask import Flask, g
+from maple.extensions import (register_login, register_redis, register_mail)
+from maple.extensions import (register_form, register_babel, register_principal,
+                            register_jinja2, register_db, register_maple)
+from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
 
 
-def register_login(app):
-    login_manager = LoginManager()
-    login_manager.login_view = "auth.login"
-    login_manager.session_protection = "strong"
-    login_manager.login_message = u"这个页面要求登陆，请登陆"
-    login_manager.anonymous_user = Anonymous
-    login_manager.init_app(app)
-    return login_manager
+def create_app():
+
+    app = Flask(__name__)
+    app.config.from_object('config.config')
+    return app
 
 
-def register_redis(app):
-    config = app.config
-    redis_data = StrictRedis(db=config['REDIS_DB'],
-                             password=config['REDIS_PASSWORD'])
-    return redis_data
+def register(app):
+    # register_db(db, app)
+    register_form(app)
+    register_principal(app)
+    register_babel(app)
+    register_jinja2(app)
+    register_maple(app)
+    register_routes(app)
 
 
 def register_routes(app):
     from maple.forums.views import site
-    app.register_blueprint(site,url_prefix=app.config["FORUMS_URL"])
-    from maple.auth.views import site
-    app.register_blueprint(site, url_prefix=app.config["AUTH_URL"])
-    from maple.question.views import site
-    app.register_blueprint(site, url_prefix=app.config["QUESTION_URL"])
-    from maple.group.views import site
-    app.register_blueprint(site, url_prefix=app.config["USERGROUP_URL"])
-    from maple.admin.views import site
-    app.register_blueprint(site, url_prefix=app.config["ADMIN_URL"])
+    app.register_blueprint(site, url_prefix='')
     from maple.board.views import site
-    app.register_blueprint(site,url_prefix=app.config["BOARD_URL"] + '/<forums_url>')
+    app.register_blueprint(site, url_prefix='/<parent_b>')
     from maple.user.views import site
-    app.register_blueprint(site, url_prefix=app.config["USER_URL"] + '/<user_url>')
+    app.register_blueprint(site, url_prefix='/u/<user_url>')
+    from maple.topic.views import site
+    app.register_blueprint(site, url_prefix='')
+    from maple.mine.views import site
+    app.register_blueprint(site, url_prefix='/user')
+    from maple.setting.views import site
+    app.register_blueprint(site, url_prefix='/setting')
+    from maple.tag.views import site
+    app.register_blueprint(site, url_prefix='/t')
+    import maple.auth.auth
+    import maple.admin.admin
 
 
-def register_db(app):
-    db.init_app(app)
-
-
-def register_form(app):
-    from flask_wtf.csrf import CsrfProtect
-    csrf = CsrfProtect()
-    csrf.init_app(app)
-
-
-def register_jinja2(app):
-    from maple.main.records import load_online_users
-    from maple.main.filters import (safe_markdown,
-                                    safe_clean,
-                                    join_time,
-                                    judge, groups,
-                                    load_read_count,
-                                    load_user_count,
-                                    load_forums_count)
-    app.jinja_env.filters['safe_markdown'] = safe_markdown
-    app.jinja_env.filters['safe_clean'] = safe_clean
-    app.jinja_env.filters['judge'] = judge
-    app.jinja_env.filters['groups'] = groups
-    app.jinja_env.filters['load_online_users'] = load_online_users
-    app.jinja_env.filters['join_time'] = join_time
-    app.jinja_env.filters['load_read_count'] = load_read_count
-    app.jinja_env.filters['load_user_count'] = load_user_count
-    app.jinja_env.filters['load_forums_count'] = load_forums_count
-
-
-def register_assets(app):
-    bundles = {
-
-        'home_js': Bundle(
-            'style/js/jquery.min.js',
-            'style/js/bootstrap.min.js',
-            output='style/assets/home.js',
-            filters='jsmin'),
-
-        'home_css': Bundle(
-            'style/css/bootstrap.min.css',
-            output='style/assets/home.css',
-            filters='cssmin')
-        }
-
-    assets = Environment(app)
-    assets.register(bundles)
-
-
-class Anonymous(AnonymousUserMixin):
-    id = 0
-    name = u"Anonymous"
-    is_superuser = False
-
-
-def register(app):
-    register_routes(app)
-    register_jinja2(app)
-    register_assets(app)
-    register_db(app)
-    register_form(app)
-
-
-def create_app():
-    app = Flask(__name__, static_folder='static')
-    config = load_config()
-    app.config.from_object(config)
-    return app
-
-db = SQLAlchemy()
 app = create_app()
-mail = Mail(app)
+db = SQLAlchemy(app)
+mail = register_mail(app)
 login_manager = register_login(app)
-principals = Principal(app)
 redis_data = register_redis(app)
-login_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 register(app)
 
 
-from flask import (render_template,g,request,send_from_directory)
-from flask_login import current_user
-
 @app.before_request
 def before_request():
-    g.user = current_user
     from maple.forums.forms import SortForm
-    g.sortform = SortForm()
-    from maple.main.records import mark_online
-    mark_online(request.remote_addr)
-
-
-@app.errorhandler(404)
-def not_found(error):
-    return render_template('templet/error_404.html'), 404
-
-
-@app.route('/robots.txt',methods=['GET'])
-@app.route('/favicon.ico',methods=['GET'])
-def static_from_root():
-    return send_from_directory(app.static_folder, request.path[1:])
+    g.user = current_user
+    g.sort_form = SortForm()

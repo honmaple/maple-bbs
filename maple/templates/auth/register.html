@@ -1,87 +1,20 @@
-{% extends "index/base.html" %}
-{% block title %}注册 - 河海大学论坛{% endblock %}
+{% extends "base/base.html" %}
+{% block title -%}
+{{ _('register')}} - HonMaple
+{% endblock %}
+
 {% block content %}
-<script type=text/javascript>
-$(document).ready(function(){
-    $('a#clickCode').click(function() {
-        $("#changeCode").attr("src","/validcode?code=" + Math.random());
-    });
-    $('button#ajax').click(function() {
-        $.ajax ({
-            type : "POST",
-            url : "{{ url_for('auth.register') }}",
-            data:JSON.stringify({
-                name: $('#name').val(),
-                email: $('#email').val(),
-                passwd: $('#passwd').val(),
-                code:$("#code").val()
-            }),
-            contentType: 'application/json;charset=UTF-8',
-            success: function(result) {
-                if (result.judge == true)
-                {
-                    window.location = '/';
-                }
-                else 
-                {
-                    $("#showerror").show();
-                    $("#error").text(result.error);
-                }
-            }
-        });
-    });
-});
-</script>
+{% import 'maple/auth.html' as auth %}
 <ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.index') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
     <li class="active">注册</li>
 </ol>
-<div class="panel panel-default">
-    <div class="panel-heading" style="background:#2e609b;">
+<div class="panel panel-primary">
+    <div class="panel-heading">
         <a href="{{ url_for('auth.register') }}" style="color:#fff">注册页</a>
     </div>
-    <div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
-        <div class="center-block">
-            <div class="col-sm-offset-3 col-md-8 form-horizontal">
-                <div class="alert alert-info" id="showerror" style="padding:8px;">
-                    <button type="button" class="close" id="hide">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <ul>
-                        <li id="error"></li>
-                    </ul>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">{{ form.name.label }}</label>
-                    <div class="col-sm-10">
-                        {{ form.name(class="form-control",placeholder="name",style="width:240px") }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">{{ form.email.label }}</label>
-                    <div class="col-sm-10">
-                        {{ form.email(class="form-control",placeholder="email",style="width:240px") }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">{{ form.passwd.label }}</label>
-                    <div class="col-sm-10">
-                        {{ form.passwd(class="form-control",placeholder="passwd",style="width:240px") }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">{{ form.code.label }}</label>
-                    <div class="col-sm-10">
-                    {% include 'auth/validate.html' %}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="button" class="btn btn-primary" id="ajax">注册新用户</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="panel-body">
+        {{ auth.register(form)}}
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,14 @@
+{% from 'base/paginate.html' import paginate %}
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <span style="float:right"> 排序1 / 排序2</span>
+    </div>
+    {% for notebook in notebooks.items %}
+    <div class="panel-body" style="border-bottom:1px solid #eee">
+        {{ notebook.content}}
+    </div>
+    {% endfor  %}
+    <div class="panel-footer">
+        {{ paginate(notebooks,'user.notebook')}}
+    </div>
+</div>

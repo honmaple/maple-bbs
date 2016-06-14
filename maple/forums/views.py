@@ -1,81 +1,84 @@
-#*************************************************************************
-#   Copyright © 2015 JiangLin. All rights reserved.
-#   File Name: index.py
-#   Author:JiangLin
-#   Mail:xiyang0807@gmail.com
-#   Created Time: 2015-11-25 02:21:04
-#*************************************************************************
 #!/usr/bin/env python
 # -*- coding=UTF-8 -*-
-from flask import (render_template, Blueprint)
-from maple.question.models import Tags, Questions
-from maple import app, login_serializer, login_manager, db
+# **************************************************************************
+# Copyright © 2016 jianglin
+# File Name: views.py
+# Author: jianglin
+# Email: xiyang0807@gmail.com
+# Created: 2016-05-20 13:18:19 (CST)
+# Last Update:星期二 2016-6-14 23:20:14 (CST)
+#          By:
+# Description:
+# **************************************************************************
+from flask import Blueprint, render_template, g, request, abort
+from flask_login import current_user,login_required
+from maple import app, db
+from maple.helpers import is_num
 from maple.user.models import User
-from maple.board.models import Board_F
-from maple.group.models import Group
+from maple.forums.models import Notice, Board
+from maple.topic.models import Tags, Topic
 
 site = Blueprint('forums', __name__)
 
 
-@login_manager.token_loader
-def load_token(token):
-    max_age = app.config["REMEMBER_COOKIE_DURATION"].total_seconds()
-    data = login_serializer.loads(token, max_age=max_age)
-    user = User.load_by_name(data[0])
-    if user and data[1] == user.password:
-        return user
-    return None
-
-
-@login_manager.user_loader
-def user_loader(id):
-    user = User.query.get(int(id))
-    return user
-
-
 @site.route('/', methods=['GET'])
 def index():
-    from sqlalchemy import or_
-    clubs = Group.query.limit(15)
-    schools = Questions.query.join(Questions.tags).filter(
-        Tags.name == '新闻').offset(0).limit(5)
-    wulwxys = Questions.query.join(Questions.tags).filter(
-        Tags.name == '新闻').offset(5).limit(5)
-    jidians = Questions.query.join(Questions.tags).filter(
-        Tags.name == '新闻').offset(10).limit(5)
-    bss = Questions.query.join(Questions.tags).filter(
-        Tags.name == '新闻').offset(15).limit(5)
-    masters = Questions.query.join(Questions.tags).filter(or_(
-        Tags.name == '考研',Tags.name == '研究生新闻')).limit(5)
-    questions = Questions.query.limit(16)
-    return render_template('index/index.html',
-                           questions=questions,
-                           schools=schools,
-                           wulwxys=wulwxys,
-                           bss=bss,
-                           jidians=jidians,
-                           masters=masters,
-                           clubs=clubs)
+    topics = Topic.query.filter_by(is_good=True).paginate(1, 10)
+    if not topics.items:
+        topics = Topic.query.paginate(1, 10)
+    data = {'topics': topics}
+    return render_template('forums/index.html', **data)
 
 
-@site.route('/index', methods=['GET'])
+@site.route('/index')
 def forums():
-    boards = Board_F.query.all()
-    return render_template('index/forums.html', boards=boards)
+    boards = {}
+    parent_boards = db.session.query(Board.parent_board).group_by(
+        Board.parent_board)
+    for parent_board in parent_boards:
+        child_board = Board.query.filter_by(parent_board=parent_board).all()
+        boards[parent_board[0]] = child_board
+    data = {'boards': boards}
+    return render_template('forums/forums.html', **data)
 
 
-@site.route('/t', methods=['GET'], defaults={'tag': None})
-@site.route('/t/<tag>', methods=['GET'])
-def tag(tag):
-    if tag is not None:
-        questions = Questions.query.join(Questions.tags).\
-            filter(Tags.name == tag).all()
-        return render_template('index/tags.html', questions=questions, tag=tag)
-    else:
-        tags = db.session.query(Tags.name).group_by(Tags.name).all()
-        return render_template('index/all_tags.html', tags=tags)
+@site.route('/notices', defaults={'page': 1})
+@site.route('/notices/?page=<int:page>')
+@login_required
+def notice(page):
+    notices = Notice.query.join(Notice.rece_user).filter(
+        User.username == current_user.username).paginate(
+            page, app.config['PER_PAGE'],
+            error_out=True)
+    return render_template('forums/notice.html', notices=notices)
 
 
-@site.route('/about', methods=['GET'])
+@site.route('/userlist')
+@login_required
+def userlist():
+    page = is_num(request.args.get('page'))
+    users = User.query.paginate(page, app.config['PER_PAGE'], error_out=True)
+    data = {'users': users}
+    return render_template('forums/userlist.html', **data)
+
+
+@site.route('/about')
 def about():
-    return render_template('index/about.html')
+    return render_template('forums/about.html')
+
+
+@site.route('/help')
+def help():
+    return render_template('forums/help.html')
+
+
+@site.route('/order', methods=['POST'])
+def order():
+    from maple.main.orderby import form_judge
+    form = g.sort_form
+    if form.validate_on_submit():
+        topics = form_judge(form)
+        data = {'topics': topics}
+        return render_template('base/sort.html', **data)
+    else:
+        abort(404)

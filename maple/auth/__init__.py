@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding=UTF-8 -*-
-#*************************************************************************
-#   Copyright © 2015 JiangLin. All rights reserved.
-#   File Name: __init__.py
-#   Author:JiangLin
-#   Mail:xiyang0807@gmail.com
-#   Created Time: 2016-03-14 19:05:05
-#*************************************************************************
-
+# **************************************************************************
+# Copyright © 2016 jianglin
+# File Name: __init__.py
+# Author: jianglin
+# Email: xiyang0807@gmail.com
+# Created: 2016-05-31 21:35:58 (CST)
+# Last Update:星期二 2016-5-31 21:35:59 (CST)
+#          By:
+# Description:
+# **************************************************************************

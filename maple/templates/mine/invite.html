@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li class="active">邀请我回答的问题</li>
+</ol>
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                最新动态
+            </div>
+            {% for topic in topics %}
+            <div class="panel-body" style="border-bottom:1px solid #eee">
+                <span class="btn btn-success" style="float:right">忽略邀请</span>
+                <p>
+                {{ topic.topic.title}}
+                </p>
+                {{ topic.invite.username }}邀请你回答
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {% include 'base/panel.html' %}
+    </div>
+</div>
+{% endblock %}

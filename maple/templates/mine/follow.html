@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% import 'base/link.html' as link %}
+<ol class="breadcrumb" style="margin-bottom:0;">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+</ol>
+<div class="row">
+    <div class="col-md-9">
+        {% for follow in follows.items %}
+        <h4> <a href="{{ url_for('mine.follow')}}">{{ follow.title}}</a></h4>
+        <span> <a href="">编辑</a></span>
+        <span> <a href="">删除</a></span>
+        {% endfor %}
+        <div class="panel-footer">
+            {{ paginate(follows,'mine.follow')}}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {% include 'base/panel.html' %}
+    </div>
+</div>
+{% endblock %}

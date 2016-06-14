@@ -1,0 +1,61 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        共收到{{ replies.total }}条回复
+    </div>
+    {% if replies.items %}
+    {% set num = 1 %}
+    {% for reply in replies.items %}
+    <div class="panel-body media" style="border-bottom:1px solid #eee;margin:0">
+        <div class="media-left">
+            <a href="#">
+                <img class="media-object img-circle" src="{{ url_for('static',filename='images/Moo.png')}}" alt="..." style="width:48px;height:48px">
+            </a>
+        </div>
+        <div class="media-body">
+            <small class="media-heading" style="color:#999">
+                <span>{{ link_base.user(reply.author.username)}}</span>
+                <span>{{ reply.publish}}</span>
+                <a name="reply{{ num }}" class="anchor" href="#reply{{ num }}" aria-hidden="true">#{{ num }}</a>
+            </small>
+            <div>
+                {{ reply.content}}
+            </div>
+        </div>
+    </div>
+    {% set num = num + 1 %}
+    {% endfor %}
+    {% if replies.pages > 1 %}
+    <div class="panel-footer">
+        {% from 'base/paginate.html' import paginate %}
+        {{ paginate(replies,'topic.topic',dict(uid=topic.uid))}}
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="panel-body">
+        <span class="text-center" style="display:block;width:100%;color:#999">
+            暂无回复
+        </span>
+    </div>
+    {% endif %}
+</div>
+<div class="panel panel-default">
+    {% if g.user.is_authenticated %}
+    <div class="panel-heading">
+        回帖
+    </div>
+    <div class="panel-body">
+        <form action="{{ url_for('topic.reply',uid=topic.id)}}" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.content(class='form-control')}}
+            <button class="btn btn-sm btn-primary" type="submit">提交问题</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
+        <span class="text-center" style="display:block;width:100%;color:#999">
+            <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
+            你需要<a href="{{ url_for('auth.login') }}">登陆</a>后才能发表回复
+        </span>
+    </div>
+    {% endif %}
+</div>
