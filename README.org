@@ -1,0 +1,17 @@
+* maple-bbs(maplebb)
+
+  This is a forums system based on the flask
+
+** Start version
+   You can have a look [[https://forums.honmaple.org][here]]  
+   The version isn't completed
+
+** Now version
+   [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/index.png]]
+   [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/ask.png]]
+   [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/board.png]]
+** if you want to use
+
+   You need register a account,and use `update users set is_superuser = true where id = 1`  
+   Then you can add board use admin
+
