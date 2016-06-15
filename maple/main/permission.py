@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-09 19:53:35 (CST)
-# Last Update:星期二 2016-6-14 23:20:14 (CST)
+# Last Update:星期三 2016-6-15 17:50:37 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import (request, abort, current_app, redirect, jsonify, url_for,
-                   flash)
+                   flash, g)
 from flask_principal import Permission, RoleNeed, UserNeed, identity_loaded
 from flask_login import current_user, login_required
 from maple import app
@@ -127,11 +127,22 @@ class TagPermission(BasePermission):
         pass
 
 
+class LikePermission(BasePermission):
+    def post(self):
+        if not g.user.is_authenticated:
+            return jsonify(judge=False, url=url_for('auth.login'))
+
+    def delete(self):
+        if not g.user.is_authenticated:
+            return jsonify(judge=False, url=url_for('auth.login'))
+
+
 topic_permission = TopicPermission()
 reply_permission = ReplyPermission()
 follow_permission = FollowPermission()
 collect_permission = CollectPermission()
 tag_permission = TagPermission()
+like_permission = LikePermission()
 
 super_permission = Permission(RoleNeed('super'))
 

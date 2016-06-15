@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-21 22:46:35 (CST)
-# Last Update:星期日 2016-6-5 14:7:34 (CST)
+# Last Update:星期三 2016-6-15 10:9:7 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -36,13 +36,9 @@ class PrivacyForm(Form):
 
 
 class ProfileForm(Form):
-    introduce = TextAreaField('个人介绍:',
-                              [Length(max=256)])
-    school = StringField('所在学校:',
-                         [Length(max=256)])
-    word = TextAreaField('个性签名:',
-                         [Length(max=256)])
-
+    introduce = TextAreaField('个人介绍:', [Length(max=256)])
+    school = StringField('所在学校:', [Length(max=256)])
+    word = TextAreaField('个性签名:', [Length(max=256)])
 
 
 class PasswordForm(Form):

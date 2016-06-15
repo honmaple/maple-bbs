@@ -6,14 +6,15 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期二 2016-6-14 23:20:15 (CST)
+# Last Update:星期三 2016-6-15 11:22:42 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
 from flask import Flask, g
 from maple.extensions import (register_login, register_redis, register_mail)
-from maple.extensions import (register_form, register_babel, register_principal,
-                            register_jinja2, register_db, register_maple)
+from maple.extensions import (register_form, register_babel,
+                              register_principal, register_jinja2,
+                              register_maple)
 from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
 
@@ -22,11 +23,18 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_object('config.config')
+    app.url_map._rules.clear()
+    app.url_map._rules_by_endpoint.clear()
+    app.config['SERVER_NAME'] = 'localhost:5000'
+    app.url_map.default_subdomain = 'forums'
+    app.add_url_rule(app.static_url_path + '/<path:filename>',
+                     endpoint='static',
+                     view_func=app.send_static_file,
+                     subdomain='forums')
     return app
 
 
 def register(app):
-    # register_db(db, app)
     register_form(app)
     register_principal(app)
     register_babel(app)
@@ -38,18 +46,20 @@ def register(app):
 def register_routes(app):
     from maple.forums.views import site
     app.register_blueprint(site, url_prefix='')
+    from maple.topic.views import site
+    app.register_blueprint(site, url_prefix='/topic')
     from maple.board.views import site
     app.register_blueprint(site, url_prefix='/<parent_b>')
     from maple.user.views import site
     app.register_blueprint(site, url_prefix='/u/<user_url>')
-    from maple.topic.views import site
-    app.register_blueprint(site, url_prefix='')
     from maple.mine.views import site
     app.register_blueprint(site, url_prefix='/user')
     from maple.setting.views import site
     app.register_blueprint(site, url_prefix='/setting')
     from maple.tag.views import site
     app.register_blueprint(site, url_prefix='/t')
+    from maple.docs.views import site
+    app.register_blueprint(site, subdomain='docs')
     import maple.auth.auth
     import maple.admin.admin
 

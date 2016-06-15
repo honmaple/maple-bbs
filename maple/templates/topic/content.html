@@ -8,6 +8,21 @@
     <li class="active">{{ topic.title }}</li>
 </ol>
 {% set last_reply = topic.replies.first() %}
+<style>
+ .vote {
+     text-decoration: none;
+     font-size: 10px;
+     line-height: 1;
+     padding: 2px 8px;
+     border: 1px solid #C4C4C4;
+     border-radius: 3px;
+     color: #778;
+     display: inline-block;
+     vertical-align: baseline;
+     text-align: center;
+     background-color: #fff;
+ }
+</style>
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
@@ -15,15 +30,21 @@
                 <div class="media-body">
                     <h2 class="media-heading">{{ topic.title}}</h2>
                     <small style="color:#999">
+                        <span class="vote">
+                            <i class="icon-chevron-up"></i>
+                        </span>
+                        <span class="vote">
+                            <i class="icon-chevron-down"></i>
+                        </span>
                         {% for tag in topic.tags %}
                         {{ link_base.tag(tag) }}
                         {% endfor %}
                         <br/>
                         {{ link_base.user(topic.author.username )}}
-                        于 <abbr class="timeago" title="{{ topic.publish}}">{{ topic.publish}}</abbr>发布
+                        于 <abbr class="timeago" title="{{ topic.publish}}">{{ topic.publish | timesince }}</abbr>发布
                         {% if last_reply %}
                         最后由{{ link_base.user(last_reply.author.username )}}于
-                        <abbr class="timeago" title="{{ topic.publish}}">{{ last_reply.publish}}</abbr>回复
+                        <abbr class="timeago" title="{{ topic.publish}}">{{ last_reply.publish | timesince }}</abbr>回复
                         {% endif %}
                     </small>
                 </div>

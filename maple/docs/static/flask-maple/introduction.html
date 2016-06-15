@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1 Introduction To Flask-Maple &mdash; Flask-Maple 0.8 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flask-Maple 0.8 documentation" href="index.html" />
+    <link rel="next" title="1 Bootstrap" href="bootstrap.html" />
+    <link rel="prev" title="Welcome to Flask-Maple’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction-to-flask-maple">
+<h1>1 Introduction To Flask-Maple<a class="headerlink" href="#introduction-to-flask-maple" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>1.1 Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>To install Flask-Maple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">flask</span><span class="o">-</span><span class="n">maple</span>
+</pre></div>
+</div>
+<p>Or alternatively, you can download the repository and install manually by doing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github.com</span><span class="p">:</span><span class="n">honmaple</span><span class="o">/</span><span class="n">flask</span><span class="o">-</span><span class="n">maple</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">flask</span><span class="o">-</span><span class="n">maple</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bootstrap">
+<h2>1.2 Bootstrap<a class="headerlink" href="#bootstrap" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s very sample to use bootstrap</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_maple</span> <span class="kn">import</span> <span class="n">Bootstrap</span>
+<span class="n">maple</span> <span class="o">=</span> <span class="n">Boostrap</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or you can register it by</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">maple</span> <span class="o">=</span> <span class="n">Bootstrap</span><span class="p">()</span>
+<span class="n">maple</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Templates:</strong></p>
+<div class="highlight-html"><div class="highlight"><pre><span></span>{% extends &#39;maple/base.html&#39; %}
+{% block main -%}
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span><span class="p">&gt;</span>submit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;glyphicon glyphicon-search&quot;</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+{% endblock -%}
+</pre></div>
+</div>
+<p><strong>Config:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">AUTHOR_NAME</span> <span class="o">=</span> <span class="s2">&quot;This will show you name at html footer&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="captcha">
+<h2>1.3 Captcha<a class="headerlink" href="#captcha" title="Permalink to this headline">¶</a></h2>
+<p>Please install <strong>Pillow</strong> before use captcha</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pillow</span>
+</pre></div>
+</div>
+<p><strong>Usage</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_maple</span> <span class="kn">import</span> <span class="n">Captcha</span>
+<span class="n">captcha</span> <span class="o">=</span> <span class="n">Captcha</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then you can visit <a class="reference external" href="http://127.0.0.1/captcha">http://127.0.0.1/captcha</a></p>
+<p><strong>Config</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">CAPTCHA_URL</span> <span class="o">=</span> <span class="s2">&quot;The captcha url,default &#39;captcha&#39;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="error">
+<h2>1.4 Error<a class="headerlink" href="#error" title="Permalink to this headline">¶</a></h2>
+<p>You don&#8217;t register app.errorhandler if you use error extension</p>
+<p><strong>Usage</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_maple</span> <span class="kn">import</span> <span class="n">Error</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">Error</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This extension provides some simple error view</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="mi">404</span>
+<span class="mi">403</span>
+<span class="mi">500</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="login">
+<h2>1.5 Login<a class="headerlink" href="#login" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s easy to use login</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="n">UserMixin</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">120</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">120</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;User </span><span class="si">%r</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">set_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+        <span class="n">pw_hash</span> <span class="o">=</span> <span class="n">generate_password_hash</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pw_hash</span>
+
+    <span class="k">def</span> <span class="nf">check_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">check_password_hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Usage</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_maple</span> <span class="kn">import</span> <span class="n">Auth</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">Auth</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">,</span> <span class="n">mail</span><span class="o">=</span><span class="n">mail</span><span class="p">,</span> <span class="n">user_model</span><span class="o">=</span><span class="n">User</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you use flask-principal,please set use_principal = True</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_maple</span> <span class="kn">import</span> <span class="n">Auth</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">Auth</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">,</span> <span class="n">mail</span><span class="o">=</span><span class="n">mail</span><span class="p">,</span> <span class="n">user_model</span><span class="o">=</span><span class="n">User</span><span class="p">,</span><span class="n">use_principal</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>then you can visit <a class="reference external" href="http://127.0.0.1:5000/login">http://127.0.0.1:5000/login</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1 Introduction To Flask-Maple</a><ul>
+<li><a class="reference internal" href="#installation">1.1 Installation</a></li>
+<li><a class="reference internal" href="#bootstrap">1.2 Bootstrap</a></li>
+<li><a class="reference internal" href="#captcha">1.3 Captcha</a></li>
+<li><a class="reference internal" href="#error">1.4 Error</a></li>
+<li><a class="reference internal" href="#login">1.5 Login</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Flask-Maple&#8217;s documentation!</a></li>
+      <li>Next: <a href="bootstrap.html" title="next chapter">1 Bootstrap</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/introduction.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, honmaple.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/introduction.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

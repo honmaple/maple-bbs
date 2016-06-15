@@ -18,7 +18,7 @@
         </span>
         <p>{{ reply.content }}</p>
         <span style="font-size:12px;color:#999;">
-            回复日期:{{ reply.publish.strftime('%Y-%m-%d %H:%M') }}
+            回复日期:{{ reply.publish | timesince }}
         </span>
     </div>
     {% endfor  %}

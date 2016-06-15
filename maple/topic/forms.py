@@ -6,16 +6,15 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:08:44 (CST)
-# Last Update:星期二 2016-6-14 23:20:13 (CST)
+# Last Update:星期三 2016-6-15 18:48:29 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_wtf import Form
-from wtforms import StringField, TextAreaField, SelectField, BooleanField,FieldList
-from wtforms.validators import DataRequired, Length, InputRequired
+from wtforms import StringField, TextAreaField, SelectField
+from wtforms.validators import DataRequired, Length
 from flask_babel import lazy_gettext as _
 from maple.forums.models import Board
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 
 class TopicForm(Form):

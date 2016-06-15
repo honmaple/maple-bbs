@@ -20,7 +20,7 @@
             <dl style="margin:0;">
                 <dt style="word-wrap: break-word;word-break: normal;">{{ link_base.topic(last_topic)}}</dt>
                 <dd>由{{ link_base.user(last_topic.author.username) }}发表</dd>
-                <dd>{{ last_topic.publish.strftime('%Y-%m-%d %H:%M') }}</dd>
+                <dd>{{ last_topic.publish | timesince }}</dd>
             </dl>
             {% else %}
             没有帖子

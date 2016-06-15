@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:24:19 (CST)
-# Last Update:星期二 2016-6-14 23:20:14 (CST)
+# Last Update:星期三 2016-6-15 18:34:50 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -22,6 +22,7 @@ class UserRole(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     roles_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+
 
 class Follow(db.Model):
     __tablename__ = 'follows'
@@ -49,14 +50,12 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
     is_superuser = db.Column(db.Boolean, default=False)
     is_confirmed = db.Column(db.Boolean, default=False)
+    register_time = db.Column(db.DateTime, default=datetime.now())
 
     likes = db.relationship('Reply',
                             secondary='likes',
                             lazy='dynamic',
-                            backref="likers",
-                            cascade='all,delete-orphan',
-                            single_parent=True,
-                            #  passive_deletes=True
+                            backref="likers"
                             )
     following_tags = db.relationship('Tags',
                                      secondary='follows',
@@ -128,6 +127,7 @@ class Role(db.Model):
                             secondary='user_role',
                             backref=db.backref('roles', lazy='dynamic'))
 
+
 class UserInfor(db.Model):
     __tablename__ = 'userinfor'
     id = db.Column(db.Integer, primary_key=True)
@@ -143,6 +143,7 @@ class UserInfor(db.Model):
 
     def __repr__(self):
         return "<UserInfor %r>" % self.id
+
 
 class UserSetting(db.Model):
     '''

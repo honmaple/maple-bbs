@@ -1,6 +1,6 @@
 {% if g.user.is_authenticated %}
 <ul class="list-group">
-    <a class="list-group-item list-group-item-info" href="{{ url_for('topic.ask')}}">
+    <a class="list-group-item list-group-item-info" href="{{ ask_url or url_for('topic.ask')}}">
         <span class="btn btn-info btn-block">提问</span>
     </a>
 </ul>
@@ -17,7 +17,7 @@
 {% else %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        maplebb
+        Honmaple
     </div>
     <div class="panel-body text-center">
         <a class="btn btn-primary" href="{{ url_for('auth.register')}}">
@@ -42,8 +42,8 @@
         统计信息
     </div>
     <ul class="list-group">
-        <li class="list-group-item">社区会员: 26972 人</li>
-        <li class="list-group-item">帖子数: 30235 个</li>
-        <li class="list-group-item">回帖数: 297982 条</li>
+        <li class="list-group-item">社区会员:0  人</li>
+        <li class="list-group-item">帖子数: 0 个</li>
+        <li class="list-group-item">回帖数: 0 条</li>
     </ul>
 </div>

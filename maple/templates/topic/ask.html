@@ -10,7 +10,7 @@
     </div>
     <div class="panel-body" style="border-bottom:1px solid #f6e1e1;padding:10px 0;">
         <div class="row" style="margin:0;padding:0;">
-            <form action="{{ url_for('topic.topic') }}" method="POST">
+            <form action="{{ url_for('topic.post') }}" method="POST">
                 <div class="col-sm-2">
                     {{ form.hidden_tag() }}
                     {{ form.title.label(class="control-label") }}

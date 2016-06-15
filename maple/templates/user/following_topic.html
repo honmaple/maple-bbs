@@ -19,9 +19,7 @@
                 </span>
                 <p>{{ link_base.topic(topic)}}</p>
                 {% for tag in topic.tags %}
-                <span class="label label-default" style="font-size:12px;background:rgba(1,126,102,.08);color:#337ab7;display: inline-block">
-                    <a href="" style="font-weight:normal">{{ tag.tagname }}</a>
-                </span>
+                {{ link_base.tag(tag)}}
                 {% endfor %}
             </div>
             {% endfor  %}

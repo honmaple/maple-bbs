@@ -17,7 +17,7 @@
         <span style="color:#666">{{ topic.board.board }}</span>
         {{ link_base.topic(topic) }}
         <div style="font-size:12px;color:#999;">
-            创建日期:{{ topic.publish.strftime('%Y-%m-%d %H:%M') }}
+            创建日期:{{ topic.publish | timesince }}
             最后回复来自
             {{ link_base.user(topic.author.username) }}
         </div>

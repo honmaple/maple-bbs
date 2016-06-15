@@ -65,17 +65,16 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>{{ collect.name }}</h4>
-                {{ collect.description }}
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#editcollect">编辑</a>
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#deletecollect">删除</a>
+                <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#editcollect">编辑</a>
+                <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#deletecollect">删除</a>
             </div>
             {% if topics.items %}
-            <div class="panel-body">
-                {% for topic in topics.items %}
+            {% for topic in topics.items %}
+            <div class="panel-body" style="border-bottom:1px solid #eee">
                 <a href="{{ url_for('topic.topic',uid=topic.uid)}}">{{ topic.title}}</a>
-                <span> <a href="">删除</a></span>
-                {% endfor %}
+                <span class="pull-right btn btn-sm btn-danger">删除</span>
             </div>
+            {% endfor %}
             {% else %}
             <div class="panel-body">
                 <span class="text-center" style="display:block;width:100%;color:#999">

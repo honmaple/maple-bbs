@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期二 2016-6-14 23:20:13 (CST)
+# Last Update:星期三 2016-6-15 19:3:17 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,12 +15,13 @@ from flask.views import MethodView
 from flask_login import login_required
 from flask_maple.forms import flash_errors
 from maple import app
-from maple.main.models import SQLData, RedisData
+from maple.main.models import RedisData
 from maple.main.permission import topic_permission, reply_permission
 from maple.helpers import is_num
 from maple.forums.models import Board
 from maple.topic.models import Topic
 from maple.topic.forms import TopicForm, ReplyForm
+from .controls import TopicModel, ReplyModel
 
 site = Blueprint('topic', __name__)
 
@@ -35,23 +36,14 @@ def ask():
         form.category.data = board.id
     return render_template('topic/ask.html', form=form)
 
-# @site.route('/topic/<uid>/edit', methods=['POST'])
-# def edit(uid):
-#     topic = Topic.query.filter_by(uid=uid).first_or_404()
-#     form = TopicForm()
-#     form.title.data = topic.title
-#     tags = ''
-#     leng = 1
-#     for tag in topic.tags:
-#         if leng == len(list(topic.tags)):
-#             tags += tag.tagname
-#         else:
-#             tags += tag.tagname + ','
-#         leng += 1
-#     form.tags.data = tags
-#     form.content.data = topic.content
-#     return jsonify(form=form)
-#     # return render_template('topic/edit.html', form=form)
+
+@site.route('/good')
+def good():
+    page = is_num(request.args.get('page'))
+    topics = Topic.query.filter_by(is_good=True).paginate(
+        page, app.config['PER_PAGE'],
+        error_out=True)
+    return render_template('topic/topic_good.html', topics=topics)
 
 
 class TopicAPI(MethodView):
@@ -81,8 +73,8 @@ class TopicAPI(MethodView):
     def post(self):
         form = TopicForm()
         if form.validate_on_submit():
-            SQLData.set_topics(form)
-            return redirect('/')
+            topic = TopicModel.post_data(form)
+            return redirect(url_for('topic.topic', uid=topic.uid))
         else:
             if form.errors:
                 flash_errors(form)
@@ -92,13 +84,13 @@ class TopicAPI(MethodView):
             form.title.data = form.title.data
             return redirect(url_for('topic.ask'))
 
-    def put(self, uid):
-        form = TopicForm()
-        if form.validate_on_submit():
-            pass
+    # def put(self, uid):
+    #     form = TopicForm()
+    #     if form.validate_on_submit():
+    #         pass
 
-    def delete(self, uid):
-        return 'delete'
+    # def delete(self, uid):
+    #     return 'delete'
 
 
 class ReplyAPI(MethodView):
@@ -108,8 +100,8 @@ class ReplyAPI(MethodView):
         form = ReplyForm()
         topic = Topic.query.filter_by(id=uid).first()
         if form.validate_on_submit():
-            SQLData.set_replies(form, uid)
-            return redirect('/topic/' + topic.uid)
+            ReplyModel.post_data(form, uid)
+            return redirect(url_for('topic.topic', uid=topic.uid))
         else:
             if form.errors:
                 flash_errors(form)
@@ -117,24 +109,23 @@ class ReplyAPI(MethodView):
                 pass
             return redirect(url_for('topic.topic',
                                     uid=str(topic.uid),
-                                    _anchor='comment'))
+                                    _anchor='reply'))
 
-    def put(self, uid):
-        return 'put'
+    # def put(self, uid):
+    #     return 'put'
 
-    def delete(self, uid):
-        return 'delete'
+    # def delete(self, uid):
+    #     return 'delete'
+
 
 topic_view = TopicAPI.as_view('topic')
-site.add_url_rule('/topic',
+site.add_url_rule('',
                   defaults={'uid': None},
                   view_func=topic_view,
-                  methods=['GET', ])
-site.add_url_rule('/topic', view_func=topic_view, methods=['POST', ])
-site.add_url_rule('/topic/<uid>',
-                  view_func=topic_view,
-                  methods=['GET', 'PUT', 'DELETE'])
+                  methods=['GET'])
+site.add_url_rule('', view_func=TopicAPI.as_view('post'), methods=['POST'])
+site.add_url_rule('/<uid>', view_func=topic_view, methods=['GET'])
 
 site.add_url_rule('/reply/<uid>',
                   view_func=ReplyAPI.as_view('reply'),
-                  methods=['POST', 'PUT'])
+                  methods=['POST'])

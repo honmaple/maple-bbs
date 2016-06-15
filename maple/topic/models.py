@@ -6,24 +6,21 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期二 2016-6-14 23:20:13 (CST)
+# Last Update:星期三 2016-6-15 18:52:38 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from maple import db
 from datetime import datetime
 from sqlalchemy import event
-# from flask_login import current_user
 
 tag_topic = db.Table('tag_topic',
                      db.Column('tags_id',
                                db.Integer,
-                               db.ForeignKey('tags.id',
-                                             ondelete="CASCADE")),
+                               db.ForeignKey('tags.id')),
                      db.Column('topics_id',
                                db.Integer,
-                               db.ForeignKey('topics.id',
-                                             ondelete="CASCADE")))
+                               db.ForeignKey('topics.id')))
 
 
 class Tags(db.Model):
@@ -49,9 +46,6 @@ class Topic(db.Model):
                            secondary=tag_topic,
                            lazy='dynamic',
                            backref="topics",
-                           cascade='all,delete-orphan',
-                           single_parent=True,
-                           #  passive_deletes=True
                            )
 
     author_id = db.Column(db.Integer,
@@ -68,7 +62,8 @@ class Topic(db.Model):
                             backref=db.backref('topics',
                                                cascade='all,delete-orphan',
                                                lazy='dynamic',
-                                               order_by='Topic.publish.desc()'))
+                                               order_by='Topic.publish.desc()')
+                            )
 
     is_good = db.Column(db.Boolean, default=False)
     is_top = db.Column(db.Boolean, default=False)
@@ -139,9 +134,7 @@ class Like(db.Model):
     __tablename__ = 'likes'
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer,
-                          db.ForeignKey('users.id',
-                                        ondelete="CASCADE"))
+                          db.ForeignKey('users.id'))
     reply_id = db.Column(db.Integer,
-                         db.ForeignKey('replies.id',
-                                       ondelete="CASCADE"))
+                         db.ForeignKey('replies.id'))
     like_time = db.Column(db.DateTime, default=datetime.now())

@@ -1,10 +1,11 @@
+{% from 'base/link.html' import user  %}
 {% if topics.items %}
 <div class="panel-body" style="padding-top:0;">
     {% for topic in topics.items %}
     <div class="row" style="padding:5px 0;border-bottom:1px solid #f6e1e1;">
         <div class="col-md-6 media">
             <div class="media-left">
-                <a href="#">
+                <a href="{{ url_for('user.user',user_url=topic.author.username) }}">
                     <img class="media-object img-circle" src="{{ url_for('static',filename='images/Moo.png')}}" alt="..." style="width:48px;height:48px">
                 </a>
             </div>
@@ -21,7 +22,7 @@
             <span style="font-size:12px">{{ user(topic.author.username) }}</span>
             <br/>
             <span style="font-size:12px;color:#999;">
-                {{ topic.publish.strftime('%Y-%m-%d') }}
+                {{ topic.publish | timesince }}
             </span>
         </div>
         <div class="col-md-2  hidden-xs" style="padding:5px 5px 5px 20px;margin:0">
@@ -36,11 +37,11 @@
             {% if last_reply %}
             <span style="font-size:12px">{{ user(last_reply.author.username) }}</span>
             <br/>
-            <span style="font-size:12px;color:#999;">{{ last_reply.publish.strftime('%Y-%m-%d') }}</span>
+            <span style="font-size:12px;color:#999;">{{ last_reply.publish | timesince }}</span>
             {% else %}
             <span style="font-size:12px">{{ user(topic.author.username) }}</span>
             <br/>
-            <span style="font-size:12px;color:#999;">{{ topic.publish.strftime('%Y-%m-%d') }}</span>
+            <span style="font-size:12px;color:#999;">{{ topic.publish | timesince }}</span>
             {% endif %}
         </div>
     </div>

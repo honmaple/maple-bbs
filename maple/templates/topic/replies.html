@@ -1,3 +1,62 @@
+<style>
+ .like-active {
+     color:#a40004;
+ }
+ .like-no-active {
+     color:#ccc;
+ }
+</style>
+<script type="text/javascript">
+ $(document).ready(function(){
+     $('.like-reply').click(function() {
+         var _$this = $(this);
+         var replyId = _$this.attr('data-id');
+         var data = JSON.stringify({
+             uid:replyId
+         });
+         if(_$this.hasClass('like-active')){
+             $.ajax ({
+                 type : "DELETE",
+                 url : "{{ url_for('mine.like') }}",
+                 data:data,
+                 contentType: 'application/json;charset=UTF-8',
+                 success: function(result) {
+                     if (result.judge === true)
+                     {
+                         _$this.attr("title","赞");
+                         _$this.removeClass("like-active");
+                         _$this.addClass("like-no-active");
+                     } else
+                     {
+                         window.location.href = result.url;
+                     }
+                 }});
+         }else {
+             $.ajax ({
+                 type : "POST",
+                 url : "{{ url_for('mine.like') }}",
+                 data:data,
+                 contentType: 'application/json;charset=UTF-8',
+                 success: function(result) {
+                     if (result.judge === true)
+                     {
+                         _$this.attr("title","取消赞");
+                         _$this.removeClass("like-no-active");
+                         _$this.addClass("like-active");
+                     } else
+                     {
+                         window.location.href = result.url;
+                     }
+                 }});
+         }});
+     $('.reply-author').click(function() {
+         var _$this = $(this);
+         var author = _$this.attr('data-id');
+         $('#content').focus();
+         $('#content').val('@' + author + ' ');
+     })
+ });
+</script>
 <div class="panel panel-default">
     <div class="panel-heading">
         共收到{{ replies.total }}条回复
@@ -14,12 +73,28 @@
         <div class="media-body">
             <small class="media-heading" style="color:#999">
                 <span>{{ link_base.user(reply.author.username)}}</span>
-                <span>{{ reply.publish}}</span>
+                <span>{{ reply.publish | timesince }}</span>
                 <a name="reply{{ num }}" class="anchor" href="#reply{{ num }}" aria-hidden="true">#{{ num }}</a>
             </small>
             <div>
                 {{ reply.content}}
             </div>
+        </div>
+        <div class="media-right">
+            {% if reply in current_user.likes and g.user.is_authenticated %}
+            <a href="javascript:void(0);" style="padding:0" class="like-reply btn btn-sm like-active" data-id="{{ reply.id}}" title="取消赞">
+                <i class="icon-thumbs-up"></i>
+            </a>
+            {% else %}
+            <a href="javascript:void(0);" style="padding:0" class="like-reply btn btn-sm like-no-active" data-id="{{ reply.id}}" title="赞">
+                <i class="icon-thumbs-up"></i>
+            </a>
+            {% endif %}
+        </div>
+        <div class="media-right">
+            <a href="javascript:void(0);" style="color:#ccc;padding:0" class="reply-author btn btn-sm" data-id="{{ reply.author.username }}" title="回复">
+                <i class="icon-reply"></i>
+            </a>
         </div>
     </div>
     {% set num = num + 1 %}

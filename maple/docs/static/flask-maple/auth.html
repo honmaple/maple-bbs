@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1 Auth &mdash; Flask-Maple 0.8 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flask-Maple 0.8 documentation" href="index.html" />
+    <link rel="prev" title="1 Error" href="error.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="auth">
+<h1>1 Auth<a class="headerlink" href="#auth" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="custom-model">
+<h2>1.1 Custom model<a class="headerlink" href="#custom-model" title="Permalink to this headline">¶</a></h2>
+<p>You custom model if you need more when register or confirm email</p>
+<div class="section" id="register-models">
+<h3>1.1.1 register_models<a class="headerlink" href="#register-models" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_maple</span> <span class="kn">import</span> <span class="n">Auth</span>
+<span class="k">class</span> <span class="nc">MyAuth</span><span class="p">(</span><span class="n">Auth</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">register_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">User</span><span class="p">()</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">username</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">password</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">email</span><span class="o">.</span><span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">user</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="confirm-models">
+<h3>1.1.2 confirm_models<a class="headerlink" href="#confirm-models" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyAuth</span><span class="p">(</span><span class="n">Auth</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">confirm_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">is_confirmed</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">confirmed_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="email-models">
+<h3>1.1.3 email_models<a class="headerlink" href="#email-models" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyAuth</span><span class="p">(</span><span class="n">Auth</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">email_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">current_user</span><span class="o">.</span><span class="n">send_email_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="custom-form">
+<h2>1.2 Custom form<a class="headerlink" href="#custom-form" title="Permalink to this headline">¶</a></h2>
+<p>You can add custom form when register Auth</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Auth</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">,</span> <span class="n">mail</span><span class="o">=</span><span class="n">mail</span><span class="p">,</span> <span class="n">user_model</span><span class="o">=</span><span class="n">User</span><span class="p">,</span>
+     <span class="n">login_form</span><span class="o">=</span><span class="n">loginform</span><span class="p">,</span>
+     <span class="n">register_form</span><span class="o">=</span><span class="n">registerform</span><span class="p">,</span>
+     <span class="n">forget_form</span><span class="o">=</span><span class="n">forgetpasswordform</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>template</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">templates</span><span class="o">/</span><span class="n">auth</span><span class="o">/</span><span class="n">login</span><span class="o">.</span><span class="n">html</span>
+<span class="n">templates</span><span class="o">/</span><span class="n">auth</span><span class="o">/</span><span class="n">register</span><span class="o">.</span><span class="n">html</span>
+<span class="n">templates</span><span class="o">/</span><span class="n">auth</span><span class="o">/</span><span class="n">forget</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1 Auth</a><ul>
+<li><a class="reference internal" href="#custom-model">1.1 Custom model</a><ul>
+<li><a class="reference internal" href="#register-models">1.1.1 register_models</a></li>
+<li><a class="reference internal" href="#confirm-models">1.1.2 confirm_models</a></li>
+<li><a class="reference internal" href="#email-models">1.1.3 email_models</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#custom-form">1.2 Custom form</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="error.html" title="previous chapter">1 Error</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/auth.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, honmaple.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/auth.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

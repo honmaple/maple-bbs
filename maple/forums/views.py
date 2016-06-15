@@ -6,17 +6,17 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期二 2016-6-14 23:20:14 (CST)
+# Last Update:星期三 2016-6-15 19:4:31 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Blueprint, render_template, g, request, abort
-from flask_login import current_user,login_required
+from flask_login import current_user, login_required
 from maple import app, db
 from maple.helpers import is_num
 from maple.user.models import User
 from maple.forums.models import Notice, Board
-from maple.topic.models import Tags, Topic
+from maple.topic.models import Topic
 
 site = Blueprint('forums', __name__)
 

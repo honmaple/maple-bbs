@@ -11,10 +11,10 @@
             </div>
             <div class="media-body" style="line-height: 200%; text-align: center;">
                 <div style="font-size: 15px">
-                    Maple 官方网站源码 <a href="https://github.com/honmaple/maple-maple" target="_blank">Maple</a> 正式上线！
+                    Honmaple 官方网站源码 <a href="https://github.com/honmaple/maple-maple" target="_blank">Honmaple</a>
                 </div>
                 <div>
-                    <code style="padding: 4px 10px;">git clone git@github.com:honmaple/maple-maple.git</code>
+                    <code style="padding: 4px 10px;">git clone git@github.com:honmaple/maple-bbs.git</code>
                 </div>
             </div>
         </div>
@@ -39,15 +39,20 @@
 {%- endmacro %}
 <div class="row">
     {{ item("社区",url_for('forums.forums'),"icon-comments","#F86334")}}
-    {{ item("文档",url_for('forums.forums'),"icon-book","#eeccaa")}}
+    {{ item("文档",url_for('docs.docs'),"icon-book","#eeccaa")}}
     {{ item("博客",url_for('forums.forums'),"icon-tasks")}}
-    {{ item("精华文章",url_for('forums.forums'),"icon-globe","#017e66")}}
+    {{ item("精华文章",url_for('topic.good'),"icon-globe","#017e66")}}
 </div>
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
             {% from 'topic/topic_list.html' import view_no_form as board_view %}
             {{ board_view(topics)}}
+            <div class="panel-footer">
+                <a href="{{ url_for('topic.good')}}">
+                    查看更多精华帖...
+                </a>
+            </div>
         </div>
     </div>
     <div class="col-md-3" style="padding-left:0">

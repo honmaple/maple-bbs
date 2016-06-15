@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:04:43 (CST)
-# Last Update:星期二 2016-6-14 23:20:13 (CST)
+# Last Update:星期三 2016-6-15 19:6:23 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,15 +14,15 @@ from flask import (Blueprint, render_template, request, redirect, url_for,
                    jsonify)
 from flask.views import MethodView
 from flask_maple.forms import flash_errors
-from flask_login import current_user
+from flask_login import current_user, login_required
 from flask_maple.forms import return_errors
 from maple import app, db
-from maple.main.permission import follow_permission, collect_permission
+from maple.main.permission import (follow_permission, collect_permission,
+                                   like_permission)
 from maple.helpers import is_num
-from maple.topic.models import Topic, Reply, Collect, Tags
-from maple.forums.models import Notice
-from maple.user.models import User
+from maple.topic.models import Topic, Collect
 from maple.mine.forms import CollectForm
+from .controls import CollectModel, FollowModel, LikeModel
 
 site = Blueprint('mine', __name__)
 
@@ -58,14 +58,7 @@ class CollectAPI(MethodView):
     def post(self):
         form = CollectForm()
         if form.validate_on_submit():
-            collect = Collect()
-            collect.name = form.name.data
-            collect.description = form.description.data
-            collect.is_privacy = True if form.is_privacy.data == 0 else False
-            collect.author = current_user
-            current_user.following_collects.append(collect)
-            db.session.add(collect)
-            db.session.commit()
+            CollectModel.post_data(form)
             return redirect(url_for('mine.collect'))
         else:
             if form.errors:
@@ -75,11 +68,7 @@ class CollectAPI(MethodView):
     def put(self, uid):
         form = CollectForm()
         if form.validate_on_submit():
-            collect = Collect.query.filter_by(id=uid).first_or_404()
-            collect.name = form.name.data
-            collect.description = form.description.data
-            collect.is_privacy = True if form.is_privacy.data == 0 else False
-            db.session.commit()
+            CollectModel.put_data(form, uid)
             return jsonify(judge=True)
         else:
             if form.errors:
@@ -87,9 +76,7 @@ class CollectAPI(MethodView):
             return jsonify(judge=False)
 
     def delete(self, uid):
-        collect = Collect.query.filter_by(id=uid).first_or_404()
-        db.session.delete(collect)
-        db.session.commit()
+        CollectModel.delete_data(uid)
         return jsonify(judge=True)
 
 
@@ -99,6 +86,7 @@ def collect_following():
 
 
 @site.route('/add-to-collect', methods=['POST'])
+@login_required
 def add_collect():
     form = request.form.getlist('add-to-collect')
     topicId = request.args.get('topicId')
@@ -111,28 +99,19 @@ def add_collect():
 
 
 class LikeAPI(MethodView):
-    def get(self, uid):
-        if uid is None:
-            page = is_num(request.args.get('page'))
-            replies = current_user.likes.paginate(page,
-                                                  app.config['PER_PAGE'],
-                                                  error_out=True)
-            return render_template('mine/reply.html', replies=replies)
-        else:
-            return redirect(url_for('topic.reply', rid=uid))
+    decorators = [like_permission]
 
-    def post(self, uid):
-        tid = request.args.get('tid')
-        reply = Reply.query.filter_by(id=uid).first_or_404()
-        current_user.likes.append(reply)
-        db.session.commit()
-        return redirect(url_for('topic.topic', uid=tid))
+    def post(self):
+        data = request.get_json()
+        uid = data['uid']
+        LikeModel.post_data(uid)
+        return jsonify(judge=True)
 
-    def delete(self, uid):
-        reply = Reply.query.filter_by(id=uid).first_or_404()
-        db.session.delete(reply)
-        db.session.commit()
-        return 's'
+    def delete(self):
+        data = request.get_json()
+        uid = data['uid']
+        LikeModel.delete_data(uid)
+        return jsonify(judge=True)
 
 
 class FollowAPI(MethodView):
@@ -142,7 +121,7 @@ class FollowAPI(MethodView):
         return render_template('mine/follow_list.html', follows=topics)
 
     def get(self, type):
-        page = is_num(request.args.get('page'))
+        # page = is_num(request.args.get('page'))
         if type == 'tag':
             return render_template('user/following_tag.html',
                                    following_type=type)
@@ -160,25 +139,9 @@ class FollowAPI(MethodView):
         data = request.get_json()
         type = data['type']
         id = data['id']
-        if type == 'tag':
-            tag = Tags.query.filter_by(id=id).first()
-            current_user.following_tags.append(tag)
-            db.session.commit()
-            return jsonify(judge=True)
-        elif type == 'topic':
-            topic = Topic.query.filter_by(id=id).first()
-            current_user.following_topics.append(topic)
-            db.session.commit()
-            return jsonify(judge=True)
-        elif type == 'user':
-            user = User.query.filter_by(id=id).first()
-            current_user.following_users.append(user)
-            db.session.commit()
-            return jsonify(judge=True)
-        elif type == 'collect':
-            collect = Collect.query.filter_by(id=id).first()
-            current_user.following_collects.append(collect)
-            db.session.commit()
+        type_list = ['tag', 'topic', 'user', 'collect']
+        if type in type_list:
+            FollowModel.post_data(type, id)
             return jsonify(judge=True)
         else:
             pass
@@ -188,52 +151,13 @@ class FollowAPI(MethodView):
         data = request.get_json()
         type = data['type']
         id = data['id']
-        if type == 'tag':
-            tag = Tags.query.filter_by(id=id).first()
-            current_user.following_tags.remove(tag)
-            db.session.commit()
-            return jsonify(judge=True)
-        elif type == 'topic':
-            topic = Topic.query.filter_by(id=id).first()
-            current_user.following_topics.remove(topic)
-            db.session.commit()
-            return jsonify(judge=True)
-        elif type == 'user':
-            pass
-        elif type == 'collect':
-            collect = Collect.query.filter_by(id=id).first()
-            current_user.following_collects.remove(collect)
-            db.session.commit()
+        type_list = ['tag', 'topic', 'user', 'collect']
+        if type in type_list:
+            FollowModel.delete_data(type, id)
             return jsonify(judge=True)
         else:
             pass
         return jsonify(judge=False)
-
-
-class NoticeAPI(MethodView):
-    def template_without_uid(self, notices):
-        return render_template('topic/topic_good.html', notices=notices)
-
-    def get(self, uid):
-        if uid is None:
-            page = is_num(request.args.get('page'))
-            notices = Notice.query.filter_by(
-                user=current_user.username).paginate(page,
-                                                     app.config['PER_PAGE'],
-                                                     error_out=True)
-            return self.template_without_uid(notices)
-        else:
-            return redirect(url_for('topic.topic', uid=uid))
-
-    def post(self, uid):
-        topic = Topic.query.filter_by(uid=uid).first()
-        topic.is_good = True
-        db.session.commit()
-
-    def put(self, uid):
-        topic = Topic.query.filter_by(uid=uid).first()
-        topic.is_good = False
-        db.session.commit()
 
 
 def register_api(view, endpoint, url):
@@ -272,10 +196,6 @@ site.add_url_rule('/follow',
                   methods=['GET', ])
 site.add_url_rule('/follow', view_func=follow_view, methods=['POST', 'DELETE'])
 site.add_url_rule('/follow/<type>', view_func=follow_view, methods=['GET'])
-register_api(LikeAPI, 'like', '/likes')
-# register_api(FollowAPI, 'follow', '/follows')
-# register_api(DraftAPI, 'draft', '/draft')
-# register_api(CollectAPI, 'collect', '/collects')
-# register_api(LikeAPI, 'like', '/likes')
-# register_api(FollowAPI, 'follow', '/follows')
-# register_api(InviteAPI, 'invite', '/invites')
+
+like_view = LikeAPI.as_view('like')
+site.add_url_rule('/like', view_func=like_view, methods=['POST', 'DELETE'])
