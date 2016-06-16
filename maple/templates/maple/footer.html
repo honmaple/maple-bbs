@@ -1,16 +1,21 @@
 <div class="footer col-md-offset-1 col-md-10" style="padding:0">
-    <span style="font-size:12px;color:#999;float:left">
-        <span>当前在线用户:<strong style="color:#333;">{{ 'all_counts' | get_online_users }}</strong></span>
-        <span style="margin-left:10px">注册用户:<strong style="color:#333;">{{ 'sign_counts' | get_online_users }}</strong></span>
-        <span style="margin-left:10px">当前访客:<strong style="color:#333;">{{ 'counts' | get_online_users }}</strong></span>
-        <span style="margin-left:10px">最高在线:<strong style="color:#333;">{{ 'high' | get_online_users }}</strong></span>
-        <span style="margin-left:10px">最高在线时间:<strong style="color:#333;">{{ 'high_time' | get_online_users }}</strong></span>
-    </span>
-    <span style="float:right">
-        <span style="font-size:12px"><a href="{{ url_for('forums.about')}}">关于我</a></span>
-        <span style="font-size:12px"><a href="">GitHub</a></span>
-        <span  style="font-size:12px;">
-            Copyright © 2015-2016 honmaple.
-        </span>
-    </span>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <small style="color:#999">
+                <span>当前在线用户:<strong style="color:#333;">{{ 'all_counts' | get_online_users }}</strong></span>
+                <span style="margin-left:10px">注册用户:<strong style="color:#333;">{{ 'sign_counts' | get_online_users }}</strong></span>
+                <span style="margin-left:10px">当前访客:<strong style="color:#333;">{{ 'counts' | get_online_users }}</strong></span>
+                <span style="margin-left:10px">最高在线:<strong style="color:#333;">{{ 'high' | get_online_users }}</strong></span>
+                <span style="margin-left:10px">最高在线时间:<strong style="color:#333;">{{ 'high_time' | get_online_users }}</strong></span>
+            </small>
+        </div>
+        <div class="col-md-offset-2 col-md-4 text-center">
+            <small>
+                <span><a href="{{ url_for('forums.help')}}">帮助</a></span>
+                <span><a href="{{ url_for('forums.about')}}">关于我</a></span>
+                <span><a href="https://github.com/honmaple/maple-bbs" target="_blank">GitHub</a></span>
+                <span> Copyright © 2015-2016 honmaple.</span>
+            </small>
+        </div>
+    </div>
 </div>

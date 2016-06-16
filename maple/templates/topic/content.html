@@ -28,7 +28,7 @@
         <div class="panel panel-default">
             <div class="panel-heading media ">
                 <div class="media-body">
-                    <h2 class="media-heading">{{ topic.title}}</h2>
+                    <h3 class="media-heading">{{ topic.title}}</h3>
                     <small style="color:#999">
                         <span class="vote">
                             <i class="icon-chevron-up"></i>
@@ -54,13 +54,18 @@
                     </a>
                 </div>
             </div>
-            <div class="panel-body">
-                {{ topic.content}}
+            <div class="panel-body topic-content">
+                {% if topic.is_markdown %}
+                {{ topic.content | markdown }}
+                {% else %}
+                {{ topic.content }}
+                {% endif %}
             </div>
         </div>
         {% include 'topic/replies.html' %}
     </div>
     <div class="col-md-3" style="padding-left:0">
+        {% set ask_url = url_for('topic.ask',boardId=topic.board.id) %}
         {% include 'topic/panel.html' %}
     </div>
 </div>

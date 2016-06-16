@@ -1,5 +1,18 @@
 {% extends 'base/base.html' %}
 {% block content %}
+<script type="text/javascript">
+ $(document).ready(function(){
+     $('#topic-preview').click(function() {
+         var content = $('#content').val();
+         $.post("{{ url_for('topic.preview') }}", {
+             content: $("#content").val(),
+             choice: $("#choice").val()
+         }, function(data) {
+             $("#show-preview").html(data);
+         });
+     })
+ });
+</script>
 <ol class="breadcrumb" style="margin-bottom:0;">
     <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
     <li class="active">提问</li>
@@ -52,7 +65,11 @@
                     {{ form.content(class="form-control",style="border-radius:0px;margin-top:0",rows="8",onchange="preview()",placeholder="请输入问题描述") }}
                 </div>
                 <div class="col-sm-offset-2 col-sm-10">
+                    {{ form.choice(class="input-sm pull-right",style="padding:2")}}
                     <button class="btn btn-sm btn-primary" type="submit">提交问题</button>
+                    <button class="btn btn-sm btn-primary" id="topic-preview" type="button">预览</button>
+                </div>
+                <div class="col-sm-offset-2 col-sm-10" id="show-preview">
                 </div>
             </form>
         </div>

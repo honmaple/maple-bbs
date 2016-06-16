@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:39:29 (CST)
-# Last Update:星期三 2016-6-15 18:44:9 (CST)
+# Last Update:星期四 2016-6-16 1:31:14 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,9 +15,38 @@ from maple import redis_data
 from maple.settings import setting
 from maple.topic.models import Reply, Topic
 from maple.user.models import User
+from flask import Markup
+from misaka import Markdown, HtmlRenderer
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
+from bleach import clean
+
+
+def safe_clean(text):
+    tags = ['b', 'i', 'font', 'br', 'blockquote', 'a', 'div', 'ul', 'li', 'h2']
+    attrs = {'*': ['style', 'id', 'class'], 'font': ['color'], 'a': ['href']}
+    styles = ['color']
+    return Markup(clean(text, tags=tags, attributes=attrs, styles=styles))
 
 
 class Filters(object):
+    def safe_markdown(text):
+        class HighlighterRenderer(HtmlRenderer):
+            def blockcode(self, text, lang):
+                lang = 'python'
+                if not lang:
+                    return '\n<pre><code>{}</code></pre>\n'.format(text.strip(
+                    ))
+                lexer = get_lexer_by_name(lang, stripall=True)
+                formatter = HtmlFormatter()
+                return highlight(text, lexer, formatter)
+
+        renderer = HighlighterRenderer()
+        md = Markdown(renderer, extensions=('fenced-code', ))
+        return Markup(md(safe_clean(text)))
+        # return Markup(md(text))
+
     def timesince(dt, default="just now"):
         now = datetime.now()
         diff = now - dt

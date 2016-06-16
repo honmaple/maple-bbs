@@ -1,6 +1,6 @@
 {% macro tag(tag) -%}
-<span class="label label-default" style="font-size:12px;background:rgba(1,126,102,.08);color:#337ab7;display: inline-block">
-    <a href="{{ url_for('tag.tag',tag=tag.tagname)}}" style="font-weight:normal">{{ tag.tagname }}</a>
+<span class="label label-default tag">
+    <a href="{{ url_for('tag.tag',tag=tag.tagname)}}">{{ tag.tagname }}</a>
 </span>
 {%- endmacro %}
 {% macro topic(topic) -%}

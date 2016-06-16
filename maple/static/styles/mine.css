@@ -1,0 +1,29 @@
+ body {
+     background:#f5f5f5
+ }
+ .tag {
+     font-size:12px;
+     background:rgba(1,126,102,.08);
+     color:#337ab7;
+     display: inline-block
+ }
+ .tag a {
+     font-weight:normal
+ }
+ .topic-content h1{
+     font-size:30px;
+ }
+ .topic-content h2{
+     font-size:26px;
+ }
+ .topic-content h3{
+     font-size:22px;
+ }
+ .topic-content h4{
+     font-size:18px;
+ }
+ .topic-content img {
+     max-width: 100%;
+     height: auto;
+     display: block;
+ }

@@ -6,11 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期三 2016-6-15 19:3:17 (CST)
+# Last Update:星期四 2016-6-16 13:16:4 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import (Blueprint, render_template, redirect, url_for, request)
+from flask import (Blueprint, render_template, redirect, url_for, request,
+                   Markup, abort)
 from flask.views import MethodView
 from flask_login import login_required
 from flask_maple.forms import flash_errors
@@ -21,6 +22,7 @@ from maple.helpers import is_num
 from maple.forums.models import Board
 from maple.topic.models import Topic
 from maple.topic.forms import TopicForm, ReplyForm
+from maple.filters import safe_clean, Filters
 from .controls import TopicModel, ReplyModel
 
 site = Blueprint('topic', __name__)
@@ -44,6 +46,21 @@ def good():
         page, app.config['PER_PAGE'],
         error_out=True)
     return render_template('topic/topic_good.html', topics=topics)
+
+
+@site.route('/preview', methods=['GET', 'POST'])
+@login_required
+def preview():
+    if request.method == "POST":
+        choice = request.values.get('choice')
+        content = request.values.get('content')
+        print(choice)
+        if choice == '2':
+            return safe_clean(content)
+        else:
+            return Filters.safe_markdown(content)
+    else:
+        abort(404)
 
 
 class TopicAPI(MethodView):
@@ -101,7 +118,7 @@ class ReplyAPI(MethodView):
         topic = Topic.query.filter_by(id=uid).first()
         if form.validate_on_submit():
             ReplyModel.post_data(form, uid)
-            return redirect(url_for('topic.topic', uid=topic.uid))
+            return redirect(url_for('topic.topic', uid=topic.uid,_anchor='replies-content'))
         else:
             if form.errors:
                 flash_errors(form)
@@ -109,7 +126,7 @@ class ReplyAPI(MethodView):
                 pass
             return redirect(url_for('topic.topic',
                                     uid=str(topic.uid),
-                                    _anchor='reply'))
+                                    _anchor='replies-content'))
 
     # def put(self, uid):
     #     return 'put'

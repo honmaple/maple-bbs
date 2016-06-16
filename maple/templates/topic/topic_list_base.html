@@ -1,8 +1,8 @@
-{% from 'base/link.html' import user  %}
+{% import 'base/link.html' as link_base  %}
 {% if topics.items %}
-<div class="panel-body" style="padding-top:0;">
-    {% for topic in topics.items %}
-    <div class="row" style="padding:5px 0;border-bottom:1px solid #f6e1e1;">
+{% for topic in topics.items %}
+<div class="panel-body" style="padding:6px;border-bottom:1px solid #eee">
+    <div class="row">
         <div class="col-md-6 media">
             <div class="media-left">
                 <a href="{{ url_for('user.user',user_url=topic.author.username) }}">
@@ -10,20 +10,27 @@
                 </a>
             </div>
             <div class="media-body">
-                <div class="media-heading"> <a href="{{url_for('topic.topic',uid=topic.uid)}}">{{ topic.title}}</a></div>
-                {% for tag in topic.tags %}
-                <span class="label label-default" style="font-size:12px;background:rgba(1,126,102,.08);color:#337ab7;display: inline-block">
-                    <a href="{{ url_for('tag.tag',tag = tag.tagname) }}" style="font-weight:normal">{{ tag.tagname }}</a>
+                <div class="media-heading"> <a href="{{url_for('topic.topic',uid=topic.uid)}}" style="color:#555">{{ topic.title}}</a></div>
+                <span class="visible-xs-inline">
+                    <small style="font-size:10px;">由{{ link_base.user(topic.author.username) }}</small>
+                    <small style="color:#999;">
+                        {{ topic.publish | timesince }}
+                        发布
+                    </small>
                 </span>
-                {% endfor %}
+                <div class="hidden-xs">
+                    {% for tag in topic.tags %}
+                    {{ link_base.tag(tag)}}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-        <div class="col-md-2" style="padding:5px;margin:0">
-            <span style="font-size:12px">{{ user(topic.author.username) }}</span>
+        <div class="col-md-2 hidden-xs" style="padding-top:5px;">
+            <small>{{ link_base.user(topic.author.username) }}</small>
             <br/>
-            <span style="font-size:12px;color:#999;">
+            <small style="color:#999;">
                 {{ topic.publish | timesince }}
-            </span>
+            </small>
         </div>
         <div class="col-md-2  hidden-xs" style="padding:5px 5px 5px 20px;margin:0">
             {% set rep,read = topic.id | get_read_count %}
@@ -35,18 +42,18 @@
         <div class="col-md-2 hidden-xs" style="padding:5px;margin:0;">
             {% set last_reply = topic.replies.first() %}
             {% if last_reply %}
-            <span style="font-size:12px">{{ user(last_reply.author.username) }}</span>
+            <span style="font-size:12px">{{ link_base.user(last_reply.author.username) }}</span>
             <br/>
             <span style="font-size:12px;color:#999;">{{ last_reply.publish | timesince }}</span>
             {% else %}
-            <span style="font-size:12px">{{ user(topic.author.username) }}</span>
+            <span style="font-size:12px">{{ link_base.user(topic.author.username) }}</span>
             <br/>
             <span style="font-size:12px;color:#999;">{{ topic.publish | timesince }}</span>
             {% endif %}
         </div>
     </div>
-    {% endfor %}
 </div>
+{% endfor %}
 {% else %}
 <div class="panel-body">
     <span class="text-center" style="display:block;width:100%;color:#999">

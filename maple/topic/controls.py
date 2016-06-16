@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 10:22:42 (CST)
-# Last Update:星期三 2016-6-15 14:7:48 (CST)
+# Last Update:星期四 2016-6-16 13:9:11 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -23,6 +23,7 @@ class TopicModel(object):
         topic = Topic()
         topic.title = form.title.data
         topic.content = form.content.data
+        topic.is_markdown = True if form.choice.data == 1 else False
         topic.uid = make_uid()
         topic.author = current_user
         tags = sp(',|;|，|；| ', form.tags.data)
@@ -33,14 +34,18 @@ class TopicModel(object):
                 exsit_tag = Tags.query.filter_by(tagname=tag).first()
                 if exsit_tag is not None:
                     post_tags.append(exsit_tag)
+                    if exsit_tag not in current_user.following_tags:
+                        current_user.following_tags.append(exsit_tag)
                 else:
                     t = Tags()
                     t.tagname = tag
                     post_tags.append(t)
+                    current_user.following_tags.append(t)
         topic.tags = post_tags
         topic.board_id = form.category.data
         db.session.add(topic)
         db.session.commit()
+        current_user.following_topics.append(topic)
         topic.board.count.topics += 1
         topic.board.count.all_topics += 1
         db.session.commit()

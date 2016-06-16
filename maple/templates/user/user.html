@@ -37,7 +37,7 @@
         </ul>
         <ul class="nav nav-pills nav-stacked">
             <li role="presentation" class="followings"><a href="{{ url_for('user.following')}}">我的关注</a></li>
-            <li role="presentation" class="followers'"><a href="{{ url_for('user.follower')}}">我的粉丝</a></li>
+            <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">我的粉丝</a></li>
         </ul>
         {% else %}
         <ul class="nav nav-pills nav-stacked">
@@ -47,7 +47,7 @@
         </ul>
         <ul class="nav nav-pills nav-stacked">
             <li role="presentation" class="followings"><a href="{{ url_for('user.following')}}">{{ g.user_url}}的关注</a></li>
-            <li role="presentation" class="followers'"><a href="{{ url_for('user.follower')}}">{{ g.user_url}}的粉丝</a></li>
+            <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">{{ g.user_url}}的粉丝</a></li>
         </ul>
         {% endif %}
     </div>

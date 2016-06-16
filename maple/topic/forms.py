@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:08:44 (CST)
-# Last Update:星期三 2016-6-15 18:48:29 (CST)
+# Last Update:星期四 2016-6-16 13:1:22 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -26,6 +26,9 @@ class TopicForm(Form):
                  for b in Board.query.all()],
         coerce=int)
     tags = StringField(_('Tags:'), [DataRequired(), Length(min=2, max=36)])
+    choice = SelectField('choice',
+                         choices=[(1, 'Markdown'), (2, 'Default')],
+                         coerce=int)
 
 
 class ReplyForm(Form):
