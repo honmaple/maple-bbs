@@ -13,13 +13,10 @@
      })
  });
 </script>
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li class="active">提问</li>
-</ol>
+{{ breadcrumb(active='提问')}}
 <div class="panel panel-primary">
     <div class="panel-heading">
-        发帖
+        提问
     </div>
     <div class="panel-body" style="border-bottom:1px solid #f6e1e1;padding:10px 0;">
         <div class="row" style="margin:0;padding:0;">

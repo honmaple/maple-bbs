@@ -1,5 +1,4 @@
 {% extends 'base/base.html' %}
-{% import 'base/link.html' as link %}
 {% block content %}
 <script type="text/javascript">
  $(document).ready(function(){
@@ -21,10 +20,9 @@
      }
  });
 </script>
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li class="active">{{ g.user_url }}</li>
-</ol>
+{% import 'base/link.html' as link_base %}
+{% from 'base/paginate.html' import footer as p_footer %}
+{{ breadcrumb(active=g.user_url)}}
 <div class="row">
     <div class="col-md-3" style="padding-right:0">
         {% set user = g.user_url | get_user_infor %}

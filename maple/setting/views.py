@@ -6,11 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:04:43 (CST)
-# Last Update:星期三 2016-6-15 10:19:5 (CST)
+# Last Update:星期四 2016-6-16 18:53:30 (CST)
 #          By:jianglin
 # Description: user setting include password , infor and privacy
 # **************************************************************************
-from flask import (Blueprint, render_template, request, url_for, redirect,
+from flask import (Blueprint, render_template, request, url_for, redirect, g,
                    flash)
 from flask_maple.forms import flash_errors
 from flask_login import current_user, login_required
@@ -33,11 +33,10 @@ def setting():
         if form.errors:
             flash_errors(form)
             return redirect(url_for('setting.setting'))
-        else:
-            form.introduce.data = infor.introduce
-            form.school.data = infor.school
-            form.word.data = infor.word
-            return render_template('setting/setting.html', form=form)
+        form.introduce.data = infor.introduce
+        form.school.data = infor.school
+        form.word.data = infor.word
+        return render_template('setting/setting.html', form=form)
 
 
 @site.route('/password', methods=['GET', 'POST'])
@@ -55,8 +54,7 @@ def password():
         if form.errors:
             flash_errors(form)
             return redirect(url_for('setting.password'))
-        else:
-            return render_template('setting/password.html', form=form)
+        return render_template('setting/password.html', form=form)
 
 
 @site.route('/privacy', methods=['GET', 'POST'])

@@ -7,9 +7,5 @@
         {{ follower.username }}
     </div>
     {% endfor  %}
-    {% if followers.pages > 1 %}
-    <div class="panel-footer">
-        {{ paginate(followers,'user.follower')}}
-    </div>
-    {% endif %}
+    {{ p_footer(followers,'user.follower')}}
 </div>

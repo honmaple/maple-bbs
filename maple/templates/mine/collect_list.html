@@ -1,8 +1,6 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-</ol>
+{{ breadcrumb(active='我的收藏')}}
 <div class="row">
     <div class="col-md-9">
         <ul class="nav nav-tabs">
@@ -23,11 +21,7 @@
                 {% endif %}
             </div>
             {% endfor %}
-            {% if collects.pages  > 1 %}
-            <div class="panel-footer">
-                {{ paginate(collects,'mine.collect')}}
-            </div>
-            {% endif %}
+            {{ p_footer(collects,'mine.collect')}}
         </div>
     </div>
     <div class="col-md-3" style="padding-left:0">

@@ -1,6 +1,8 @@
 {% extends 'maple/base.html' %}
-{% from 'base/paginate.html' import paginate %}
+{% from 'base/paginate.html' import paginate%}
+{% from 'base/paginate.html' import footer as p_footer %}
 {% import 'base/link.html' as link_base %}
+{% from 'base/head.html' import breadcrumb %}
 {% block script %}
 {{ super()}}
 <script type="text/javascript" src="{{ url_for('static',filename='styles/order.js')}}"></script>
@@ -21,7 +23,7 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('forums.forums')}}">社区</a></li>
+                <li><a href="{{ url_for('forums.forums')}}">社区{{ _('社区')}}</a></li>
                 <li><a href="{{ url_for('docs.docs')}}">文档</a></li>
                 <li><a href="#">博客</a></li>
                 <li><a href="{{ url_for('topic.good')}}">精华文章</a></li>
@@ -67,6 +69,6 @@
     <a href="{{ url_for('tag.tag')}}" ><span class="btn btn-sm btn-primary pull-right">所有标签</span></a>
     <a href="{{ url_for('forums.userlist')}}"><span class="btn btn-sm btn-primary pull-right">用户列表</span></a>
     <a href="{{ url_for('forums.notice')}}"><span class="btn btn-sm btn-primary pull-right">消息通知</span></a>
-    {% block content %}{% endblock %}
+    {% block content %} {% endblock %}
 </div>
 {% endblock %}

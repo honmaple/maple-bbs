@@ -99,12 +99,7 @@
     </div>
     {% set num = num + 1 %}
     {% endfor %}
-    {% if replies.pages > 1 %}
-    <div class="panel-footer">
-        {% from 'base/paginate.html' import paginate %}
-        {{ paginate(replies,'topic.topic',dict(uid=topic.uid))}}
-    </div>
-    {% endif %}
+    {{ p_footer(replies,'topic.topic',dict(uid=topic.uid))}}
     {% else %}
     <div class="panel-body">
         <span class="text-center" style="display:block;width:100%;color:#999">
@@ -115,9 +110,7 @@
 </div>
 <div class="panel panel-default">
     {% if g.user.is_authenticated %}
-    <div class="panel-heading">
-        回帖
-    </div>
+    <div class="panel-heading"> 回帖 </div>
     <div class="panel-body">
         <form action="{{ url_for('topic.reply',uid=topic.id)}}" method="POST">
             {{ form.hidden_tag() }}

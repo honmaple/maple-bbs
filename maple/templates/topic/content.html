@@ -1,12 +1,8 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    {% set board = topic.board %}
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li><a href="{{ url_for('board.board',parent_b=board.parent_board)}}">{{ board.parent_board }}</a></li>
-    <li><a href="{{ url_for('board.board',parent_b=board.parent_board,child_b=board.board)}}">{{ board.board }}</a></li>
-    <li class="active">{{ topic.title }}</li>
-</ol>
+{% set board = topic.board %}
+{{ breadcrumb(hrefs={board.parent_board:url_for('board.board',parent_b=board.parent_board),
+board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.board)},active=topic.title)}}
 {% set last_reply = topic.replies.first() %}
 <style>
  .vote {
@@ -23,6 +19,7 @@
      background-color: #fff;
  }
 </style>
+{% from 'base/paginate.html' import footer as p_footer %}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">

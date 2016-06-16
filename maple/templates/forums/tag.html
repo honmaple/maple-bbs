@@ -9,12 +9,7 @@
 {{ super()}}
 {% endblock %}
 {% block content %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li><a href="{{ url_for('tag.tag') }}">所有标签</a></li>
-    <li class="active">{{ tag.tagname }}</li>
-</ol>
-
+{{ breadcrumb(hrefs={'所有标签':url_for('tag.tag')},active=tag.tagname)}}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
@@ -27,14 +22,15 @@
                 <button class="btn btn-sm btn-default tagfollow" id="{{ tag.id}}" style="padding:0 5px">关注</button>
                 {% endif %}
                 {% endif %}
+                <span class="pull-right">
+                    <a href="{{ url_for('tag.rss',tag=tag.tagname)}}">
+                        <i class="icon-rss" style="padding:2px">Rss</i>
+                    </a>
+                </span>
             </div>
             {% from 'topic/topic_list.html' import view as board_view %}
             {{ board_view(topics)}}
-            {% if topics.pages > 1 %}
-            <div class="panel-footer">
-                {{paginate(topics, 'tag.tag',kw=dict(tag=tag.tagname))}}
-            </div>
-            {% endif %}
+            {{ p_footer(topics, 'tag.tag',kw=dict(tag=tag.tagname))}}
         </div>
     </div>
     <div class="col-md-3" style="padding-left:0">

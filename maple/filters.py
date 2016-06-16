@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:39:29 (CST)
-# Last Update:星期四 2016-6-16 1:31:14 (CST)
+# Last Update:星期五 2016-6-17 13:36:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -60,14 +60,6 @@ class Filters(object):
             periods = ((diff.seconds / 60, "minute", "minutes"), )
         if diff.seconds <= 90:
             return default
-
-        # periods = ((diff.days / 365, "year", "years"),
-        #            (diff.days / 30, "month", "months"),
-        #            (diff.days / 7, "week", "weeks"),
-        #            (diff.days, "day", "days"),
-        #            (diff.seconds / 3600, "hour", "hours"),
-        #            (diff.seconds / 60, "minute", "minutes"),
-        #            (diff.seconds, "second", "seconds"), )
 
         for period, singular, plural in periods:
 

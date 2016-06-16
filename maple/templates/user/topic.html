@@ -1,5 +1,3 @@
-{% import 'base/link.html' as link_base %}
-{% from 'base/paginate.html' import paginate %}
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
         <span style="float:right">
@@ -23,11 +21,7 @@
         </div>
     </div>
     {% endfor  %}
-    {% if topics.pages > 1 %}
-    <div class="panel-footer">
-        {{ paginate(topics,'user.topic')}}
-    </div>
-    {% endif %}
+    {{ p_footer(topics,'user.topic')}}
     {% else %}
     <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
         <span class="text-center" style="display:block;width:100%;color:#999">

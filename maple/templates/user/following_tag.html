@@ -1,8 +1,6 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-</ol>
+{{ breadcrumb(active='关注的节点')}}
 <div class="row">
     <div class="col-md-9"  style="background:#fff;border:1px solid #eee">
         <ul class="nav nav-tabs">

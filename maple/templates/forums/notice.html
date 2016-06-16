@@ -1,10 +1,7 @@
 {% extends 'base/base.html' %}
 {% import 'base/link.html' as link %}
 {% block content %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li class="active">消息通知</li>
-</ol>
+{{ breadcrumb(active='消息通知')}}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
@@ -17,11 +14,7 @@
                 {{ notice }}
                 {% endfor %}
             </div>
-            {% if notices.pages > 1 %}
-            <div class="panel-footer">
-                {{paginate(notices, 'forums.notice')}}
-            </div>
-            {% endif %}
+            {{ p_footer(notices, 'forums.notice')}}
             {% else %}
             <div class="panel-body">
                 <span class="text-center" style="display:block;width:100%;color:#999">

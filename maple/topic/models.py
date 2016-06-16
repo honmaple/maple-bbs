@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期三 2016-6-15 18:52:38 (CST)
+# Last Update:星期五 2016-6-17 10:44:16 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,12 +14,9 @@ from maple import db
 from datetime import datetime
 from sqlalchemy import event
 
-tag_topic = db.Table('tag_topic',
-                     db.Column('tags_id',
-                               db.Integer,
-                               db.ForeignKey('tags.id')),
-                     db.Column('topics_id',
-                               db.Integer,
+tag_topic = db.Table('tag_topic', db.Column('tags_id', db.Integer,
+                                            db.ForeignKey('tags.id')),
+                     db.Column('topics_id', db.Integer,
                                db.ForeignKey('topics.id')))
 
 
@@ -45,8 +42,7 @@ class Topic(db.Model):
     tags = db.relationship('Tags',
                            secondary=tag_topic,
                            lazy='dynamic',
-                           backref="topics",
-                           )
+                           backref="topics", )
 
     author_id = db.Column(db.Integer,
                           db.ForeignKey('users.id',
@@ -58,12 +54,12 @@ class Topic(db.Model):
     board_id = db.Column(db.Integer,
                          db.ForeignKey('boards.id',
                                        ondelete="CASCADE"))
-    board = db.relationship('Board',
-                            backref=db.backref('topics',
-                                               cascade='all,delete-orphan',
-                                               lazy='dynamic',
-                                               order_by='Topic.publish.desc()')
-                            )
+    board = db.relationship(
+        'Board',
+        backref=db.backref('topics',
+                           cascade='all,delete-orphan',
+                           lazy='dynamic',
+                           order_by='Topic.publish.desc()'))
 
     is_good = db.Column(db.Boolean, default=False)
     is_top = db.Column(db.Boolean, default=False)
@@ -133,8 +129,25 @@ class Collect(db.Model):
 class Like(db.Model):
     __tablename__ = 'likes'
     id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer,
-                          db.ForeignKey('users.id'))
-    reply_id = db.Column(db.Integer,
-                         db.ForeignKey('replies.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    reply_id = db.Column(db.Integer, db.ForeignKey('replies.id'))
     like_time = db.Column(db.DateTime, default=datetime.now())
+
+
+# class TopicCount(db.Model):
+#     __tablename__ = 'topic_counts'
+#     id = db.Column(db.Integer, primary_key=True)
+#     topic_id = db.Column(db.Integer,
+#                          db.ForeignKey('topics.id',
+#                                        ondelete="CASCADE"))
+#     topic = db.relationship("Topic",
+#                             backref="counts",
+#                             cascade='all,delete-orphan',
+#                             single_parent=True,
+#                             uselist=False)
+#     read = db.Column(db.Integer, default=0)
+#     reply = db.Column(db.Integer, default=0)
+#     vote = db.Column(db.Integer, default=0)
+
+#     def __repr__(self):
+#         return '<TopicCount %r>' % self.id

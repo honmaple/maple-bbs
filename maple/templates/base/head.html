@@ -1,0 +1,19 @@
+{% macro breadcrumb(hrefs=None,active=None) -%}
+<ol class="breadcrumb" style="margin:0">
+    {% if not active %}
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    {% else %}
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    {{ breadcrumb_list(hrefs) }}
+    <li class="active">{{ active }}</li>
+    {% endif %}
+</ol>
+{%- endmacro %}
+
+{% macro breadcrumb_list(hrefs) -%}
+{% if hrefs %}
+{% for k,v in hrefs.items() %}
+<li><a href="{{ v }}">{{ k }}</a></li>
+{% endfor %}
+{% endif %}
+{%- endmacro %}

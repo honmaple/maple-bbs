@@ -1,4 +1,3 @@
-{% from 'base/paginate.html' import paginate %}
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
         <span style="float:right">
@@ -22,11 +21,7 @@
         </span>
     </div>
     {% endfor  %}
-    {% if replies.pages > 1 %}
-    <div class="panel-footer">
-        {{ paginate(replies,'user.reply')}}
-    </div>
-    {% endif %}
+    {{ p_footer(replies,'user.reply')}}
     {% else %}
     <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
         <span class="text-center" style="display:block;width:100%;color:#999">

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期三 2016-6-15 11:22:42 (CST)
+# Last Update:星期五 2016-6-17 13:35:31 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
@@ -25,7 +25,6 @@ def create_app():
     app.config.from_object('config.config')
     app.url_map._rules.clear()
     app.url_map._rules_by_endpoint.clear()
-    app.config['SERVER_NAME'] = 'localhost:5000'
     app.url_map.default_subdomain = 'forums'
     app.add_url_rule(app.static_url_path + '/<path:filename>',
                      endpoint='static',
@@ -35,9 +34,9 @@ def create_app():
 
 
 def register(app):
+    register_babel(app)
     register_form(app)
     register_principal(app)
-    register_babel(app)
     register_jinja2(app)
     register_maple(app)
     register_routes(app)
@@ -60,7 +59,7 @@ def register_routes(app):
     app.register_blueprint(site, url_prefix='/t')
     from maple.docs.views import site
     app.register_blueprint(site, subdomain='docs')
-    import maple.auth.auth
+    import maple.auth.views
     import maple.admin.admin
 
 

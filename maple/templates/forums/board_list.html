@@ -9,10 +9,7 @@
 {{ super()}}
 {% endblock %}
 {% block content %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li class="active">{{ g.parent_b}}</li>
-</ol>
+{{ breadcrumb(active=g.parent_b)}}
 {% if topics.page == 1 %}
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -27,11 +24,7 @@
         <div class="panel panel-default">
             {% from 'topic/topic_list.html' import view as board_view %}
             {{ board_view(topics)}}
-            {% if topics.pages > 1 %}
-            <div class="panel-footer">
-                {{ paginate(topics,'board.board') }}
-            </div>
-            {% endif %}
+            {{ p_footer(topics,'board.board')}}
         </div>
     </div>
     <div class="col-md-3" style="padding-left:0">

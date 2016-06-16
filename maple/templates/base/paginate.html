@@ -37,3 +37,11 @@
     {%- endif -%}
   </ul>
 {%- endmacro %}
+
+{% macro footer(pagination, endpoint,kw=None) %}
+  {% if pagination.pages > 1 %}
+    <div class="panel-footer">
+      {{ paginate(pagination,endpoint,kw)}}
+    </div>
+  {% endif %}
+{%- endmacro %}

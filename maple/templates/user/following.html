@@ -1,9 +1,6 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li class="active">我的关注</li>
-</ol>
+{{ breadcrumb(active='我的关注')}}
 <div class="row">
     <div class="col-md-3" style="padding-right:0">
         {% include 'user/infor.html' %}
@@ -28,9 +25,7 @@
                 {{ following}}
             </div>
             {% endfor  %}
-            <div class="panel-footer">
-                {{ paginate(followings,'user.following')}}
-            </div>
+            {{ p_footer(followings,'user.following')}}
         </div>
     </div>
 </div>

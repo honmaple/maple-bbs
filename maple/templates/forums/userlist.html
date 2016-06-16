@@ -1,10 +1,7 @@
 {% extends 'base/base.html' %}
 {% import 'base/link.html' as link %}
 {% block content %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li class="active">所有用户</li>
-</ol>
+{{ breadcrumb(active='所有用户')}}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
@@ -16,11 +13,7 @@
                 {{ user.username }}
             </div>
             {% endfor %}
-            {% if users.pages > 1 %}
-            <div class="panel-footer">
-                {{paginate(users, 'forums.userlist')}}
-            </div>
-            {% endif %}
+            {{ p_footer(users, 'forums.userlist')}}
         </div>
     </div>
     <div class="col-md-3">

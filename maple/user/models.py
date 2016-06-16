@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:24:19 (CST)
-# Last Update:星期三 2016-6-15 18:34:50 (CST)
+# Last Update:星期四 2016-6-16 18:17:47 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -158,9 +158,28 @@ class UserSetting(db.Model):
     rep_list = db.Column(db.Integer, nullable=False, default=1)
     ntb_list = db.Column(db.Integer, nullable=False, default=3)
     collect_list = db.Column(db.Integer, nullable=False, default=2)
+    locale = db.Column(db.String(32), default='zh')
+    timezone = db.Column(db.String(32), default='UTC')
 
     def __repr__(self):
         return "<UserSetting %r>" % self.id
+
+
+class OpenID(db.Model):
+    __tablename__ = 'openids'
+    id = db.Column(db.Integer, primary_key=True)
+    openid = db.Column(db.Integer, nullable=False)
+    openid_type = db.Column(db.String, nullable=False)
+    nickname = db.Column(db.String, nullable=False)
+    email = db.Column(db.String)
+    avatar = db.Column(db.String)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.id',
+                                      ondelete="CASCADE"))
+    user = db.relationship('User',
+                           backref=db.backref('openids',
+                                              cascade='all,delete-orphan',
+                                              lazy='dynamic'))
 
 # class Invite(db.Model):
 #     __tablename__ = 'invites'

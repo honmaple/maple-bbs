@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期四 2016-6-16 13:16:4 (CST)
+# Last Update:星期四 2016-6-16 19:6:20 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import (Blueprint, render_template, redirect, url_for, request,
-                   Markup, abort)
+from flask import (Blueprint, render_template, redirect, url_for, request, g,
+                   session, Markup, abort)
 from flask.views import MethodView
 from flask_login import login_required
 from flask_maple.forms import flash_errors
@@ -31,7 +31,9 @@ site = Blueprint('topic', __name__)
 @site.route('/ask')
 @login_required
 def ask():
-    form = TopicForm()
+    form = session.get('topicform', None)
+    if form is None:
+        form = TopicForm()
     boardId = request.args.get('boardId')
     if boardId is not None:
         board = Board.query.filter_by(id=boardId).first()
@@ -95,10 +97,7 @@ class TopicAPI(MethodView):
         else:
             if form.errors:
                 flash_errors(form)
-                form.title.data = form.title.data
-            else:
-                pass
-            form.title.data = form.title.data
+            session['topicform'] = form
             return redirect(url_for('topic.ask'))
 
     # def put(self, uid):
@@ -118,7 +117,9 @@ class ReplyAPI(MethodView):
         topic = Topic.query.filter_by(id=uid).first()
         if form.validate_on_submit():
             ReplyModel.post_data(form, uid)
-            return redirect(url_for('topic.topic', uid=topic.uid,_anchor='replies-content'))
+            return redirect(url_for('topic.topic',
+                                    uid=topic.uid,
+                                    _anchor='replies-content'))
         else:
             if form.errors:
                 flash_errors(form)

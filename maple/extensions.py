@@ -6,10 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期四 2016-6-16 13:21:16 (CST)
+# Last Update:星期五 2016-6-17 13:36:25 (CST)
 #          By:
 # Description:
 # **************************************************************************
+from flask import request, g
 from flask.json import JSONEncoder
 from flask_wtf.csrf import CsrfProtect
 from flask_maple import Bootstrap, Error, Captcha
@@ -45,9 +46,28 @@ def register_babel(app):
 
     app.json_encoder = CustomJSONEncoder
 
+    @babel.localeselector
+    def get_locale():
+        user = getattr(g, 'user', None)
+        if user is not None:
+            if g.user.is_authenticated:
+                return user.setting.locale or 'zh'
+        return request.accept_languages.best_match(app.config[
+            'LANGUAGES'].keys())
+
+    @babel.timezoneselector
+    def get_timezone():
+        user = getattr(g, 'user', None)
+        if user is not None:
+            if g.user.is_authenticated:
+                return user.setting.timezone or 'UTC'
+        return 'UTC'
+
 
 def register_maple(app):
-    Bootstrap(app, css=('styles/monokai.css','styles/mine.css' ), use_auth=True)
+    Bootstrap(app,
+              css=('styles/monokai.css', 'styles/mine.css'),
+              use_auth=True)
     Captcha(app)
     Error(app)
 

@@ -5,10 +5,7 @@
 
 {% block content %}
 {% import 'maple/auth.html' as auth %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li class="active">注册</li>
-</ol>
+{{ breadcrumb(active='注册')}}
 <div class="panel panel-primary">
     <div class="panel-heading">
         <a href="{{ url_for('auth.register') }}" style="color:#fff">注册页</a>

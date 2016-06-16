@@ -55,11 +55,7 @@
 </script>
 {% endblock %}
 {% block content %}
-<ol class="breadcrumb" style="margin-bottom:0;">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
-    <li><a href="{{ url_for('mine.collect')}}">我的收藏</a></li>
-    <li class="active">{{ collect.name }}</li>
-</ol>
+{{ breadcrumb(hrefs={'我的收藏':url_for('mine.collect')},active=collect.name)}}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
