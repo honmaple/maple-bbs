@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:39:29 (CST)
-# Last Update:星期五 2016-6-17 13:36:44 (CST)
+# Last Update:星期日 2016-6-19 16:26:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -24,8 +24,8 @@ from bleach import clean
 
 
 def safe_clean(text):
-    tags = ['b', 'i', 'font', 'br', 'blockquote', 'a', 'div', 'ul', 'li', 'h2']
-    attrs = {'*': ['style', 'id', 'class'], 'font': ['color'], 'a': ['href']}
+    tags = ['b', 'i', 'font', 'br', 'blockquote', 'div', 'h2']
+    attrs = {'*': ['style', 'id', 'class'], 'font': ['color']}
     styles = ['color']
     return Markup(clean(text, tags=tags, attributes=attrs, styles=styles))
 

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-17 13:25:39 (CST)
-# Last Update:星期五 2016-6-17 13:36:59 (CST)
+# Last Update:星期日 2016-6-19 13:36:5 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -25,8 +25,10 @@ class Login(Auth):
         user.infor = userinfor
         usersetting = UserSetting()
         user.setting = usersetting
-        role = Role()
-        role.rolename = 'unconfirmed'
+        role = Role.query.filter_by(rolename='unconfirmed').first()
+        if role is None:
+            role = Role()
+            role.rolename = 'unconfirmed'
         user.roles.append(role)
         self.db.session.add(user)
         self.db.session.commit()

@@ -55,7 +55,7 @@ board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.boar
                 {% if topic.is_markdown %}
                 {{ topic.content | markdown }}
                 {% else %}
-                {{ topic.content }}
+                {{ topic.content | safe_clean }}
                 {% endif %}
             </div>
         </div>

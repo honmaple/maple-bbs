@@ -77,7 +77,7 @@
                 <a name="reply{{ num }}" class="anchor" href="#reply{{ num }}" aria-hidden="true">#{{ num }}</a>
             </small>
             <div>
-                {{ reply.content}}
+                {{ reply.content | safe_clean }}
             </div>
         </div>
         <div class="media-right">

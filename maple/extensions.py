@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期五 2016-6-17 13:36:25 (CST)
+# Last Update:星期日 2016-6-19 16:23:11 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -117,7 +117,7 @@ def register_redis(app):
 
 def register_jinja2(app):
     from maple.main.records import load_online_users
-    from .filters import Filters
+    from .filters import Filters, safe_clean
 
     app.jinja_env.globals['Title'] = Filters.Title
     app.jinja_env.filters['get_last_reply'] = Filters.get_last_reply
@@ -126,3 +126,4 @@ def register_jinja2(app):
     app.jinja_env.filters['timesince'] = Filters.timesince
     app.jinja_env.filters['get_online_users'] = load_online_users
     app.jinja_env.filters['markdown'] = Filters.safe_markdown
+    app.jinja_env.filters['safe_clean'] = safe_clean

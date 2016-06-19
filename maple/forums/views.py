@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期三 2016-6-15 19:4:31 (CST)
+# Last Update:星期日 2016-6-19 16:6:42 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -48,7 +48,8 @@ def forums():
 def notice(page):
     notices = Notice.query.join(Notice.rece_user).filter(
         User.username == current_user.username).paginate(
-            page, app.config['PER_PAGE'],
+            page,
+            app.config['PER_PAGE'],
             error_out=True)
     return render_template('forums/notice.html', notices=notices)
 
