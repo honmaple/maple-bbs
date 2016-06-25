@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-09 19:53:35 (CST)
-# Last Update:星期三 2016-6-15 17:50:37 (CST)
+# Last Update:星期六 2016-6-25 11:4:20 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -64,7 +64,7 @@ class TopicPermission(BasePermission):
     def put(self, uid):
         permission = EditTopicPermission(uid)
         if not permission.can():
-            flash('你没有权限')
+            flash('你没有权限','warning')
             return redirect(url_for('topic.topic', uid=uid))
 
     @login_required

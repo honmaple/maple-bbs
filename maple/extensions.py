@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期日 2016-6-19 16:23:11 (CST)
+# Last Update:星期六 2016-6-25 11:13:8 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -67,6 +67,7 @@ def register_babel(app):
 def register_maple(app):
     Bootstrap(app,
               css=('styles/monokai.css', 'styles/mine.css'),
+              js=('styles/upload.js', 'styles/order.js', 'styles/mine.js'),
               use_auth=True)
     Captcha(app)
     Error(app)

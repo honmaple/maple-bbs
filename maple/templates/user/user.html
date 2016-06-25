@@ -24,30 +24,32 @@
 {% from 'base/paginate.html' import footer as p_footer %}
 {{ breadcrumb(active=g.user_url)}}
 <div class="row">
-    <div class="col-md-3" style="padding-right:0">
+    <div class="col-md-3" style="padding-right:0;">
         {% set user = g.user_url | get_user_infor %}
         {% include 'user/infor.html' %}
-        {% if g.user.is_authenticated and current_user.username == g.user_url %}
-        <ul class="nav nav-pills nav-stacked">
-            <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">我的主题</a></li>
-            <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">我的回复</a></li>
-            <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">我的收藏</a></li>
-        </ul>
-        <ul class="nav nav-pills nav-stacked">
-            <li role="presentation" class="followings"><a href="{{ url_for('user.following')}}">我的关注</a></li>
-            <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">我的粉丝</a></li>
-        </ul>
-        {% else %}
-        <ul class="nav nav-pills nav-stacked">
-            <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">{{ g.user_url}}的主题</a></li>
-            <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">{{ g.user_url}}的回复</a></li>
-            <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">{{ g.user_url}}的收藏</a></li>
-        </ul>
-        <ul class="nav nav-pills nav-stacked">
-            <li role="presentation" class="followings"><a href="{{ url_for('user.following')}}">{{ g.user_url}}的关注</a></li>
-            <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">{{ g.user_url}}的粉丝</a></li>
-        </ul>
-        {% endif %}
+        <div  style="background:#fff;border:1px solid #ddd;border-radius:5px">
+            {% if g.user.is_authenticated and current_user.username == g.user_url %}
+            <ul class="nav nav-pills nav-stacked ">
+                <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">我的主题</a></li>
+                <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">我的回复</a></li>
+                <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">我的收藏</a></li>
+            </ul>
+            <ul class="nav nav-pills nav-stacked" >
+                <li role="presentation" class="followings"><a href="{{ url_for('user.following')}}">我的关注</a></li>
+                <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">我的粉丝</a></li>
+            </ul>
+            {% else %}
+            <ul class="nav nav-pills nav-stacked" >
+                <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">{{ g.user_url}}的主题</a></li>
+                <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">{{ g.user_url}}的回复</a></li>
+                <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">{{ g.user_url}}的收藏</a></li>
+            </ul>
+            <ul class="nav nav-pills nav-stacked" >
+                <!-- <li role="presentation" class="followings"><a href="{{ url_for('user.following')}}">{{ g.user_url}}的关注</a></li> -->
+                <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">{{ g.user_url}}的粉丝</a></li>
+            </ul>
+            {% endif %}
+        </div>
     </div>
     <div class="col-md-9">
         {% set setting = user.setting %}

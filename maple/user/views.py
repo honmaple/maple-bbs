@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:04:43 (CST)
-# Last Update:星期二 2016-6-14 23:20:14 (CST)
+# Last Update:星期六 2016-6-25 13:30:4 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -47,11 +47,21 @@ def user():
 
 @site.route('/topics')
 def topic():
+    orderby = request.args.get('orderby')
     page = is_num(request.args.get('page'))
-    topics = Topic.query.join(Topic.author).filter(
-        User.username == g.user_url).paginate(page,
-                                              app.config['PER_PAGE'],
-                                              error_out=True)
+    all_order = ['vote', 'publish']
+    if orderby and orderby not in all_order:
+        abort(404)
+    if orderby == 'vote':
+        topics = Topic.query.join(Topic.author).filter(
+            User.username == g.user_url).order_by(Topic.vote).paginate(
+                page, app.config['PER_PAGE'],
+                error_out=True)
+    else:
+        topics = Topic.query.join(Topic.author).filter(
+            User.username == g.user_url).paginate(page,
+                                                  app.config['PER_PAGE'],
+                                                  error_out=True)
     data = {'type': 'topic', 'topics': topics}
     return render_template('user/user.html', **data)
 

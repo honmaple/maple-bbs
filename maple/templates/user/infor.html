@@ -1,12 +1,12 @@
 <div class="list-group">
     <div class="media list-group-item">
         <div class="media-left">
-            <img class="media-object img-circle" src="{{ url_for('static',filename='images/Moo.png')}}" alt="..." style="width:64px;height:64px">
+            <img class="media-object img-circle" src="{{ link_base.avatar(user.infor) }}" alt="avatar" style="width:64px;height:64px">
         </div>
         <div class="media-body">
             <h4 class="media-heading">{{ user.username}}</h4>
             <small style="color:#999">
-                <span>第{{ user.id}}号会员</span>/
+                <span>第{{ user.id }}号会员</span>/
                 <span>{{user.register_time}}</span>
                 <br/>
                 <span>13篇主题</span> |

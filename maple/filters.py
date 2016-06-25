@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:39:29 (CST)
-# Last Update:星期日 2016-6-19 16:26:44 (CST)
+# Last Update:星期一 2016-6-20 21:2:58 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -52,13 +52,13 @@ class Filters(object):
         diff = now - dt
         if diff.days > 10:
             return dt.strftime('%Y-%m-%d %H:%M')
-        if diff.days <= 10 and diff.days > 0:
+        elif diff.days <= 10 and diff.days > 0:
             periods = ((diff.days, "day", "days"), )
-        if diff.days <= 0 and diff.seconds > 3600:
+        elif diff.days <= 0 and diff.seconds > 3600:
             periods = ((diff.seconds / 3600, "hour", "hours"), )
-        if diff.seconds <= 3600 and diff.seconds > 90:
+        elif diff.seconds <= 3600 and diff.seconds > 90:
             periods = ((diff.seconds / 60, "minute", "minutes"), )
-        if diff.seconds <= 90:
+        else:
             return default
 
         for period, singular, plural in periods:

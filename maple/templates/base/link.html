@@ -33,3 +33,10 @@
 {% macro following_collect() -%}
 <a href="{{ url_for('mine.follow',type="collect")}}">关注的收藏夹</a>
 {%- endmacro %}
+{% macro avatar(infor) -%}
+{% if not infor.avatar -%}
+{{ url_for('static',filename='images/Moo.png') }}
+{% else %}
+{{ url_for('upload.avatar_file',filename=infor.avatar) }}
+{%- endif %}
+{%- endmacro %}

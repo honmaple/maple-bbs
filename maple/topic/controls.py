@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 10:22:42 (CST)
-# Last Update:星期四 2016-6-16 13:9:11 (CST)
+# Last Update:星期六 2016-6-25 13:4:49 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -51,6 +51,27 @@ class TopicModel(object):
         db.session.commit()
         RedisData.set_topics()
         return topic
+
+    def vote(uid, count):
+        if count > 0:
+            html = '''
+                    <a class="vote" href="javascript:void(0)" onclick="upVoteTopic(%s);" style="text-decoration:none;">
+                        <i class="icon-chevron-up">%d</i>
+                    </a>
+                    <a class="vote" href="javascript:void(0)" onclick="downVoteTopic(%s);" style="text-decoration:none;">
+                        <i class="icon-chevron-down"></i>
+                    </a>
+            ''' % (uid, count, uid)
+        else:
+            html = '''
+                    <a class="vote" href="javascript:void(0)" onclick="upVoteTopic(%s);" style="text-decoration:none;">
+                        <i class="icon-chevron-up"></i>
+                    </a>
+                    <a class="vote" href="javascript:void(0)" onclick="downVoteTopic(%s);" style="text-decoration:none;">
+                        <i class="icon-chevron-down">%d</i>
+                    </a>
+            ''' % (uid, uid, count)
+        return html
 
 
 class ReplyModel(object):

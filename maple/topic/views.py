@@ -6,16 +6,16 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期四 2016-6-16 19:6:20 (CST)
+# Last Update:星期六 2016-6-25 13:15:29 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import (Blueprint, render_template, redirect, url_for, request, g,
-                   session, Markup, abort)
+                   jsonify, session, Markup, abort)
 from flask.views import MethodView
 from flask_login import login_required
 from flask_maple.forms import flash_errors
-from maple import app
+from maple import app, db
 from maple.main.models import RedisData
 from maple.main.permission import topic_permission, reply_permission
 from maple.helpers import is_num
@@ -63,6 +63,34 @@ def preview():
             return Filters.safe_markdown(content)
     else:
         abort(404)
+
+
+@site.route('/up/<topicId>', methods=['POST'])
+def vote_up(topicId):
+    if not g.user.is_authenticated:
+        return jsonify(judge=False, url=url_for('auth.login'))
+    topic = Topic.query.filter_by(uid=topicId).first_or_404()
+    if not topic.vote:
+        topic.vote = 1
+    else:
+        topic.vote += 1
+    db.session.commit()
+    html = TopicModel.vote(topicId, topic.vote)
+    return jsonify(judge=True, html=html)
+
+
+@site.route('/down/<topicId>', methods=['POST'])
+def vote_down(topicId):
+    if not g.user.is_authenticated:
+        return jsonify(judge=False, url=url_for('auth.login'))
+    topic = Topic.query.filter_by(uid=topicId).first_or_404()
+    if not topic.vote:
+        topic.vote = -1
+    else:
+        topic.vote -= 1
+    db.session.commit()
+    html = TopicModel.vote(topicId, topic.vote)
+    return jsonify(judge=True, html=html)
 
 
 class TopicAPI(MethodView):

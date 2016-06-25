@@ -6,33 +6,24 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-21 22:46:35 (CST)
-# Last Update:星期三 2016-6-15 10:9:7 (CST)
+# Last Update:星期六 2016-6-25 0:53:46 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask.ext.wtf import Form
-from wtforms import StringField, PasswordField, BooleanField,\
-    TextAreaField, SelectField
-from wtforms.validators import Length, DataRequired, Email, EqualTo
+from wtforms import StringField, PasswordField, TextAreaField, SelectField
+from wtforms.validators import Length, DataRequired, EqualTo
+
+choices = [(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')]
 
 
 class PrivacyForm(Form):
-    online_status = SelectField('登录状态',
-                                coerce=int,
-                                choices=[(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')])
-    topic_list = SelectField('主题列表',
-                             coerce=int,
-                             choices=[(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')])
+    online_status = SelectField('登录状态', coerce=int, choices=choices)
+    topic_list = SelectField('主题列表', coerce=int, choices=choices)
 
-    rep_list = SelectField('回复列表',
-                           coerce=int,
-                           choices=[(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')])
-    ntb_list = SelectField('笔记列表',
-                           coerce=int,
-                           choices=[(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')])
-    collect_list = SelectField('收藏列表',
-                               coerce=int,
-                               choices=[(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')])
+    rep_list = SelectField('回复列表', coerce=int, choices=choices)
+    ntb_list = SelectField('笔记列表', coerce=int, choices=choices)
+    collect_list = SelectField('收藏列表', coerce=int, choices=choices)
 
 
 class ProfileForm(Form):

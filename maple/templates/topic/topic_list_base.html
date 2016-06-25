@@ -1,12 +1,13 @@
 {% import 'base/link.html' as link_base  %}
 {% if topics.items %}
 {% for topic in topics.items %}
+{% set author = topic.author %}
 <div class="panel-body" style="padding:6px;border-bottom:1px solid #eee">
     <div class="row">
         <div class="col-md-6 media">
             <div class="media-left">
-                <a href="{{ url_for('user.user',user_url=topic.author.username) }}">
-                    <img class="media-object img-circle" src="{{ url_for('static',filename='images/Moo.png')}}" alt="..." style="width:48px;height:48px">
+                <a href="{{ url_for('user.user',user_url=author.username) }}">
+                    <img class="media-object img-circle" src="{{ link_base.avatar(author.infor) }}" alt="avatar" style="width:48px;height:48px">
                 </a>
             </div>
             <div class="media-body">

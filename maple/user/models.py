@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:24:19 (CST)
-# Last Update:星期四 2016-6-16 18:17:47 (CST)
+# Last Update:星期六 2016-6-25 0:13:28 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -134,6 +134,7 @@ class UserInfor(db.Model):
     # confirmed_time = db.Column(db.DateTime, nullable=True)
     # registered_time = db.Column(db.DateTime, nullable=False)
     # score = db.Column(db.Integer, nullable=False, default=100)
+    avatar = db.Column(db.String)
     word = db.Column(db.Text, nullable=True)
     introduce = db.Column(db.Text, nullable=True)
     school = db.Column(db.String, nullable=True)

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期日 2016-6-19 16:6:52 (CST)
+# Last Update:星期六 2016-6-25 11:30:55 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -38,6 +38,7 @@ class Topic(db.Model):
     content = db.Column(db.Text, nullable=False)
     publish = db.Column(db.DateTime, default=datetime.now())
     updated = db.Column(db.DateTime)
+    vote = db.Column(db.Integer, default=0)
 
     tags = db.relationship('Tags',
                            secondary=tag_topic,
@@ -132,7 +133,6 @@ class Like(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     reply_id = db.Column(db.Integer, db.ForeignKey('replies.id'))
     like_time = db.Column(db.DateTime, default=datetime.now())
-
 
 # class TopicCount(db.Model):
 #     __tablename__ = 'topic_counts'

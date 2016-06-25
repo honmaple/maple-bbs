@@ -6,15 +6,16 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:04:43 (CST)
-# Last Update:星期四 2016-6-16 18:53:30 (CST)
+# Last Update:星期六 2016-6-25 11:7:20 (CST)
 #          By:jianglin
 # Description: user setting include password , infor and privacy
 # **************************************************************************
-from flask import (Blueprint, render_template, request, url_for, redirect, g,
+from flask import (Blueprint, render_template, request, url_for, redirect,
                    flash)
 from flask_maple.forms import flash_errors
 from flask_login import current_user, login_required
-from maple.setting.forms import ProfileForm, PasswordForm, PrivacyForm
+from maple.setting.forms import (ProfileForm, PasswordForm, PrivacyForm)
+from maple.upload.forms import AvatarForm
 from .controls import SettingModel
 
 site = Blueprint('setting', __name__)
@@ -25,6 +26,7 @@ site = Blueprint('setting', __name__)
 @login_required
 def setting():
     form = ProfileForm()
+    avatarform = AvatarForm()
     infor = current_user.infor
     if form.validate_on_submit() and request.method == "POST":
         SettingModel.profile(form)
@@ -36,7 +38,8 @@ def setting():
         form.introduce.data = infor.introduce
         form.school.data = infor.school
         form.word.data = infor.word
-        return render_template('setting/setting.html', form=form)
+        data = {'form': form, 'avatarform': avatarform}
+        return render_template('setting/setting.html', **data)
 
 
 @site.route('/password', methods=['GET', 'POST'])
@@ -45,10 +48,10 @@ def password():
     form = PasswordForm()
     if form.validate_on_submit() and request.method == "POST":
         if SettingModel.password(form):
-            flash('The password has been updated,Please login')
+            flash('The password has been updated,Please login', 'info')
             return redirect(url_for('auth.login'))
         else:
-            flash('password is error')
+            flash('password is error', 'danger')
             return redirect(url_for('setting.password'))
     else:
         if form.errors:

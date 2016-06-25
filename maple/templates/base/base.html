@@ -3,11 +3,6 @@
 {% from 'base/paginate.html' import footer as p_footer %}
 {% import 'base/link.html' as link_base %}
 {% from 'base/head.html' import breadcrumb %}
-{% block script %}
-{{ super()}}
-<script type="text/javascript" src="{{ url_for('static',filename='styles/order.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static',filename='styles/mine.js')}}"></script>
-{% endblock %}
 {% block main %}
 <nav class="navbar navbar-default navbar-fixed-top" style="background:#fff">
     <div class="container-fluid col-md-offset-1 col-md-10">
@@ -23,7 +18,7 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('forums.forums')}}">社区{{ _('社区')}}</a></li>
+                <li><a href="{{ url_for('forums.forums')}}">{{ _('社区')}}</a></li>
                 <li><a href="{{ url_for('docs.docs')}}">文档</a></li>
                 <li><a href="#">博客</a></li>
                 <li><a href="{{ url_for('topic.good')}}">精华文章</a></li>
@@ -36,18 +31,21 @@
     </div>
 </nav>
 <div class="col-md-offset-1 col-md-10" style="padding:0;margin-top:60px">
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <div class="alert alert-info" style="padding:8px">
+    {% for category,message in messages %}
+    {% if category == 'message' -%}
+    {% set category = 'info' %}
+    {%- endif %}
+    <div class="alert alert-{{ category }}" style="padding:8px">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
         <ul>
-            {% for message in messages %}
             <li style="list-style-type:none">{{ message }} </li>
-            {% endfor %}
         </ul>
     </div>
+    {% endfor %}
     {% endif %}
     {% endwith %}
     {% if g.user.is_authenticated %}

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期五 2016-6-17 13:35:31 (CST)
+# Last Update:星期六 2016-6-25 1:0:54 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
@@ -55,6 +55,8 @@ def register_routes(app):
     app.register_blueprint(site, url_prefix='/user')
     from maple.setting.views import site
     app.register_blueprint(site, url_prefix='/setting')
+    from maple.upload.views import site as upload_site
+    app.register_blueprint(upload_site)
     from maple.tag.views import site
     app.register_blueprint(site, url_prefix='/t')
     from maple.docs.views import site

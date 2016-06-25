@@ -3,8 +3,13 @@
         <span style="float:right">
             排序:
             <div class="btn-group btn-group-xs" role="group">
+                {% if request.args.get('orderby') == 'vote' %}
+                <a href="{{ url_for('user.topic',orderby='publish')}}" class="btn btn-default">时间</a>
+                <a href="{{ url_for('user.topic',orderby='vote')}}" class="btn btn-default active">投票</a>
+                {% else %}
                 <a href="" class="btn btn-default active">时间</a>
-                <a href="" class="btn btn-default">投票</a>
+                <a href="{{ url_for('user.topic',orderby='vote')}}" class="btn btn-default">投票</a>
+                {% endif %}
             </div>
         </span>
     </div>
@@ -32,7 +37,7 @@
     {% endif %}
     {% else %}
     <div class="panel-body text-center">
-       没有主题
+        没有主题
     </div>
     {% endif %}
 </div>

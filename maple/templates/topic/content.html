@@ -6,7 +6,6 @@ board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.boar
 {% set last_reply = topic.replies.first() %}
 <style>
  .vote {
-     text-decoration: none;
      font-size: 10px;
      line-height: 1;
      padding: 2px 8px;
@@ -17,8 +16,51 @@ board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.boar
      vertical-align: baseline;
      text-align: center;
      background-color: #fff;
+     text-decoration: none;
  }
 </style>
+<script type="text/javascript">
+ function upVoteTopic(topicId) {
+     if (g.csrftoken) {
+         var data = JSON.stringify({
+         });
+         $.ajax ({
+             type : "POST",
+             url : "{{ url_for('topic.vote_up',topicId=topic.uid)}}",
+             data:data,
+             contentType: 'application/json;charset=UTF-8',
+             success: function(result) {
+                 if (result.judge)
+                 {
+                     $('.votes').html(result.html);
+                 } else
+                 {
+                     window.location.href = result.url;
+                 }
+             }});
+     }
+ }
+ function downVoteTopic(topicId) {
+     if (g.csrftoken) {
+         var data = JSON.stringify({
+         });
+         $.ajax ({
+             type : "POST",
+             url : "{{ url_for('topic.vote_down',topicId=topic.uid)}}",
+             data:data,
+             contentType: 'application/json;charset=UTF-8',
+             success: function(result) {
+                 if (result.judge)
+                 {
+                     $('.votes').html(result.html);
+                 } else
+                 {
+                     window.location.href = result.url;
+                 }
+             }});
+     }
+ }
+</script>
 {% from 'base/paginate.html' import footer as p_footer %}
 <div class="row">
     <div class="col-md-9">
@@ -27,12 +69,26 @@ board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.boar
                 <div class="media-body">
                     <h3 class="media-heading">{{ topic.title}}</h3>
                     <small style="color:#999">
-                        <span class="vote">
-                            <i class="icon-chevron-up"></i>
-                        </span>
-                        <span class="vote">
-                            <i class="icon-chevron-down"></i>
-                        </span>
+                        <div class="votes">
+                            {% if topic.vote and topic.vote > 0 -%}
+                            <a class="vote" href="javascript:void(0)" onclick="upVoteTopic({{ topic.uid }});" style="text-decoration:none;">
+                                <i class="icon-chevron-up">{{ topic.vote}}</i>
+                            </a>
+                            {% else %}
+                            <a class="vote" href="javascript:void(0)" onclick="upVoteTopic({{ topic.uid }});" style="text-decoration:none;">
+                                <i class="icon-chevron-up"></i>
+                            </a>
+                            {%- endif %}
+                            {% if topic.vote and topic.vote < 0 %}
+                            <a class="vote" href="javascript:void(0)" onclick="downVoteTopic({{ topic.uid }});" style="text-decoration:none;">
+                                <i class="icon-chevron-down">{{ topic.vote}}</i>
+                            </a>
+                            {% else %}
+                            <a class="vote" href="javascript:void(0)" onclick="downVoteTopic({{ topic.uid }});" style="text-decoration:none;">
+                                <i class="icon-chevron-down"></i>
+                            </a>
+                            {%- endif %}
+                        </div>
                         {% for tag in topic.tags %}
                         {{ link_base.tag(tag) }}
                         {% endfor %}
@@ -47,7 +103,7 @@ board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.boar
                 </div>
                 <div class="media-right">
                     <a href="{{ url_for('user.user',user_url=topic.author.username)}}">
-                        <img class="media-object img-circle" src="{{ url_for('static',filename='images/Moo.png')}}" alt="..." style="width:64px;height:64px">
+                        <img class="media-object img-circle" src="{{ link_base.avatar(topic.author.infor) }}" alt="avatar" style="width:64px;height:64px">
                     </a>
                 </div>
             </div>
