@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期日 2016-6-19 16:6:42 (CST)
+# Last Update:星期六 2016-6-25 18:4:14 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -23,10 +23,11 @@ site = Blueprint('forums', __name__)
 
 @site.route('/', methods=['GET'])
 def index():
-    topics = Topic.query.filter_by(is_good=True).paginate(1, 10)
+    topics = Topic.query.filter_by(is_good=True, is_top=False).paginate(1, 10)
+    top_topics = Topic.query.filter_by(is_top=True).limit(5).all()
     if not topics.items:
         topics = Topic.query.paginate(1, 10)
-    data = {'topics': topics}
+    data = {'topics': topics, 'top_topics': top_topics}
     return render_template('forums/index.html', **data)
 
 
@@ -48,8 +49,7 @@ def forums():
 def notice(page):
     notices = Notice.query.join(Notice.rece_user).filter(
         User.username == current_user.username).paginate(
-            page,
-            app.config['PER_PAGE'],
+            page, app.config['PER_PAGE'],
             error_out=True)
     return render_template('forums/notice.html', notices=notices)
 

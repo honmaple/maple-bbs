@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期日 2016-6-19 16:51:32 (CST)
+# Last Update:星期六 2016-6-25 17:59:5 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -18,7 +18,6 @@ from maple.filters import Filters
 from urllib.parse import urljoin
 from werkzeug.utils import escape
 from werkzeug.contrib.atom import AtomFeed
-
 
 site = Blueprint('tag', __name__)
 
@@ -32,18 +31,19 @@ def tag(tag):
         return render_template('forums/tag_list.html', **data)
     else:
         page = is_num(request.args.get('page'))
-        topics = Topic.query.join(Topic.tags).filter(
-            Tags.tagname == tag).paginate(page,
-                                          app.config['PER_PAGE'],
-                                          error_out=True)
+        topic_base = Topic.query.join(Topic.tags).filter(Tags.tagname == tag)
+        topics = topic_base.filter(Topic.is_top == False).paginate(
+            page, app.config['PER_PAGE'],
+            error_out=True)
+        top_topics = topic_base.filter(Topic.is_top == True).limit(5).all()
         tag = Tags.query.filter_by(tagname=tag).first_or_404()
-        data = {'tag': tag, 'topics': topics}
+        data = {'tag': tag, 'topics': topics, 'top_topics': top_topics}
         return render_template('forums/tag.html', **data)
 
 
 @site.route('/<tag>/feed')
 def rss(tag):
-    feed = AtomFeed('%s·HonMaple社区'%tag,
+    feed = AtomFeed('%s·HonMaple社区' % tag,
                     feed_url=request.url,
                     url=request.url_root,
                     subtitle='I like solitude, yearning for freedom')
@@ -52,8 +52,8 @@ def rss(tag):
     for topic in topics:
         feed.add(
             topic.title,
-            escape(Filters.safe_markdown(topic.content)
-            if topic.is_markdown else topic.content),
+            escape(Filters.safe_markdown(topic.content) if topic.is_markdown
+                   else topic.content),
             content_type='html',
             author=topic.author.username,
             url=urljoin(request.url_root,

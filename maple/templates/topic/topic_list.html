@@ -1,4 +1,4 @@
-{% macro view(topics) -%}
+{% macro view(topics,top_topics) -%}
 <style>
  select {
      background-color: #fff;
@@ -10,12 +10,26 @@
 <div class="panel-heading" style="font-size:12px;">
     {{ form() }}
 </div>
-<div class="topiclist">
+{% set ts = topics.items %}
+<div class="top-topiclist">
+    {% set topics = top_topics %}
     {% include 'topic/topic_list_base.html' %}
+</div>
+<div class="topiclist">
+    {% set topics = ts %}
+    {% if not topics and not top_topics %}
+    <div class="panel-body">
+        <span class="text-center" style="display:block;width:100%;color:#999">
+            没有帖子
+        </span>
+    </div>
+    {% else %}
+    {% include 'topic/topic_list_base.html' %}
+    {% endif %}
 </div>
 {%- endmacro %}
 
-{% macro view_no_form(topics) -%}
+{% macro view_no_form(topics,top_topics) -%}
 <div class="panel-heading" style="font-size:12px;">
     <div class="row">
         <div class="col-sm-6">
@@ -32,7 +46,13 @@
         </div>
     </div>
 </div>
+{% set ts = topics.items %}
+<div class="top-topiclist">
+    {% set topics = top_topics %}
+    {% include 'topic/topic_list_base.html' %}
+</div>
 <div class="topiclist">
+    {% set topics = ts %}
     {% include 'topic/topic_list_base.html' %}
 </div>
 {%- endmacro %}

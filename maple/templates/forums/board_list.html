@@ -23,7 +23,7 @@
     <div class="col-md-9">
         <div class="panel panel-default">
             {% from 'topic/topic_list.html' import view as board_view %}
-            {{ board_view(topics)}}
+            {{ board_view(topics,top_topics)}}
             {{ p_footer(topics,'board.board')}}
         </div>
     </div>

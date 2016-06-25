@@ -45,7 +45,7 @@
     <div class="col-md-9">
         <div class="panel panel-default">
             {% from 'topic/topic_list.html' import view_no_form as board_view %}
-            {{ board_view(topics)}}
+            {{ board_view(topics,top_topics)}}
             <div class="panel-footer clearfix">
                 <a class="pull-right" href="{{ url_for('topic.good')}}">
                     查看更多精华帖

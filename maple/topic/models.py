@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期六 2016-6-25 11:30:55 (CST)
+# Last Update:星期六 2016-6-25 16:40:1 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -64,6 +64,7 @@ class Topic(db.Model):
 
     is_good = db.Column(db.Boolean, default=False)
     is_top = db.Column(db.Boolean, default=False)
+    # is_top = db.Column(db.Integer, default = 0)
     is_markdown = db.Column(db.Boolean, default=False)
     is_draft = db.Column(db.Boolean, default=False)
     collect_id = db.Column(db.Integer,

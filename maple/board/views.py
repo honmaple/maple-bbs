@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-03 14:32:06 (CST)
-# Last Update:星期五 2016-6-17 14:0:47 (CST)
+# Last Update:星期六 2016-6-25 17:52:50 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -39,12 +39,18 @@ def board(child_b):
     page = is_num(request.args.get('page'))
     if child_b is None:
         boards = Board.query.filter_by(parent_board=g.parent_b).all()
-        topics = Topic.query.join(Topic.board).filter(
-            Board.parent_board == g.parent_b).paginate(page, 20, True)
-        data = {'boards': boards, 'topics': topics}
+        topic_base = Topic.query.join(Topic.board).filter(Board.parent_board ==
+                                                          g.parent_b)
+        topics = topic_base.filter(Topic.is_top == False).paginate(page, 20,
+                                                                   True)
+        top_topics = topic_base.filter(Topic.is_top == True).limit(5).all()
+        data = {'boards': boards, 'topics': topics, 'top_topics': top_topics}
         return render_template('forums/board_list.html', **data)
     else:
         board = Board.query.filter_by(board=child_b).first_or_404()
-        topics = board.topics.paginate(page, 20, True)
-        data = {'board': board, 'topics': topics}
+        topic_base = board.topics
+        topics = topic_base.filter(Topic.is_top == False).paginate(page, 20,
+                                                                   True)
+        top_topics = topic_base.filter(Topic.is_top == True).limit(5).all()
+        data = {'board': board, 'topics': topics, 'top_topics': top_topics}
         return render_template('forums/board.html', **data)

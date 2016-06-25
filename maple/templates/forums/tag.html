@@ -29,7 +29,7 @@
                 </span>
             </div>
             {% from 'topic/topic_list.html' import view as board_view %}
-            {{ board_view(topics)}}
+            {{ board_view(topics,top_topics)}}
             {{ p_footer(topics, 'tag.tag',kw=dict(tag=tag.tagname))}}
         </div>
     </div>

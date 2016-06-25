@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期六 2016-6-25 13:15:29 (CST)
+# Last Update:星期六 2016-6-25 17:55:55 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -100,20 +100,23 @@ class TopicAPI(MethodView):
         data = {'topic': topic, 'replies': replies, 'form': form}
         return render_template('topic/content.html', **data)
 
-    def template_without_uid(self, topics):
-        return render_template('topic/topic.html', topics=topics)
+    def template_without_uid(self, topics, top_topics):
+        data = {'topics': topics, 'top_topics': top_topics}
+        return render_template('topic/topic.html', **data)
 
     def get(self, uid):
         page = is_num(request.args.get('page'))
         if uid is None:
-            topics = Topic.query.paginate(page,
-                                          app.config['PER_PAGE'],
-                                          error_out=True)
-            return self.template_without_uid(topics)
+            topics = Topic.query.filter_by(is_top=False).paginate(
+                page, app.config['PER_PAGE'],
+                error_out=True)
+            top_topics = Topic.query.filter_by(is_top=True).limit(5).all()
+            return self.template_without_uid(topics, top_topics)
         else:
             form = ReplyForm()
             topic = Topic.query.filter_by(uid=str(uid)).first_or_404()
-            replies = topic.replies.paginate(page, 5, True)
+            replies = topic.replies.paginate(page, app.config['PER_PAGE'],
+                                             True)
             RedisData.set_read_count(topic.id)
             return self.template_with_uid(form, topic, replies)
 
