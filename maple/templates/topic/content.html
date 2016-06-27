@@ -1,9 +1,6 @@
 {% extends 'base/base.html' %}
-{% block content %}
-{% set board = topic.board %}
-{{ breadcrumb(hrefs={board.parent_board:url_for('board.board',parent_b=board.parent_board),
-board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.board)},active=topic.title)}}
-{% set last_reply = topic.replies.first() %}
+{% block style %}
+{{ super() }}
 <style>
  .vote {
      font-size: 10px;
@@ -19,48 +16,23 @@ board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.boar
      text-decoration: none;
  }
 </style>
+{% endblock %}
+{% block script -%}
+{{ super() }}
 <script type="text/javascript">
- function upVoteTopic(topicId) {
-     if (g.csrftoken) {
-         var data = JSON.stringify({
-         });
-         $.ajax ({
-             type : "POST",
-             url : "{{ url_for('topic.vote_up',topicId=topic.uid)}}",
-             data:data,
-             contentType: 'application/json;charset=UTF-8',
-             success: function(result) {
-                 if (result.judge)
-                 {
-                     $('.votes').html(result.html);
-                 } else
-                 {
-                     window.location.href = result.url;
-                 }
-             }});
-     }
- }
- function downVoteTopic(topicId) {
-     if (g.csrftoken) {
-         var data = JSON.stringify({
-         });
-         $.ajax ({
-             type : "POST",
-             url : "{{ url_for('topic.vote_down',topicId=topic.uid)}}",
-             data:data,
-             contentType: 'application/json;charset=UTF-8',
-             success: function(result) {
-                 if (result.judge)
-                 {
-                     $('.votes').html(result.html);
-                 } else
-                 {
-                     window.location.href = result.url;
-                 }
-             }});
-     }
- }
+ var voteData = {
+     'vote_up': "{{ url_for('topic.vote_up',topicId=topic.uid)}}",
+     'vote_down': "{{ url_for('topic.vote_down',topicId=topic.uid)}}"
+ };
+ DoVote(voteData);
 </script>
+{%- endblock script %}
+
+{% block content %}
+{% set board = topic.board %}
+{{ breadcrumb(hrefs={board.parent_board:url_for('board.board',parent_b=board.parent_board),
+board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.board)},active=topic.title)}}
+{% set last_reply = topic.replies.first() %}
 {% from 'base/paginate.html' import footer as p_footer %}
 <div class="row">
     <div class="col-md-9">
@@ -71,20 +43,20 @@ board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.boar
                     <small style="color:#999">
                         <div class="votes">
                             {% if topic.vote and topic.vote > 0 -%}
-                            <a class="vote" href="javascript:void(0)" onclick="upVoteTopic({{ topic.uid }});" style="text-decoration:none;">
+                            <a id="topic-up-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
                                 <i class="icon-chevron-up">{{ topic.vote}}</i>
                             </a>
                             {% else %}
-                            <a class="vote" href="javascript:void(0)" onclick="upVoteTopic({{ topic.uid }});" style="text-decoration:none;">
+                            <a id="topic-up-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
                                 <i class="icon-chevron-up"></i>
                             </a>
                             {%- endif %}
                             {% if topic.vote and topic.vote < 0 %}
-                            <a class="vote" href="javascript:void(0)" onclick="downVoteTopic({{ topic.uid }});" style="text-decoration:none;">
+                            <a id="topic-down-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
                                 <i class="icon-chevron-down">{{ topic.vote}}</i>
                             </a>
                             {% else %}
-                            <a class="vote" href="javascript:void(0)" onclick="downVoteTopic({{ topic.uid }});" style="text-decoration:none;">
+                            <a id="topic-down-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
                                 <i class="icon-chevron-down"></i>
                             </a>
                             {%- endif %}

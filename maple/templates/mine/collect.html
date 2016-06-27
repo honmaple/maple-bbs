@@ -2,56 +2,14 @@
 {% block script %}
 {{ super()}}
 <script type=text/javascript>
- $(document).ready(function(){
-     $('button#editform').click(function() {
-         var data = JSON.stringify({
-             name:$('#name').val(),
-             description:$('#description').val(),
-             is_privacy:$("input[name='is_privacy']:checked").val()
-         });
-         $.ajax ({
-             type : "PUT",
-             url : "{{ url_for('mine.collect',uid = collect.id)}}",
-             data:data,
-             contentType: 'application/json;charset=UTF-8',
-             success: function(result) {
-                 if (result.judge == true)
-                 {
-                     window.location = '{{ url_for('mine.collect',uid = collect.id)}}';
-                 }
-                 else
-                 {
-                     alert(result.error);
-                     alert(data)
-                 }
-             }
-         });
-     });
-     $('button#deleteform').click(function() {
-         /* var data = JSON.stringify({
-            name:$('#name').val(),
-            description:$('#description').val(),
-            is_privacy:$("input[name='is_privacy']:checked").val()
-            }); */
-         $.ajax ({
-             type : "DELETE",
-             url : "{{ url_for('mine.collect',uid = collect.id)}}",
-             data:JSON.stringify(),
-             contentType: 'application/json;charset=UTF-8',
-             success: function(result) {
-                 if (result.judge == true)
-                 {
-                     window.location = '{{ url_for('mine.collect')}}';
-                 }
-                 else
-                 {
-                     alert(result.error);
-                     alert(data)
-                 }
-             }
-         });
-     });
- });
+ var collectData = {
+     'url':'{{ url_for('mine.collect')}}',
+     'edit_url':'{{ url_for('mine.collect',uid = collect.id)}}',
+     'delete_url':"{{ url_for('mine.collect',uid = collect.id)}}",
+     'collectId':"{{ collect.id}}",
+     'delete':"{{ url_for('mine.delete_collect')}}"
+ }
+ DoCollect(collectData);
 </script>
 {% endblock %}
 {% block content %}
@@ -68,7 +26,7 @@
             {% for topic in topics.items %}
             <div class="panel-body" style="border-bottom:1px solid #eee">
                 <a href="{{ url_for('topic.topic',uid=topic.uid)}}">{{ topic.title}}</a>
-                <span class="pull-right btn btn-sm btn-danger">删除</span>
+                <span id="delete-from-collect" class="pull-right btn btn-sm btn-danger" data-id="{{ topic.uid }}">删除</span>
             </div>
             {% endfor %}
             {% else %}
@@ -110,7 +68,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" id="editform" class="btn btn-primary">提交</button>
+                    <button type="button" id="edit-collect-form" class="btn btn-primary">提交</button>
                 </div>
             </form>
         </div>
@@ -129,7 +87,7 @@
             </div>
             <div class="modal-footer" style="padding-top:5px;padding-bottom:5px;">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" id="deleteform" class="btn btn-danger">删除</button>
+                <button type="button" id="delete-collect-form" class="btn btn-danger">删除</button>
             </div>
         </div>
     </div>

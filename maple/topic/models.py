@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期六 2016-6-25 16:40:1 (CST)
+# Last Update:星期一 2016-6-27 12:13:37 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -67,13 +67,6 @@ class Topic(db.Model):
     # is_top = db.Column(db.Integer, default = 0)
     is_markdown = db.Column(db.Boolean, default=False)
     is_draft = db.Column(db.Boolean, default=False)
-    collect_id = db.Column(db.Integer,
-                           db.ForeignKey('collects.id',
-                                         ondelete="CASCADE"))
-    collect = db.relationship('Collect',
-                              backref=db.backref('topics',
-                                                 cascade='all,delete-orphan',
-                                                 lazy='dynamic'))
 
     __mapper_args__ = {"order_by": publish.desc()}
 
@@ -110,6 +103,13 @@ class Reply(db.Model):
     __mapper_args__ = {"order_by": publish.desc()}
 
 
+class CollectTopic(db.Model):
+    __tablename__ = 'collect_topic'
+    id = db.Column(db.Integer, primary_key=True)
+    topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'))
+    collect_id = db.Column(db.Integer, db.ForeignKey('collects.id'))
+
+
 class Collect(db.Model):
     __tablename__ = 'collects'
     id = db.Column(db.Integer, primary_key=True)
@@ -123,6 +123,11 @@ class Collect(db.Model):
                              backref=db.backref('collects',
                                                 cascade='all,delete-orphan',
                                                 lazy='dynamic'))
+
+    topics = db.relationship('Topic',
+                             secondary='collect_topic',
+                             lazy='dynamic',
+                             backref="collects")
 
     def __repr__(self):
         return "<Collect %r>" % self.name

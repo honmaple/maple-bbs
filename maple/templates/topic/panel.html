@@ -5,6 +5,9 @@
     {% else %}
     <button type="button" class="btn btn-info btn-block topicfollow" id="{{ topic.id }}">关注问题</button>
     {% endif %}
+    {% if topic.id | is_collected %}
+    <span class="btn btn-default btn-block">已收藏</span>
+    {% else %}
     <span class="btn btn-default btn-block" data-toggle="modal" data-target="#sidecollect">收藏问题</span>
     <div class="modal fade" id="sidecollect" tabindex="-1" role="dialog" aria-labelledby="sidecollectLabel">
         <div class="modal-dialog" role="document">
@@ -34,7 +37,8 @@
                 </form>
             </div>
         </div>
-                        </div>
+        </div>
+    {% endif %}
 </ul>
 {% endif %}
 {% include 'base/panel.html' %}

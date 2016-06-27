@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:39:29 (CST)
-# Last Update:星期一 2016-6-20 21:2:58 (CST)
+# Last Update:星期一 2016-6-27 12:33:39 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -89,6 +89,16 @@ class Filters(object):
         else:
             replies = int(replies)
         return replies, read
+
+    def is_collected(topicId):
+        from maple.topic.models import CollectTopic
+        from flask_login import current_user
+        for collect in current_user.collects:
+            cid = CollectTopic.query.filter_by(collect_id=collect.id,
+                                               topic_id=topicId).first()
+            if cid is not None:
+                return True
+        return False
 
     class Title(object):
         title = setting['title']

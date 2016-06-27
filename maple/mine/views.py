@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:04:43 (CST)
-# Last Update:星期三 2016-6-15 19:6:23 (CST)
+# Last Update:星期一 2016-6-27 12:52:4 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import (Blueprint, render_template, request, redirect, url_for,
-                   jsonify)
+                   flash, jsonify)
 from flask.views import MethodView
 from flask_maple.forms import flash_errors
 from flask_login import current_user, login_required
@@ -30,30 +30,35 @@ site = Blueprint('mine', __name__)
 class CollectAPI(MethodView):
     decorators = [collect_permission]
 
-    def template_with_uid(self, topics, collect):
+    def template_with_uid(self, data):
         form = CollectForm()
+        collect = data['collect']
         form.name.data = collect.name
         form.description.data = collect.description
         form.is_privacy.data = 0 if collect.is_privacy else 1
-        data = {'topics': topics, 'collect': collect, 'form': form}
+        data_form = {'form': form}
+        data.update(data_form)
         return render_template('mine/collect.html', **data)
 
-    def template_without_uid(self, collects):
+    def template_without_uid(self, data):
         form = CollectForm()
-        data = {'collects': collects, 'form': form}
+        data_form = {'form': form}
+        data.update(data_form)
         return render_template('mine/collect_list.html', **data)
 
     def get(self, uid):
         page = is_num(request.args.get('page'))
         if uid is None:
-            topics = current_user.collects.paginate(page,
-                                                    app.config['PER_PAGE'],
-                                                    error_out=True)
-            return self.template_without_uid(topics)
+            collects = current_user.collects.paginate(page,
+                                                      app.config['PER_PAGE'],
+                                                      error_out=True)
+            data = {'collects': collects}
+            return self.template_without_uid(data)
         else:
             collect = Collect.query.filter_by(id=uid).first()
             topics = collect.topics.paginate(page, 10, True)
-            return self.template_with_uid(topics, collect)
+            data = {'collect': collect, 'topics': topics}
+            return self.template_with_uid(data)
 
     def post(self):
         form = CollectForm()
@@ -93,9 +98,26 @@ def add_collect():
     topic = Topic.query.filter_by(uid=topicId).first_or_404()
     for id in form:
         collect = Collect.query.filter_by(id=id).first_or_404()
-        collect.topics.append(topic)
-        db.session.commit()
+        if topic in collect.topics:
+            flash('This topic has been collected in %s' % collect.name,
+                  'warning')
+        else:
+            collect.topics.append(topic)
+            db.session.commit()
     return redirect(url_for('topic.topic', uid=topic.uid))
+
+
+@site.route('/delete-from-collect', methods=['DELETE'])
+@login_required
+def delete_collect():
+    data = request.get_json()
+    topicId = data['topicId']
+    collectId = data['collectId']
+    topic = Topic.query.filter_by(uid=topicId).first_or_404()
+    collect = Collect.query.filter_by(id=collectId).first_or_404()
+    collect.topics.remove(topic)
+    db.session.commit()
+    return jsonify(judge=True)
 
 
 class LikeAPI(MethodView):

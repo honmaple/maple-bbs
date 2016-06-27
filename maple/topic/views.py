@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期六 2016-6-25 17:55:55 (CST)
+# Last Update:星期一 2016-6-27 14:30:59 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -75,7 +75,7 @@ def vote_up(topicId):
     else:
         topic.vote += 1
     db.session.commit()
-    html = TopicModel.vote(topicId, topic.vote)
+    html = TopicModel.vote(topic.vote)
     return jsonify(judge=True, html=html)
 
 
@@ -89,19 +89,17 @@ def vote_down(topicId):
     else:
         topic.vote -= 1
     db.session.commit()
-    html = TopicModel.vote(topicId, topic.vote)
+    html = TopicModel.vote(topic.vote)
     return jsonify(judge=True, html=html)
 
 
 class TopicAPI(MethodView):
     decorators = [topic_permission]
 
-    def template_with_uid(self, form, topic, replies):
-        data = {'topic': topic, 'replies': replies, 'form': form}
+    def template_with_uid(self, data):
         return render_template('topic/content.html', **data)
 
-    def template_without_uid(self, topics, top_topics):
-        data = {'topics': topics, 'top_topics': top_topics}
+    def template_without_uid(self, data):
         return render_template('topic/topic.html', **data)
 
     def get(self, uid):
@@ -111,14 +109,16 @@ class TopicAPI(MethodView):
                 page, app.config['PER_PAGE'],
                 error_out=True)
             top_topics = Topic.query.filter_by(is_top=True).limit(5).all()
-            return self.template_without_uid(topics, top_topics)
+            data = {'topics': topics, 'top_topics': top_topics}
+            return self.template_without_uid(data)
         else:
             form = ReplyForm()
             topic = Topic.query.filter_by(uid=str(uid)).first_or_404()
             replies = topic.replies.paginate(page, app.config['PER_PAGE'],
                                              True)
             RedisData.set_read_count(topic.id)
-            return self.template_with_uid(form, topic, replies)
+            data = {'form': form, 'topic': topic, 'replies': replies}
+            return self.template_with_uid(data)
 
     def post(self):
         form = TopicForm()

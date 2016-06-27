@@ -7,55 +7,10 @@
  }
 </style>
 <script type="text/javascript">
- $(document).ready(function(){
-     $('.like-reply').click(function() {
-         var _$this = $(this);
-         var replyId = _$this.attr('data-id');
-         var data = JSON.stringify({
-             uid:replyId
-         });
-         if(_$this.hasClass('like-active')){
-             $.ajax ({
-                 type : "DELETE",
-                 url : "{{ url_for('mine.like') }}",
-                 data:data,
-                 contentType: 'application/json;charset=UTF-8',
-                 success: function(result) {
-                     if (result.judge === true)
-                     {
-                         _$this.attr("title","赞");
-                         _$this.removeClass("like-active");
-                         _$this.addClass("like-no-active");
-                     } else
-                     {
-                         window.location.href = result.url;
-                     }
-                 }});
-         }else {
-             $.ajax ({
-                 type : "POST",
-                 url : "{{ url_for('mine.like') }}",
-                 data:data,
-                 contentType: 'application/json;charset=UTF-8',
-                 success: function(result) {
-                     if (result.judge === true)
-                     {
-                         _$this.attr("title","取消赞");
-                         _$this.removeClass("like-no-active");
-                         _$this.addClass("like-active");
-                     } else
-                     {
-                         window.location.href = result.url;
-                     }
-                 }});
-         }});
-     $('.reply-author').click(function() {
-         var _$this = $(this);
-         var author = _$this.attr('data-id');
-         $('#content').focus();
-         $('#content').val('@' + author + ' ');
-     })
- });
+ var replyData = {
+     'like':"{{ url_for('mine.like') }}",
+ }
+ DoLike(replyData);
 </script>
 <div class="panel panel-default" id="replies-content">
     <div class="panel-heading">
@@ -115,7 +70,7 @@
         <form action="{{ url_for('topic.reply',uid=topic.id)}}" method="POST">
             {{ form.hidden_tag() }}
             {{ form.content(class='form-control')}}
-            <button class="btn btn-sm btn-primary" type="submit">提交问题</button>
+            <button class="btn btn-sm btn-primary" type="submit">提交回复</button>
         </form>
     </div>
     {% else %}
