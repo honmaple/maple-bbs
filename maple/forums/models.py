@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:24:19 (CST)
-# Last Update:星期二 2016-6-14 23:20:14 (CST)
+# Last Update:星期二 2016-6-28 1:4:23 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -21,16 +21,20 @@ class Board(db.Model):
     board = db.Column(db.String(81), nullable=False)
     parent_board = db.Column(db.String(81), nullable=False)
     description = db.Column(db.Text(), nullable=False)
+
     count_id = db.Column(db.Integer,
                          db.ForeignKey('counts.id',
                                        ondelete="CASCADE"))
-    count = db.relationship("Count",
+    count = db.relationship('Count',
                             backref="board",
                             cascade='all,delete-orphan',
                             single_parent=True,
                             uselist=False)
 
     __mapper_args__ = {"order_by": rank.desc()}
+
+    def __str__(self):
+        return self.board
 
     def __repr__(self):
         return '<Board %r>' % self.board
@@ -53,6 +57,15 @@ class Count(db.Model):
     follows = db.Column(db.Integer, default=0)
     topics = db.Column(db.Integer, default=0)
     all_topics = db.Column(db.Integer, default=0)
+
+    # board_id = db.Column(db.Integer,
+    #                      db.ForeignKey(Board.id,
+    #                                    ondelete="CASCADE"))
+    # board = db.relationship(Board,
+    #                         backref=db.backref("count", lazy="dynamic"),
+    #                         cascade='all,delete-orphan',
+    #                         single_parent=True,
+    #                         uselist=False)
 
     def __repr__(self):
         return '<Count %r>' % self.id

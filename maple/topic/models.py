@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期一 2016-6-27 12:13:37 (CST)
+# Last Update:星期一 2016-6-27 23:1:42 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -69,6 +69,9 @@ class Topic(db.Model):
     is_draft = db.Column(db.Boolean, default=False)
 
     __mapper_args__ = {"order_by": publish.desc()}
+
+    def __str__(self):
+        return self.title
 
     def __repr__(self):
         return "<Topic %r>" % self.title

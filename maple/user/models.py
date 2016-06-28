@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:24:19 (CST)
-# Last Update:星期六 2016-6-25 0:13:28 (CST)
+# Last Update:星期一 2016-6-27 22:46:38 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -94,7 +94,7 @@ class User(db.Model, UserMixin):
                            db.ForeignKey('usersetting.id',
                                          ondelete="CASCADE"))
     setting = db.relationship("UserSetting",
-                              backref="users",
+                              backref="user",
                               cascade='all,delete',
                               uselist=False)
 
@@ -102,9 +102,12 @@ class User(db.Model, UserMixin):
                          db.ForeignKey('userinfor.id',
                                        ondelete="CASCADE"))
     infor = db.relationship("UserInfor",
-                            backref="users",
+                            backref=db.backref('user', lazy='joined'),
                             cascade='all,delete',
                             uselist=False)
+
+    def __str__(self):
+        return self.username
 
     def __repr__(self):
         return '<User %r>' % self.username

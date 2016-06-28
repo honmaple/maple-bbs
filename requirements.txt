@@ -39,6 +39,7 @@ Flask-Script==2.0.5
 Flask-SocketIO==2.2
 Flask-SQLAlchemy==2.1
 Flask-Themes2==0.1.4
+flask-util-js==0.2.25
 Flask-WhooshAlchemy==0.56
 Flask-WTF==0.12
 gevent==1.1.1

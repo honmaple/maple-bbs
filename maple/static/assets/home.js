@@ -15,7 +15,9 @@ else
 else
 {$("#showerror").show();$("#error").text(result.error);$("#changeCode").attr("src",url.captcha+"?code="+Math.random());}}});});});function loadFile(event){var _file=document.getElementById("avatar");var i=_file.value.lastIndexOf('.');var len=_file.value.length;var extEndName=_file.value.substring(i+1,len);var extName="JPG,PNG";if(extName.indexOf(extEndName.toUpperCase())==-1){alert("您只能上传"+extName+"格式的文件");$('#avatar').val('');}else{var reader=new FileReader();reader.onload=function(){var icon='<i class="icon-exchange"></i>'+'\n';var img='<img src="'+reader.result+'" title="avatar" class="avatar img-circle">';$("#show-avatar").html(icon+img);};reader.readAsDataURL(event.target.files[0]);}}
 function SortFuntion(){var data=JSON.stringify({display:$('#display').val(),sort:$('#sort').val(),st:$('#st').val(),type:sortData.type,uid:sortData.uid,page:sortData.page});$.ajax({type:"POST",url:"/order",data:data,contentType:'application/json;charset=UTF-8',success:function(result){$('div.topiclist').html(result);}});}
-$(document).ready(function(){$('#display').change(function(){SortFuntion();});$('#sort').change(function(){SortFuntion();});$('#st').change(function(){SortFuntion();});});function Follow(obj,data){if(obj.hasClass('active'))
+$(document).ready(function(){$('#display').change(function(){SortFuntion();});$('#sort').change(function(){SortFuntion();});$('#st').change(function(){SortFuntion();});});function dispatch(){var q=document.getElementById("search");if(q.value!==""){var url='https://www.google.com/search?q=site:forums.honmaple.org%20'+q.value;if(navigator.userAgent.indexOf('iPad')>-1||navigator.userAgent.indexOf('iPod')>-1||navigator.userAgent.indexOf('iPhone')>-1){location.href=url;}else{window.open(url,"_blank");}
+return false;}else{return false;}}
+function Follow(obj,data){if(obj.hasClass('active'))
 {$.ajax({type:"DELETE",url:"/user/follow",data:data,contentType:'application/json;charset=UTF-8',success:function(result){if(result.judge===true)
 {obj.text('关注').removeClass('active');}
 else

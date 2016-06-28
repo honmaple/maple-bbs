@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期一 2016-6-27 14:49:34 (CST)
+# Last Update:星期一 2016-6-27 15:0:21 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
@@ -75,6 +75,7 @@ register(app)
 
 @app.before_request
 def before_request():
-    from maple.forums.forms import SortForm
+    from maple.forums.forms import SortForm, SearchForm
     g.user = current_user
     g.sort_form = SortForm()
+    g.search_form = SearchForm()
