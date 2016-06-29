@@ -6,17 +6,20 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期六 2016-6-25 18:4:14 (CST)
+# Last Update:星期四 2016-6-30 20:32:38 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import Blueprint, render_template, g, request, abort
+from flask import (Blueprint, render_template, g, request, abort, redirect,
+                   flash, url_for)
 from flask_login import current_user, login_required
+from flask_maple.forms import flash_errors
 from maple import app, db
 from maple.helpers import is_num
 from maple.user.models import User
 from maple.forums.models import Notice, Board
 from maple.topic.models import Topic
+from .forms import MessageForm
 
 site = Blueprint('forums', __name__)
 
@@ -43,15 +46,16 @@ def forums():
     return render_template('forums/forums.html', **data)
 
 
-@site.route('/notices', defaults={'page': 1})
-@site.route('/notices/?page=<int:page>')
+@site.route('/notices')
 @login_required
-def notice(page):
-    notices = Notice.query.join(Notice.rece_user).filter(
-        User.username == current_user.username).paginate(
+def notice():
+    page = is_num(request.args.get('page'))
+    notices = Notice.query.filter_by(
+        rece_id=current_user.id).order_by(Notice.publish.desc()).paginate(
             page, app.config['PER_PAGE'],
             error_out=True)
-    return render_template('forums/notice.html', notices=notices)
+    data = {'notices': notices}
+    return render_template('forums/notice.html', **data)
 
 
 @site.route('/userlist')
@@ -61,6 +65,27 @@ def userlist():
     users = User.query.paginate(page, app.config['PER_PAGE'], error_out=True)
     data = {'users': users}
     return render_template('forums/userlist.html', **data)
+
+
+@site.route('/messages/<int:receId>', methods=['POST'])
+@login_required
+def message(receId):
+    form = MessageForm()
+    rece_user = User.query.filter_by(id=receId).first_or_404()
+    if form.validate_on_submit() and request.method == "POST":
+        message = Notice()
+        message.category = 'privacy'
+        message.content = form.message.data
+        message.rece_user = rece_user
+        message.send_id = current_user.id
+        db.session.add(message)
+        db.session.commit()
+        flash('成功发送', category='success')
+        return redirect(url_for('user.user', user_url=rece_user.username))
+    else:
+        if form.errors:
+            flash_errors(form)
+    return redirect(url_for('user.user', user_url=rece_user.username))
 
 
 @site.route('/about')

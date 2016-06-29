@@ -52,6 +52,14 @@ $(document).ready(function(){
     });
     Follow(_$this,data);
   });
+  $('button.userfollow').click(function(){
+    var _$this = $(this);
+    var data = JSON.stringify({
+      id:_$this.attr("id"),
+      type:'user'
+    });
+    Follow(_$this,data);
+  });
 });
 function DoCollect(collectData) {
   $(document).ready(function(){

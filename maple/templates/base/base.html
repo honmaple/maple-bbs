@@ -72,7 +72,17 @@
     {% endif %}
     <a href="{{ url_for('tag.tag')}}" ><span class="btn btn-sm btn-primary pull-right">所有标签</span></a>
     <a href="{{ url_for('forums.userlist')}}"><span class="btn btn-sm btn-primary pull-right">用户列表</span></a>
-    <a href="{{ url_for('forums.notice')}}"><span class="btn btn-sm btn-primary pull-right">消息通知</span></a>
+    <a href="{{ url_for('forums.notice')}}"><span class="btn btn-sm btn-primary pull-right">
+        消息通知
+        {% if g.user.is_authenticated %}
+        {% set n = current_user.id | notice_count %}
+        {% if n != 0 -%}
+        <span class="badge">
+            {{ n }}
+        </span>
+        {% endif %}
+        {% endif %}
+    </span></a>
     {% block content %} {% endblock %}
 </div>
 {% endblock %}

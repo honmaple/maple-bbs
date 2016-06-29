@@ -6,14 +6,40 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 09:44:01 (CST)
-# Last Update:星期三 2016-6-15 13:11:34 (CST)
+# Last Update:星期四 2016-6-30 20:43:59 (CST)
 #          By:
 # Description:
 # **************************************************************************
+from flask import flash
 from flask_login import current_user
 from maple import db
 from maple.topic.models import Collect, Topic, Tags, Reply
 from maple.user.models import User
+from maple.forums.controls import collect as notice_collect
+from maple.forums.controls import like as notice_like
+from maple.forums.controls import user as notice_user
+
+
+class CollectDetail(object):
+    def post(form, topicId):
+        topic = Topic.query.filter_by(uid=topicId).first_or_404()
+        for id in form:
+            collect = Collect.query.filter_by(id=id).first_or_404()
+            if topic in collect.topics:
+                flash('This topic has been collected in %s' % collect.name,
+                      'warning')
+            else:
+                collect.topics.append(topic)
+                db.session.commit()
+                if topic.author_id != current_user.id:
+                    notice_collect(topic)
+        return topic
+
+    def delete(topicId, collectId):
+        topic = Topic.query.filter_by(uid=topicId).first_or_404()
+        collect = Collect.query.filter_by(id=collectId).first_or_404()
+        collect.topics.remove(topic)
+        db.session.commit()
 
 
 class CollectModel(object):
@@ -54,6 +80,7 @@ class FollowModel(object):
             user = User.query.filter_by(id=id).first()
             current_user.following_users.append(user)
             db.session.commit()
+            notice_user(user.id)
         elif type == 'collect':
             collect = Collect.query.filter_by(id=id).first()
             current_user.following_collects.append(collect)
@@ -69,7 +96,9 @@ class FollowModel(object):
             current_user.following_topics.remove(topic)
             db.session.commit()
         elif type == 'user':
-            pass
+            user = User.query.filter_by(id=id).first()
+            current_user.following_users.remove(user)
+            db.session.commit()
         elif type == 'collect':
             collect = Collect.query.filter_by(id=id).first()
             current_user.following_collects.remove(collect)
@@ -81,6 +110,8 @@ class LikeModel(object):
         reply = Reply.query.filter_by(id=uid).first_or_404()
         current_user.likes.append(reply)
         db.session.commit()
+        if reply.author_id != current_user.id:
+            notice_like(reply)
 
     def delete_data(uid):
         reply = Reply.query.filter_by(id=uid).first_or_404()

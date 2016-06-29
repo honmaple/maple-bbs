@@ -6,12 +6,15 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:24:19 (CST)
-# Last Update:星期二 2016-6-28 1:4:23 (CST)
+# Last Update:星期四 2016-6-30 21:28:54 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from maple import db
 from datetime import datetime
+from sqlalchemy.dialects.postgresql import JSON
+
+# from sqlalchemy.types import JSON
 
 
 class Board(db.Model):
@@ -76,26 +79,19 @@ class Notice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     publish = db.Column(db.DateTime, default=datetime.now())
     category = db.Column(db.String(81), nullable=False)
-    content = db.Column(db.Text)
+    content = db.Column(JSON)
+    is_read = db.Column(db.Boolean, default=False)
 
-    rece_id = db.Column(db.Integer,
-                        db.ForeignKey('users.id',
-                                      ondelete="CASCADE"))
+    rece_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     rece_user = db.relationship("User",
                                 backref="rece_user",
                                 foreign_keys='Notice.rece_id',
-                                cascade='all,delete-orphan',
-                                single_parent=True,
                                 uselist=False)
 
-    send_id = db.Column(db.Integer,
-                        db.ForeignKey('users.id',
-                                      ondelete="CASCADE"))
+    send_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     send_user = db.relationship("User",
                                 backref="send_user",
                                 foreign_keys='Notice.send_id',
-                                cascade='all,delete-orphan',
-                                single_parent=True,
                                 uselist=False)
 
     def __repr__(self):

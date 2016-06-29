@@ -30,22 +30,16 @@
         <div  style="background:#fff;border:1px solid #ddd;border-radius:5px">
             {% if g.user.is_authenticated and current_user.username == g.user_url %}
             <ul class="nav nav-pills nav-stacked ">
-                <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">我的主题</a></li>
-                <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">我的回复</a></li>
-                <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">我的收藏</a></li>
-            </ul>
-            <ul class="nav nav-pills nav-stacked" >
-                <li role="presentation" class="followings"><a href="{{ url_for('user.following')}}">我的关注</a></li>
-                <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">我的粉丝</a></li>
+                {% set class_list = ['topics','replies','collects','followings','followers'] %}
+                {% set href_list = ['user.topic','user.reply','user.collect','user.following','user.follower'] %}
+                {% set show_list = ['我的主题','我的回复','我的收藏','我的关注','我的粉丝'] %}
+                {{ nav_list(class_list,href_list,show_list)}}
             </ul>
             {% else %}
             <ul class="nav nav-pills nav-stacked" >
                 <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">{{ g.user_url}}的主题</a></li>
                 <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">{{ g.user_url}}的回复</a></li>
                 <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">{{ g.user_url}}的收藏</a></li>
-            </ul>
-            <ul class="nav nav-pills nav-stacked" >
-                <!-- <li role="presentation" class="followings"><a href="{{ url_for('user.following')}}">{{ g.user_url}}的关注</a></li> -->
                 <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">{{ g.user_url}}的粉丝</a></li>
             </ul>
             {% endif %}
@@ -53,17 +47,14 @@
     </div>
     <div class="col-md-9">
         {% set setting = user.setting %}
-        {% if type == 'topic' %}
-        {% include 'user/topic.html' %}
-        {% elif type == 'reply' %}
-        {% include 'user/reply.html' %}
-        {% elif type == 'notebook' %}
-        {% include 'user/notebook.html' %}
-        {% elif type == 'follower' %}
-        {% include 'user/follower.html' %}
-        {% elif type == 'collect' %}
-        {% include 'user/collect.html' %}
-        {% endif %}
+        {% include "user/" + type + ".html" %}
     </div>
 </div>
 {% endblock %}
+
+{% macro nav_list(class,href,show) -%}
+{% set len = class | length %}
+{% for i in range(len) %}
+<li role="presentation" class="{{ class[i] }}"><a href="{{ url_for(href[i])}}">{{show[i]}}</a></li>
+{% endfor %}
+{%- endmacro %}

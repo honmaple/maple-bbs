@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 10:22:42 (CST)
-# Last Update:星期一 2016-6-27 14:36:20 (CST)
+# Last Update:星期四 2016-6-30 19:49:45 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,6 +14,7 @@ from flask_login import current_user
 from maple import db
 from maple.helpers import make_uid
 from maple.main.models import RedisData
+from maple.forums.controls import reply as notice_reply
 from .models import Topic, Tags, Reply
 from re import split as sp
 
@@ -92,6 +93,9 @@ class ReplyModel(object):
         reply.topic_id = uid
         db.session.add(reply)
         db.session.commit()
-        reply.topic.board.count.all_topics += 1
+        topic = reply.topic
+        topic.board.count.all_topics += 1
+        if topic.author_id != current_user.id:
+            notice_reply(topic, reply)
         db.session.commit()
         RedisData.set_replies(uid)

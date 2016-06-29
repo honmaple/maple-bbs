@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:04:43 (CST)
-# Last Update:星期一 2016-6-27 12:52:4 (CST)
+# Last Update:星期四 2016-6-30 20:0:46 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -22,7 +22,7 @@ from maple.main.permission import (follow_permission, collect_permission,
 from maple.helpers import is_num
 from maple.topic.models import Topic, Collect
 from maple.mine.forms import CollectForm
-from .controls import CollectModel, FollowModel, LikeModel
+from .controls import CollectModel, FollowModel, LikeModel, CollectDetail
 
 site = Blueprint('mine', __name__)
 
@@ -95,15 +95,7 @@ def collect_following():
 def add_collect():
     form = request.form.getlist('add-to-collect')
     topicId = request.args.get('topicId')
-    topic = Topic.query.filter_by(uid=topicId).first_or_404()
-    for id in form:
-        collect = Collect.query.filter_by(id=id).first_or_404()
-        if topic in collect.topics:
-            flash('This topic has been collected in %s' % collect.name,
-                  'warning')
-        else:
-            collect.topics.append(topic)
-            db.session.commit()
+    topic = CollectDetail.post(form, topicId)
     return redirect(url_for('topic.topic', uid=topic.uid))
 
 
@@ -113,10 +105,7 @@ def delete_collect():
     data = request.get_json()
     topicId = data['topicId']
     collectId = data['collectId']
-    topic = Topic.query.filter_by(uid=topicId).first_or_404()
-    collect = Collect.query.filter_by(id=collectId).first_or_404()
-    collect.topics.remove(topic)
-    db.session.commit()
+    CollectDetail.delete(topicId, collectId)
     return jsonify(judge=True)
 
 

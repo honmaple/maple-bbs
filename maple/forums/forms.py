@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-03 19:27:58 (CST)
-# Last Update:星期一 2016-6-27 14:59:44 (CST)
+# Last Update:星期二 2016-6-28 21:52:3 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_wtf import Form
-from wtforms import SelectField, StringField
+from wtforms import SelectField, StringField, TextAreaField
 from wtforms.validators import DataRequired
 from flask_babel import lazy_gettext as _
 
@@ -32,3 +32,7 @@ class SortForm(Form):
 
 class SearchForm(Form):
     search = StringField(_('search'), validators=[DataRequired()])
+
+
+class MessageForm(Form):
+    message = TextAreaField(_('message'), validators=[DataRequired()])

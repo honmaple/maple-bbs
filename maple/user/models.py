@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:24:19 (CST)
-# Last Update:星期一 2016-6-27 22:46:38 (CST)
+# Last Update:星期四 2016-6-30 21:14:5 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -32,14 +32,11 @@ class Follow(db.Model):
     following_user_id = db.Column(db.Integer,
                                   db.ForeignKey('users.id'))
     following_tag_id = db.Column(db.Integer,
-                                 db.ForeignKey('tags.id',
-                                               ondelete="CASCADE"))
+                                 db.ForeignKey('tags.id'))
     following_collect_id = db.Column(db.Integer,
-                                     db.ForeignKey('collects.id',
-                                                   ondelete="CASCADE"))
+                                     db.ForeignKey('collects.id'))
     followinf_topic_id = db.Column(db.Integer,
-                                   db.ForeignKey('topics.id',
-                                                 ondelete="CASCADE"))
+                                   db.ForeignKey('topics.id'))
 
 
 class User(db.Model, UserMixin):
@@ -60,24 +57,27 @@ class User(db.Model, UserMixin):
     following_tags = db.relationship('Tags',
                                      secondary='follows',
                                      primaryjoin="User.id==follows.c.follower_id",
-                                     lazy='dynamic',
-                                     backref="followers",
+                                     # lazy='dynamic',
+                                     backref=db.backref(
+                                         'followers', lazy='dynamic'),
                                      # cascade='all,delete-orphan',
                                      # single_parent=True,
                                      )
     following_topics = db.relationship('Topic',
                                        secondary='follows',
                                        primaryjoin="User.id==follows.c.follower_id",
-                                       lazy='dynamic',
-                                       backref="followers",
+                                       # lazy='dynamic',
+                                       backref=db.backref(
+                                           'followers', lazy='dynamic'),
                                        # cascade='all,delete-orphan',
                                        # single_parent=True,
                                        )
     following_collects = db.relationship('Collect',
                                          secondary='follows',
                                          primaryjoin="User.id==follows.c.follower_id",
-                                         lazy='dynamic',
-                                         backref="followers",
+                                         backref=db.backref(
+                                             'followers', lazy='dynamic'),
+                                         # lazy='dynamic',
                                          # cascade='all,delete-orphan',
                                          # single_parent=True,
                                          )
@@ -87,7 +87,7 @@ class User(db.Model, UserMixin):
                                       secondaryjoin="User.id==follows.c.following_user_id",
                                       backref=db.backref(
                                           'followers', lazy='dynamic'),
-                                      lazy='dynamic'
+                                      # lazy='dynamic'
                                       )
 
     setting_id = db.Column(db.Integer,

@@ -12,7 +12,7 @@
         <div class="panel-panel-default">
             {% for user in current_user.following_users %}
             <div class="panel-body" style="border-bottom:1px solid #eee">
-                {{ user.username}}
+                {{ link_base.user(user)}}
                 <span style="float:right">
                     <button class="btn btn-sm btn-default userfollow active" id="{{ user.id}}" style="padding:0 5px">取消关注</button>
                 </span>

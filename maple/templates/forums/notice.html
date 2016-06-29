@@ -6,14 +6,16 @@
     <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-heading">
+                <button class="pull-right btn btn-sm btn-default ingore-all" style="padding:0 5px">全部标记为已读</button>
                 消息通知
             </div>
             {% if notices.items %}
-            <div class="panel-body">
-                {% for notice in notices.items %}
-                {{ notice }}
-                {% endfor %}
+            {% for notice in notices.items %}
+            <div class="panel-body" style="border-bottom:1px solid #eee;">
+                {% import 'base/notice.html' as notice_base %}
+                {{ notice_base[notice.category](notice) }}
             </div>
+            {% endfor %}
             {{ p_footer(notices, 'forums.notice')}}
             {% else %}
             <div class="panel-body">

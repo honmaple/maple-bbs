@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:08:44 (CST)
-# Last Update:星期五 2016-6-24 23:36:35 (CST)
+# Last Update:星期二 2016-6-28 21:51:0 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -30,20 +30,13 @@ class PasswordForm(Form):
     password_nn = PasswordField('重复新密码:', [DataRequired()])
 
 
-class PrivacyForm(Form):
-    online_status = SelectField('登录状态',
-                                coerce=int,
-                                choices=[(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')])
-    topic_list = SelectField('主题列表',
-                             coerce=int,
-                             choices=[(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')])
+choices = [(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')]
 
-    rep_list = SelectField('回复列表',
-                           coerce=int,
-                           choices=[(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')])
-    ntb_list = SelectField('笔记列表',
-                           coerce=int,
-                           choices=[(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')])
-    collect_list = SelectField('收藏列表',
-                               coerce=int,
-                               choices=[(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')])
+
+class PrivacyForm(Form):
+    online_status = SelectField('登录状态', coerce=int, choices=choices)
+    topic_list = SelectField('主题列表', coerce=int, choices=choices)
+
+    rep_list = SelectField('回复列表', coerce=int, choices=choices)
+    ntb_list = SelectField('笔记列表', coerce=int, choices=choices)
+    collect_list = SelectField('收藏列表', coerce=int, choices=choices)

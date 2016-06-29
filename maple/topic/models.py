@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期一 2016-6-27 23:1:42 (CST)
+# Last Update:星期二 2016-6-28 11:53:41 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -25,6 +25,9 @@ class Tags(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tagname = db.Column(db.String(64), nullable=False)
     summary = db.Column(db.Text)
+
+    def __str__(self):
+        return self.tagname
 
     def __repr__(self):
         return '<Tags %r>' % self.tagname
@@ -131,6 +134,8 @@ class Collect(db.Model):
                              secondary='collect_topic',
                              lazy='dynamic',
                              backref="collects")
+    def __str__(self):
+        return self.name
 
     def __repr__(self):
         return "<Collect %r>" % self.name

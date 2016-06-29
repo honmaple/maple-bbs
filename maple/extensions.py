@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期一 2016-6-27 17:17:11 (CST)
+# Last Update:星期四 2016-6-30 20:54:16 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -67,7 +67,7 @@ def register_babel(app):
 def register_maple(app):
     Bootstrap(app,
               css=('styles/monokai.css', 'styles/mine.css'),
-              js=('styles/upload.js', 'styles/order.js', 'styles/mine.js',
+              js=('styles/upload.js', 'styles/forums.js', 'styles/mine.js',
                   'styles/topic.js'),
               use_auth=True)
     Captcha(app)
@@ -130,3 +130,4 @@ def register_jinja2(app):
     app.jinja_env.filters['markdown'] = Filters.safe_markdown
     app.jinja_env.filters['safe_clean'] = safe_clean
     app.jinja_env.filters['is_collected'] = Filters.is_collected
+    app.jinja_env.filters['notice_count'] = Filters.notice_count

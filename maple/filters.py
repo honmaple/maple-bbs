@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:39:29 (CST)
-# Last Update:星期一 2016-6-27 12:33:39 (CST)
+# Last Update:星期四 2016-6-30 20:53:41 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -99,6 +99,11 @@ class Filters(object):
             if cid is not None:
                 return True
         return False
+
+    def notice_count(uid):
+        from maple.forums.models import Notice
+        count = Notice.query.filter_by(rece_id=uid, is_read=False).count()
+        return count
 
     class Title(object):
         title = setting['title']
