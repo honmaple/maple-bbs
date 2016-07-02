@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期四 2016-6-30 20:54:16 (CST)
+# Last Update:星期六 2016-7-2 16:25:7 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -19,7 +19,12 @@ from flask_babel import Babel
 from flask_babel import lazy_gettext as _
 from flask_mail import Mail
 from flask_principal import Principal
+from flask_avatar import Avatar
 from redis import StrictRedis
+
+
+def register_avatar(app):
+    Avatar(app)
 
 
 def register_form(app):

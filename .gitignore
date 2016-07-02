@@ -8,4 +8,3 @@ fabfile.py
 *.log
 *.pyc
 **/.webassets-cache/
-**/admin/

@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期三 2016-6-29 15:22:56 (CST)
+# Last Update:星期六 2016-7-2 16:27:33 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
 from flask import Flask, g
 from maple.extensions import (register_login, register_redis, register_mail)
 from maple.extensions import (register_form, register_babel,
-                              register_principal, register_jinja2,
+                              register_principal, register_jinja2,register_avatar,
                               register_maple)
 from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
@@ -34,6 +34,7 @@ def create_app():
 
 
 def register(app):
+    register_avatar(app)
     register_babel(app)
     register_form(app)
     register_principal(app)

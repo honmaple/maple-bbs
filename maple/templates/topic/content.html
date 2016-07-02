@@ -75,7 +75,7 @@ board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.boar
                 </div>
                 <div class="media-right">
                     <a href="{{ url_for('user.user',user_url=topic.author.username)}}">
-                        <img class="media-object img-circle" src="{{ link_base.avatar(topic.author.infor) }}" alt="avatar" style="width:64px;height:64px">
+                        <img class="media-object img-circle" src="{{ link_base.avatar(topic.author) }}" alt="avatar" style="width:64px;height:64px">
                     </a>
                 </div>
             </div>

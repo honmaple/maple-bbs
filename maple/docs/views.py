@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:11:56 (CST)
-# Last Update:星期四 2016-6-16 0:14:20 (CST)
+# Last Update:星期六 2016-7-2 21:9:48 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -28,3 +28,9 @@ def docs():
 def flask_maple(path):
     return send_from_directory(
         ph.join(site.static_folder, 'flask-maple'), path)
+
+
+@site.route('/flask-avatar/<path:path>')
+def flask_avatar(path):
+    return send_from_directory(
+        ph.join(site.static_folder, 'flask-avatar'), path)

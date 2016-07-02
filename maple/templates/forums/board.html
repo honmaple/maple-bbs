@@ -14,6 +14,27 @@
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
+            <div class="panel-body media" style="padding:10px 12px;border-bottom:1px solid #eee">
+                <div class="media-left">
+                    <a href="{{ request.path }}">
+                        <img class="media-object img-circle" src="{{ url_for('avatar',text=board.board)}}" alt="avatar" style="width:64px;height:64px">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ board.board }}</h4>
+                    <p style="margin:10px;">
+                        <small class="hidden-xs" style="color:#999">{{ board.description }}</small>
+                        <small class="pull-right" style="color:#999">
+                            今日:
+                            <strong>1123</strong>
+                            主题:
+                            <strong>12321</strong>
+                            排名:
+                            <strong>13</strong>
+                        </small>
+                    </p>
+                </div>
+            </div>
             {% from 'topic/topic_list.html' import view as board_view %}
             {{ board_view(topics,top_topics)}}
             {{ p_footer(topics,'board.board',dict(child_b=board.board))}}

@@ -1,17 +1,56 @@
-* maple-bbs(maplebb)
+* Honmaple(maplebb)
 
-  This is a forums system based on the flask
+  [[license][https://img.shields.io/badge/license-GPL3.0-blue.svg]]
 
-** Start version
-   You can have a look [[https://forums.honmaple.org][here]]  
-   The version isn't completed
+  [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/index.png]]
+  [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/board.png]]
+  [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/ask.png]]
 
-** Now version
-   [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/index.png]]
-   [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/ask.png]]
-   [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/board.png]]
-** if you want to use
+  This is a free,open-source forums system based on the flask
 
-   You need register a account,and use `update users set is_superuser = true where id = 1`  
-   Then you can add board use admin
+** Features
+   + Register & login & forget password
+   + Board and tags
+   + Collect
+   + Like replies
+   + Follow tags,users,topics
+   + Privacy setting
+   + Choice markdown to ask
+   + Tags rss
+   + Avatar
+   + Topic vote
+     
+** Installation
+   Some package is not neccessary
+   #+BEGIN_SRC python
+   pip install -r requirements.txt
+   #+END_SRC
+
+   Then,you should comment *maple/topic/forms.py*
+   #+BEGIN_SRC python
+    category = SelectField(
+        _('Category:'),
+        choices=[(b.id, b.board + '   --' + b.parent_board)
+                 for b in Board.query.all()],
+        coerce=int)
+   #+END_SRC
+
+   Now,please init db use 
+   #+BEGIN_SRC python
+    python manage.py db init 
+    python manage.py db migrate -m "first migrate"
+    python manage.py db upgrade
+   #+END_SRC
+
+   Finally,you can register a account,and `update users set is_superuser = true`
+
+   *Ok* ,visit forums.localhost:5000/admin to add something
+   
+** Demo
+   Please visit [[https://forums.honmaple.org][forums.honmaple.org]] 
+
+** License
+   Honmaple is open-sourced software licensed under the GPL3 license
+
+
 
