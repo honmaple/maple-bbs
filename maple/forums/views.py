@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期六 2016-7-2 18:48:2 (CST)
+# Last Update:星期一 2016-7-4 17:21:15 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,7 +14,7 @@ from flask import (Blueprint, render_template, g, request, abort, redirect,
                    flash, url_for)
 from flask_login import current_user, login_required
 from flask_maple.forms import flash_errors
-from maple import app, db
+from maple import app, db, cache
 from maple.helpers import is_num
 from maple.user.models import User
 from maple.forums.models import Notice, Board
@@ -25,16 +25,20 @@ site = Blueprint('forums', __name__)
 
 
 @site.route('/', methods=['GET'])
+@cache.cached(timeout=60)
 def index():
     topics = Topic.query.filter_by(is_good=True, is_top=False).paginate(1, 10)
     top_topics = Topic.query.filter_by(is_top=True).limit(5).all()
     if not topics.items:
         topics = Topic.query.paginate(1, 10)
-    data = {'topics': topics, 'top_topics': top_topics}
+    data = {'title': '',
+            'topics': topics,
+            'top_topics': top_topics}
     return render_template('forums/index.html', **data)
 
 
 @site.route('/index')
+@cache.cached(timeout=60)
 def forums():
     boards = {}
     parent_boards = db.session.query(Board.parent_board).group_by(
@@ -42,7 +46,7 @@ def forums():
     for parent_board in parent_boards:
         child_board = Board.query.filter_by(parent_board=parent_board).all()
         boards[parent_board[0]] = child_board
-    data = {'boards': boards}
+    data = {'title': '首页 - ', 'boards': boards}
     return render_template('forums/forums.html', **data)
 
 
@@ -54,7 +58,7 @@ def notice():
         rece_id=current_user.id).order_by(Notice.publish.desc()).paginate(
             page, app.config['PER_PAGE'],
             error_out=True)
-    data = {'notices': notices}
+    data = {'title': '消息提醒 - ', 'notices': notices}
     return render_template('forums/notice.html', **data)
 
 
@@ -63,7 +67,7 @@ def notice():
 def userlist():
     page = is_num(request.args.get('page'))
     users = User.query.paginate(page, app.config['PER_PAGE'], error_out=True)
-    data = {'users': users}
+    data = {'title': '用户列表 - ', 'users': users}
     return render_template('forums/userlist.html', **data)
 
 
@@ -89,13 +93,17 @@ def message(receId):
 
 
 @site.route('/about')
+@cache.cached(timeout=60)
 def about():
-    return render_template('forums/about.html')
+    data = {'title': '关于 - '}
+    return render_template('forums/about.html', **data)
 
 
 @site.route('/help')
+@cache.cached(timeout=60)
 def help():
-    return render_template('forums/help.html')
+    data = {'title': '帮助 - '}
+    return render_template('forums/help.html', **data)
 
 
 @site.route('/order', methods=['POST'])

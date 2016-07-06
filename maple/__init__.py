@@ -6,15 +6,16 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期六 2016-7-2 16:27:33 (CST)
+# Last Update:星期日 2016-7-3 13:16:53 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
 from flask import Flask, g
-from maple.extensions import (register_login, register_redis, register_mail)
+from maple.extensions import (register_login, register_redis, register_mail,
+                              register_cache)
 from maple.extensions import (register_form, register_babel,
-                              register_principal, register_jinja2,register_avatar,
-                              register_maple)
+                              register_principal, register_jinja2,
+                              register_avatar, register_maple)
 from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
 
@@ -73,6 +74,7 @@ db = SQLAlchemy(app)
 mail = register_mail(app)
 login_manager = register_login(app)
 redis_data = register_redis(app)
+cache = register_cache(app)
 register(app)
 
 

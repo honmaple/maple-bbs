@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期一 2016-6-27 14:30:59 (CST)
+# Last Update:星期一 2016-7-4 16:55:55 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -38,7 +38,9 @@ def ask():
     if boardId is not None:
         board = Board.query.filter_by(id=boardId).first()
         form.category.data = board.id
-    return render_template('topic/ask.html', form=form)
+
+    data = {'title': '提问 - ', 'form': form}
+    return render_template('topic/ask.html', **data)
 
 
 @site.route('/good')
@@ -47,22 +49,20 @@ def good():
     topics = Topic.query.filter_by(is_good=True).paginate(
         page, app.config['PER_PAGE'],
         error_out=True)
-    return render_template('topic/topic_good.html', topics=topics)
+    data = {'title': '精华文章 - ', 'topics': topics}
+    return render_template('topic/topic_good.html', **data)
 
 
-@site.route('/preview', methods=['GET', 'POST'])
+@site.route('/preview', methods=['POST'])
 @login_required
 def preview():
-    if request.method == "POST":
-        choice = request.values.get('choice')
-        content = request.values.get('content')
-        print(choice)
-        if choice == '2':
-            return safe_clean(content)
-        else:
-            return Filters.safe_markdown(content)
+    choice = request.values.get('choice')
+    content = request.values.get('content')
+    print(choice)
+    if choice == '2':
+        return safe_clean(content)
     else:
-        abort(404)
+        return Filters.safe_markdown(content)
 
 
 @site.route('/up/<topicId>', methods=['POST'])
@@ -109,7 +109,9 @@ class TopicAPI(MethodView):
                 page, app.config['PER_PAGE'],
                 error_out=True)
             top_topics = Topic.query.filter_by(is_top=True).limit(5).all()
-            data = {'topics': topics, 'top_topics': top_topics}
+            data = {'title': '所有主题 - ',
+                    'topics': topics,
+                    'top_topics': top_topics}
             return self.template_without_uid(data)
         else:
             form = ReplyForm()
@@ -117,7 +119,10 @@ class TopicAPI(MethodView):
             replies = topic.replies.paginate(page, app.config['PER_PAGE'],
                                              True)
             RedisData.set_read_count(topic.id)
-            data = {'form': form, 'topic': topic, 'replies': replies}
+            data = {'title': '%s - ' % topic.title,
+                    'form': form,
+                    'topic': topic,
+                    'replies': replies}
             return self.template_with_uid(data)
 
     def post(self):

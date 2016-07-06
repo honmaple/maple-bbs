@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期六 2016-7-2 16:25:7 (CST)
+# Last Update:星期一 2016-7-4 19:0:5 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -20,6 +20,7 @@ from flask_babel import lazy_gettext as _
 from flask_mail import Mail
 from flask_principal import Principal
 from flask_avatar import Avatar
+from flask_cache import Cache
 from redis import StrictRedis
 
 
@@ -79,6 +80,18 @@ def register_maple(app):
     Error(app)
 
 
+def register_redis(app):
+    redis_data = StrictRedis(db=app.config['CACHE_REDIS_DB'],
+                             password=app.config['CACHE_REDIS_PASSWORD'])
+    return redis_data
+
+
+def register_cache(app):
+    cache = Cache(config={'CACHE_TYPE': 'null'})
+    cache.init_app(app)
+    return cache
+
+
 def register_principal(app):
     principal = Principal()
     principal.init_app(app)
@@ -116,17 +129,14 @@ def register_login(app):
     return login_manager
 
 
-def register_redis(app):
-    redis_data = StrictRedis(db=app.config['CACHE_REDIS_DB'],
-                             password=app.config['CACHE_REDIS_PASSWORD'])
-    return redis_data
-
-
 def register_jinja2(app):
     from maple.main.records import load_online_users
     from .filters import Filters, safe_clean
 
     app.jinja_env.globals['Title'] = Filters.Title
+    app.jinja_env.globals['hot_tags'] = Filters.hot_tags
+    app.jinja_env.globals['recent_tags'] = Filters.recent_tags
+    app.jinja_env.globals['notice_count'] = Filters.notice_count
     app.jinja_env.filters['get_last_reply'] = Filters.get_last_reply
     app.jinja_env.filters['get_user_infor'] = Filters.get_user_infor
     app.jinja_env.filters['get_read_count'] = Filters.get_read_count
@@ -135,4 +145,3 @@ def register_jinja2(app):
     app.jinja_env.filters['markdown'] = Filters.safe_markdown
     app.jinja_env.filters['safe_clean'] = safe_clean
     app.jinja_env.filters['is_collected'] = Filters.is_collected
-    app.jinja_env.filters['notice_count'] = Filters.notice_count

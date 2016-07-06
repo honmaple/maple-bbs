@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:04:43 (CST)
-# Last Update:星期四 2016-6-30 20:0:46 (CST)
+# Last Update:星期一 2016-7-4 18:2:14 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -128,22 +128,19 @@ class LikeAPI(MethodView):
 class FollowAPI(MethodView):
     decorators = [follow_permission]
 
-    def template_without_uid(self, topics):
-        return render_template('mine/follow_list.html', follows=topics)
-
     def get(self, type):
         # page = is_num(request.args.get('page'))
         if type == 'tag':
-            return render_template('user/following_tag.html',
+            return render_template('follow/following_tag.html',
                                    following_type=type)
         elif type == 'user':
-            return render_template('user/following_user.html',
+            return render_template('follow/following_user.html',
                                    following_type=type)
         elif type == 'collect':
-            return render_template('user/following_collect.html',
+            return render_template('follow/following_collect.html',
                                    following_type=type)
         else:
-            return render_template('user/following_topic.html',
+            return render_template('follow/following_topic.html',
                                    following_type=type)
 
     def post(self):

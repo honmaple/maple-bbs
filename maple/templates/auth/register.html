@@ -1,8 +1,5 @@
+{% set title = '注册 - ' %}
 {% extends "base/base.html" %}
-{% block title -%}
-{{ _('register')}} - HonMaple
-{% endblock %}
-
 {% block content %}
 {% import 'maple/auth.html' as auth %}
 {{ breadcrumb(active='注册')}}

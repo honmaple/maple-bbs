@@ -6,10 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期二 2016-6-28 11:53:41 (CST)
+# Last Update:星期四 2016-7-7 3:55:35 (CST)
 #          By:
 # Description:
 # **************************************************************************
+from flask import current_app
 from maple import db
 from datetime import datetime
 from sqlalchemy import event
@@ -23,6 +24,7 @@ tag_topic = db.Table('tag_topic', db.Column('tags_id', db.Integer,
 class Tags(db.Model):
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
+    time = db.Column(db.DateTime, default=datetime.utcnow())
     tagname = db.Column(db.String(64), nullable=False)
     summary = db.Column(db.Text)
 
@@ -39,7 +41,7 @@ class Topic(db.Model):
     uid = db.Column(db.String(36), nullable=False)
     title = db.Column(db.String(81), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    publish = db.Column(db.DateTime, default=datetime.now())
+    publish = db.Column(db.DateTime, default=datetime.utcnow())
     updated = db.Column(db.DateTime)
     vote = db.Column(db.Integer, default=0)
 
@@ -78,6 +80,12 @@ class Topic(db.Model):
 
     def __repr__(self):
         return "<Topic %r>" % self.title
+
+    # @staticmethod
+    # def page(page):
+    #     app = current_app._get_current_object()
+    #     per_page = app.config['PER_PAGE']
+    #     return Topic.paginate(page, per_page, True)
 
 
 @event.listens_for(Topic, 'before_update')
@@ -134,6 +142,7 @@ class Collect(db.Model):
                              secondary='collect_topic',
                              lazy='dynamic',
                              backref="collects")
+
     def __str__(self):
         return self.name
 

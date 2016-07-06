@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{{ breadcrumb(active='关注的用户')}}
+<div class="row">
+    <div class="col-md-9"   style="background:#fff;border:1px solid #eee">
+        <ul class="nav nav-tabs">
+            <li role="presentation" >{{ link_base.following_topic()}}</li>
+            <li role="presentation">{{ link_base.following_tag()}}</li>
+            <li role="presentation"  class="active">{{ link_base.following_user()}}</li>
+            <li role="presentation">{{ link_base.following_collect()}}</li>
+        </ul>
+        <div class="panel-panel-default">
+            {% for user in current_user.following_users %}
+            <div class="panel-body" style="border-bottom:1px solid #eee">
+                {{ link_base.user(user)}}
+                <span style="float:right">
+                    <button class="btn btn-sm btn-default userfollow active" id="{{ user.id}}" style="padding:0 5px">取消关注</button>
+                </span>
+            </div>
+            {% endfor  %}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {{ panel_base.follow() }}
+    </div>
+</div>
+{% endblock %}

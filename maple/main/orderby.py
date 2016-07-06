@@ -6,11 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-05 10:15:58 (CST)
-# Last Update:星期六 2016-6-25 18:30:13 (CST)
+# Last Update:星期四 2016-7-7 4:0:25 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import request
+from flask import request, current_app
 from maple.forums.models import Board
 from maple.topic.models import Tags, Topic
 from datetime import datetime, timedelta
@@ -51,71 +51,37 @@ def form_sort(t1, t2, t3):
     else:
         time = datetime.now() - timedelta(days=30)
 
-    # 发表时间
+    # 发表时间或作者
     if t2 == 0:
-        topic_base = Topic.query.join(Topic.board).filter(
-            Topic.publish > time, Topic.is_top == False)
-        if t3 == 0:
-            if type == 'parent_b':
-                topics = topic_base.filter(Board.parent_board == uid).paginate(
-                    page, 20, True)
-            elif type == 'child_b':
-                topics = topic_base.filter(Board.id == uid).paginate(page, 20,
-                                                                     True)
-            elif type == 'tags':
-                topics = Topic.query.join(Topic.tags).filter(
-                    Topic.publish > time, Topic.is_top == False, Tags.tagname
-                    == uid).order_by(Topic.publish.desc()).paginate(page, 20,
-                                                                    True)
-            else:
-                topics = None
-            return topics
-        else:
-            if type == 'parent_b':
-                topics = topic_base.filter(Board.parent_board == uid).order_by(
-                    Topic.publish.asc()).paginate(page, 20, True)
-            elif type == 'child_b':
-                topics = topic_base.filter(Board.id == uid).order_by(
-                    Topic.publish.asc()).paginate(page, 20, True)
-            elif type == 'tags':
-                topics = Topic.query.join(Topic.tags).filter(
-                    Topic.publish > time, Topic.is_top == False,
-                    Tags.tagname ==
-                    uid).order_by(Topic.publish.asc()).paginate(page, 20, True)
-            else:
-                topics = None
-            return topics
-    # 作者
+        order = Topic.publish
     else:
-        topic_base = Topic.query.join(Topic.board).filter(
-            Topic.publish > time, Topic.is_top == False)
-        if t3 == 0:
-            if type == 'parent_b':
-                topics = topic_base.filter(Board.parent_board == uid).order_by(
-                    Topic.author_id.desc()).paginate(page, 20, True)
-            elif type == 'child_b':
-                topics = topic_base.filter(Board.id == uid).order_by(
-                    Topic.author_id.desc()).paginate(page, 20, True)
-            elif type == 'tags':
-                topics = Topic.query.join(Topic.tags).filter(
-                    Topic.publish > time, Topic.is_top == False, Tags.tagname
-                    == uid).order_by(Topic.author_id.desc()).paginate(page, 20,
-                                                                      True)
-            else:
-                topics = None
-            return topics
-        else:
-            if type == 'parent_b':
-                topics = topic_base.filter(Board.parent_board == uid).order_by(
-                    Topic.author_id.asc()).paginate(page, 20, True)
-            elif type == 'child_b':
-                topics = topic_base.filter(Board.id == uid).order_by(
-                    Topic.author_id.asc()).paginate(page, 20, True)
-            elif type == 'tags':
-                topics = Topic.query.join(Topic.tags).filter(
-                    Topic.publish > time, Topic.is_top == False, Tags.tagname
-                    == uid).order_by(Topic.author_id.asc()).paginate(page, 20,
-                                                                     True)
-            else:
-                topics = None
-            return topics
+        order = Topic.author_id
+
+    # 升降序
+    if t3 == 0:
+        order = order.desc()
+    else:
+        order = order.asc()
+
+    app = current_app._get_current_object()
+    per_page = app.config['PER_PAGE']
+    topic_base = Topic.query.join(Topic.board).filter(Topic.publish > time,
+                                                      Topic.is_top == False)
+    if type == 'parent_b':
+        topics = topic_base.filter(Board.parent_board == uid).order_by(
+            order).paginate(page, per_page, True)
+    elif type == 'child_b':
+        topics = topic_base.filter(Board.id == uid).order_by(order).paginate(
+            page, per_page, True)
+    elif type == 'tags':
+        topics = Topic.query.join(Topic.tags).filter(
+            Topic.publish > time, Topic.is_top == False,
+            Tags.tagname == uid).order_by(order).paginate(page, per_page, True)
+    elif type == 'all':
+        topics = Topic.query.filter(
+            Topic.publish > time,
+            Topic.is_top == False).order_by(order).paginate(page, per_page,
+                                                            True)
+    else:
+        topics = None
+    return topics

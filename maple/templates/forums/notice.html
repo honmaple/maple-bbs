@@ -1,5 +1,4 @@
 {% extends 'base/base.html' %}
-{% import 'base/link.html' as link %}
 {% block content %}
 {{ breadcrumb(active='消息通知')}}
 <div class="row">
@@ -27,7 +26,7 @@
         </div>
     </div>
     <div class="col-md-3" style="padding-left:0">
-        {% include 'base/panel.html' %}
+        {{ panel_base.index() }}
     </div>
 </div>
 {% endblock %}

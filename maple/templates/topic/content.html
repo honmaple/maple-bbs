@@ -30,8 +30,12 @@
 
 {% block content %}
 {% set board = topic.board %}
-{{ breadcrumb(hrefs={board.parent_board:url_for('board.board',parent_b=board.parent_board),
-board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.board)},active=topic.title)}}
+<ol class="breadcrumb" style="margin:0">
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li><a href="{{ url_for('board.board',parent_b=board.parent_board) }}">{{ board.parent_board }}</a></li>
+    <li><a href="{{ url_for('board.board',parent_b=board.parent_board,child_b=board.board)}}">{{ board.board }}</a></li>
+    <li class="active">{{ topic.title }}</li>
+</ol>
 {% set last_reply = topic.replies.first() %}
 {% from 'base/paginate.html' import footer as p_footer %}
 <div class="row">
@@ -92,6 +96,7 @@ board.board:url_for('board.board',parent_b=board.parent_board,child_b=board.boar
     <div class="col-md-3" style="padding-left:0">
         {% set ask_url = url_for('topic.ask',boardId=topic.board.id) %}
         {% include 'topic/panel.html' %}
+        {{ panel_base.board() }}
     </div>
 </div>
 {% endblock %}

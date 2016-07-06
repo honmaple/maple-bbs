@@ -41,8 +41,7 @@
         </div>
     </div>
     <div class="col-md-3" style="padding-left:0">
-        {% set ask_url = url_for('topic.ask',boardId=board.id) %}
-        {% include 'base/panel.html' %}
+        {{ panel_base.board() }}
     </div>
 </div>
 {% endblock %}

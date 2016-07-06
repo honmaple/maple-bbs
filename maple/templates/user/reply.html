@@ -9,13 +9,13 @@
         </span>
     </div>
     {% if replies.items %}
-    {% if setting.reply_list == 1 or (setting.reply_list == 2 and g.user.is_authenticated) or (g.user.is_authenticated and g.user.username == g.user_url) %}
+    {% if setting.rep_list == 1 or (g.user.is_authenticated and setting.rep_list == 2) or (g.user.is_authenticated and g.user.username == g.user_url) %}
     {% for reply in replies.items %}
     <div class="panel-body" style="border-bottom:1px solid #eee">
         <span style="font-size:12px;color:#999;">回复了 {{ reply.username }} 创建的主题:
             <a href="{{ url_for('topic.topic',uid=reply.topic.uid)}}">{{ reply.topic.title}}</a>
         </span>
-        <p>{{ reply.content }}</p>
+        <p>{{ reply.content | safe_clean }}</p>
         <span style="font-size:12px;color:#999;">
             回复日期:{{ reply.publish | timesince }}
         </span>

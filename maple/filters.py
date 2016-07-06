@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:39:29 (CST)
-# Last Update:星期四 2016-6-30 20:53:41 (CST)
+# Last Update:星期一 2016-7-4 19:10:0 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -100,10 +100,25 @@ class Filters(object):
                 return True
         return False
 
-    def notice_count(uid):
+    def notice_count():
         from maple.forums.models import Notice
-        count = Notice.query.filter_by(rece_id=uid, is_read=False).count()
-        return count
+        from flask import g
+        if g.user.is_authenticated:
+            count = Notice.query.filter_by(rece_id=g.user.id,
+                                           is_read=False).count()
+            if count > 0:
+                return count
+        return None
+
+    def hot_tags():
+        from maple.topic.models import Tags
+        tags = Tags.query.order_by(Tags.time.desc()).limit(9).all()
+        return tags
+
+    def recent_tags():
+        from maple.topic.models import Tags
+        tags = Tags.query.order_by(Tags.time.desc()).limit(12).all()
+        return tags
 
     class Title(object):
         title = setting['title']

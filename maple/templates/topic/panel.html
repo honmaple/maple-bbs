@@ -11,34 +11,33 @@
     <span class="btn btn-default btn-block" data-toggle="modal" data-target="#sidecollect">收藏问题</span>
     <div class="modal fade" id="sidecollect" tabindex="-1" role="dialog" aria-labelledby="sidecollectLabel">
         <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="sidecollectLabel">收藏夹</h4>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="sidecollectLabel">收藏夹</h4>
                 </div>
-        <form action="{{ url_for('mine.add_collect',topicId=topic.uid)}}" method="POST">
-        {{ form.hidden_tag() }}
-        <div class="modal-body">
-        <p> 添加到收藏夹 </p>
-        {% for collect in current_user.collects %}
-        <label data-id="{{ collect.id }}"><input name="add-to-collect" type="checkbox" value="{{ collect.id}}" />{{ collect.name }}</label>
-        {% if collect.is_privacy %}
-        <span class="label label-default">私密</span>
-        {% else %}
-        <span class="label label-default">公开</span>
-        {% endif %}
-        <br/>
-        {% endfor %}
+                <form action="{{ url_for('mine.add_collect',topicId=topic.uid)}}" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="modal-body">
+                        <p> 添加到收藏夹 </p>
+                        {% for collect in current_user.collects %}
+                        <label data-id="{{ collect.id }}"><input name="add-to-collect" type="checkbox" value="{{ collect.id}}" />{{ collect.name }}</label>
+                        {% if collect.is_privacy %}
+                        <span class="label label-default">私密</span>
+                        {% else %}
+                        <span class="label label-default">公开</span>
+                        {% endif %}
+                        <br/>
+                        {% endfor %}
                     </div>
-        <div class="modal-footer" style="padding-top:5px;padding-bottom:5px;">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="submit" class="btn btn-primary">提交</button>
+                    <div class="modal-footer" style="padding-top:5px;padding-bottom:5px;">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">提交</button>
                     </div>
                 </form>
             </div>
         </div>
-        </div>
+    </div>
     {% endif %}
 </ul>
 {% endif %}
-{% include 'base/panel.html' %}

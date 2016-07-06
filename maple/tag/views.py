@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期六 2016-6-25 17:59:5 (CST)
+# Last Update:星期一 2016-7-4 17:40:45 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -27,8 +27,8 @@ site = Blueprint('tag', __name__)
 def tag(tag):
     if tag is None:
         tags = Tags.query.distinct(Tags.tagname).all()
-        data = {'tags': tags}
-        return render_template('forums/tag_list.html', **data)
+        data = {'title': '所有标签 - ', 'tags': tags}
+        return render_template('tag/tag_list.html', **data)
     else:
         page = is_num(request.args.get('page'))
         topic_base = Topic.query.join(Topic.tags).filter(Tags.tagname == tag)
@@ -37,8 +37,21 @@ def tag(tag):
             error_out=True)
         top_topics = topic_base.filter(Topic.is_top == True).limit(5).all()
         tag = Tags.query.filter_by(tagname=tag).first_or_404()
-        data = {'tag': tag, 'topics': topics, 'top_topics': top_topics}
-        return render_template('forums/tag.html', **data)
+        data = {'title': '%s - ' % tag,
+                'tag': tag,
+                'topics': topics,
+                'top_topics': top_topics}
+        return render_template('tag/tag.html', **data)
+
+# @site.route('/hot')
+# def hot():
+#     tags = Tags.query.order_by(Tags.time.desc()).limit(10).all()
+#     return tags
+
+# @site.route('/recent')
+# def recent():
+#     tags = Tags.query.order_by(Tags.time.desc()).limit(10).all()
+#     return tags
 
 
 @site.route('/<tag>/feed')

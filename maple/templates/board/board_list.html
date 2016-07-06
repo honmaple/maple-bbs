@@ -15,7 +15,7 @@
     <div class="panel-heading">
         {{ g.parent_b}}
     </div>
-    {% from 'forums/board_base.html' import body as board_body %}
+    {% from 'board/board_base.html' import body as board_body %}
     {{ board_body(boards)}}
 </div>
 {% endif %}
@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="col-md-3" style="padding-left:0">
-        {% include 'base/panel.html' %}
+        {{ panel_base.board_list() }}
     </div>
 </div>
 {% endblock %}

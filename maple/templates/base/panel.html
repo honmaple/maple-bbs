@@ -1,3 +1,4 @@
+{% macro base() -%}
 {% if g.user.is_authenticated %}
 <ul class="list-group">
     <a class="list-group-item list-group-item-info" href="{{ ask_url or url_for('topic.ask')}}">
@@ -28,13 +29,63 @@
     </div>
 </div>
 {% endif %}
+{%- endmacro %}
+
+{% macro board_list() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro board() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro collect() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro follow() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro tag_list() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro tag_panel() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro topic_list() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro index() -%}
+{{ base() }}
+{{ tags_panel('热门节点',hot_tags) }}
+{{ tags_panel('最近新增节点',recent_tags) }}
+{{ count() }}
+{%- endmacro %}
+{% macro tags_panel(text,tags) -%}
 <div class="panel panel-default">
     <div class="panel-heading">
-        推荐帖子
+        <h3>{{ text }}</h3>
     </div>
-    <div class="panel-body text-center">
+    <div class="panel-body text-center tags">
+        {% set tags = tags() %}
+        {% for tag in tags -%}
+        <a href="{{ url_for('tag.tag',tag=tag)}}" class="item_node">{{ tag }}</a>
+        {%- endfor %}
     </div>
 </div>
+{%- endmacro %}
+{% macro count() -%}
 <div class="panel panel-default">
     <div class="panel-heading">
         统计信息
@@ -45,3 +96,15 @@
         <li class="list-group-item">回帖数: 0 条</li>
     </ul>
 </div>
+{%- endmacro %}
+
+{% macro panel(heading,body) -%}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{ heading }}
+    </div>
+    <div class="panel-body text-center">
+        {{ body }}
+    </div>
+</div>
+{%- endmacro %}

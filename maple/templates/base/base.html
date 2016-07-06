@@ -2,7 +2,15 @@
 {% from 'base/paginate.html' import paginate%}
 {% from 'base/paginate.html' import footer as p_footer %}
 {% import 'base/link.html' as link_base %}
+{% import 'base/panel.html' as panel_base %}
 {% from 'base/head.html' import breadcrumb %}
+{% block title -%}
+{%- set n = notice_count() -%}
+{%- if n -%}
+({{ n }})
+{%- endif -%}
+{{ title }} {{ Title.title }} - {{Title.description}}
+{%- endblock title %}
 {% block main %}
 <nav class="navbar navbar-default navbar-fixed-top" style="background:#fff">
     <div class="container-fluid col-md-offset-1 col-md-10">
@@ -22,10 +30,6 @@
                 <li><a href="{{ url_for('docs.docs')}}">文档</a></li>
                 <li><a href="#">博客</a></li>
                 <li><a href="{{ url_for('topic.good')}}">精华文章</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">注册</a></li>
-                <li><a href="#">登陆</a></li>
             </ul>
             <form onsubmit="return dispatch()" class="navbar-form navbar-right" style="margin-top:10px;" >
                 <div class="form-group has-feedback">
@@ -74,14 +78,12 @@
     <a href="{{ url_for('forums.userlist')}}"><span class="btn btn-sm btn-primary pull-right">用户列表</span></a>
     <a href="{{ url_for('forums.notice')}}"><span class="btn btn-sm btn-primary pull-right">
         消息通知
-        {% if g.user.is_authenticated %}
-        {% set n = current_user.id | notice_count %}
-        {% if n != 0 -%}
         <span class="badge">
+            {%- set n = notice_count() -%}
+            {%- if n -%}
             {{ n }}
+            {%- endif -%}
         </span>
-        {% endif %}
-        {% endif %}
     </span></a>
     {% block content %} {% endblock %}
 </div>

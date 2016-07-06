@@ -1,7 +1,5 @@
 {% macro tag(tag) -%}
-<span class="label label-default tag">
-    <a href="{{ url_for('tag.tag',tag=tag.tagname)}}">{{ tag.tagname }}</a>
-</span>
+<a class="tag" href="{{ url_for('tag.tag',tag=tag.tagname)}}">{{ tag.tagname }}</a>
 {%- endmacro %}
 {% macro topic(topic) -%}
 <a href="{{ url_for('topic.topic',uid=topic.uid)}}">{{ topic.title}}</a>

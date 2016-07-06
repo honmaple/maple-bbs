@@ -4,7 +4,7 @@
  var sortData = {
      "type" : 'all',
      "page" : '{{ topics.page }}',
-     "uid" : ""
+     "uid" : ''
  }
 </script>
 {{ super()}}
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="col-md-3" style="padding-left:0">
-        {% include 'base/panel.html' %}
+        {{ panel_base.topic_list() }}
     </div>
 </div>
 {% endblock %}
