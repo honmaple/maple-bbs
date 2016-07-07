@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期一 2016-7-4 17:21:15 (CST)
+# Last Update:星期四 2016-7-7 19:54:5 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -31,9 +31,7 @@ def index():
     top_topics = Topic.query.filter_by(is_top=True).limit(5).all()
     if not topics.items:
         topics = Topic.query.paginate(1, 10)
-    data = {'title': '',
-            'topics': topics,
-            'top_topics': top_topics}
+    data = {'title': '', 'topics': topics, 'top_topics': top_topics}
     return render_template('forums/index.html', **data)
 
 
@@ -58,6 +56,12 @@ def notice():
         rece_id=current_user.id).order_by(Notice.publish.desc()).paginate(
             page, app.config['PER_PAGE'],
             error_out=True)
+    unread_notices = Notice.query.filter_by(rece_id=current_user.id,
+                                            is_read=False).all()
+    if unread_notices:
+        for notice in unread_notices:
+            notice.is_read = True
+        db.session.commit()
     data = {'title': '消息提醒 - ', 'notices': notices}
     return render_template('forums/notice.html', **data)
 
@@ -79,7 +83,7 @@ def message(receId):
     if form.validate_on_submit() and request.method == "POST":
         message = Notice()
         message.category = 'privacy'
-        message.content = form.message.data
+        message.content = {'content': form.message.data}
         message.rece_user = rece_user
         message.send_id = current_user.id
         db.session.add(message)

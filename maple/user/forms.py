@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:08:44 (CST)
-# Last Update:星期二 2016-6-28 21:51:0 (CST)
+# Last Update:星期日 2016-7-10 21:11:14 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_wtf import Form
 from wtforms import StringField, TextAreaField, SelectField, PasswordField
 from wtforms.validators import DataRequired, Length, EqualTo
-from flask_babel import lazy_gettext as _
+from flask_babelex import lazy_gettext as _
 
 
 class ProfileForm(Form):

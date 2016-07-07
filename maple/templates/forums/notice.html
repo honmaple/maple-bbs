@@ -1,12 +1,12 @@
 {% extends 'base/base.html' %}
 {% block content %}
-{{ breadcrumb(active='消息通知')}}
+{{ breadcrumb(active=_('Notices'))}}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <button class="pull-right btn btn-sm btn-default ingore-all" style="padding:0 5px">全部标记为已读</button>
-                消息通知
+                <button class="pull-right btn btn-sm btn-default ingore-all" style="padding:0 5px">{{ _('mark all to is read')}}</button>
+                {{ _('Notices') }}
             </div>
             {% if notices.items %}
             {% for notice in notices.items %}
@@ -19,7 +19,7 @@
             {% else %}
             <div class="panel-body">
                 <span class="text-center" style="display:block;width:100%;color:#999">
-                    没有通知
+                    {{ _('No Notices')}}
                 </span>
             </div>
             {% endif %}

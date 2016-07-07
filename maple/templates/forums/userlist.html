@@ -1,11 +1,11 @@
 {% extends 'base/base.html' %}
 {% block content %}
-{{ breadcrumb(active='所有用户')}}
+{{ breadcrumb(active=_('Userlist'))}}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-heading">
-                所有用户
+                {{ _('Userlist')}}
             </div>
             {% for user in users.items %}
             <div class="panel-body" style="border-bottom:1px solid #eee">

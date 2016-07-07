@@ -1,12 +1,12 @@
 {% extends 'base/base.html' %}
 {% import 'base/link.html' as link %}
 {% block content %}
-{{ breadcrumb(active='所有标签')}}
+{{ breadcrumb(active=_('All Tags'))}}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                所有标签
+                {{_('All Tags')}}
             </div>
             {% if tags %}
             <div class="panel-body">
@@ -16,6 +16,7 @@
             </div>
             {% else %}
             <div class="panel-body text-center">
+                {{_('No Tag')}}
                 暂无标签
             </div>
             {% endif %}

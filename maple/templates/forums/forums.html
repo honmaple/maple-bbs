@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% block content %}
-{{ breadcrumb(active='版块')}}
+{{ breadcrumb(active=_('Board'))}}
 {% for parent_board,child_boards in boards.items() %}
 <div class="panel panel-primary">
     <div class="panel-heading">

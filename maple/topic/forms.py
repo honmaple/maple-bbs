@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:08:44 (CST)
-# Last Update:星期四 2016-6-16 13:1:22 (CST)
+# Last Update:星期日 2016-7-10 21:11:14 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_wtf import Form
 from wtforms import StringField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length
-from flask_babel import lazy_gettext as _
+from flask_babelex import lazy_gettext as _
 from maple.forums.models import Board
 
 

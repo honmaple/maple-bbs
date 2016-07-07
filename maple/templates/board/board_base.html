@@ -7,9 +7,9 @@
             <dl style="margin:0;">
                 <dd>{{ link_base.board(board)}}</dd>
                 <dd style="font-size:12px;">
-                    <span style="color:#999;">主题:</span>
+                    <span style="color:#999;">{{_('Topics:')}}</span>
                     <span>{{ board.count.topics }}</span>
-                    <span style="color:#999;">帖子:</span>
+                    <span style="color:#999;">{{ _('Posts:')}}</span>
                     <span>{{board.count.all_topics }}</span>
                 </dd>
             </dl>
@@ -19,11 +19,11 @@
             {% if last_topic  %}
             <dl style="margin:0;">
                 <dt style="word-wrap: break-word;word-break: normal;">{{ link_base.topic(last_topic)}}</dt>
-                <dd>由{{ link_base.user(last_topic.author.username) }}发表</dd>
+                <dd>{{ _('published by %(author)s',author=link_base.user(last_topic.author.username)) }}</dd>
                 <dd>{{ last_topic.publish | timesince }}</dd>
             </dl>
             {% else %}
-            没有帖子
+            {{_('No Topic')}}
             {% endif %}
         </div>
     </div>

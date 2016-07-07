@@ -14,7 +14,7 @@
 </script>
 <div class="panel panel-default" id="replies-content">
     <div class="panel-heading">
-        共收到{{ replies.total }}条回复
+        {{ _('Received %(total)s replies',total=replies.total) }}
     </div>
     {% if replies.items %}
     {% set num = 1 %}
@@ -29,7 +29,7 @@
             <small class="media-heading" style="color:#999">
                 <span>{{ link_base.user(reply.author.username)}}</span>
                 <span>{{ reply.publish | timesince }}</span>
-                <a name="reply{{ num }}" class="anchor" href="#reply{{ num }}" aria-hidden="true">#{{ num }}</a>
+                <a name="reply{{ reply.id }}" class="anchor" href="#reply{{ num }}" aria-hidden="true">#{{ num }}</a>
             </small>
             <div>
                 {{ reply.content | safe_clean }}
@@ -65,19 +65,19 @@
 </div>
 <div class="panel panel-default">
     {% if g.user.is_authenticated %}
-    <div class="panel-heading"> 回帖 </div>
+    <div class="panel-heading"> {{ _('Reply this topic') }} </div>
     <div class="panel-body">
         <form action="{{ url_for('topic.reply',uid=topic.id)}}" method="POST">
             {{ form.hidden_tag() }}
             {{ form.content(class='form-control')}}
-            <button class="btn btn-sm btn-primary" type="submit">提交回复</button>
+            <button class="btn btn-sm btn-primary" type="submit">{{ _('Post reply') }}</button>
         </form>
     </div>
     {% else %}
     <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
         <span class="text-center" style="display:block;width:100%;color:#999">
             <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
-            你需要<a href="{{ url_for('auth.login') }}">登陆</a>后才能发表回复
+            {{_('You need')}}<a href="{{ url_for('auth.login') }}">{{ _('Login')}}</a>{{_('before you can reply.')}}
         </span>
     </div>
     {% endif %}

@@ -1,18 +1,18 @@
 <div class="footer col-md-offset-1 col-md-10" style="padding:0">
     <div class="row">
-        <div class="col-md-6 text-center hidden-xs">
+        <div class="col-md-7 text-center hidden-xs">
             <small style="color:#999">
-                <span>当前在线用户:<strong style="color:#333;">{{ 'all_counts' | get_online_users }}</strong></span>
-                <span style="margin-left:10px">注册用户:<strong style="color:#333;">{{ 'sign_counts' | get_online_users }}</strong></span>
-                <span style="margin-left:10px">当前访客:<strong style="color:#333;">{{ 'counts' | get_online_users }}</strong></span>
-                <span style="margin-left:10px">最高在线:<strong style="color:#333;">{{ 'high' | get_online_users }}</strong></span>
-                <span style="margin-left:10px">最高在线时间:<strong style="color:#333;">{{ 'high_time' | get_online_users }}</strong></span>
+                <span>{{ _('Now users online:')}}<strong style="color:#333;">{{ 'all_counts' | get_online_users }}</strong></span>
+                <span style="margin-left:10px">{{ _('Registered users online:') }}<strong style="color:#333;">{{ 'sign_counts' | get_online_users }}</strong></span>
+                <span style="margin-left:10px">{{ _('Guests online:')}}<strong style="color:#333;">{{ 'counts' | get_online_users }}</strong></span>
+                <span style="margin-left:10px">{{ _('Highest online:')}}<strong style="color:#333;">{{ 'high' | get_online_users }}</strong></span>
+                <span style="margin-left:10px">{{ _('Time of highest online:')}}<strong style="color:#333;">{{ 'high_time' | get_online_users }}</strong></span>
             </small>
         </div>
-        <div class="col-md-offset-2 col-md-4 text-center">
+        <div class="col-md-offset-2 col-md-3 text-center">
             <small>
-                <span><a href="{{ url_for('forums.help')}}">帮助</a></span>
-                <span><a href="{{ url_for('forums.about')}}">关于我</a></span>
+                <span><a href="{{ url_for('forums.help')}}">{{ _('Help')}}</a></span>
+                <span><a href="{{ url_for('forums.about')}}">{{ _('About')}}</a></span>
                 <span><a href="https://github.com/honmaple/maple-bbs" target="_blank">GitHub</a></span>
                 <span> Copyright © 2015-2016 honmaple.</span>
             </small>

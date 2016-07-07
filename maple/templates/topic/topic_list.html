@@ -20,7 +20,7 @@
     {% if not topics and not top_topics %}
     <div class="panel-body">
         <span class="text-center" style="display:block;width:100%;color:#999">
-            没有帖子
+            {{ _('No Topic')}}
         </span>
     </div>
     {% else %}
@@ -33,16 +33,16 @@
 <div class="panel-heading" style="font-size:12px;">
     <div class="row">
         <div class="col-sm-6">
-            社区精华帖
+            {{ _('Good Topics')}}
         </div>
         <div class="col-sm-2 hidden-xs">
-            作者
+            {{ _('Author') }}
         </div>
         <div class="col-sm-2 hidden-xs">
-            回复/查看
+            {{_('Replies/Read')}}
         </div>
         <div class="col-sm-2 hidden-xs">
-            最后发表
+            {{_('Last reply')}}
         </div>
     </div>
 </div>
@@ -60,20 +60,20 @@
 {% macro form() %}
 <div class="row">
     <div class="col-sm-6">
-        筛选:
+        {{_('Choice:')}}
         {{ g.sort_form.display() }}
-        排序:
+        {{ _('Order:')}}
         {{ g.sort_form.sort() }}
         {{ g.sort_form.st() }}
     </div>
     <div class="col-sm-2 hidden-xs">
-        作者
+        {{ _('Author') }}
     </div>
     <div class="col-sm-2 hidden-xs">
-        回复/查看
+        {{_('Replies/Read')}}
     </div>
     <div class="col-sm-2 hidden-xs">
-        最后发表
+        {{_('Last reply')}}
     </div>
 </div>
 {% endmacro %}

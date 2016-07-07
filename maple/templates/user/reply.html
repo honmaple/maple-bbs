@@ -12,7 +12,7 @@
     {% if setting.rep_list == 1 or (g.user.is_authenticated and setting.rep_list == 2) or (g.user.is_authenticated and g.user.username == g.user_url) %}
     {% for reply in replies.items %}
     <div class="panel-body" style="border-bottom:1px solid #eee">
-        <span style="font-size:12px;color:#999;">回复了 {{ reply.username }} 创建的主题:
+        <span style="font-size:12px;color:#999;">回复了 {{ link_base.user(reply.author) }} 创建的主题:
             <a href="{{ url_for('topic.topic',uid=reply.topic.uid)}}">{{ reply.topic.title}}</a>
         </span>
         <p>{{ reply.content | safe_clean }}</p>

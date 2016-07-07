@@ -1,11 +1,11 @@
-{% set title = '忘记密码 - ' %}
+{% set title = _('Forget Password - ') %}
 {% extends "base/base.html" %}
 {% block content %}
 {% import 'maple/auth.html' as auth %}
-{{ breadcrumb(active='忘记密码')}}
+{{ breadcrumb(active=_('Forget Password'))}}
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <a href="{{ url_for('auth.forget') }}" style="color:#fff">忘记密码</a>
+        <a href="{{ url_for('auth.forget') }}" style="color:#fff">{{ _('Forget Password')}}</a>
     </div>
     <div class="panel-body">
         {{ auth.forget(form)}}

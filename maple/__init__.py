@@ -6,11 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期日 2016-7-3 13:16:53 (CST)
+# Last Update:星期五 2016-7-8 12:22:53 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
-from flask import Flask, g
+from flask import Flask, g, send_from_directory, request
 from maple.extensions import (register_login, register_redis, register_mail,
                               register_cache)
 from maple.extensions import (register_form, register_babel,
@@ -67,6 +67,8 @@ def register_routes(app):
     from maple.auth import views
     from maple.admin import admin
     # import maple.admin.admin
+    # from flask_admin import Admin
+    # admin = Admin(app, name='microblog', template_mode='bootstrap3')
 
 
 app = create_app()
@@ -84,3 +86,9 @@ def before_request():
     g.user = current_user
     g.sort_form = SortForm()
     g.search_form = SearchForm()
+
+
+@app.route('/robots.txt')
+@app.route('/favicon.ico')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])

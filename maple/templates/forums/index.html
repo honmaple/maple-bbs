@@ -9,7 +9,7 @@
             </div>
             <div class="media-body" style="line-height: 200%; text-align: center;">
                 <div style="font-size: 15px">
-                    Honmaple 官方网站源码 <a href="https://github.com/honmaple/maple-bbs" target="_blank">Honmaple</a>
+                    Honmaple {{ _('Office Source Code')}} <a href="https://github.com/honmaple/maple-bbs" target="_blank">Honmaple</a>
                 </div>
                 <div>
                     <code style="padding: 4px 10px;">git clone git@github.com:honmaple/maple-bbs.git</code>
@@ -36,10 +36,10 @@
 </div>
 {%- endmacro %}
 <div class="row hidden-sm hidden-xs">
-    {{ item("社区",url_for('forums.forums'),"icon-comments","#F86334")}}
-    {{ item("文档",url_for('docs.docs'),"icon-book","#eeccaa")}}
-    {{ item("博客",'#',"icon-tasks")}}
-    {{ item("精华文章",url_for('topic.good'),"icon-globe","#017e66")}}
+    {{ item(_('Forums'),url_for('forums.forums'),"icon-comments","#F86334")}}
+    {{ item(_('Wiki'),url_for('docs.docs'),"icon-book","#eeccaa")}}
+    {{ item(_('Blog'),'#',"icon-tasks")}}
+    {{ item(_('Good'),url_for('topic.good'),"icon-globe","#017e66")}}
 </div>
 <div class="row">
     <div class="col-md-9">
@@ -48,7 +48,7 @@
             {{ board_view(topics,top_topics)}}
             <div class="panel-footer clearfix">
                 <a class="pull-right" href="{{ url_for('topic.good')}}">
-                    查看更多精华帖
+                    {{ _('more good topics') }}
                     <i class="icon-arrow-right"></i>
                 </a>
             </div>

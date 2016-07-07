@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期四 2016-7-7 3:55:35 (CST)
+# Last Update:星期四 2016-7-7 18:53:10 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -107,7 +107,7 @@ class Reply(db.Model):
                             backref=db.backref('replies',
                                                cascade='all,delete-orphan',
                                                lazy='dynamic',
-                                               order_by='Reply.publish'))
+                                               order_by='Reply.publish.desc()'))
 
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     author = db.relationship('User',

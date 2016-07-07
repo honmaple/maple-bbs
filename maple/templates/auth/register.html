@@ -1,11 +1,11 @@
-{% set title = '注册 - ' %}
+{% set title = _('Register - ') %}
 {% extends "base/base.html" %}
 {% block content %}
 {% import 'maple/auth.html' as auth %}
-{{ breadcrumb(active='注册')}}
+{{ breadcrumb(active=_('Register'))}}
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <a href="{{ url_for('auth.register') }}" style="color:#fff">注册页</a>
+        <a href="{{ url_for('auth.register') }}" style="color:#fff">{{ _('Register')}}</a>
     </div>
     <div class="panel-body">
         {{ auth.register(form)}}

@@ -6,21 +6,22 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期一 2016-7-4 16:55:55 (CST)
+# Last Update:星期四 2016-7-7 19:59:29 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import (Blueprint, render_template, redirect, url_for, request, g,
-                   jsonify, session, Markup, abort)
+                   jsonify, session)
 from flask.views import MethodView
 from flask_login import login_required
 from flask_maple.forms import flash_errors
 from maple import app, db
+from maple.helpers import replies_page
 from maple.main.models import RedisData
 from maple.main.permission import topic_permission, reply_permission
 from maple.helpers import is_num
 from maple.forums.models import Board
-from maple.topic.models import Topic
+from maple.topic.models import Topic, Reply
 from maple.topic.forms import TopicForm, ReplyForm
 from maple.filters import safe_clean, Filters
 from .controls import TopicModel, ReplyModel
@@ -116,8 +117,9 @@ class TopicAPI(MethodView):
         else:
             form = ReplyForm()
             topic = Topic.query.filter_by(uid=str(uid)).first_or_404()
-            replies = topic.replies.paginate(page, app.config['PER_PAGE'],
-                                             True)
+            replies = Reply.query.filter_by(
+                topic_id=topic.id).order_by(Reply.publish.asc()).paginate(
+                    page, app.config['PER_PAGE'], True)
             RedisData.set_read_count(topic.id)
             data = {'title': '%s - ' % topic.title,
                     'form': form,
@@ -150,19 +152,21 @@ class ReplyAPI(MethodView):
 
     def post(self, uid):
         form = ReplyForm()
-        topic = Topic.query.filter_by(id=uid).first()
+        topic = Topic.query.filter_by(id=uid).first_or_404()
         if form.validate_on_submit():
-            ReplyModel.post_data(form, uid)
+            reply = ReplyModel.post_data(form, uid)
+            page = replies_page(topic.id)
             return redirect(url_for('topic.topic',
                                     uid=topic.uid,
-                                    _anchor='replies-content'))
+                                    page=page,
+                                    _anchor='reply' + str(reply.id)))
         else:
             if form.errors:
                 flash_errors(form)
-            else:
-                pass
+            page = replies_page(topic.id)
             return redirect(url_for('topic.topic',
-                                    uid=str(topic.uid),
+                                    uid=topic.uid,
+                                    page=page,
                                     _anchor='replies-content'))
 
     # def put(self, uid):

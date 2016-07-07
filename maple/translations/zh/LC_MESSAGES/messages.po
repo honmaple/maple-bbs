@@ -1,0 +1,424 @@
+# Chinese translations for PROJECT.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-07-10 22:15+0800\n"
+"PO-Revision-Date: 2016-06-16 14:36+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh\n"
+"Language-Team: zh <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: maple/extensions.py:112
+msgid "Please login to access this page."
+msgstr "这个页面要求登陆，请登陆"
+
+#: maple/settings.py:16
+msgid "I love freedom more than life."
+msgstr "爱生活，更爱自由"
+
+#: maple/forums/forms.py:21
+msgid "Choice"
+msgstr "选择"
+
+#: maple/forums/forms.py:23
+msgid "All Topics"
+msgstr "所有主题"
+
+#: maple/forums/forms.py:23
+msgid "One Day"
+msgstr "一天之内"
+
+#: maple/forums/forms.py:23
+msgid "One Week"
+msgstr "一周之内"
+
+#: maple/forums/forms.py:27
+msgid "Publish"
+msgstr "发表时间"
+
+#: maple/forums/forms.py:27 maple/templates/topic/topic_list.html:39
+#: maple/templates/topic/topic_list.html:70
+msgid "Author"
+msgstr "发表作者"
+
+#: maple/forums/forms.py:30
+msgid "Desc"
+msgstr "降序"
+
+#: maple/forums/forms.py:30
+msgid "Asc"
+msgstr "升序"
+
+#: maple/forums/forms.py:34
+msgid "search"
+msgstr "搜索"
+
+#: maple/forums/forms.py:38
+msgid "message"
+msgstr "私信"
+
+#: maple/mine/forms.py:21
+msgid "Name:"
+msgstr "收藏夹名:"
+
+#: maple/mine/forms.py:22
+msgid "Description:"
+msgstr "描述:"
+
+#: maple/templates/auth/forget.html:1
+msgid "Forget Password - "
+msgstr "忘记密码 - "
+
+#: maple/templates/auth/forget.html:5 maple/templates/auth/forget.html:8
+msgid "Forget Password"
+msgstr "忘记密码"
+
+#: maple/templates/auth/login.html:1
+msgid "Login - "
+msgstr "登陆 - "
+
+#: maple/templates/auth/login.html:5 maple/templates/auth/login.html:8
+#: maple/templates/base/base.html:75 maple/templates/topic/replies.html:80
+msgid "Login"
+msgstr "登陆"
+
+#: maple/templates/auth/register.html:1
+msgid "Register - "
+msgstr "注册 - "
+
+#: maple/templates/auth/register.html:5 maple/templates/auth/register.html:8
+#: maple/templates/base/base.html:74
+msgid "Register"
+msgstr "注册"
+
+#: maple/templates/base/base.html:29 maple/templates/forums/index.html:39
+msgid "Forums"
+msgstr "社区"
+
+#: maple/templates/base/base.html:30 maple/templates/forums/index.html:40
+msgid "Wiki"
+msgstr "文档"
+
+#: maple/templates/base/base.html:31 maple/templates/forums/index.html:41
+msgid "Blog"
+msgstr "博客"
+
+#: maple/templates/base/base.html:32 maple/templates/forums/index.html:42
+msgid "Good"
+msgstr "精华文章"
+
+#: maple/templates/base/base.html:36
+msgid "search content"
+msgstr "搜索内容"
+
+#: maple/templates/base/base.html:67
+msgid "My Page"
+msgstr "我的主页"
+
+#: maple/templates/base/base.html:68
+msgid "Setting"
+msgstr "帐号设置"
+
+#: maple/templates/base/base.html:70
+msgid "Logout"
+msgstr "注销"
+
+#: maple/templates/base/base.html:77 maple/templates/tag/tag.html:12
+#: maple/templates/tag/tag_list.html:4 maple/templates/tag/tag_list.html:9
+msgid "All Tags"
+msgstr "所有标签"
+
+#: maple/templates/base/base.html:78 maple/templates/forums/userlist.html:3
+#: maple/templates/forums/userlist.html:8
+msgid "Userlist"
+msgstr "用户列表"
+
+#: maple/templates/base/base.html:80 maple/templates/forums/notice.html:3
+#: maple/templates/forums/notice.html:9
+msgid "Notices"
+msgstr "消息通知"
+
+#: maple/templates/base/form.html:14
+msgid "save"
+msgstr "保存"
+
+#: maple/templates/base/head.html:4 maple/templates/base/head.html:6
+#: maple/templates/topic/content.html:16
+msgid "Index"
+msgstr "社区主页"
+
+#: maple/templates/base/link.html:17
+msgid "My Created Collects"
+msgstr "我创建的收藏夹"
+
+#: maple/templates/base/link.html:20 maple/templates/base/link.html:32
+#: maple/templates/follow/following_collect.html:3
+msgid "Following Collects"
+msgstr "关注的收藏"
+
+#: maple/templates/base/link.html:23
+#: maple/templates/follow/following_tag.html:3
+msgid "Following Tags"
+msgstr "关注的节点"
+
+#: maple/templates/base/link.html:26
+#: maple/templates/follow/following_topic.html:3
+msgid "Following Topics"
+msgstr "关注的主题"
+
+#: maple/templates/base/link.html:29
+#: maple/templates/follow/following_user.html:3
+msgid "Following Users"
+msgstr "关注的用户"
+
+#: maple/templates/base/panel.html:5
+msgid "Ask Questions"
+msgstr "提问"
+
+#: maple/templates/base/panel.html:10 maple/templates/mine/collect.html:16
+#: maple/templates/mine/collect_list.html:3
+msgid "My Collects"
+msgstr "我的收藏"
+
+#: maple/templates/base/panel.html:13
+msgid "My Followings"
+msgstr "我的关注"
+
+#: maple/templates/base/panel.html:24
+msgid "now register"
+msgstr "现在注册"
+
+#: maple/templates/base/panel.html:28
+msgid "If you have a account,please"
+msgstr "已经注册"
+
+#: maple/templates/base/panel.html:28
+msgid "login"
+msgstr "登陆"
+
+#: maple/templates/base/panel.html:71
+msgid "Hot Tags"
+msgstr "热门节点"
+
+#: maple/templates/base/panel.html:72
+msgid "Recent Tags"
+msgstr "最近增加的节点"
+
+#: maple/templates/base/panel.html:91
+msgid "Forums Count"
+msgstr "社区统计"
+
+#: maple/templates/base/panel.html:94
+msgid "Total number of registered users:"
+msgstr "社区会员:"
+
+#: maple/templates/base/panel.html:95
+msgid "Total number of topics:"
+msgstr "主题总数:"
+
+#: maple/templates/base/panel.html:96
+msgid "Total number of posts:"
+msgstr "回帖数:"
+
+#: maple/templates/board/board.html:28
+msgid "Today:"
+msgstr "今日:"
+
+#: maple/templates/board/board.html:30 maple/templates/board/board_base.html:10
+msgid "Topics:"
+msgstr "主题:"
+
+#: maple/templates/board/board.html:32
+msgid "Ranking:"
+msgstr "排名:"
+
+#: maple/templates/board/board_base.html:12
+msgid "Posts:"
+msgstr "帖子:"
+
+#: maple/templates/board/board_base.html:22
+#, python-format
+msgid "published by %(author)s"
+msgstr "由%(author)s发表"
+
+#: maple/templates/board/board_base.html:26
+#: maple/templates/topic/topic_list.html:23
+msgid "No Topic"
+msgstr "没有帖子"
+
+#: maple/templates/forums/about.html:3 maple/templates/forums/about.html:6
+#: maple/templates/maple/footer.html:15
+msgid "About"
+msgstr "关于"
+
+#: maple/templates/forums/forums.html:3
+msgid "Board"
+msgstr "版块"
+
+#: maple/templates/forums/help.html:3 maple/templates/forums/help.html:6
+#: maple/templates/maple/footer.html:14
+msgid "Help"
+msgstr "帮助"
+
+#: maple/templates/forums/index.html:12
+msgid "Office Source Code"
+msgstr "官方网站源码"
+
+#: maple/templates/forums/index.html:51
+msgid "more good topics"
+msgstr "查看更多精华文章"
+
+#: maple/templates/forums/notice.html:8
+msgid "mark all to is read"
+msgstr "全部标记为已读"
+
+#: maple/templates/forums/notice.html:22
+msgid "No Notices"
+msgstr "没有通知"
+
+#: maple/templates/maple/footer.html:5
+msgid "Now users online:"
+msgstr "当前在线用户:"
+
+#: maple/templates/maple/footer.html:6
+msgid "Registered users online:"
+msgstr "注册用户:"
+
+#: maple/templates/maple/footer.html:7
+msgid "Guests online:"
+msgstr "当前访客:"
+
+#: maple/templates/maple/footer.html:8
+msgid "Highest online:"
+msgstr "最高在线:"
+
+#: maple/templates/maple/footer.html:9
+msgid "Time of highest online:"
+msgstr "最高在线时间:"
+
+#: maple/templates/mine/collect.html:22
+msgid "edit"
+msgstr "编辑"
+
+#: maple/templates/mine/collect.html:23 maple/templates/mine/collect.html:29
+msgid "delete"
+msgstr "删除"
+
+#: maple/templates/mine/collect.html:35
+msgid "No Collect"
+msgstr "暂无收藏"
+
+#: maple/templates/mine/collect.html:50
+msgid "Edit the collect"
+msgstr "编辑收藏"
+
+#: maple/templates/mine/collect.html:70 maple/templates/mine/collect.html:89
+#: maple/templates/mine/collect_list.html:57
+msgid "cancel"
+msgstr "取消"
+
+#: maple/templates/mine/collect.html:71 maple/templates/mine/collect.html:90
+#: maple/templates/mine/collect_list.html:58
+msgid "confirm"
+msgstr "确定"
+
+#: maple/templates/mine/collect.html:82
+msgid "Delete this collect"
+msgstr "删除收藏"
+
+#: maple/templates/mine/collect_list.html:12
+#: maple/templates/mine/collect_list.html:36
+msgid "Create Collect"
+msgstr "创建收藏"
+
+#: maple/templates/mine/collect_list.html:18
+msgid "Privacy"
+msgstr "私有"
+
+#: maple/templates/mine/collect_list.html:20
+msgid "Public"
+msgstr "公共"
+
+#: maple/templates/tag/tag_list.html:19
+msgid "No Tag"
+msgstr "暂无标签"
+
+#: maple/templates/topic/content.html:36
+#, python-format
+msgid "published at %(time)s"
+msgstr "于%(time)s发布"
+
+#: maple/templates/topic/content.html:38
+#, python-format
+msgid "The last reply published by %(author)s at %(time)s"
+msgstr "最后由%(author)s于%(time)s发布"
+
+#: maple/templates/topic/replies.html:17
+#, python-format
+msgid "Received %(total)s replies"
+msgstr "共收到%(total)s条回复"
+
+#: maple/templates/topic/replies.html:68
+msgid "Reply this topic"
+msgstr "回帖"
+
+#: maple/templates/topic/replies.html:73
+msgid "Post reply"
+msgstr "发表回复"
+
+#: maple/templates/topic/replies.html:80
+msgid "You need"
+msgstr "你需要"
+
+#: maple/templates/topic/replies.html:80
+msgid "before you can reply."
+msgstr "后才能发表回复"
+
+#: maple/templates/topic/topic_list.html:36
+msgid "Good Topics"
+msgstr "社区精华帖子"
+
+#: maple/templates/topic/topic_list.html:42
+#: maple/templates/topic/topic_list.html:73
+msgid "Replies/Read"
+msgstr "回复/阅读"
+
+#: maple/templates/topic/topic_list.html:45
+#: maple/templates/topic/topic_list.html:76
+msgid "Last reply"
+msgstr "最后回复"
+
+#: maple/templates/topic/topic_list.html:63
+msgid "Choice:"
+msgstr "筛选:"
+
+#: maple/templates/topic/topic_list.html:65
+msgid "Order:"
+msgstr "排序:"
+
+#: maple/topic/forms.py:21
+msgid "Title:"
+msgstr "标题:"
+
+#: maple/topic/forms.py:22 maple/topic/forms.py:35
+msgid "Content:"
+msgstr "内容:"
+
+#: maple/topic/forms.py:24
+msgid "Category:"
+msgstr "分类:"
+
+#: maple/topic/forms.py:28
+msgid "Tags:"
+msgstr "节点:"
+

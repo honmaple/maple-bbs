@@ -44,3 +44,16 @@ a.item_node {
     height: auto;
     display: block;
 }
+.vote {
+    font-size: 10px;
+    line-height: 1;
+    padding: 2px 8px;
+    border: 1px solid #C4C4C4;
+    border-radius: 3px;
+    color: #778;
+    display: inline-block;
+    vertical-align: baseline;
+    text-align: center;
+    background-color: #fff;
+    text-decoration: none;
+}

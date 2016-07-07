@@ -13,26 +13,26 @@
 </script>
 {% endblock %}
 {% block content %}
-{{ breadcrumb(hrefs={'我的收藏':url_for('mine.collect')},active=collect.name)}}
+{{ breadcrumb(hrefs={_('My Collects'):url_for('mine.collect')},active=collect.name)}}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>{{ collect.name }}</h4>
-                <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#editcollect">编辑</a>
-                <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#deletecollect">删除</a>
+                <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#editcollect">{{ _('edit') }}</a>
+                <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#deletecollect">{{ _('delete')}}</a>
             </div>
             {% if topics.items %}
             {% for topic in topics.items %}
             <div class="panel-body" style="border-bottom:1px solid #eee">
                 <a href="{{ url_for('topic.topic',uid=topic.uid)}}">{{ topic.title}}</a>
-                <span id="delete-from-collect" class="pull-right btn btn-sm btn-danger" data-id="{{ topic.uid }}">删除</span>
+                <span id="delete-from-collect" class="pull-right btn btn-sm btn-danger" data-id="{{ topic.uid }}">{{_('delete')}}</span>
             </div>
             {% endfor %}
             {% else %}
             <div class="panel-body">
                 <span class="text-center" style="display:block;width:100%;color:#999">
-                    暂无收藏
+                    {{_('No Collect')}}
                 </span>
             </div>
             {% endif %}
@@ -47,7 +47,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="editcollectLabel">编辑收藏夹</h4>
+                <h4 class="modal-title" id="editcollectLabel">{{_('Edit the collect')}}</h4>
             </div>
             <form id="editcollectform">
                 <div class="modal-body">
@@ -67,8 +67,8 @@
                     {% endfor %}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" id="edit-collect-form" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ _('cancel')}}</button>
+                    <button type="button" id="edit-collect-form" class="btn btn-primary">{{_('confirm')}}</button>
                 </div>
             </form>
         </div>
@@ -79,15 +79,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="deletecollectLabel">删除收藏夹</h4>
+                <h4 class="modal-title" id="deletecollectLabel">{{_('Delete this collect')}}</h4>
             </div>
             <div class="modal-body">
                 <p>确认要删除收藏夹「flask相关」么？</p>
                 注意：收藏夹下的收藏也会被删除！
             </div>
             <div class="modal-footer" style="padding-top:5px;padding-bottom:5px;">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" id="delete-collect-form" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{_('cancel')}}</button>
+                <button type="button" id="delete-collect-form" class="btn btn-danger">{{_('confirm')}}</button>
             </div>
         </div>
     </div>

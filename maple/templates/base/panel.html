@@ -2,15 +2,15 @@
 {% if g.user.is_authenticated %}
 <ul class="list-group">
     <a class="list-group-item list-group-item-info" href="{{ ask_url or url_for('topic.ask')}}">
-        <span class="btn btn-info btn-block">提问</span>
+        <span class="btn btn-info btn-block">{{ _('Ask Questions') }}</span>
     </a>
 </ul>
 <div class="list-group">
     <a href="{{ url_for('mine.collect')}}" class="list-group-item">
-        我的收藏
+        {{ _('My Collects')}}
     </a>
     <a href="{{ url_for('mine.follow')}}" class="list-group-item">
-        我关注的
+        {{ _('My Followings')}}
     </a>
 </div>
 {% else %}
@@ -21,11 +21,11 @@
     <div class="panel-body text-center">
         <a class="btn btn-primary" href="{{ url_for('auth.register')}}">
             <i class="icon-user"></i>
-            现在注册
+            {{ _('now register')}}
         </a>
     </div>
     <div class="panel-footer text-center">
-        已注册用户请 <a href="{{ url_for('auth.login')}}">登陆</a>
+        {{ _('If you have a account,please') }}<a href="{{ url_for('auth.login')}}"> {{ _('login') }}</a>
     </div>
 </div>
 {% endif %}
@@ -68,8 +68,8 @@
 
 {% macro index() -%}
 {{ base() }}
-{{ tags_panel('热门节点',hot_tags) }}
-{{ tags_panel('最近新增节点',recent_tags) }}
+{{ tags_panel(_('Hot Tags'),hot_tags) }}
+{{ tags_panel(_('Recent Tags'),recent_tags) }}
 {{ count() }}
 {%- endmacro %}
 {% macro tags_panel(text,tags) -%}
@@ -88,12 +88,12 @@
 {% macro count() -%}
 <div class="panel panel-default">
     <div class="panel-heading">
-        统计信息
+        {{ _('Forums Count') }}
     </div>
     <ul class="list-group">
-        <li class="list-group-item">社区会员:0  人</li>
-        <li class="list-group-item">帖子数: 0 个</li>
-        <li class="list-group-item">回帖数: 0 条</li>
+        <li class="list-group-item">{{ _('Total number of registered users:')}} 0</li>
+        <li class="list-group-item">{{ _('Total number of topics:') }} 0 </li>
+        <li class="list-group-item">{{ _('Total number of posts:') }} 0 </li>
     </ul>
 </div>
 {%- endmacro %}

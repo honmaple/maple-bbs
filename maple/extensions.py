@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期一 2016-7-4 19:0:5 (CST)
+# Last Update:星期日 2016-7-10 22:19:4 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,8 +15,8 @@ from flask.json import JSONEncoder
 from flask_wtf.csrf import CsrfProtect
 from flask_maple import Bootstrap, Error, Captcha
 from flask_login import LoginManager
-from flask_babel import Babel
-from flask_babel import lazy_gettext as _
+from flask_babelex import Babel
+from flask_babelex import lazy_gettext as _
 from flask_mail import Mail
 from flask_principal import Principal
 from flask_avatar import Avatar
@@ -37,23 +37,24 @@ def register_babel(app):
     babel = Babel()
     babel.init_app(app)
 
-    class CustomJSONEncoder(JSONEncoder):
-        """This class adds support for lazy translation texts to Flask's
-        JSON encoder. This is necessary when flashing translated texts."""
+    # class CustomJSONEncoder(JSONEncoder):
+    #     """This class adds support for lazy translation texts to Flask's
+    #     JSON encoder. This is necessary when flashing translated texts."""
 
-        def default(self, obj):
-            from speaklater import is_lazy_string
-            if is_lazy_string(obj):
-                try:
-                    return unicode(obj)  # python 2
-                except NameError:
-                    return str(obj)  # python 3
-            return super(CustomJSONEncoder, self).default(obj)
+    #     def default(self, obj):
+    #         from speaklater import is_lazy_string
+    #         if is_lazy_string(obj):
+    #             try:
+    #                 return unicode(obj)  # python 2
+    #             except NameError:
+    #                 return str(obj)  # python 3
+    #         return super(CustomJSONEncoder, self).default(obj)
 
-    app.json_encoder = CustomJSONEncoder
+    # app.json_encoder = CustomJSONEncoder
 
     @babel.localeselector
     def get_locale():
+        # return 'en'
         user = getattr(g, 'user', None)
         if user is not None:
             if g.user.is_authenticated:

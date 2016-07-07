@@ -1,22 +1,4 @@
 {% extends 'base/base.html' %}
-{% block style %}
-{{ super() }}
-<style>
- .vote {
-     font-size: 10px;
-     line-height: 1;
-     padding: 2px 8px;
-     border: 1px solid #C4C4C4;
-     border-radius: 3px;
-     color: #778;
-     display: inline-block;
-     vertical-align: baseline;
-     text-align: center;
-     background-color: #fff;
-     text-decoration: none;
- }
-</style>
-{% endblock %}
 {% block script -%}
 {{ super() }}
 <script type="text/javascript">
@@ -31,7 +13,7 @@
 {% block content %}
 {% set board = topic.board %}
 <ol class="breadcrumb" style="margin:0">
-    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>社区首页</a></li>
+    <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>{{ _('Index') }}</a></li>
     <li><a href="{{ url_for('board.board',parent_b=board.parent_board) }}">{{ board.parent_board }}</a></li>
     <li><a href="{{ url_for('board.board',parent_b=board.parent_board,child_b=board.board)}}">{{ board.board }}</a></li>
     <li class="active">{{ topic.title }}</li>
@@ -45,35 +27,15 @@
                 <div class="media-body">
                     <h3 class="media-heading">{{ topic.title}}</h3>
                     <small style="color:#999">
-                        <div class="votes">
-                            {% if topic.vote and topic.vote > 0 -%}
-                            <a id="topic-up-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
-                                <i class="icon-chevron-up">{{ topic.vote}}</i>
-                            </a>
-                            {% else %}
-                            <a id="topic-up-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
-                                <i class="icon-chevron-up"></i>
-                            </a>
-                            {%- endif %}
-                            {% if topic.vote and topic.vote < 0 %}
-                            <a id="topic-down-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
-                                <i class="icon-chevron-down">{{ topic.vote}}</i>
-                            </a>
-                            {% else %}
-                            <a id="topic-down-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
-                                <i class="icon-chevron-down"></i>
-                            </a>
-                            {%- endif %}
-                        </div>
+                        {{ votes(topic) }}
                         {% for tag in topic.tags %}
                         {{ link_base.tag(tag) }}
                         {% endfor %}
                         <br/>
                         {{ link_base.user(topic.author.username )}}
-                        于 <abbr class="timeago" title="{{ topic.publish}}">{{ topic.publish | timesince }}</abbr>发布
+                        {{ _('published at %(time)s',time = topic.publish | timesince ) }}
                         {% if last_reply %}
-                        最后由{{ link_base.user(last_reply.author.username )}}于
-                        <abbr class="timeago" title="{{ topic.publish}}">{{ last_reply.publish | timesince }}</abbr>回复
+                        · {{ _('The last reply published by %(author)s at %(time)s',author=link_base.user(last_reply.author.username),time=last_reply.publish | timesince)}}
                         {% endif %}
                     </small>
                 </div>
@@ -100,3 +62,28 @@
     </div>
 </div>
 {% endblock %}
+{% macro votes(topic) -%}
+<div class="votes">
+    {% if topic.vote and topic.vote > 0 -%}
+    {{ vote_a('up',topic.vote) }}
+    {% else %}
+    {{ vote_a('up') }}
+    {%- endif %}
+    {% if topic.vote and topic.vote < 0 %}
+    {{ vote_a('down',topic.vote) }}
+    {% else %}
+    {{ vote_a('down') }}
+    {%- endif %}
+</div>
+{%- endmacro %}
+{% macro vote_a(vo,count=None) -%}
+{% if count -%}
+<a id="topic-{{ vo }}-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
+    <i class="icon-chevron-{{ vo }}">{{ count }}</i>
+</a>
+{% else %}
+<a id="topic-{{ vo }}-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
+    <i class="icon-chevron-{{ vo }}"></i>
+</a>
+{%- endif %}
+{%- endmacro %}

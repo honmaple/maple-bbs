@@ -6,14 +6,15 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:56:43 (CST)
-# Last Update:星期三 2016-6-15 18:46:40 (CST)
+# Last Update:星期四 2016-7-7 19:44:42 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import abort
+from flask import abort, current_app
 from flask_login import current_user
 from time import time
 from random import randint
+from maple import redis_data
 
 
 def is_num(num):
@@ -26,6 +27,21 @@ def is_num(num):
                 abort(404)
         except ValueError:
             abort(404)
+
+
+def replies_page(topicId):
+    app = current_app._get_current_object()
+    replies = redis_data.hget('topic:%s' % str(topicId), 'replies')
+    if not replies:
+        replies = 0
+    else:
+        replies = int(replies)
+    p = app.config['PER_PAGE']
+    if replies % p == 0:
+        q = replies // p
+    else:
+        q = replies // p + 1
+    return q
 
 
 def register_api(site, view, endpoint, url, pk='uid', pk_type='int'):

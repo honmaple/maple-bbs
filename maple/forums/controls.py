@@ -6,20 +6,23 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-30 19:39:13 (CST)
-# Last Update:星期四 2016-6-30 20:34:48 (CST)
+# Last Update:星期四 2016-7-7 19:48:22 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import url_for
 from flask_login import current_user
+from maple.helpers import replies_page
 from .models import db
 from .models import Notice
 
 
 def reply(topic, reply):
+    page = replies_page(topic.id)
     url = url_for('topic.topic',
                   uid=topic.uid,
-                  _anchor='reply-' + str(reply.id))
+                  page=page,
+                  _anchor='reply' + str(reply.id))
     notice = Notice()
     notice.category = 'reply'
     notice.content = {'url': url,

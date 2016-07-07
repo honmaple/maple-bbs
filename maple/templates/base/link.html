@@ -14,22 +14,22 @@
 <a href="{{ url_for('mine.collect',uid=collect.id)}}">{{ collect.name }}</a>
 {%- endmacro %}
 {% macro collect_list() -%}
-<a href="{{ url_for('mine.collect') }}">我创建的收藏夹</a>
+<a href="{{ url_for('mine.collect') }}">{{ _('My Created Collects') }}</a>
 {%- endmacro %}
 {% macro collect_following() -%}
-<a href="{{ url_for('mine.collect_following')}}">我关注的收藏夹</a>
+<a href="{{ url_for('mine.collect_following')}}">{{ _('Following Collects')}}</a>
 {%- endmacro %}
 {% macro following_tag() -%}
-<a href="{{ url_for('mine.follow',type="tag")}}">关注的节点</a>
+<a href="{{ url_for('mine.follow',type="tag")}}">{{ _('Following Tags') }}</a>
 {%- endmacro %}
 {% macro following_topic() -%}
-<a href="{{ url_for('mine.follow',type="topic")}}">关注的问题</a>
+<a href="{{ url_for('mine.follow',type="topic")}}">{{ _('Following Topics')}}</a>
 {%- endmacro %}
 {% macro following_user() -%}
-<a href="{{ url_for('mine.follow',type="user")}}">关注的用户</a>
+<a href="{{ url_for('mine.follow',type="user")}}">{{ _('Following Users')}}</a>
 {%- endmacro %}
 {% macro following_collect() -%}
-<a href="{{ url_for('mine.follow',type="collect")}}">关注的收藏夹</a>
+<a href="{{ url_for('mine.follow',type="collect")}}">{{ _('Following Collects')}}</a>
 {%- endmacro %}
 {% macro avatar(author) -%}
 {% set infor = author.infor %}

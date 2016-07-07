@@ -6,28 +6,28 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-03 19:27:58 (CST)
-# Last Update:星期二 2016-6-28 21:52:3 (CST)
+# Last Update:星期日 2016-7-10 21:11:14 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_wtf import Form
 from wtforms import SelectField, StringField, TextAreaField
 from wtforms.validators import DataRequired
-from flask_babel import lazy_gettext as _
+from flask_babelex import lazy_gettext as _
 
 
 class SortForm(Form):
     display = SelectField(
         _('Choice'),
         coerce=int,
-        choices=[(0, 'all topic'), (1, 'one day'), (2, 'one week'), (
-            3, 'one month')])
+        choices=[(0, _('All Topics')), (1, _('One Day')), (2, _('One Week')), (
+            3, 'One Month')])
     sort = SelectField('Sort',
                        coerce=int,
-                       choices=[(0, 'publish'), (1, 'author')])
+                       choices=[(0, _('Publish')), (1, _('Author'))])
     st = SelectField('Up and Down',
                      coerce=int,
-                     choices=[(0, 'down'), (1, 'up')])
+                     choices=[(0, _('Desc')), (1, _('Asc'))])
 
 
 class SearchForm(Form):

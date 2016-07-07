@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% block content %}
-{{ breadcrumb(active='我的收藏')}}
+{{ breadcrumb(active=_('My Collects'))}}
 <div class="row">
     <div class="col-md-9">
         <ul class="nav nav-tabs">
@@ -9,15 +9,15 @@
         </ul>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#addcollect">创建收藏夹</button>
+                <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#addcollect">{{_('Create Collect')}}</button>
             </div>
             {% for collect in collects.items %}
             <div class="panel-body" style="border-bottom:1px solid #eee">
                 <a href="{{ url_for('mine.collect',uid=collect.id)}}">{{ collect.name}}</a>
                 {% if collect.is_privacy %}
-                <span class="pull-right">私有</span>
+                <span class="pull-right">{{_('Privacy')}}</span>
                 {% else %}
-                <span class="pull-right">公共</span>
+                <span class="pull-right">{{_('Public')}}</span>
                 {% endif %}
             </div>
             {% endfor %}
@@ -33,7 +33,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addcollectLabel">创建收藏夹</h4>
+                <h4 class="modal-title" id="addcollectLabel">{{_('Create Collect')}}</h4>
             </div>
             <form action="{{ url_for('mine.collect')}}" method="POST">
                 {{ form.hidden_tag() }}
@@ -54,8 +54,8 @@
                     {% endfor %}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_('cancel')}}</button>
+                    <button type="submit" class="btn btn-primary">{{_('confirm')}}</button>
                 </div>
             </form>
         </div>
