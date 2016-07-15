@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 10:22:42 (CST)
-# Last Update:星期四 2016-7-7 19:27:22 (CST)
+# Last Update:星期四 2016-7-14 20:6:15 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -28,7 +28,7 @@ class TopicModel(object):
         topic.uid = make_uid()
         topic.author = current_user
         tags = sp(',|;|，|；| ', form.tags.data)
-        tags = list(set(tags))[:4]
+        tags = [x for x in list(set(tags)) if x != ''][:4]
         post_tags = []
         for tag in tags:
             if tag != '':

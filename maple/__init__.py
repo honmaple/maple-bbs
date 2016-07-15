@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期五 2016-7-8 12:22:53 (CST)
+# Last Update:星期五 2016-7-15 19:37:57 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
@@ -45,30 +45,8 @@ def register(app):
 
 
 def register_routes(app):
-    from maple.forums.views import site
-    app.register_blueprint(site, url_prefix='')
-    from maple.topic.views import site
-    app.register_blueprint(site, url_prefix='/topic')
-    from maple.board.views import site
-    app.register_blueprint(site, url_prefix='/<parent_b>')
-    from maple.user.views import site
-    app.register_blueprint(site, url_prefix='/u/<user_url>')
-    from maple.mine.views import site
-    app.register_blueprint(site, url_prefix='/user')
-    from maple.setting.views import site
-    app.register_blueprint(site, url_prefix='/setting')
-    from maple.upload.views import site as upload_site
-    app.register_blueprint(upload_site)
-    from maple.tag.views import site
-    app.register_blueprint(site, url_prefix='/t')
-    from maple.docs.views import site
-    app.register_blueprint(site, subdomain='docs')
-    # import maple.auth.views
-    from maple.auth import views
-    from maple.admin import admin
-    # import maple.admin.admin
-    # from flask_admin import Admin
-    # admin = Admin(app, name='microblog', template_mode='bootstrap3')
+    from .urls import register_urls
+    register_urls(app)
 
 
 app = create_app()

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-03 19:27:58 (CST)
-# Last Update:星期日 2016-7-10 21:11:14 (CST)
+# Last Update:星期四 2016-7-14 20:35:37 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -21,7 +21,7 @@ class SortForm(Form):
         _('Choice'),
         coerce=int,
         choices=[(0, _('All Topics')), (1, _('One Day')), (2, _('One Week')), (
-            3, 'One Month')])
+            3, _('One Month'))])
     sort = SelectField('Sort',
                        coerce=int,
                        choices=[(0, _('Publish')), (1, _('Author'))])

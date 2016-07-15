@@ -6,25 +6,25 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期四 2016-7-7 19:54:5 (CST)
+# Last Update:星期五 2016-7-15 19:3:47 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import (Blueprint, render_template, g, request, abort, redirect,
-                   flash, url_for)
+                   flash, url_for, current_app)
 from flask_login import current_user, login_required
 from flask_maple.forms import flash_errors
-from maple import app, db, cache
 from maple.helpers import is_num
 from maple.user.models import User
 from maple.forums.models import Notice, Board
 from maple.topic.models import Topic
 from .forms import MessageForm
+from maple import cache, db
 
-site = Blueprint('forums', __name__)
+# site = Blueprint('forums', __name__)
 
 
-@site.route('/', methods=['GET'])
+# @site.route('/', methods=['GET'])
 @cache.cached(timeout=60)
 def index():
     topics = Topic.query.filter_by(is_good=True, is_top=False).paginate(1, 10)
@@ -35,7 +35,7 @@ def index():
     return render_template('forums/index.html', **data)
 
 
-@site.route('/index')
+# @site.route('/index')
 @cache.cached(timeout=60)
 def forums():
     boards = {}
@@ -48,13 +48,14 @@ def forums():
     return render_template('forums/forums.html', **data)
 
 
-@site.route('/notices')
+# @site.route('/notices')
 @login_required
 def notice():
     page = is_num(request.args.get('page'))
     notices = Notice.query.filter_by(
         rece_id=current_user.id).order_by(Notice.publish.desc()).paginate(
-            page, app.config['PER_PAGE'],
+            page,
+            current_app.config['PER_PAGE'],
             error_out=True)
     unread_notices = Notice.query.filter_by(rece_id=current_user.id,
                                             is_read=False).all()
@@ -66,16 +67,18 @@ def notice():
     return render_template('forums/notice.html', **data)
 
 
-@site.route('/userlist')
+# @site.route('/userlist')
 @login_required
 def userlist():
     page = is_num(request.args.get('page'))
-    users = User.query.paginate(page, app.config['PER_PAGE'], error_out=True)
+    users = User.query.paginate(page,
+                                current_app.config['PER_PAGE'],
+                                error_out=True)
     data = {'title': '用户列表 - ', 'users': users}
     return render_template('forums/userlist.html', **data)
 
 
-@site.route('/messages/<int:receId>', methods=['POST'])
+# @site.route('/messages/<int:receId>', methods=['POST'])
 @login_required
 def message(receId):
     form = MessageForm()
@@ -96,21 +99,21 @@ def message(receId):
     return redirect(url_for('user.user', user_url=rece_user.username))
 
 
-@site.route('/about')
+# @site.route('/about')
 @cache.cached(timeout=60)
 def about():
     data = {'title': '关于 - '}
     return render_template('forums/about.html', **data)
 
 
-@site.route('/help')
+# @site.route('/help')
 @cache.cached(timeout=60)
 def help():
     data = {'title': '帮助 - '}
     return render_template('forums/help.html', **data)
 
 
-@site.route('/order', methods=['POST'])
+# @site.route('/order', methods=['POST'])
 def order():
     from maple.main.orderby import form_judge
     form = g.sort_form

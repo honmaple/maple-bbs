@@ -6,11 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期一 2016-7-4 17:40:45 (CST)
+# Last Update:星期五 2016-7-15 18:33:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import Blueprint, render_template, request, url_for
+from flask import render_template, request, url_for
 from maple import app
 from maple.helpers import is_num
 from maple.topic.models import Tags, Topic
@@ -19,11 +19,11 @@ from urllib.parse import urljoin
 from werkzeug.utils import escape
 from werkzeug.contrib.atom import AtomFeed
 
-site = Blueprint('tag', __name__)
+# site = Blueprint('tag', __name__)
 
 
-@site.route('', defaults={'tag': None})
-@site.route('/<tag>')
+# @site.route('', defaults={'tag': None})
+# @site.route('/<tag>')
 def tag(tag):
     if tag is None:
         tags = Tags.query.distinct(Tags.tagname).all()
@@ -54,7 +54,7 @@ def tag(tag):
 #     return tags
 
 
-@site.route('/<tag>/feed')
+# @site.route('/<tag>/feed')
 def rss(tag):
     feed = AtomFeed('%s·HonMaple社区' % tag,
                     feed_url=request.url,

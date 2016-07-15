@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
-{% block content %}
+{% block script -%}
+{{ super() }}
 <script type="text/javascript">
  $(document).ready(function(){
      $('#topic-preview').click(function() {
@@ -10,9 +11,21 @@
          }, function(data) {
              $("#show-preview").html(data);
          });
-     })
+     });
+     $('#tokenfield').tokenfield({
+         limit:4
+     });
  });
 </script>
+{%- endblock script %}
+{% block content %}
+<style>
+ .tokenfield .token {
+     border: 1px solid #5cb85c;
+     background-color: #5cb85c;
+     color:#eee;
+ }
+</style>
 {{ breadcrumb(active='提问')}}
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -47,7 +60,7 @@
                     </span>
                 </div>
                 <div class="col-sm-10" style="margin-bottom:8px;">
-                    {{ form.tags(class="form-control",placeholder="节点请以逗号,空格隔开.请勿输入超过4个节点") }}
+                    {{ form.tags(class="form-control",id="tokenfield",placeholder="节点请以逗号,空格隔开.请勿输入超过4个节点") }}
                 </div>
                 <div class="col-sm-2">
                     {{ form.content.label(class="control-label") }}

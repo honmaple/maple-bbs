@@ -10,6 +10,9 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from maple import app, db
+from maple.user.models import User, UserInfor, UserSetting, Role
+from getpass import getpass
+from werkzeug.security import generate_password_hash
 import os
 
 migrate = Migrate(app, db)
@@ -54,6 +57,34 @@ def babel_update():
 def babel_compile():
     pybabel = 'pybabel'
     os.system(pybabel + ' compile -d maple/translations')
+
+
+@manager.option('-u', '--username', dest='username', default='admin')
+@manager.option('-e', '--email', dest='email')
+@manager.option('-w', '--password', dest='password')
+def create_user(username, email, password):
+    if username == 'admin':
+        username = input('Username(default admin):')
+    if email is None:
+        email = input('Email:')
+    if password is None:
+        password = getpass('Password:')
+    user = User()
+    user.username = username
+    user.password = generate_password_hash(password)
+    user.email = email
+    user.is_superuser = True
+    userinfor = UserInfor()
+    user.infor = userinfor
+    usersetting = UserSetting()
+    user.setting = usersetting
+    role = Role.query.filter_by(rolename='super').first()
+    if role is None:
+        role = Role()
+        role.rolename = 'super'
+    user.roles.append(role)
+    db.session.add(user)
+    db.session.commit()
 
 
 @manager.option('-h', '--host', dest='host', default='127.0.0.1')

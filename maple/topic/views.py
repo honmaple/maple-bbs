@@ -6,12 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期四 2016-7-7 19:59:29 (CST)
+# Last Update:星期五 2016-7-15 20:24:16 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import (Blueprint, render_template, redirect, url_for, request, g,
-                   jsonify, session)
+from flask import (render_template, redirect, url_for, request, g, jsonify)
 from flask.views import MethodView
 from flask_login import login_required
 from flask_maple.forms import flash_errors
@@ -26,15 +25,10 @@ from maple.topic.forms import TopicForm, ReplyForm
 from maple.filters import safe_clean, Filters
 from .controls import TopicModel, ReplyModel
 
-site = Blueprint('topic', __name__)
 
-
-@site.route('/ask')
 @login_required
 def ask():
-    form = session.get('topicform', None)
-    if form is None:
-        form = TopicForm()
+    form = TopicForm()
     boardId = request.args.get('boardId')
     if boardId is not None:
         board = Board.query.filter_by(id=boardId).first()
@@ -44,17 +38,16 @@ def ask():
     return render_template('topic/ask.html', **data)
 
 
-@site.route('/good')
 def good():
     page = is_num(request.args.get('page'))
     topics = Topic.query.filter_by(is_good=True).paginate(
-        page, app.config['PER_PAGE'],
+        page,
+        app.config['PER_PAGE'],
         error_out=True)
     data = {'title': '精华文章 - ', 'topics': topics}
     return render_template('topic/topic_good.html', **data)
 
 
-@site.route('/preview', methods=['POST'])
 @login_required
 def preview():
     choice = request.values.get('choice')
@@ -66,7 +59,6 @@ def preview():
         return Filters.safe_markdown(content)
 
 
-@site.route('/up/<topicId>', methods=['POST'])
 def vote_up(topicId):
     if not g.user.is_authenticated:
         return jsonify(judge=False, url=url_for('auth.login'))
@@ -80,7 +72,6 @@ def vote_up(topicId):
     return jsonify(judge=True, html=html)
 
 
-@site.route('/down/<topicId>', methods=['POST'])
 def vote_down(topicId):
     if not g.user.is_authenticated:
         return jsonify(judge=False, url=url_for('auth.login'))
@@ -107,7 +98,8 @@ class TopicAPI(MethodView):
         page = is_num(request.args.get('page'))
         if uid is None:
             topics = Topic.query.filter_by(is_top=False).paginate(
-                page, app.config['PER_PAGE'],
+                page,
+                app.config['PER_PAGE'],
                 error_out=True)
             top_topics = Topic.query.filter_by(is_top=True).limit(5).all()
             data = {'title': '所有主题 - ',
@@ -135,26 +127,23 @@ class TopicAPI(MethodView):
         else:
             if form.errors:
                 flash_errors(form)
-            session['topicform'] = form
             return redirect(url_for('topic.ask'))
 
-    # def put(self, uid):
-    #     form = TopicForm()
-    #     if form.validate_on_submit():
-    #         pass
+    def put(self, uid):
+        return 'delete'
 
-    # def delete(self, uid):
-    #     return 'delete'
+    def delete(self, uid):
+        return 'delete'
 
 
 class ReplyAPI(MethodView):
     decorators = [reply_permission]
 
-    def post(self, uid):
+    def post(self, topicId):
         form = ReplyForm()
-        topic = Topic.query.filter_by(id=uid).first_or_404()
+        topic = Topic.query.filter_by(id=topicId).first_or_404()
         if form.validate_on_submit():
-            reply = ReplyModel.post_data(form, uid)
+            reply = ReplyModel.post_data(form, topicId)
             page = replies_page(topic.id)
             return redirect(url_for('topic.topic',
                                     uid=topic.uid,
@@ -174,16 +163,3 @@ class ReplyAPI(MethodView):
 
     # def delete(self, uid):
     #     return 'delete'
-
-
-topic_view = TopicAPI.as_view('topic')
-site.add_url_rule('',
-                  defaults={'uid': None},
-                  view_func=topic_view,
-                  methods=['GET'])
-site.add_url_rule('', view_func=TopicAPI.as_view('post'), methods=['POST'])
-site.add_url_rule('/<uid>', view_func=topic_view, methods=['GET'])
-
-site.add_url_rule('/reply/<uid>',
-                  view_func=ReplyAPI.as_view('reply'),
-                  methods=['POST'])

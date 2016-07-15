@@ -6,23 +6,22 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:04:43 (CST)
-# Last Update:星期六 2016-6-25 11:7:20 (CST)
+# Last Update:星期五 2016-7-15 18:40:21 (CST)
 #          By:jianglin
 # Description: user setting include password , infor and privacy
 # **************************************************************************
-from flask import (Blueprint, render_template, request, url_for, redirect,
-                   flash)
+from flask import (render_template, request, url_for, redirect, flash)
 from flask_maple.forms import flash_errors
 from flask_login import current_user, login_required
 from maple.setting.forms import (ProfileForm, PasswordForm, PrivacyForm)
 from maple.upload.forms import AvatarForm
 from .controls import SettingModel
 
-site = Blueprint('setting', __name__)
+# site = Blueprint('setting', __name__)
 
 
-@site.route('', methods=['GET', 'POST'])
-@site.route('/profile', methods=['GET', 'POST'])
+# @site.route('', methods=['GET', 'POST'])
+# @site.route('/profile', methods=['GET', 'POST'])
 @login_required
 def setting():
     form = ProfileForm()
@@ -42,7 +41,7 @@ def setting():
         return render_template('setting/setting.html', **data)
 
 
-@site.route('/password', methods=['GET', 'POST'])
+# @site.route('/password', methods=['GET', 'POST'])
 @login_required
 def password():
     form = PasswordForm()
@@ -60,7 +59,7 @@ def password():
         return render_template('setting/password.html', form=form)
 
 
-@site.route('/privacy', methods=['GET', 'POST'])
+# @site.route('/privacy', methods=['GET', 'POST'])
 @login_required
 def privacy():
     form = PrivacyForm()

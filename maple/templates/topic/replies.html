@@ -67,7 +67,7 @@
     {% if g.user.is_authenticated %}
     <div class="panel-heading"> {{ _('Reply this topic') }} </div>
     <div class="panel-body">
-        <form action="{{ url_for('topic.reply',uid=topic.id)}}" method="POST">
+        <form action="{{ url_for('topic.reply',topicId=topic.id)}}" method="POST">
             {{ form.hidden_tag() }}
             {{ form.content(class='form-control')}}
             <button class="btn btn-sm btn-primary" type="submit">{{ _('Post reply') }}</button>
@@ -77,7 +77,7 @@
     <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
         <span class="text-center" style="display:block;width:100%;color:#999">
             <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
-            {{_('You need')}}<a href="{{ url_for('auth.login') }}">{{ _('Login')}}</a>{{_('before you can reply.')}}
+            {{_('You need')}} <a href="{{ url_for('auth.login') }}">{{ _('Login')}}</a> {{_('before you can reply.')}}
         </span>
     </div>
     {% endif %}
