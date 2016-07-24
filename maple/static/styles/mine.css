@@ -1,5 +1,5 @@
 body {
-    background:#f5f5f5
+    background:#f5f5f5;
 }
 a.tag {
     background:rgba(1,126,102,.08);
@@ -29,15 +29,19 @@ a.item_node {
 }
 .topic-content h1{
     font-size:30px;
+    font-weight:bold;
 }
 .topic-content h2{
     font-size:26px;
+    font-weight:bold;
 }
 .topic-content h3{
     font-size:22px;
+    font-weight:bold;
 }
 .topic-content h4{
     font-size:18px;
+    font-weight:bold;
 }
 .topic-content img {
     max-width: 100%;
@@ -56,4 +60,12 @@ a.item_node {
     text-align: center;
     background-color: #fff;
     text-decoration: none;
+}
+.rss {
+    display:block;
+    margin-bottom:20px;
+}
+.follow-panel {
+    background-color:#fff;
+    border-bottom:None;
 }

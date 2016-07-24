@@ -2,7 +2,7 @@
 <a class="tag" href="{{ url_for('tag.tag',tag=tag.tagname)}}">{{ tag.tagname }}</a>
 {%- endmacro %}
 {% macro topic(topic) -%}
-<a href="{{ url_for('topic.topic',uid=topic.uid)}}">{{ topic.title}}</a>
+<a href="{{ url_for('topic.topic',topicId=topic.uid)}}">{{ topic.title}}</a>
 {%- endmacro %}
 {% macro user(username) -%}
 <a href="{{ url_for('user.user',user_url=username)}}">{{ username}}</a>
@@ -11,7 +11,7 @@
 <a href="{{ url_for('board.board',parent_b=board.parent_board,child_b=board.board)}}">{{ board.board }}</a>
 {%- endmacro %}
 {% macro collect(collect) -%}
-<a href="{{ url_for('mine.collect',uid=collect.id)}}">{{ collect.name }}</a>
+<a href="{{ url_for('mine.collect',collectId=collect.id)}}">{{ collect.name }}</a>
 {%- endmacro %}
 {% macro collect_list() -%}
 <a href="{{ url_for('mine.collect') }}">{{ _('My Created Collects') }}</a>

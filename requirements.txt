@@ -29,13 +29,17 @@ Flask-BabelPlus==1.0.1
 Flask-Bootstrap==3.3.5.7
 Flask-Cache==0.13.1
 Flask-DebugToolbar==0.10.0
+Flask-HTTPAuth==3.1.2
 Flask-Login==0.3.2
 Flask-Mail==0.9.1
 Flask-Maple==0.3.5
+Flask-Maple-Rbac==0.3.6
 Flask-Migrate==1.8.0
 Flask-OAuthlib==0.9.3
 Flask-Plugins==1.6.1
 Flask-Principal==0.4.0
+flask-profiler==1.0.1
+Flask-RBAC==0.2.1
 Flask-Redis==0.1.0
 Flask-RESTful==0.3.5
 Flask-Script==2.0.5
@@ -74,6 +78,7 @@ pytz==2016.4
 redis==2.10.5
 requests==2.9.1
 requests-oauthlib==0.6.1
+simple-rbac==0.1.1
 simplejson==3.8.1
 six==1.10.0
 speaklater==1.3

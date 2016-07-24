@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-02 20:12:26 (CST)
-# Last Update:星期六 2016-7-2 20:14:36 (CST)
+# Last Update:星期日 2016-7-24 15:7:4 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -19,7 +19,8 @@ class UserModelView(BaseModelView):
     column_exclude_list = ['password', 'infor', 'setting']
     column_searchable_list = ['username', 'email']
     column_filters = ['email', 'is_superuser', 'is_confirmed', 'register_time']
-    form_columns = ('username', 'email', 'password')
+    column_editable_list = ['is_confirmed', 'is_superuser']
+    form_columns = ('username', 'email', 'password', 'roles', 'is_confirmed')
     # inline_models = (UserInfor, UserSetting, Role)
     column_details_exclude_list = ['infor', 'setting']
 
@@ -32,9 +33,9 @@ class UserInforModelView(BaseModelView):
 
 
 class UserRoleModelView(BaseModelView):
-    column_list = ['rolename', 'description', 'users']
+    column_list = ['name', 'description', 'users']
     column_filters = ['users.username']
-    column_searchable_list = ['rolename']
+    column_searchable_list = ['name']
 
 
 class UserSettingModelView(BaseModelView):

@@ -1,21 +1,45 @@
-<div class="footer col-md-offset-1 col-md-10" style="padding:0;">
-    <div class="row">
-        <div class="col-md-7 text-center hidden-xs">
-            <small style="color:#999">
-                <span>{{ _('Now users online:')}}<strong style="color:#333;">{{ 'all_counts' | get_online_users }}</strong></span>
-                <span style="margin-left:10px">{{ _('Registered users online:') }}<strong style="color:#333;">{{ 'sign_counts' | get_online_users }}</strong></span>
-                <span style="margin-left:10px">{{ _('Guests online:')}}<strong style="color:#333;">{{ 'counts' | get_online_users }}</strong></span>
-                <span style="margin-left:10px">{{ _('Highest online:')}}<strong style="color:#333;">{{ 'high' | get_online_users }}</strong></span>
-                <span style="margin-left:10px">{{ _('Time of highest online:')}}<strong style="color:#333;">{{ 'high_time' | get_online_users }}</strong></span>
-            </small>
-        </div>
-        <div class="col-md-offset-2 col-md-3 text-center">
-            <small>
-                <span><a href="{{ url_for('forums.help')}}">{{ _('Help')}}</a></span>
-                <span><a href="{{ url_for('forums.about')}}">{{ _('About')}}</a></span>
-                <span><a href="https://github.com/honmaple/maple-bbs" target="_blank">GitHub</a></span>
-                <span> Copyright © 2015-2016 honmaple.</span>
-            </small>
-        </div>
+<style>
+ .footer {
+     margin-top: -30px;
+     height: 100px;
+     background-color:#fff;
+     padding:16 0 10 10;
+     border:1px solid #ddd;
+     border-radius:5px;
+ }
+ p.aaaa a{
+     color: #aaa;
+     text-decoration: none;
+     border-bottom: 1px dotted #999;
+ }
+ .pipe {
+     margin: 0 5px;
+     color: #ccc;
+ }
+</style>
+<div class="footer col-md-offset-1 col-md-10">
+    <div class="pull-right" style="margin-right:30px;">
+        <p class="aaaa text-right">
+            <a href="{{ url_for('forums.help')}}">{{ _('Help')}}</a>
+            <span class="pipe"> | </span>
+            <a href="{{ url_for('forums.about')}}">{{ _('About')}}</a>
+            <span class="pipe"> | </span>
+            <a href="{{ url_for('forums.contact')}}">{{ _('Contact me')}}</a>
+            <span class="pipe"> | </span>
+            <a href="https://github.com/honmaple/maple-bbs" target="_blank">GitHub</a>
+        </p>
+        <p class="text-right hidden-xs" style="font-size:13px;">
+            <span>{{ _('Now users online:')}}<strong>{{ 'all_counts' | get_online_users }}</strong></span>
+            <span style="margin-left:10px">{{ _('Registered users online:') }}<strong>{{ 'sign_counts' | get_online_users }}</strong></span>
+            <span style="margin-left:10px">{{ _('Guests online:')}}<strong>{{ 'counts' | get_online_users }}</strong></span>
+        </p>
+        <p class="text-right  hidden-xs"  style="font-size:13px;">
+            <span style="margin-left:10px">{{ _('Highest online:')}}<strong>{{ 'high' | get_online_users }}</strong></span>
+            <span style="margin-left:10px">{{ _('Time of highest online:')}}<strong>{{ 'high_time' | get_online_users }}</strong></span>
+        </p>
     </div>
+    <blockquote style="font-size:13px;">
+        <p style="font-size:14px;">{{ Title.description }}</p>
+        <footer> <span> Copyright © 2015-2016 honmaple.</span></footer>
+    </blockquote>
 </div>

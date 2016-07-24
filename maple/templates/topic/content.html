@@ -18,25 +18,26 @@
     <li><a href="{{ url_for('board.board',parent_b=board.parent_board,child_b=board.board)}}">{{ board.board }}</a></li>
     <li class="active">{{ topic.title }}</li>
 </ol>
-{% set last_reply = topic.replies.first() %}
 {% from 'base/paginate.html' import footer as p_footer %}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-heading media ">
                 <div class="media-body">
-                    <h3 class="media-heading">{{ topic.title}}</h3>
+                    <h3 class="media-heading" style="font-size:20px;"><b>{{ topic.title}}</b></h3>
                     <small style="color:#999">
                         {{ votes(topic) }}
                         {% for tag in topic.tags %}
                         {{ link_base.tag(tag) }}
                         {% endfor %}
-                        <br/>
-                        {{ link_base.user(topic.author.username )}}
-                        {{ _('published at %(time)s',time = topic.publish | timesince ) }}
-                        {% if last_reply %}
-                        · {{ _('The last reply published by %(author)s at %(time)s',author=link_base.user(last_reply.author.username),time=last_reply.publish | timesince)}}
-                        {% endif %}
+                        <span style="margin-left:10px;">
+                            {% set last_reply = topic.replies.first() %}
+                            {{ link_base.user(topic.author.username )}}
+                            {{ _('published at %(time)s',time = topic.publish | timesince ) }}
+                            {% if last_reply %}
+                            · {{ _('The last reply published by %(author)s at %(time)s',author=link_base.user(last_reply.author.username),time=last_reply.publish | timesince)}}
+                            {% endif %}
+                        </span>
                     </small>
                 </div>
                 <div class="media-right">

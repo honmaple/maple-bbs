@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <h3><strong>{{ collect.name }}</strong></h3>
+    </div>
+    {% if topics.items %}
+    {% if setting.collect_list == 1 or (setting.collect_list == 2 and g.user.is_authenticated) or (g.user.is_authenticated and g.user.username == g.user_url) %}
+    {% for topic in topics.items %}
+    <div class="panel-body" style="border-bottom:1px solid #eee">
+        {{ link_base.topic(topic) }}
+    </div>
+    {% endfor  %}
+    {{ p_footer(topics,'user.collect_detail')}}
+    {% else %}
+    <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
+        <span class="text-center" style="display:block;width:100%;color:#999">
+            <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
+            根据用户设置,列表被隐藏
+        </span>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="panel-body text-center">
+        没有收藏
+    </div>
+    {% endif %}
+</div>

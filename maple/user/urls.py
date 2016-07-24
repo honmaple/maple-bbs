@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-15 19:23:48 (CST)
-# Last Update:星期五 2016-7-15 19:35:42 (CST)
+# Last Update:星期日 2016-7-24 14:10:2 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Blueprint, abort, g
 from maple.user.models import User
 from maple.forums.forms import MessageForm
-from .views import user, topic, reply, collect, following, follower
+from .views import user, topic, reply, collect, following, follower,collect_detail
 
 site = Blueprint('user', __name__)
 
@@ -42,5 +42,6 @@ site.add_url_rule('', view_func=user)
 site.add_url_rule('/topics', view_func=topic)
 site.add_url_rule('/replies', view_func=reply)
 site.add_url_rule('/collects', view_func=collect)
+site.add_url_rule('/collects/<int:collectId>', view_func=collect_detail)
 site.add_url_rule('/following', view_func=following)
 site.add_url_rule('/followers', view_func=follower)

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期四 2016-7-7 18:53:10 (CST)
+# Last Update:星期日 2016-7-24 19:58:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,25 +14,6 @@ from flask import current_app
 from maple import db
 from datetime import datetime
 from sqlalchemy import event
-
-tag_topic = db.Table('tag_topic', db.Column('tags_id', db.Integer,
-                                            db.ForeignKey('tags.id')),
-                     db.Column('topics_id', db.Integer,
-                               db.ForeignKey('topics.id')))
-
-
-class Tags(db.Model):
-    __tablename__ = 'tags'
-    id = db.Column(db.Integer, primary_key=True)
-    time = db.Column(db.DateTime, default=datetime.utcnow())
-    tagname = db.Column(db.String(64), nullable=False)
-    summary = db.Column(db.Text)
-
-    def __str__(self):
-        return self.tagname
-
-    def __repr__(self):
-        return '<Tags %r>' % self.tagname
 
 
 class Topic(db.Model):
@@ -44,11 +25,6 @@ class Topic(db.Model):
     publish = db.Column(db.DateTime, default=datetime.utcnow())
     updated = db.Column(db.DateTime)
     vote = db.Column(db.Integer, default=0)
-
-    tags = db.relationship('Tags',
-                           secondary=tag_topic,
-                           lazy='dynamic',
-                           backref="topics", )
 
     author_id = db.Column(db.Integer,
                           db.ForeignKey('users.id',
@@ -81,6 +57,10 @@ class Topic(db.Model):
     def __repr__(self):
         return "<Topic %r>" % self.title
 
+    def pagea(self, page=None):
+        per_page = current_app.config['PER_PAGE']
+        return self.paginate(page, per_page, True)
+
     # @staticmethod
     # def page(page):
     #     app = current_app._get_current_object()
@@ -103,17 +83,22 @@ class Reply(db.Model):
     topic_id = db.Column(db.Integer,
                          db.ForeignKey('topics.id',
                                        ondelete="CASCADE"))
-    topic = db.relationship('Topic',
-                            backref=db.backref('replies',
-                                               cascade='all,delete-orphan',
-                                               lazy='dynamic',
-                                               order_by='Reply.publish.desc()'))
+    topic = db.relationship(
+        'Topic',
+        backref=db.backref('replies',
+                           cascade='all,delete-orphan',
+                           lazy='dynamic',
+                           order_by='Reply.publish.desc()'))
 
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     author = db.relationship('User',
                              backref=db.backref('replies',
                                                 lazy='dynamic',
                                                 order_by='Reply.publish'))
+    likers = db.relationship(
+        'User',
+        secondary='likes',
+        backref=db.backref("likes", lazy='dynamic'))
     __mapper_args__ = {"order_by": publish.desc()}
 
 
@@ -156,21 +141,3 @@ class Like(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     reply_id = db.Column(db.Integer, db.ForeignKey('replies.id'))
     like_time = db.Column(db.DateTime, default=datetime.now())
-
-# class TopicCount(db.Model):
-#     __tablename__ = 'topic_counts'
-#     id = db.Column(db.Integer, primary_key=True)
-#     topic_id = db.Column(db.Integer,
-#                          db.ForeignKey('topics.id',
-#                                        ondelete="CASCADE"))
-#     topic = db.relationship("Topic",
-#                             backref="counts",
-#                             cascade='all,delete-orphan',
-#                             single_parent=True,
-#                             uselist=False)
-#     read = db.Column(db.Integer, default=0)
-#     reply = db.Column(db.Integer, default=0)
-#     vote = db.Column(db.Integer, default=0)
-
-#     def __repr__(self):
-#         return '<TopicCount %r>' % self.id

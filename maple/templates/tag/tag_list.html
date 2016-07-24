@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-{% import 'base/link.html' as link %}
+{% import 'base/link.html' as link_base %}
 {% block content %}
 {{ breadcrumb(active=_('All Tags'))}}
 <div class="row">
@@ -11,7 +11,7 @@
             {% if tags %}
             <div class="panel-body">
                 {% for tag in tags %}
-                {{ link.tag(tag) }}
+                {{ link_base.tag(tag) }}
                 {% endfor %}
             </div>
             {% else %}

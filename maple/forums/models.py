@@ -6,15 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:24:19 (CST)
-# Last Update:星期四 2016-6-30 21:28:54 (CST)
+# Last Update:星期六 2016-7-23 20:58:12 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from maple import db
 from datetime import datetime
 from sqlalchemy.dialects.postgresql import JSON
-
-# from sqlalchemy.types import JSON
 
 
 class Board(db.Model):
@@ -46,29 +44,12 @@ class Board(db.Model):
 class Count(db.Model):
     __tablename__ = 'counts'
     id = db.Column(db.Integer, primary_key=True)
-    # author_id = db.Column(db.Integer,
-    #                       db.ForeignKey('users.id',
-    #                                     ondelete="CASCADE"))
-    # author = db.relationship("User",
-    #                          backref="counts",
-    #                          cascade='all,delete-orphan',
-    #                          single_parent=True,
-    #                          uselist=False)
     drafts = db.Column(db.Integer, default=0)
     collects = db.Column(db.Integer, default=0)
     inviteds = db.Column(db.Integer, default=0)
     follows = db.Column(db.Integer, default=0)
     topics = db.Column(db.Integer, default=0)
     all_topics = db.Column(db.Integer, default=0)
-
-    # board_id = db.Column(db.Integer,
-    #                      db.ForeignKey(Board.id,
-    #                                    ondelete="CASCADE"))
-    # board = db.relationship(Board,
-    #                         backref=db.backref("count", lazy="dynamic"),
-    #                         cascade='all,delete-orphan',
-    #                         single_parent=True,
-    #                         uselist=False)
 
     def __repr__(self):
         return '<Count %r>' % self.id

@@ -1,21 +1,20 @@
-function Follow(obj,data){
+function Follow(obj,data,url){
   if(obj.hasClass('active'))
   {$.ajax ({
     type : "DELETE",
-    url : "/user/follow",
+    url : url,
     data:data,
     contentType: 'application/json;charset=UTF-8',
     success: function(result) {
       if (result.judge === true)
       {
         obj.text('关注').removeClass('active');
-      }
-      else
-      {alert('asd');}}});
+      } else
+      {alert('fail');}}});
   }else
   {$.ajax ({
     type : "POST",
-    url : "/user/follow",
+    url : url,
     data:data,
     contentType: 'application/json;charset=UTF-8',
     success: function(result) {
@@ -23,42 +22,42 @@ function Follow(obj,data){
       {
         obj.text('取消关注').addClass('active');
       } else
-      {alert('asd');}
+      {alert('fail');}
     }});
   }
 }
 $(document).ready(function(){
   $('button.tagfollow').click(function(){
     var _$this = $(this);
+    var url = "/user/follow/tag";
     var data = JSON.stringify({
       id:_$this.attr("id"),
-      type:'tag'
     });
-    Follow(_$this,data);
+    Follow(_$this,data,url);
   });
   $('button.topicfollow').click(function(){
     var _$this = $(this);
+    var url = "/user/follow/topic";
     var data = JSON.stringify({
       id:_$this.attr("id"),
-      type:'topic'
     });
-    Follow(_$this,data);
+    Follow(_$this,data,url);
   });
   $('button.collectfollow').click(function(){
     var _$this = $(this);
+    var url = "/user/follow/collect";
     var data = JSON.stringify({
       id:_$this.attr("id"),
-      type:'collect'
     });
-    Follow(_$this,data);
+    Follow(_$this,data,url);
   });
   $('button.userfollow').click(function(){
     var _$this = $(this);
+    var url = "/user/follow/user";
     var data = JSON.stringify({
       id:_$this.attr("id"),
-      type:'user'
     });
-    Follow(_$this,data);
+    Follow(_$this,data,url);
   });
 });
 function DoCollect(collectData) {
@@ -71,13 +70,13 @@ function DoCollect(collectData) {
       });
       $.ajax ({
         type : "PUT",
-        url : collectData.edit_url,
+        url : collectData.collect_action_url,
         data:data,
         contentType: 'application/json;charset=UTF-8',
         success: function(result) {
-          if (result.judge == true)
+          if (result.judge === true)
           {
-            window.location =collectData.edit_url ;
+            window.location =collectData.collect_action_url ;
           }
         }
       });
@@ -85,13 +84,13 @@ function DoCollect(collectData) {
     $('button#delete-collect-form').click(function() {
       $.ajax ({
         type : "DELETE",
-        url : collectData.delete_url,
+        url : collectData.collect_action_url,
         data:JSON.stringify(),
         contentType: 'application/json;charset=UTF-8',
         success: function(result) {
-          if (result.judge == true)
+          if (result.judge === true)
           {
-            window.location = collectData.url;
+            window.location = collectData.collect_url;
           }
         }
       });
@@ -99,18 +98,16 @@ function DoCollect(collectData) {
     $('#delete-from-collect').click(function() {
       var _$this = $(this);
       var topicId = _$this.attr('data-id');
-      var collectId = collectData.collectId;
       var data = JSON.stringify({
-        collectId:collectId,
         topicId:topicId
       });
       $.ajax ({
         type : "DELETE",
-        url : collectData.delete,
+        url : collectData.delete_detail_action_url,
         data:data,
         contentType: 'application/json;charset=UTF-8',
         success: function(result) {
-          if (result.judge == true)
+          if (result.judge === true)
           {
             _$this.parent().remove();
           }

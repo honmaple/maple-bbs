@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-07-10 22:15+0800\n"
+"POT-Creation-Date: 2016-07-24 22:00+0800\n"
 "PO-Revision-Date: 2016-06-16 14:36+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: maple/extensions.py:112
+#: maple/extensions.py:125
 msgid "Please login to access this page."
 msgstr "这个页面要求登陆，请登陆"
 
@@ -26,11 +26,20 @@ msgstr "这个页面要求登陆，请登陆"
 msgid "I love freedom more than life."
 msgstr "爱生活，更爱自由"
 
+#: maple/auth/views.py:68
+msgid "Your account has been confirmed,don't need again"
+msgstr "你的账户已经验证，不能重复验证"
+
+#: maple/auth/views.py:74
+msgid "An email has been sent to your.Please receive"
+msgstr "验证邮件已发送到你的邮箱，请及时查收！"
+
 #: maple/forums/forms.py:21
 msgid "Choice"
 msgstr "选择"
 
-#: maple/forums/forms.py:23
+#: maple/forums/forms.py:23 maple/templates/topic/topic.html:13
+#: maple/templates/topic/topic_good.html:13
 msgid "All Topics"
 msgstr "所有主题"
 
@@ -41,6 +50,10 @@ msgstr "一天之内"
 #: maple/forums/forms.py:23
 msgid "One Week"
 msgstr "一周之内"
+
+#: maple/forums/forms.py:24
+msgid "One Month"
+msgstr "一月之内"
 
 #: maple/forums/forms.py:27
 msgid "Publish"
@@ -67,6 +80,30 @@ msgstr "搜索"
 msgid "message"
 msgstr "私信"
 
+#: maple/forums/views.py:44
+msgid "Index - "
+msgstr "首页 - "
+
+#: maple/forums/views.py:61
+msgid "Notice - "
+msgstr "消息提醒 - "
+
+#: maple/forums/views.py:71
+msgid "Userlist - "
+msgstr "用户列表 - "
+
+#: maple/forums/views.py:86
+msgid "send succeccfully"
+msgstr "成功发送"
+
+#: maple/forums/views.py:96
+msgid "About - "
+msgstr "关于 - "
+
+#: maple/forums/views.py:102
+msgid "Help - "
+msgstr "帮助 - "
+
 #: maple/mine/forms.py:21
 msgid "Name:"
 msgstr "收藏夹名:"
@@ -88,7 +125,7 @@ msgid "Login - "
 msgstr "登陆 - "
 
 #: maple/templates/auth/login.html:5 maple/templates/auth/login.html:8
-#: maple/templates/base/base.html:75 maple/templates/topic/replies.html:80
+#: maple/templates/base/base.html:75 maple/templates/topic/replies.html:90
 msgid "Login"
 msgstr "登陆"
 
@@ -185,7 +222,7 @@ msgstr "关注的用户"
 msgid "Ask Questions"
 msgstr "提问"
 
-#: maple/templates/base/panel.html:10 maple/templates/mine/collect.html:16
+#: maple/templates/base/panel.html:10 maple/templates/mine/collect.html:15
 #: maple/templates/mine/collect_list.html:3
 msgid "My Collects"
 msgstr "我的收藏"
@@ -256,8 +293,12 @@ msgstr "由%(author)s发表"
 msgid "No Topic"
 msgstr "没有帖子"
 
+#: maple/templates/follow/none.html:3
+msgid "No Following"
+msgstr "暂无关注"
+
 #: maple/templates/forums/about.html:3 maple/templates/forums/about.html:6
-#: maple/templates/maple/footer.html:15
+#: maple/templates/maple/footer.html:25
 msgid "About"
 msgstr "关于"
 
@@ -266,7 +307,7 @@ msgid "Board"
 msgstr "版块"
 
 #: maple/templates/forums/help.html:3 maple/templates/forums/help.html:6
-#: maple/templates/maple/footer.html:14
+#: maple/templates/maple/footer.html:23
 msgid "Help"
 msgstr "帮助"
 
@@ -286,53 +327,57 @@ msgstr "全部标记为已读"
 msgid "No Notices"
 msgstr "没有通知"
 
-#: maple/templates/maple/footer.html:5
+#: maple/templates/maple/footer.html:27
+msgid "Contact me"
+msgstr "联系我"
+
+#: maple/templates/maple/footer.html:32
 msgid "Now users online:"
 msgstr "当前在线用户:"
 
-#: maple/templates/maple/footer.html:6
+#: maple/templates/maple/footer.html:33
 msgid "Registered users online:"
 msgstr "注册用户:"
 
-#: maple/templates/maple/footer.html:7
+#: maple/templates/maple/footer.html:34
 msgid "Guests online:"
 msgstr "当前访客:"
 
-#: maple/templates/maple/footer.html:8
+#: maple/templates/maple/footer.html:37
 msgid "Highest online:"
 msgstr "最高在线:"
 
-#: maple/templates/maple/footer.html:9
+#: maple/templates/maple/footer.html:38
 msgid "Time of highest online:"
 msgstr "最高在线时间:"
 
-#: maple/templates/mine/collect.html:22
+#: maple/templates/mine/collect.html:21
 msgid "edit"
 msgstr "编辑"
 
-#: maple/templates/mine/collect.html:23 maple/templates/mine/collect.html:29
+#: maple/templates/mine/collect.html:22 maple/templates/mine/collect.html:30
 msgid "delete"
 msgstr "删除"
 
-#: maple/templates/mine/collect.html:35
+#: maple/templates/mine/collect.html:36
 msgid "No Collect"
 msgstr "暂无收藏"
 
-#: maple/templates/mine/collect.html:50
+#: maple/templates/mine/collect.html:51
 msgid "Edit the collect"
 msgstr "编辑收藏"
 
-#: maple/templates/mine/collect.html:70 maple/templates/mine/collect.html:89
+#: maple/templates/mine/collect.html:71 maple/templates/mine/collect.html:90
 #: maple/templates/mine/collect_list.html:57
 msgid "cancel"
 msgstr "取消"
 
-#: maple/templates/mine/collect.html:71 maple/templates/mine/collect.html:90
+#: maple/templates/mine/collect.html:72 maple/templates/mine/collect.html:91
 #: maple/templates/mine/collect_list.html:58
 msgid "confirm"
 msgstr "确定"
 
-#: maple/templates/mine/collect.html:82
+#: maple/templates/mine/collect.html:83
 msgid "Delete this collect"
 msgstr "删除收藏"
 
@@ -363,27 +408,28 @@ msgstr "于%(time)s发布"
 msgid "The last reply published by %(author)s at %(time)s"
 msgstr "最后由%(author)s于%(time)s发布"
 
-#: maple/templates/topic/replies.html:17
+#: maple/templates/topic/replies.html:21
 #, python-format
 msgid "Received %(total)s replies"
 msgstr "共收到%(total)s条回复"
 
-#: maple/templates/topic/replies.html:68
+#: maple/templates/topic/replies.html:78
 msgid "Reply this topic"
 msgstr "回帖"
 
-#: maple/templates/topic/replies.html:73
+#: maple/templates/topic/replies.html:83
 msgid "Post reply"
 msgstr "发表回复"
 
-#: maple/templates/topic/replies.html:80
+#: maple/templates/topic/replies.html:90
 msgid "You need"
 msgstr "你需要"
 
-#: maple/templates/topic/replies.html:80
+#: maple/templates/topic/replies.html:90
 msgid "before you can reply."
 msgstr "后才能发表回复"
 
+#: maple/templates/topic/topic_good.html:13
 #: maple/templates/topic/topic_list.html:36
 msgid "Good Topics"
 msgstr "社区精华帖子"
@@ -406,6 +452,15 @@ msgstr "筛选:"
 msgid "Order:"
 msgstr "排序:"
 
+#: maple/templates/user/infor.html:22 maple/topic/permission.py:36
+#: maple/topic/permission.py:72 maple/topic/permission.py:83
+msgid "You haven't confirm your account,Please confirmed"
+msgstr "你的账户未验证，请尽快验证！"
+
+#: maple/templates/user/infor.html:23
+msgid "Activate  Account"
+msgstr "验证帐户"
+
 #: maple/topic/forms.py:21
 msgid "Title:"
 msgstr "标题:"
@@ -421,4 +476,8 @@ msgstr "分类:"
 #: maple/topic/forms.py:28
 msgid "Tags:"
 msgstr "节点:"
+
+#: maple/topic/permission.py:49
+msgid "You have no permission"
+msgstr "你没有权限！"
 

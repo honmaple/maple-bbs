@@ -1,10 +1,21 @@
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
-        ds
+        <span class="pull-right">
+            排序:
+            <div class="btn-group btn-group-xs" role="group">
+                {% if request.args.get('orderby') == 'score' %}
+                <a href="{{ url_for('user.follower',orderby='publish')}}" class="btn btn-default">时间</a>
+                <a href="{{ url_for('user.follower',orderby='score')}}" class="btn btn-default active">积分</a>
+                {% else %}
+                <a href="" class="btn btn-default active">时间</a>
+                <a href="{{ url_for('user.follower',orderby='score')}}" class="btn btn-default">积分</a>
+                {% endif %}
+            </div>
+        </span>
     </div>
     {% for follower in followers.items %}
     <div class="panel-body" style="border-bottom:1px solid #eee">
-        {{ follower.username }}
+        {{ link_base.user(follower.username) }}
     </div>
     {% endfor  %}
     {{ p_footer(followers,'user.follower')}}

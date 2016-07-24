@@ -6,12 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期三 2016-6-15 10:30:24 (CST)
+# Last Update:星期日 2016-7-24 18:54:28 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_login import current_user
 from maple import redis_data
+from datetime import datetime
 
 
 class RedisData(object):
@@ -47,6 +48,10 @@ class RedisData(object):
     def set_user_all():
         redis_data.hincrby('user:%s' % str(current_user.id), 'all_topic', 1)
 
+    # def set_email_send():
+    #     redis_data.hset('user:%s' % str(current_user.id), 'send_email_time',
+    #                     datetime.utcnow())
+
     def get_repies_count(qid):
         pages = redis_data.hget('topic:%s' % str(qid), 'replies')
         return pages
@@ -54,3 +59,8 @@ class RedisData(object):
     def get_pages(large, little):
         pages = redis_data.zscore(large, little)
         return pages
+
+
+def set_email_send(uid):
+    redis_data.hset('user:%s' % str(uid), 'send_email_time',
+                    datetime.now())

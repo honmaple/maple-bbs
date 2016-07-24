@@ -7,6 +7,7 @@
 # *************************************************************************
 # !/usr/bin/env python
 # -*- coding=UTF-8 -*-
+from flask import url_for
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from maple import app, db
@@ -20,7 +21,7 @@ manager = Manager(app)
 
 
 @manager.command
-def run():
+def runserver():
     return app.run()
 
 
@@ -78,13 +79,33 @@ def create_user(username, email, password):
     user.infor = userinfor
     usersetting = UserSetting()
     user.setting = usersetting
-    role = Role.query.filter_by(rolename='super').first()
+    role = Role.query.filter_by(name='super').first()
     if role is None:
         role = Role()
         role.rolename = 'super'
     user.roles.append(role)
     db.session.add(user)
     db.session.commit()
+
+
+@manager.command
+def list_routes():
+    import urllib
+    output = []
+    for rule in app.url_map.iter_rules():
+
+        options = {}
+        for arg in rule.arguments:
+            options[arg] = "<{0}>".format(arg)
+
+        methods = ','.join(rule.methods)
+        url = url_for(rule.endpoint, **options)
+        line = urllib.parse.unquote("{:50s} {:20s} {}".format(rule.endpoint,
+                                                              methods, url))
+        output.append(line)
+
+    for line in sorted(output):
+        print(line)
 
 
 @manager.option('-h', '--host', dest='host', default='127.0.0.1')

@@ -6,14 +6,15 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 09:44:01 (CST)
-# Last Update:星期四 2016-6-30 20:43:59 (CST)
+# Last Update:星期日 2016-7-24 13:58:50 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import flash
 from flask_login import current_user
 from maple import db
-from maple.topic.models import Collect, Topic, Tags, Reply
+from maple.topic.models import Collect, Topic, Reply
+from maple.tag.models import Tags
 from maple.user.models import User
 from maple.forums.controls import collect as notice_collect
 from maple.forums.controls import like as notice_like
@@ -24,6 +25,7 @@ class CollectDetail(object):
     def post(form, topicId):
         topic = Topic.query.filter_by(uid=topicId).first_or_404()
         for id in form:
+            '''This has a problem'''
             collect = Collect.query.filter_by(id=id).first_or_404()
             if topic in collect.topics:
                 flash('This topic has been collected in %s' % collect.name,
@@ -69,38 +71,38 @@ class CollectModel(object):
 class FollowModel(object):
     def post_data(type, id):
         if type == 'tag':
-            tag = Tags.query.filter_by(id=id).first()
+            tag = Tags.query.filter_by(id=id).first_or_404()
             current_user.following_tags.append(tag)
             db.session.commit()
         elif type == 'topic':
-            topic = Topic.query.filter_by(id=id).first()
+            topic = Topic.query.filter_by(id=id).first_or_404()
             current_user.following_topics.append(topic)
             db.session.commit()
         elif type == 'user':
-            user = User.query.filter_by(id=id).first()
+            user = User.query.filter_by(id=id).first_or_404()
             current_user.following_users.append(user)
             db.session.commit()
             notice_user(user.id)
         elif type == 'collect':
-            collect = Collect.query.filter_by(id=id).first()
+            collect = Collect.query.filter_by(id=id).first_or_404()
             current_user.following_collects.append(collect)
             db.session.commit()
 
     def delete_data(type, id):
         if type == 'tag':
-            tag = Tags.query.filter_by(id=id).first()
+            tag = Tags.query.filter_by(id=id).first_or_404()
             current_user.following_tags.remove(tag)
             db.session.commit()
         elif type == 'topic':
-            topic = Topic.query.filter_by(id=id).first()
+            topic = Topic.query.filter_by(id=id).first_or_404()
             current_user.following_topics.remove(topic)
             db.session.commit()
         elif type == 'user':
-            user = User.query.filter_by(id=id).first()
+            user = User.query.filter_by(id=id).first_or_404()
             current_user.following_users.remove(user)
             db.session.commit()
         elif type == 'collect':
-            collect = Collect.query.filter_by(id=id).first()
+            collect = Collect.query.filter_by(id=id).first_or_404()
             current_user.following_collects.remove(collect)
             db.session.commit()
 

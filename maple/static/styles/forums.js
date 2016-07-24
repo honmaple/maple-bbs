@@ -27,6 +27,23 @@ $(document).ready(function(){
   $('#st').change(function() {
     SortFuntion();
   });
+  $('span#email-confirm').click(function(){
+    $.ajax ({
+      type : "POST",
+      url : "/confirm-email",
+      data:JSON.stringify({
+      }),
+      contentType: 'application/json;charset=UTF-8',
+      success: function(result) {
+        if (result.judge === true)
+        {
+          alert(result.error);
+        } else
+        {
+          alert(result.error);
+        }}
+    });
+  });
 });
 function dispatch() {
   var q = document.getElementById("search");

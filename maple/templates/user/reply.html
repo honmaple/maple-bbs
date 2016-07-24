@@ -3,8 +3,13 @@
         <span style="float:right">
             排序:
             <div class="btn-group btn-group-xs" role="group">
+                {% if request.args.get('orderby') == 'like' %}
+                <a href="{{ url_for('user.reply',orderby='publish')}}" class="btn btn-default">时间</a>
+                <a href="{{ url_for('user.reply',orderby='like')}}" class="btn btn-default active">点赞</a>
+                {% else %}
                 <a href="" class="btn btn-default active">时间</a>
-                <a href="" class="btn btn-default">投票</a>
+                <a href="{{ url_for('user.reply',orderby='like')}}" class="btn btn-default">点赞</a>
+                {% endif %}
             </div>
         </span>
     </div>

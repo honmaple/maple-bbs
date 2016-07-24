@@ -6,19 +6,21 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-31 21:42:11 (CST)
-# Last Update:星期五 2016-7-8 12:10:51 (CST)
+# Last Update:星期日 2016-7-24 20:2:3 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from maple import db, app
-from maple.main.permission import super_permission
 from maple.forums.models import Board, Count, Notice
-from maple.topic.models import Tags
+from maple.tag.models import Tags
+from maple.user.models import Role
+from maple.permission.models import Permiss, Route
 from flask import abort
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.form import SecureForm
 from flask_wtf import Form
+from flask_principal import Permission, RoleNeed
 
 admin = Admin(app, name='HonMaple', template_mode='bootstrap3')
 
@@ -34,7 +36,8 @@ class BaseModelView(ModelView):
     # form_base_class = SecureForm
 
     def is_accessible(self):
-        return super_permission.can()
+        permission = Permission(RoleNeed('super'))
+        return permission.can()
 
     def inaccessible_callback(self, name, **kwargs):
         abort(404)
@@ -53,9 +56,36 @@ class CountModelView(BaseModelView):
     inline_models = [(Board, dict(form_excluded_columns=['topics']))]
 
 
+class PermissView(BaseModelView):
+    column_display_pk = True
+    column_list = ['id', 'name', 'roles', 'method', 'routes', 'is_allow']
+    column_editable_list = ['is_allow', 'method']
+    form_choices = {'method': [('GET', 'GET'), ('POST', 'POST'),
+                               ('PUT', 'PUT'), ('DELETE', 'DELETE')]}
+
+
+class RoleView(BaseModelView):
+    column_display_pk = True
+    column_list = ['id', 'name', 'permissions', 'parents', 'children']
+
+
+def get_list():
+    endpoints = []
+    for rule in app.url_map.iter_rules():
+        endpoints.append((rule.endpoint, rule.endpoint))
+    return endpoints
+
+
+class RouteView(BaseModelView):
+    column_display_pk = True
+    column_list = ['id', 'permissions', 'endpoint', 'rule']
+    form_choices = {'endpoint': get_list()}
+
+
 class TagsModelView(BaseModelView):
     column_searchable_list = ['tagname']
-    form_excluded_columns = ('users', 'topics', 'followers')
+    column_list = ['tagname', 'parents', 'children', 'summary', 'time']
+    form_excluded_columns = ('tags', 'users', 'topics', 'followers')
 
 
 class NoticeView(BaseModelView):
@@ -81,6 +111,21 @@ admin.add_view(TagsModelView(Tags,
                              name='管理节点',
                              endpoint='admin_tags',
                              category='管理论坛'))
+admin.add_view(RoleView(Role,
+                        db.session,
+                        name='管理用户组',
+                        endpoint='admin_role_permission',
+                        category='权限管理'))
+admin.add_view(PermissView(Permiss,
+                           db.session,
+                           name='管理权限',
+                           endpoint='admin_permiss',
+                           category='权限管理'))
+admin.add_view(RouteView(Route,
+                         db.session,
+                         name='管理视图',
+                         endpoint='admin_route',
+                         category='权限管理'))
 admin.add_view(NoticeView(
     Notice, db.session,
     name='管理通知', endpoint='admin_notice'))

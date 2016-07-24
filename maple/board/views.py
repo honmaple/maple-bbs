@@ -6,33 +6,18 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-03 14:32:06 (CST)
-# Last Update:星期五 2016-7-15 18:42:50 (CST)
+# Last Update:星期日 2016-7-24 15:0:46 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import g, render_template, request
+from maple import cache
 from maple.helpers import is_num
 from maple.topic.models import Topic
 from maple.forums.models import Board
 
-# site = Blueprint('board', __name__)
 
-# @site.url_value_preprocessor
-# def pull_url(endpoint, values):
-#     g.parent_b = values.pop('parent_b', None)
-#     board = Board.query.filter_by(parent_board=g.parent_b).first()
-#     if board is None:
-#         abort(404)
-
-# @site.url_defaults
-# def add_url(endpoint, values):
-#     if 'parent_b' in values or not g.parent_b:
-#         return
-#     values['parent_b'] = g.parent_b
-
-
-# @site.route('', defaults={'child_b': None})
-# @site.route('/<child_b>')
+@cache.cached(timeout=60)
 def board(child_b):
     page = is_num(request.args.get('page'))
     if child_b is None:

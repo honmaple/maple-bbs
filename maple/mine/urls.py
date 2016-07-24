@@ -6,57 +6,36 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-15 19:19:41 (CST)
-# Last Update:星期五 2016-7-15 19:22:40 (CST)
+# Last Update:星期日 2016-7-24 16:53:43 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Blueprint
-from .views import CollectAPI,LikeAPI,FollowAPI
-from .views import collect_following, add_collect, delete_collect
+from flask_login import login_required
+from maple.helpers import register_api
+from .views import CollectAPI, LikeAPI, FollowAPI, CollectDetailAPI
+from .views import collect_following
 
 site = Blueprint('mine', __name__)
-site.add_url_rule('/collect/following', view_func=collect_following)
-site.add_url_rule('/add-to-collect', view_func=add_collect, methods=['POST'])
-site.add_url_rule('/delete-from-collect',
-                  view_func=delete_collect,
-                  methods=['DELETE'])
+site.add_url_rule('/collect/following',
+                  view_func=login_required(collect_following))
 
-def register_api(view, endpoint, url):
-    view_func = view.as_view(endpoint)
-    site.add_url_rule(url,
-                      defaults={'uid': None},
-                      view_func=view_func,
-                      methods=['GET', 'POST', 'DELETE'])
+register_api(site, CollectAPI, 'collect', '/collect', 'collectId')
+register_api(site, CollectDetailAPI, 'collect_detail', '/collect/detail',
+             'collectId')
 
-
-def register_draft(view, endpoint, url):
-    view_func = view.as_view(endpoint)
-    site.add_url_rule(url,
-                      defaults={'uid': None},
-                      view_func=view_func,
-                      methods=['GET', 'POST'])
-    site.add_url_rule('%s/<int:uid>' % url,
-                      view_func=view_func,
-                      methods=['GET', 'PUT', 'DELETE'])
-
-
-collect_view = CollectAPI.as_view('collect')
-site.add_url_rule('/collect',
-                  defaults={'uid': None},
-                  view_func=collect_view,
-                  methods=['GET', ])
-site.add_url_rule('/collect', view_func=collect_view, methods=['POST', ])
-site.add_url_rule('/collect/<uid>',
-                  view_func=collect_view,
-                  methods=['GET', 'PUT', 'DELETE'])
+# register_api(FollowAPI, 'follow', '/follow', 'type', 'string')
 
 follow_view = FollowAPI.as_view('follow')
 site.add_url_rule('/follow',
-                  defaults={'type': 'topics'},
+                  defaults={'type': 'topic'},
                   view_func=follow_view,
-                  methods=['GET', ])
-site.add_url_rule('/follow', view_func=follow_view, methods=['POST', 'DELETE'])
-site.add_url_rule('/follow/<type>', view_func=follow_view, methods=['GET'])
+                  methods=['GET'])
+site.add_url_rule('/follow/<type>',
+                  view_func=follow_view,
+                  methods=['GET', 'POST', 'DELETE'])
 
 like_view = LikeAPI.as_view('like')
-site.add_url_rule('/like', view_func=like_view, methods=['POST', 'DELETE'])
+site.add_url_rule('/like/<int:replyId>',
+                  view_func=like_view,
+                  methods=['POST', 'DELETE'])

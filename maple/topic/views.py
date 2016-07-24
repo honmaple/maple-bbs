@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期五 2016-7-15 20:24:16 (CST)
+# Last Update:星期日 2016-7-24 20:19:33 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,17 +16,17 @@ from flask_login import login_required
 from flask_maple.forms import flash_errors
 from maple import app, db
 from maple.helpers import replies_page
-from maple.main.models import RedisData
-from maple.main.permission import topic_permission, reply_permission
 from maple.helpers import is_num
 from maple.forums.models import Board
-from maple.topic.models import Topic, Reply
-from maple.topic.forms import TopicForm, ReplyForm
 from maple.filters import safe_clean, Filters
-from .controls import TopicModel, ReplyModel
+from .models import Topic
+from .forms import TopicForm, ReplyForm
+from .controls import TopicModel, ReplyModel, vote
+from .permission import topic_permission, reply_permission, tag_permission,preview_permission
 
 
 @login_required
+@tag_permission
 def ask():
     form = TopicForm()
     boardId = request.args.get('boardId')
@@ -41,14 +41,14 @@ def ask():
 def good():
     page = is_num(request.args.get('page'))
     topics = Topic.query.filter_by(is_good=True).paginate(
-        page,
-        app.config['PER_PAGE'],
+        page, app.config['PER_PAGE'],
         error_out=True)
     data = {'title': '精华文章 - ', 'topics': topics}
     return render_template('topic/topic_good.html', **data)
 
 
 @login_required
+@preview_permission
 def preview():
     choice = request.values.get('choice')
     content = request.values.get('content')
@@ -68,7 +68,7 @@ def vote_up(topicId):
     else:
         topic.vote += 1
     db.session.commit()
-    html = TopicModel.vote(topic.vote)
+    html = vote(topic.vote)
     return jsonify(judge=True, html=html)
 
 
@@ -81,7 +81,7 @@ def vote_down(topicId):
     else:
         topic.vote -= 1
     db.session.commit()
-    html = TopicModel.vote(topic.vote)
+    html = vote(topic.vote)
     return jsonify(judge=True, html=html)
 
 
@@ -94,25 +94,18 @@ class TopicAPI(MethodView):
     def template_without_uid(self, data):
         return render_template('topic/topic.html', **data)
 
-    def get(self, uid):
+    def get(self, topicId):
         page = is_num(request.args.get('page'))
-        if uid is None:
-            topics = Topic.query.filter_by(is_top=False).paginate(
-                page,
-                app.config['PER_PAGE'],
-                error_out=True)
-            top_topics = Topic.query.filter_by(is_top=True).limit(5).all()
+        order = request.args.get('orderby')
+        if topicId is None:
+            topics, top_topics = TopicModel.get_list(page)
             data = {'title': '所有主题 - ',
                     'topics': topics,
                     'top_topics': top_topics}
             return self.template_without_uid(data)
         else:
             form = ReplyForm()
-            topic = Topic.query.filter_by(uid=str(uid)).first_or_404()
-            replies = Reply.query.filter_by(
-                topic_id=topic.id).order_by(Reply.publish.asc()).paginate(
-                    page, app.config['PER_PAGE'], True)
-            RedisData.set_read_count(topic.id)
+            topic, replies = TopicModel.get_detail(page, topicId, order)
             data = {'title': '%s - ' % topic.title,
                     'form': form,
                     'topic': topic,
@@ -122,18 +115,38 @@ class TopicAPI(MethodView):
     def post(self):
         form = TopicForm()
         if form.validate_on_submit():
-            topic = TopicModel.post_data(form)
-            return redirect(url_for('topic.topic', uid=topic.uid))
+            topic = TopicModel.post(form)
+            return redirect(url_for('topic.topic', topicId=topic.uid))
         else:
             if form.errors:
                 flash_errors(form)
             return redirect(url_for('topic.ask'))
 
-    def put(self, uid):
+    def put(self, topicId):
+        return 'put'
+
+    def delete(self, topicId):
         return 'delete'
 
-    def delete(self, uid):
-        return 'delete'
+
+def reply(topicId):
+    form = ReplyForm()
+    topic = Topic.query.filter_by(id=topicId).first_or_404()
+    if form.validate_on_submit():
+        reply = ReplyModel.post_data(form, topicId)
+        page = replies_page(topic.id)
+        return redirect(url_for('topic.topic',
+                                topicId=topic.uid,
+                                page=page,
+                                _anchor='reply' + str(reply.id)))
+    else:
+        if form.errors:
+            flash_errors(form)
+        page = replies_page(topic.id)
+        return redirect(url_for('topic.topic',
+                                topicId=topic.uid,
+                                page=page,
+                                _anchor='replies-content'))
 
 
 class ReplyAPI(MethodView):
@@ -146,7 +159,7 @@ class ReplyAPI(MethodView):
             reply = ReplyModel.post_data(form, topicId)
             page = replies_page(topic.id)
             return redirect(url_for('topic.topic',
-                                    uid=topic.uid,
+                                    topicId=topic.uid,
                                     page=page,
                                     _anchor='reply' + str(reply.id)))
         else:
@@ -154,7 +167,7 @@ class ReplyAPI(MethodView):
                 flash_errors(form)
             page = replies_page(topic.id)
             return redirect(url_for('topic.topic',
-                                    uid=topic.uid,
+                                    topicId=topic.uid,
                                     page=page,
                                     _anchor='replies-content'))
 

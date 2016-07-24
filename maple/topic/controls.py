@@ -6,21 +6,81 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 10:22:42 (CST)
-# Last Update:星期四 2016-7-14 20:6:15 (CST)
+# Last Update:星期四 2016-7-21 17:7:27 (CST)
 #          By:
 # Description:
 # **************************************************************************
+from flask import current_app
 from flask_login import current_user
+from sqlalchemy.sql import func
 from maple import db
 from maple.helpers import make_uid
 from maple.main.models import RedisData
 from maple.forums.controls import reply as notice_reply
-from .models import Topic, Tags, Reply
+from maple.tag.models import Tags
+from .models import Topic, Reply, Like
+# from .redis import get_detail_cache
 from re import split as sp
 
 
+def vote(count):
+    if count > 0:
+        html = '''
+                <a id="topic-up-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
+                    <i class="icon-chevron-up">%d</i>
+                </a>
+                <a id="topic-down-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
+                    <i class="icon-chevron-down"></i>
+                </a>
+        ''' % (count)
+    elif count == 0:
+        html = '''
+                <a id="topic-up-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
+                    <i class="icon-chevron-up"></i>
+                </a>
+                <a  id="topic-down-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
+                    <i class="icon-chevron-down"></i>
+                </a>
+        '''
+
+    else:
+        html = '''
+                <a id="topic-up-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
+                    <i class="icon-chevron-up"></i>
+                </a>
+                <a  id="topic-down-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
+                    <i class="icon-chevron-down">%d</i>
+                </a>
+        ''' % (count)
+    return html
+
+
 class TopicModel(object):
-    def post_data(form):
+    def get_list(page):
+        topics = Topic.query.filter_by(is_top=False).paginate(
+            page, current_app.config['PER_PAGE'],
+            error_out=True)
+        top_topics = Topic.query.filter_by(is_top=True).limit(5).all()
+        return topics, top_topics
+
+    def get_detail(page, topicId, order='time'):
+        topic = Topic.query.filter_by(uid=topicId).first_or_404()
+        if order == 'like':
+            replies = Reply.query.outerjoin(Like).filter(
+                Reply.topic_id == topic.id).group_by(Reply.id).order_by(
+                    func.count(Like.id).desc()).paginate(
+                        page, current_app.config['PER_PAGE'], True)
+            # replies = Reply.query.filter_by(
+            #     topic_id=topic.id).order_by(Reply.publish.asc()).paginate(
+            #         page, current_app.config['PER_PAGE'], True)
+        else:
+            replies = Reply.query.filter_by(
+                topic_id=topic.id).order_by(Reply.publish.asc()).paginate(
+                    page, current_app.config['PER_PAGE'], True)
+        RedisData.set_read_count(topic.id)
+        return topic, replies
+
+    def post(form):
         topic = Topic()
         topic.title = form.title.data
         topic.content = form.content.data
@@ -52,37 +112,6 @@ class TopicModel(object):
         db.session.commit()
         RedisData.set_topics()
         return topic
-
-    def vote(count):
-        if count > 0:
-            html = '''
-                    <a id="topic-up-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
-                        <i class="icon-chevron-up">%d</i>
-                    </a>
-                    <a id="topic-down-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
-                        <i class="icon-chevron-down"></i>
-                    </a>
-            ''' % (count)
-        elif count == 0:
-            html = '''
-                    <a id="topic-up-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
-                        <i class="icon-chevron-up"></i>
-                    </a>
-                    <a  id="topic-down-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
-                        <i class="icon-chevron-down"></i>
-                    </a>
-            '''
-
-        else:
-            html = '''
-                    <a id="topic-up-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
-                        <i class="icon-chevron-up"></i>
-                    </a>
-                    <a  id="topic-down-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
-                        <i class="icon-chevron-down">%d</i>
-                    </a>
-            ''' % (count)
-        return html
 
 
 class ReplyModel(object):

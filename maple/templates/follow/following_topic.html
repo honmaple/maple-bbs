@@ -2,25 +2,37 @@
 {% block content %}
 {{ breadcrumb(active=_('Following Topics'))}}
 <div class="row">
-    <div class="col-md-9" style="background:#fff;border:1px solid #eee">
-        <ul class="nav nav-tabs">
+    <div class="col-md-9">
+        <ul class="nav nav-tabs follow-panel">
             <li role="presentation" class="active">{{ link_base.following_topic()}}</li>
             <li role="presentation">{{ link_base.following_tag()}}</li>
             <li role="presentation">{{ link_base.following_user()}}</li>
             <li role="presentation">{{ link_base.following_collect()}}</li>
         </ul>
-        <div class="panel-panel-default">
-            {% for topic in current_user.following_topics %}
+        <div class="panel panel-default">
+            {% if not following.items -%}
+            {% include 'follow/none.html' %}
+            {%- else %}
+            {% for topic in following.items %}
             <div class="panel-body" style="border-bottom:1px solid #eee">
-                <span style="float:right">
+                <span class="pull-right">
                     <button class="btn btn-sm btn-default topicfollow active" id="{{ topic.id}}" style="padding:0 5px">取消关注</button>
                 </span>
                 <p>{{ link_base.topic(topic)}}</p>
+                <p class="topic-content">
+                    {% if topic.is_markdown %}
+                    {{ topic.content | truncate(100, True) | markdown }}
+                    {% else %}
+                    {{ topic.content | truncate(100, True) | safe_clean }}
+                    {% endif %}
+                </p>
                 {% for tag in topic.tags %}
                 {{ link_base.tag(tag)}}
                 {% endfor %}
             </div>
             {% endfor  %}
+            {{ p_footer(following,'mine.follow',kw=dict(type=following_type))}}
+            {%- endif %}
         </div>
     </div>
     <div class="col-md-3" style="padding-left:0">

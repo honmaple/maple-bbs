@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-30 19:39:13 (CST)
-# Last Update:星期四 2016-7-7 19:48:22 (CST)
+# Last Update:星期日 2016-7-24 17:16:21 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -20,7 +20,7 @@ from .models import Notice
 def reply(topic, reply):
     page = replies_page(topic.id)
     url = url_for('topic.topic',
-                  uid=topic.uid,
+                  topicId=topic.uid,
                   page=page,
                   _anchor='reply' + str(reply.id))
     notice = Notice()
@@ -35,7 +35,7 @@ def reply(topic, reply):
 
 
 def collect(topic):
-    url = url_for('topic.topic', uid=topic.uid)
+    url = url_for('topic.topic', topicId=topic.uid)
     notice = Notice()
     notice.category = 'collect'
     notice.content = {'url': url, 'title': topic.title}
@@ -48,7 +48,7 @@ def collect(topic):
 def like(reply):
     topic = reply.topic
     url = url_for('topic.topic',
-                  uid=topic.uid,
+                  topicId=topic.uid,
                   _anchor='reply-' + str(reply.id))
     notice = Notice()
     notice.category = 'like'

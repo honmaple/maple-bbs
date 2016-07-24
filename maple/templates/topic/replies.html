@@ -5,16 +5,24 @@
  .like-no-active {
      color:#ccc;
  }
-</style>
-<script type="text/javascript">
- var replyData = {
-     'like':"{{ url_for('mine.like') }}",
+ .reply-order a{
+     padding: 1px 2px;
+     color: #778087;
+     text-decoration: none;
+     font-size:13px;
  }
- DoLike(replyData);
-</script>
+ .reply-count {
+     font-size:12px;
+     color:#999;
+ }
+</style>
 <div class="panel panel-default" id="replies-content">
     <div class="panel-heading">
         {{ _('Received %(total)s replies',total=replies.total) }}
+        <ul class="pull-right list-inline reply-order">
+            <li><a href="{{ url_for('topic.topic',topicId=topic.uid,orderby='time')}}"> <i class="icon icon-time"></i>时间</a></li>
+            <li><a href="{{ url_for('topic.topic',topicId=topic.uid,orderby='like')}}"> <i class="icon icon-thumbs-up"></i>点赞数</a></li>
+        </ul>
     </div>
     {% if replies.items %}
     {% set num = 1 %}
@@ -39,10 +47,12 @@
             {% if reply in current_user.likes and g.user.is_authenticated %}
             <a href="javascript:void(0);" style="padding:0" class="like-reply btn btn-sm like-active" data-id="{{ reply.id}}" title="取消赞">
                 <i class="icon-thumbs-up"></i>
+                <span class="reply-count">{{ reply.likers | length }}</span>
             </a>
             {% else %}
             <a href="javascript:void(0);" style="padding:0" class="like-reply btn btn-sm like-no-active" data-id="{{ reply.id}}" title="赞">
                 <i class="icon-thumbs-up"></i>
+                <span class="reply-count">{{ reply.likers | length }}</span>
             </a>
             {% endif %}
         </div>
@@ -54,7 +64,7 @@
     </div>
     {% set num = num + 1 %}
     {% endfor %}
-    {{ p_footer(replies,'topic.topic',dict(uid=topic.uid))}}
+    {{ p_footer(replies,'topic.topic',dict(topicId=topic.uid))}}
     {% else %}
     <div class="panel-body">
         <span class="text-center" style="display:block;width:100%;color:#999">

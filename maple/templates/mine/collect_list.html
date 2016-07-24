@@ -13,7 +13,7 @@
             </div>
             {% for collect in collects.items %}
             <div class="panel-body" style="border-bottom:1px solid #eee">
-                <a href="{{ url_for('mine.collect',uid=collect.id)}}">{{ collect.name}}</a>
+                <a href="{{ url_for('mine.collect_detail',collectId=collect.id)}}">{{ collect.name}}</a>
                 {% if collect.is_privacy %}
                 <span class="pull-right">{{_('Privacy')}}</span>
                 {% else %}

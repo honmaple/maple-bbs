@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期五 2016-7-15 19:37:57 (CST)
+# Last Update:星期六 2016-7-23 20:48:57 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
@@ -16,6 +16,7 @@ from maple.extensions import (register_login, register_redis, register_mail,
 from maple.extensions import (register_form, register_babel,
                               register_principal, register_jinja2,
                               register_avatar, register_maple)
+from maple.extensions import register_rbac
 from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
 
@@ -55,6 +56,7 @@ mail = register_mail(app)
 login_manager = register_login(app)
 redis_data = register_redis(app)
 cache = register_cache(app)
+rbac = register_rbac(app)
 register(app)
 
 

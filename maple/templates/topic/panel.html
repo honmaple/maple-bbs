@@ -16,7 +16,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="sidecollectLabel">收藏夹</h4>
                 </div>
-                <form action="{{ url_for('mine.add_collect',topicId=topic.uid)}}" method="POST">
+                <form action="{{ url_for('mine.collect_detail',topicId=topic.uid)}}" method="POST">
                     {{ form.hidden_tag() }}
                     <div class="modal-body">
                         <p> 添加到收藏夹 </p>

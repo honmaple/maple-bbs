@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-15 18:12:22 (CST)
-# Last Update:星期五 2016-7-15 20:20:11 (CST)
+# Last Update:星期日 2016-7-24 20:15:36 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -27,13 +27,13 @@ topic_view = TopicAPI.as_view('topic')
 # /topic         post
 # /topic/<uid>   get,put,delete
 site.add_url_rule('',
-                  defaults={'uid': None},
+                  defaults={'topicId': None},
                   view_func=topic_view,
                   methods=['GET'])
 site.add_url_rule('', view_func=TopicAPI.as_view('post'), methods=['POST'])
-site.add_url_rule('/<uid>',
+site.add_url_rule('/<topicId>',
                   view_func=topic_view,
                   methods=['GET', 'PUT', 'DELETE'])
 
 reply_view = ReplyAPI.as_view('reply')
-site.add_url_rule('/<topicId>/reply', view_func=reply_view, methods=['POST'])
+site.add_url_rule('reply/<topicId>', view_func=reply_view, methods=['POST'])

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期五 2016-7-15 20:45:20 (CST)
+# Last Update:星期日 2016-7-24 21:51:35 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -21,6 +21,7 @@ from flask_mail import Mail
 from flask_principal import Principal
 from flask_avatar import Avatar
 from flask_cache import Cache
+from flask_maple_rbac import Rbac
 from redis import StrictRedis
 
 
@@ -31,6 +32,21 @@ def register_avatar(app):
 def register_form(app):
     csrf = CsrfProtect()
     csrf.init_app(app)
+
+
+def register_rbac(app):
+    from maple.user.models import Role
+    from maple.permission.models import Route, Permiss
+    from flask_login import current_user
+    rbac = Rbac(app,
+                role_model=Role,
+                route_model=Route,
+                permission_model=Permiss,
+                user_loader=current_user,
+                skip_startswith_rules=['/admin', '/static'],
+                skip_rules=['topic.topic', 'static_from_root', 'avatar',
+                            'upload.avatar_file'])
+    return rbac
 
 
 def register_babel(app):
@@ -54,13 +70,13 @@ def register_babel(app):
 
     @babel.localeselector
     def get_locale():
-        return 'zh'
-        # user = getattr(g, 'user', None)
-        # if user is not None:
-        #     if g.user.is_authenticated:
-        #         return user.setting.locale or 'zh'
-        # return request.accept_languages.best_match(app.config[
-        #     'LANGUAGES'].keys())
+        # return 'zh'
+        user = getattr(g, 'user', None)
+        if user is not None:
+            if g.user.is_authenticated:
+                return user.setting.locale or 'zh'
+        return request.accept_languages.best_match(app.config[
+            'LANGUAGES'].keys())
 
     @babel.timezoneselector
     def get_timezone():
@@ -84,7 +100,8 @@ def register_maple(app):
 
 def register_redis(app):
     redis_data = StrictRedis(db=app.config['CACHE_REDIS_DB'],
-                             password=app.config['CACHE_REDIS_PASSWORD'])
+                             password=app.config['CACHE_REDIS_PASSWORD'],
+                             decode_responses=True)
     return redis_data
 
 
@@ -92,11 +109,6 @@ def register_cache(app):
     cache = Cache(config={'CACHE_TYPE': 'null'})
     cache.init_app(app)
     return cache
-
-
-def register_principal(app):
-    principal = Principal()
-    principal.init_app(app)
 
 
 def register_mail(app):
@@ -129,6 +141,10 @@ def register_login(app):
         return user
 
     return login_manager
+
+def register_principal(app):
+    principal = Principal()
+    principal.init_app(app)
 
 
 def register_jinja2(app):

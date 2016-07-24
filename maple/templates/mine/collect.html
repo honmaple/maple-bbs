@@ -3,11 +3,10 @@
 {{ super()}}
 <script type=text/javascript>
  var collectData = {
-     'url':'{{ url_for('mine.collect')}}',
-     'edit_url':'{{ url_for('mine.collect',uid = collect.id)}}',
-     'delete_url':"{{ url_for('mine.collect',uid = collect.id)}}",
-     'collectId':"{{ collect.id}}",
-     'delete':"{{ url_for('mine.delete_collect')}}"
+     'collect_url':"{{ url_for('mine.collect')}}",
+     'collect_action_url':"{{ url_for('mine.collect',collectId = collect.id)}}",
+     'collect_detail_url':"{{ url_for('mine.collect_detail')}}",
+     'collect_detail_action_url':"{{ url_for('mine.collect_detail',collectId = collect.id)}}"
  }
  DoCollect(collectData);
 </script>
@@ -18,14 +17,16 @@
     <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>{{ collect.name }}</h4>
-                <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#editcollect">{{ _('edit') }}</a>
-                <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#deletecollect">{{ _('delete')}}</a>
+                <span class="pull-right">
+                    <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#editcollect">{{ _('edit') }}</a>
+                    <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#deletecollect">{{ _('delete')}}</a>
+                </span>
+                <h4> <strong>{{ collect.name }}</strong></h4>
             </div>
             {% if topics.items %}
             {% for topic in topics.items %}
             <div class="panel-body" style="border-bottom:1px solid #eee">
-                <a href="{{ url_for('topic.topic',uid=topic.uid)}}">{{ topic.title}}</a>
+                <a href="{{ url_for('topic.topic',topicId=topic.uid)}}">{{ topic.title}}</a>
                 <span id="delete-from-collect" class="pull-right btn btn-sm btn-danger" data-id="{{ topic.uid }}">{{_('delete')}}</span>
             </div>
             {% endfor %}

@@ -1,26 +1,33 @@
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
-        <span style="float:right">
-            排序:
-            <div class="btn-group btn-group-xs" role="group">
-                <a href="" class="btn btn-default active">时间</a>
-                <a href="" class="btn btn-default">投票</a>
-            </div>
-        </span>
+        <div class="col-md-8">
+            收藏夹名
+        </div>
+        <div class="col-md-4">
+            收藏数
+        </div>
     </div>
     {% if collects.items %}
     {% if setting.collect_list == 1 or (setting.collect_list == 2 and g.user.is_authenticated) or (g.user.is_authenticated and g.user.username == g.user_url) %}
     {% for collect in collects.items %}
     <div class="panel-body" style="border-bottom:1px solid #eee">
         <div class="row" style="margin:0">
-            <div class="col-md-9">
-                {{ link_base.collect(collect) }}
+            <div class="col-md-8">
+                <a href="{{ url_for('user.collect_detail',collectId =collect.id)}}">{{ collect.name }}</a>
             </div>
-            <div class="col-md-2">
-                {{ collect.is_privacy }}
-            </div>
-            <div class="col-md-1">
-                1
+            <div class="col-md-4">
+                {% if g.user.is_authenticated -%}
+                <span class="pull-right">
+                    {% if collect in current_user.following_collects -%}
+                    <button class="btn btn-sm btn-default collectfollow active" id="{{ collect.id}}" style="padding:0 5px">取消关注</button>
+                    {%- else %}
+                    <button class="btn btn-sm btn-default collectfollow" id="{{ collect.id}}" style="padding:0 5px">关注</button>
+                    {%- endif %}
+                </span>
+                {%- endif %}
+                <span style="margin-left:20px">
+                    {{ collect.topics.count() }}
+                </span>
             </div>
         </div>
     </div>

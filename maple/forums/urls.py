@@ -6,15 +6,20 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-15 18:48:57 (CST)
-# Last Update:星期五 2016-7-15 19:14:22 (CST)
+# Last Update:星期日 2016-7-24 22:3:29 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Blueprint
+from flask_login import login_required
 from .views import (index, forums, notice, userlist, message, about, help,
-                    order)
+                    order,contact)
 
 site = Blueprint('forums', __name__)
+
+notice = login_required(notice)
+userlist = login_required(userlist)
+message = login_required(message)
 
 site.add_url_rule('/', view_func=index)
 site.add_url_rule('/index', view_func=forums)
@@ -22,7 +27,6 @@ site.add_url_rule('/notices', view_func=notice)
 site.add_url_rule('/userlist', view_func=userlist)
 site.add_url_rule('/about', view_func=about)
 site.add_url_rule('/help', view_func=help)
+site.add_url_rule('/contact', view_func=contact)
 site.add_url_rule('/order', view_func=order, methods=['POST'])
-site.add_url_rule('/messages/<int:receId>',
-                  view_func=message,
-                  methods=['POST'])
+site.add_url_rule('/messages/<receId>', view_func=message, methods=['POST'])

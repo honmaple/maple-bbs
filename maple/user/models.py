@@ -6,15 +6,19 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:24:19 (CST)
-# Last Update:星期四 2016-6-30 21:14:5 (CST)
+# Last Update:星期日 2016-7-24 20:50:19 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from maple import db
+from maple.tag.models import Tags
+from maple.mine.models import Follow
+from maple.topic.models import Topic
 from datetime import datetime
 from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, \
-    check_password_hash
+from werkzeug.security import (generate_password_hash, check_password_hash)
+
+__all__ = ['User', 'UserRole', 'Role', 'UserInfor', 'UserSetting', 'OpenID']
 
 
 class UserRole(db.Model):
@@ -22,21 +26,6 @@ class UserRole(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     roles_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-
-
-class Follow(db.Model):
-    __tablename__ = 'follows'
-    id = db.Column(db.Integer, primary_key=True)
-    follower_id = db.Column(db.Integer,
-                            db.ForeignKey('users.id'))
-    following_user_id = db.Column(db.Integer,
-                                  db.ForeignKey('users.id'))
-    following_tag_id = db.Column(db.Integer,
-                                 db.ForeignKey('tags.id'))
-    following_collect_id = db.Column(db.Integer,
-                                     db.ForeignKey('collects.id'))
-    followinf_topic_id = db.Column(db.Integer,
-                                   db.ForeignKey('topics.id'))
 
 
 class User(db.Model, UserMixin):
@@ -49,46 +38,31 @@ class User(db.Model, UserMixin):
     is_confirmed = db.Column(db.Boolean, default=False)
     register_time = db.Column(db.DateTime, default=datetime.now())
 
-    likes = db.relationship('Reply',
-                            secondary='likes',
-                            lazy='dynamic',
-                            backref="likers"
-                            )
-    following_tags = db.relationship('Tags',
-                                     secondary='follows',
-                                     primaryjoin="User.id==follows.c.follower_id",
-                                     # lazy='dynamic',
-                                     backref=db.backref(
-                                         'followers', lazy='dynamic'),
-                                     # cascade='all,delete-orphan',
-                                     # single_parent=True,
-                                     )
-    following_topics = db.relationship('Topic',
-                                       secondary='follows',
-                                       primaryjoin="User.id==follows.c.follower_id",
-                                       # lazy='dynamic',
-                                       backref=db.backref(
-                                           'followers', lazy='dynamic'),
-                                       # cascade='all,delete-orphan',
-                                       # single_parent=True,
-                                       )
-    following_collects = db.relationship('Collect',
-                                         secondary='follows',
-                                         primaryjoin="User.id==follows.c.follower_id",
-                                         backref=db.backref(
-                                             'followers', lazy='dynamic'),
-                                         # lazy='dynamic',
-                                         # cascade='all,delete-orphan',
-                                         # single_parent=True,
-                                         )
-    following_users = db.relationship('User',
-                                      secondary='follows',
-                                      primaryjoin="User.id==follows.c.follower_id",
-                                      secondaryjoin="User.id==follows.c.following_user_id",
-                                      backref=db.backref(
-                                          'followers', lazy='dynamic'),
-                                      # lazy='dynamic'
-                                      )
+    following_tags = db.relationship(
+        'Tags',
+        secondary='follows',
+        primaryjoin="User.id==follows.c.follower_id",
+        lazy='dynamic',
+        backref=db.backref('followers', lazy='dynamic'))
+    following_topics = db.relationship(
+        'Topic',
+        secondary='follows',
+        primaryjoin="User.id==follows.c.follower_id",
+        lazy='dynamic',
+        backref=db.backref('followers', lazy='dynamic'))
+    following_collects = db.relationship(
+        'Collect',
+        secondary='follows',
+        primaryjoin="User.id==follows.c.follower_id",
+        lazy='dynamic',
+        backref=db.backref('followers', lazy='dynamic'))
+    following_users = db.relationship(
+        'User',
+        secondary='follows',
+        primaryjoin="User.id==follows.c.follower_id",
+        secondaryjoin="User.id==follows.c.following_user_id",
+        lazy='dynamic',
+        backref=db.backref('followers', lazy='dynamic'), )
 
     setting_id = db.Column(db.Integer,
                            db.ForeignKey('usersetting.id',
@@ -106,11 +80,27 @@ class User(db.Model, UserMixin):
                             cascade='all,delete',
                             uselist=False)
 
+    roles = db.relationship('Role',
+                            secondary='user_role',
+                            backref=db.backref('users'),
+                            lazy='dynamic')
+
     def __str__(self):
         return self.username
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    # @property
+    # def password(self):
+    #     return "密码不是可读形式!"
+
+    # @password.setter
+    # def password(self, password):
+    #     self.password_hash = generate_password_hash(password)
+
+    # def verify_password(self, password):
+    #     return check_password_hash(password)
 
     @staticmethod
     def set_password(password):
@@ -121,14 +111,28 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
 
+roles_parents = db.Table(
+    'roles_parents',
+    db.Column('role_id', db.Integer, db.ForeignKey('roles.id')),
+    db.Column('parent_id', db.Integer, db.ForeignKey('roles.id')))
+
+
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
-    rolename = db.Column(db.String(81), nullable=False, default='unconfirmed')
+    name = db.Column(db.String(81), nullable=False, default='unconfirmed')
     description = db.Column(db.String(255), nullable=True)
-    users = db.relationship('User',
-                            secondary='user_role',
-                            backref=db.backref('roles', lazy='dynamic'))
+    parents = db.relationship('Role',
+                              secondary=roles_parents,
+                              primaryjoin=(id == roles_parents.c.role_id),
+                              secondaryjoin=(id == roles_parents.c.parent_id),
+                              backref=db.backref('children'))
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Role %r>' % self.name
 
 
 class UserInfor(db.Model):
@@ -141,9 +145,6 @@ class UserInfor(db.Model):
     word = db.Column(db.Text, nullable=True)
     introduce = db.Column(db.Text, nullable=True)
     school = db.Column(db.String, nullable=True)
-
-    # def __init__(self):
-    #     self.registered_time = datetime.now()
 
     def __repr__(self):
         return "<UserInfor %r>" % self.id
@@ -168,50 +169,20 @@ class UserSetting(db.Model):
     def __repr__(self):
         return "<UserSetting %r>" % self.id
 
-
-class OpenID(db.Model):
-    __tablename__ = 'openids'
-    id = db.Column(db.Integer, primary_key=True)
-    openid = db.Column(db.Integer, nullable=False)
-    openid_type = db.Column(db.String, nullable=False)
-    nickname = db.Column(db.String, nullable=False)
-    email = db.Column(db.String)
-    avatar = db.Column(db.String)
-    user_id = db.Column(db.Integer,
-                        db.ForeignKey('users.id',
-                                      ondelete="CASCADE"))
-    user = db.relationship('User',
-                           backref=db.backref('openids',
-                                              cascade='all,delete-orphan',
-                                              lazy='dynamic'))
-
-# class Invite(db.Model):
-#     __tablename__ = 'invites'
+# class OpenID(db.Model):
+#     __tablename__ = 'openids'
 #     id = db.Column(db.Integer, primary_key=True)
-#     invite_id = db.Column(db.Integer,
-#                           db.ForeignKey('users.id',
-#                                         ondelete="CASCADE"))
+#     openid = db.Column(db.Integer, nullable=False)
+#     openid_type = db.Column(db.String, nullable=False)
+#     nickname = db.Column(db.String, nullable=False)
+#     email = db.Column(db.String)
+#     avatar = db.Column(db.String)
+#     user_id = db.Column(db.Integer,
+#                         db.ForeignKey('users.id',
+#                                       ondelete="CASCADE"))
+#     user = db.relationship('User',
+#                            backref=db.backref('openids',
+#                                               cascade='all,delete-orphan',
+#                                               lazy='dynamic'))
 
-#     invite = db.relationship("User",
-#                              uselist=False,
-#                              foreign_keys='Invite.invite_id',
-#                              backref="invited"
-#                              )
-
-#     invited_id = db.Column(db.Integer,
-#                            db.ForeignKey('users.id',
-#                                          ondelete="CASCADE"))
-
-#     invited = db.relationship("User",
-#                               uselist=False,
-#                               foreign_keys='Invite.invited_id',
-#                               backref="invite"
-#                               )
-
-#     topic_id = db.Column(db.Integer,
-#                          db.ForeignKey('topics.id',
-#                                        ondelete="CASCADE"))
-#     topic = db.relationship("Topic",
-#                             uselist=False,
-#                             backref="invited"
-#                             )
+from . import events
