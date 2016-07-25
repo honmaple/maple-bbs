@@ -21,30 +21,39 @@
    + Topic vote
      
 ** Installation
-   Some package is not neccessary
-   #+BEGIN_SRC python
-   pip install -r requirements.txt
-   #+END_SRC
 
-   Then,you should comment *maple/topic/forms.py*
-   #+BEGIN_SRC python
+*** Install necessary package
+    Some package is not neccessary
+    #+BEGIN_SRC python
+   pip install -r requirements.txt
+    #+END_SRC
+
+*** Comment before init db
+
+    place of file: *maple/topic/forms.py*
+    #+BEGIN_SRC python
     category = SelectField(
         _('Category:'),
         choices=[(b.id, b.board + '   --' + b.parent_board)
                  for b in Board.query.all()],
         coerce=int)
-   #+END_SRC
+    #+END_SRC
 
-   Now,please init db use 
-   #+BEGIN_SRC python
+*** Init sql
+    #+BEGIN_SRC python
     python manage.py db init 
     python manage.py db migrate -m "first migrate"
     python manage.py db upgrade
-   #+END_SRC
+    #+END_SRC
+    *Ok*,please recovery *maple/topic/forms.py*
 
-   Finally,you can register a account,and `update users set is_superuser = true`
+*** Create admin account
+    #+BEGIN_SRC shell
+python manager.py create_user
+    #+END_SRC
 
-   *Ok* ,visit forums.localhost:5000/admin to add something
+*** Login and visit admin 
+    *Ok* ,visit forums.localhost:5000/admin to add something
    
 ** Demo
    Please visit [[https://forums.honmaple.org][forums.honmaple.org]] 

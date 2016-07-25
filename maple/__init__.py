@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期六 2016-7-23 20:48:57 (CST)
+# Last Update:星期一 2016-7-25 11:11:52 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
@@ -19,11 +19,16 @@ from maple.extensions import (register_form, register_babel,
 from maple.extensions import register_rbac
 from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 
 def create_app():
+    templates = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), os.pardir, 'templates'))
+    static = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), os.pardir, 'static'))
 
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder=templates, static_folder=static)
     app.config.from_object('config.config')
     app.url_map._rules.clear()
     app.url_map._rules_by_endpoint.clear()
