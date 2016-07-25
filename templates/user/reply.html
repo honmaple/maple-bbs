@@ -1,14 +1,14 @@
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
         <span style="float:right">
-            排序:
+            {{_("Sort:")}}
             <div class="btn-group btn-group-xs" role="group">
                 {% if request.args.get('orderby') == 'like' %}
-                <a href="{{ url_for('user.reply',orderby='publish')}}" class="btn btn-default">时间</a>
-                <a href="{{ url_for('user.reply',orderby='like')}}" class="btn btn-default active">点赞</a>
+                <a href="{{ url_for('user.reply',orderby='publish')}}" class="btn btn-default">{{_('time')}}</a>
+                <a href="{{ url_for('user.reply',orderby='like')}}" class="btn btn-default active">{{_('likers')}}</a>
                 {% else %}
-                <a href="" class="btn btn-default active">时间</a>
-                <a href="{{ url_for('user.reply',orderby='like')}}" class="btn btn-default">点赞</a>
+                <a href="" class="btn btn-default active">{{_('time')}}</a>
+                <a href="{{ url_for('user.reply',orderby='like')}}" class="btn btn-default">{{_('likers')}}</a>
                 {% endif %}
             </div>
         </span>
@@ -17,12 +17,12 @@
     {% if setting.rep_list == 1 or (g.user.is_authenticated and setting.rep_list == 2) or (g.user.is_authenticated and g.user.username == g.user_url) %}
     {% for reply in replies.items %}
     <div class="panel-body" style="border-bottom:1px solid #eee">
-        <span style="font-size:12px;color:#999;">回复了 {{ link_base.user(reply.author) }} 创建的主题:
-            <a href="{{ url_for('topic.topic',uid=reply.topic.uid)}}">{{ reply.topic.title}}</a>
+        <span style="font-size:12px;color:#999;">
+            {{_('replied %(title)s created by %(author)s',title=link_base.topic(reply.topic),author = link_base.user(reply.author))}}
         </span>
         <p>{{ reply.content | safe_clean }}</p>
         <span style="font-size:12px;color:#999;">
-            回复日期:{{ reply.publish | timesince }}
+            {{_('replied time:')}}{{ reply.publish | timesince }}
         </span>
     </div>
     {% endfor  %}
@@ -31,13 +31,13 @@
     <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
         <span class="text-center" style="display:block;width:100%;color:#999">
             <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
-            根据用户设置,列表被隐藏
+            {{_("Due to user's setting,the list have been hidden.")}}
         </span>
     </div>
     {% endif %}
     {% else %}
     <div class="panel-body text-center">
-       没有回复
+        {{_('No Reply')}}
     </div>
     {% endif %}
 </div>

@@ -6,16 +6,16 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:39:29 (CST)
-# Last Update:星期三 2016-7-20 17:39:39 (CST)
+# Last Update:星期一 2016-7-25 20:58:51 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from datetime import datetime
-from maple import redis_data
+from maple import redis_data, cache
 from maple.settings import setting
 from maple.topic.models import Reply, Topic
 from maple.user.models import User
-from flask import Markup
+from flask import Markup, g
 from misaka import Markdown, HtmlRenderer
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
@@ -48,10 +48,11 @@ class Filters(object):
         # return Markup(md(text))
 
     def timesince(dt, default="just now"):
-        now = datetime.now()
+        from flask_babelex import format_datetime
+        now = datetime.utcnow()
         diff = now - dt
         if diff.days > 10:
-            return dt.strftime('%Y-%m-%d %H:%M')
+            return format_datetime(dt, 'Y-M-d H:m')
         elif diff.days <= 10 and diff.days > 0:
             periods = ((diff.days, "day", "days"), )
         elif diff.days <= 0 and diff.seconds > 3600:
@@ -69,14 +70,23 @@ class Filters(object):
 
         return default
 
-    def get_last_reply(uid):
-        reply = Reply.query.join(Reply.topic).filter(Topic.id == uid).first()
-        return reply
+    def show_time():
+        from flask_babelex import format_datetime
+        if g.user.is_authenticated:
+            return 'LOCALE:' + format_datetime(datetime.utcnow())
+        else:
+            return 'UTC:' + format_datetime(datetime.utcnow())
 
     def get_user_infor(name):
         user = User.query.filter(User.username == name).first()
         return user
 
+    @cache.memoize(timeout=60)
+    def get_last_reply(uid):
+        reply = Reply.query.join(Reply.topic).filter(Topic.id == uid).first()
+        return reply
+
+    @cache.memoize(timeout=30)
     def get_read_count(id):
         read = redis_data.hget('topic:%s' % str(id), 'read')
         replies = redis_data.hget('topic:%s' % str(id), 'replies')
@@ -90,6 +100,7 @@ class Filters(object):
             replies = int(replies)
         return replies, read
 
+    @cache.memoize(timeout=30)
     def is_collected(topicId):
         from maple.topic.models import CollectTopic
         from flask_login import current_user
@@ -102,7 +113,6 @@ class Filters(object):
 
     def notice_count():
         from maple.forums.models import Notice
-        from flask import g
         if g.user.is_authenticated:
             count = Notice.query.filter_by(rece_id=g.user.id,
                                            is_read=False).count()
@@ -110,11 +120,13 @@ class Filters(object):
                 return count
         return None
 
+    @cache.memoize(timeout=60)
     def hot_tags():
         from maple.tag.models import Tags
         tags = Tags.query.order_by(Tags.time.desc()).limit(9).all()
         return tags
 
+    @cache.memoize(timeout=60)
     def recent_tags():
         from maple.tag.models import Tags
         tags = Tags.query.order_by(Tags.time.desc()).limit(12).all()

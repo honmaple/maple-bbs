@@ -9,7 +9,7 @@
 {%- if n -%}
 ({{ n }})
 {%- endif -%}
-{{ title }} {{ Title.title }} - {{Title.description}}
+{{ title }} {{ Title.title }} - {{ _(Title.description) }}
 {%- endblock title %}
 {% block main %}
 <nav class="navbar navbar-default navbar-fixed-top" style="background:#fff">

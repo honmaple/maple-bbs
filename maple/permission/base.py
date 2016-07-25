@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-16 15:25:16 (CST)
-# Last Update:星期日 2016-7-24 14:56:50 (CST)
+# Last Update:星期一 2016-7-25 15:7:1 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -36,7 +36,6 @@ class RestBase(object):
                 meth = getattr(self, 'get', None)
             if meth is not None:
                 check = meth(*args, **kwargs)
-                print(check)
                 if check:
                     return self.callback()
             return func(*args, **kwargs)

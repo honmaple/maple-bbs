@@ -1,14 +1,14 @@
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
         <span style="float:right">
-            排序:
+            {{_('Sort:')}}
             <div class="btn-group btn-group-xs" role="group">
                 {% if request.args.get('orderby') == 'vote' %}
-                <a href="{{ url_for('user.topic',orderby='publish')}}" class="btn btn-default">时间</a>
-                <a href="{{ url_for('user.topic',orderby='vote')}}" class="btn btn-default active">投票</a>
+                <a href="{{ url_for('user.topic',orderby='publish')}}" class="btn btn-default">{{_('time')}}</a>
+                <a href="{{ url_for('user.topic',orderby='vote')}}" class="btn btn-default active">{{_('vote')}}</a>
                 {% else %}
-                <a href="" class="btn btn-default active">时间</a>
-                <a href="{{ url_for('user.topic',orderby='vote')}}" class="btn btn-default">投票</a>
+                <a href="" class="btn btn-default active">{{_('time')}}</a>
+                <a href="{{ url_for('user.topic',orderby='vote')}}" class="btn btn-default">{{_('vote')}}</a>
                 {% endif %}
             </div>
         </span>
@@ -20,9 +20,8 @@
         <span style="color:#666">{{ topic.board.board }}</span>
         {{ link_base.topic(topic) }}
         <div style="font-size:12px;color:#999;">
-            创建日期:{{ topic.publish | timesince }}
-            最后回复来自
-            {{ link_base.user(topic.author.username) }}
+            {{_('create time:')}}{{ topic.publish | timesince }}
+            · {{ _('the last reply published by %(author)s',author=link_base.user(topic.author.username))}}
         </div>
     </div>
     {% endfor  %}
@@ -31,13 +30,13 @@
     <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
         <span class="text-center" style="display:block;width:100%;color:#999">
             <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
-            根据用户设置,列表被隐藏
+            {{_("Due to user's setting,the list have been hidden.")}}
         </span>
     </div>
     {% endif %}
     {% else %}
     <div class="panel-body text-center">
-        没有主题
+        {{_('No Topic')}}
     </div>
     {% endif %}
 </div>

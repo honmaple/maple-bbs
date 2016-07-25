@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 10:03:28 (CST)
-# Last Update:星期六 2016-6-25 0:55:31 (CST)
+# Last Update:星期一 2016-7-25 15:44:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -43,4 +43,11 @@ class SettingModel(object):
         current_user.setting.rep_list = rep_list
         current_user.setting.ntb_list = ntb_list
         current_user.setting.collect_list = collect_list
+        db.session.commit()
+
+    def babel(form):
+        timezone = form.timezone.data
+        locale = form.locale.data
+        current_user.setting.locale = locale
+        current_user.setting.timezone = timezone
         db.session.commit()

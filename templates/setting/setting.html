@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% import 'base/link.html' as link %}
 {% block content %}
-{{ breadcrumb(active='资料修改')}}
+{{ breadcrumb(active=_('Profile '))}}
 <style>
  .avatar {
      width: 100px;
@@ -11,17 +11,16 @@
 <div class="row">
     <div class="col-md-3" style="padding-right:0">
         <div class="list-group">
-            <a href="{{ url_for('setting.setting')}}" class="list-group-item active">
-                个人资料
-            </a>
-            <a href="{{ url_for('setting.password')}}" class="list-group-item">密码修改</a>
-            <a href="{{ url_for('setting.privacy')}}" class="list-group-item">隐私设置</a>
+            <a href="{{ url_for('setting.setting')}}" class="list-group-item active"> {{ _('Profile ') }}</a>
+            <a href="{{ url_for('setting.password')}}" class="list-group-item">{{_('Password ')}}</a>
+            <a href="{{ url_for('setting.privacy')}}" class="list-group-item">{{_('Privacy ')}}</a>
+            <a href="{{ url_for('setting.babel')}}" class="list-group-item">{{_('Timezone and Locale')}}</a>
         </div>
     </div>
     <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-heading">
-                资料修改
+                {{ _('Profile ')}}
             </div>
             <div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
                 <form action="{{ url_for('upload.avatar')}}" method="POST" enctype=multipart/form-data>
@@ -40,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default btn-sm">确认上传</button>
+                                <button type="submit" class="btn btn-default btn-sm">{{_('confirm upload')}}</button>
                             </div>
                         </div>
                     </div>

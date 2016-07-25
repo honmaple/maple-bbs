@@ -20,8 +20,8 @@
     <div class="panel-heading">
         {{ _('Received %(total)s replies',total=replies.total) }}
         <ul class="pull-right list-inline reply-order">
-            <li><a href="{{ url_for('topic.topic',topicId=topic.uid,orderby='time')}}"> <i class="icon icon-time"></i>时间</a></li>
-            <li><a href="{{ url_for('topic.topic',topicId=topic.uid,orderby='like')}}"> <i class="icon icon-thumbs-up"></i>点赞数</a></li>
+            <li><a href="{{ url_for('topic.topic',topicId=topic.uid,orderby='time')}}"> <i class="icon icon-time"></i>{{_('time')}}</a></li>
+            <li><a href="{{ url_for('topic.topic',topicId=topic.uid,orderby='like')}}"> <i class="icon icon-thumbs-up"></i>{{_('likers')}}</a></li>
         </ul>
     </div>
     {% if replies.items %}
@@ -68,7 +68,7 @@
     {% else %}
     <div class="panel-body">
         <span class="text-center" style="display:block;width:100%;color:#999">
-            暂无回复
+            {{_('no reply')}}
         </span>
     </div>
     {% endif %}
@@ -79,8 +79,8 @@
     <div class="panel-body">
         <form action="{{ url_for('topic.reply',topicId=topic.id)}}" method="POST">
             {{ form.hidden_tag() }}
-            {{ form.content(class='form-control')}}
-            <button class="btn btn-sm btn-primary" type="submit">{{ _('Post reply') }}</button>
+            {{ form.content(class='form-control',rows=4)}}
+            <button class="btn btn-sm btn-primary" type="submit" style="margin-top:10px;">{{ _('Post reply') }}</button>
         </form>
     </div>
     {% else %}

@@ -49,7 +49,7 @@ def babel_init():
 def babel_update():
     pybabel = 'pybabel'
     os.system(pybabel +
-              ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple')
+              ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple templates')
     os.system(pybabel + ' update -i messages.pot -d maple/translations')
     os.unlink('messages.pot')
 

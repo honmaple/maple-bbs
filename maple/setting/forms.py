@@ -6,35 +6,48 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-21 22:46:35 (CST)
-# Last Update:星期六 2016-6-25 0:53:46 (CST)
+# Last Update:星期一 2016-7-25 17:43:3 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask.ext.wtf import Form
+from flask_wtf import Form
+from flask_babelex import lazy_gettext as _
 from wtforms import StringField, PasswordField, TextAreaField, SelectField
 from wtforms.validators import Length, DataRequired, EqualTo
+from pytz import all_timezones
 
-choices = [(1, '所有人'), (2, '已登陆用户'), (3, '仅自己')]
+choices = [(1, _('Everybody')), (2, _('Logined User')), (3, _('Only Self'))]
 
 
 class PrivacyForm(Form):
-    online_status = SelectField('登录状态', coerce=int, choices=choices)
-    topic_list = SelectField('主题列表', coerce=int, choices=choices)
+    online_status = SelectField(
+        _('Login status:'), coerce=int,
+        choices=choices)
+    topic_list = SelectField(_('Topic List:'), coerce=int, choices=choices)
 
-    rep_list = SelectField('回复列表', coerce=int, choices=choices)
-    ntb_list = SelectField('笔记列表', coerce=int, choices=choices)
-    collect_list = SelectField('收藏列表', coerce=int, choices=choices)
+    rep_list = SelectField(_('Reply List:'), coerce=int, choices=choices)
+    ntb_list = SelectField(_('Notebook List:'), coerce=int, choices=choices)
+    collect_list = SelectField(_('Collect List:'), coerce=int, choices=choices)
 
 
 class ProfileForm(Form):
-    introduce = TextAreaField('个人介绍:', [Length(max=256)])
-    school = StringField('所在学校:', [Length(max=256)])
-    word = TextAreaField('个性签名:', [Length(max=256)])
+    introduce = TextAreaField(_('Introduce:'), [Length(max=256)])
+    school = StringField(_('School:'), [Length(max=256)])
+    word = TextAreaField(_('Signature:'), [Length(max=256)])
 
 
 class PasswordForm(Form):
-    password = PasswordField('原密码:', [DataRequired(), Length(min=4, max=20)])
-    password_n = PasswordField('新密码:',
-                               [DataRequired(), Length(min=4, max=20),
-                                EqualTo('password_nn')])
-    password_nn = PasswordField('重复新密码:', [DataRequired()])
+    password = PasswordField(
+        _('Old Password:'), [DataRequired(), Length(min=4, max=20)])
+    password_n = PasswordField(
+        _('New Password:'),
+        [DataRequired(), Length(min=4, max=20), EqualTo('password_nn')])
+    password_nn = PasswordField(_('New Password again:'), [DataRequired()])
+
+
+class BabelForm(Form):
+    timezone = SelectField(
+        _('Timezone:'), choices=[(i, i) for i in all_timezones])
+    locale = SelectField(
+        _('Locale:'),
+        choices=[('en', _('English')), ('zh', _('Chinese'))])

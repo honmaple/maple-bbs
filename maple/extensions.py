@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期日 2016-7-24 21:51:35 (CST)
+# Last Update:星期一 2016-7-25 20:18:50 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -70,7 +70,6 @@ def register_babel(app):
 
     @babel.localeselector
     def get_locale():
-        # return 'zh'
         user = getattr(g, 'user', None)
         if user is not None:
             if g.user.is_authenticated:
@@ -90,9 +89,11 @@ def register_babel(app):
 def register_maple(app):
     Bootstrap(app,
               css=('styles/monokai.css', 'styles/mine.css',
-                   'tags/css/bootstrap-tokenfield.css'),
+                   'tags/css/bootstrap-tokenfield.css',
+                   'select2/css/select2.min.css'),
               js=('styles/upload.js', 'styles/forums.js', 'styles/mine.js',
-                  'styles/topic.js', 'tags/bootstrap-tokenfield.min.js'),
+                  'styles/topic.js', 'tags/bootstrap-tokenfield.min.js',
+                  'select2/js/select2.min.js'),
               use_auth=True)
     Captcha(app)
     Error(app)
@@ -106,7 +107,7 @@ def register_redis(app):
 
 
 def register_cache(app):
-    cache = Cache(config={'CACHE_TYPE': 'null'})
+    cache = Cache(config={'CACHE_TYPE': 'redis'})
     cache.init_app(app)
     return cache
 
@@ -142,6 +143,7 @@ def register_login(app):
 
     return login_manager
 
+
 def register_principal(app):
     principal = Principal()
     principal.init_app(app)
@@ -155,6 +157,7 @@ def register_jinja2(app):
     app.jinja_env.globals['hot_tags'] = Filters.hot_tags
     app.jinja_env.globals['recent_tags'] = Filters.recent_tags
     app.jinja_env.globals['notice_count'] = Filters.notice_count
+    app.jinja_env.globals['show_time'] = Filters.show_time
     app.jinja_env.filters['get_last_reply'] = Filters.get_last_reply
     app.jinja_env.filters['get_user_infor'] = Filters.get_user_infor
     app.jinja_env.filters['get_read_count'] = Filters.get_read_count

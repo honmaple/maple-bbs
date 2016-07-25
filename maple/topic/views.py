@@ -6,15 +6,16 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期日 2016-7-24 20:19:33 (CST)
+# Last Update:星期一 2016-7-25 20:51:19 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import (render_template, redirect, url_for, request, g, jsonify)
+from flask import (render_template, redirect, url_for, request, g, jsonify,
+                   current_app)
 from flask.views import MethodView
 from flask_login import login_required
 from flask_maple.forms import flash_errors
-from maple import app, db
+from maple import db
 from maple.helpers import replies_page
 from maple.helpers import is_num
 from maple.forums.models import Board
@@ -22,11 +23,12 @@ from maple.filters import safe_clean, Filters
 from .models import Topic
 from .forms import TopicForm, ReplyForm
 from .controls import TopicModel, ReplyModel, vote
-from .permission import topic_permission, reply_permission, tag_permission,preview_permission
+from .permission import (topic_permission, reply_permission, ask_permission,
+                         preview_permission)
 
 
 @login_required
-@tag_permission
+@ask_permission
 def ask():
     form = TopicForm()
     boardId = request.args.get('boardId')
@@ -41,7 +43,7 @@ def ask():
 def good():
     page = is_num(request.args.get('page'))
     topics = Topic.query.filter_by(is_good=True).paginate(
-        page, app.config['PER_PAGE'],
+        page, current_app.config['PER_PAGE'],
         error_out=True)
     data = {'title': '精华文章 - ', 'topics': topics}
     return render_template('topic/topic_good.html', **data)
@@ -127,26 +129,6 @@ class TopicAPI(MethodView):
 
     def delete(self, topicId):
         return 'delete'
-
-
-def reply(topicId):
-    form = ReplyForm()
-    topic = Topic.query.filter_by(id=topicId).first_or_404()
-    if form.validate_on_submit():
-        reply = ReplyModel.post_data(form, topicId)
-        page = replies_page(topic.id)
-        return redirect(url_for('topic.topic',
-                                topicId=topic.uid,
-                                page=page,
-                                _anchor='reply' + str(reply.id)))
-    else:
-        if form.errors:
-            flash_errors(form)
-        page = replies_page(topic.id)
-        return redirect(url_for('topic.topic',
-                                topicId=topic.uid,
-                                page=page,
-                                _anchor='replies-content'))
 
 
 class ReplyAPI(MethodView):

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期一 2016-7-25 1:22:43 (CST)
+# Last Update:星期一 2016-7-25 21:0:0 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -23,7 +23,6 @@ from .forms import MessageForm
 from maple import cache, db
 
 
-@cache.cached(timeout=60)
 def index():
     topics = Topic.query.filter_by(is_good=True, is_top=False).paginate(1, 10)
     top_topics = Topic.query.filter_by(is_top=True).limit(5)
@@ -33,7 +32,6 @@ def index():
     return render_template('forums/index.html', **data)
 
 
-@cache.cached(timeout=60)
 def forums():
     boards = {}
     parent_boards = db.session.query(Board.parent_board).group_by(

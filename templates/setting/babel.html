@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+{% import 'base/link.html' as link %}
+{% block content %}
+{{ breadcrumb(active=_('Timezone and Locale'))}}
+{% block script -%}
+{{ super() }}
+ <script type="text/javascript">
+ $(document).ready(function() {
+     $("#timezone").select2();
+     $("#locale").select2();
+ });
+</script>
+{%- endblock script %}
+<div class="row">
+    <div class="col-md-3" style="padding-right:0">
+        <div class="list-group">
+            <a href="{{ url_for('setting.setting')}}" class="list-group-item"> {{ _('Profile ') }}</a>
+            <a href="{{ url_for('setting.password')}}" class="list-group-item">{{_('Password ')}}</a>
+            <a href="{{ url_for('setting.privacy')}}" class="list-group-item">{{_('Privacy ')}}</a>
+            <a href="{{ url_for('setting.babel')}}" class="list-group-item active">{{_('Timezone and Locale')}}</a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{_('Timezone and Locale')}}
+            </div>
+            <div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
+                <form action="{{ url_for('setting.babel')}}" method="POST">
+                    {% from 'base/form.html' import forms %}
+                    {{ forms(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

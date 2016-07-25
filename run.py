@@ -26,3 +26,4 @@ if __name__ == '__main__':
     #  app.logger.addHandler(streamHandler)
     #  app.logger.info("Logging is set up.")
     app.run()
+    print(app.url_map)

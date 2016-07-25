@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-16 16:40:53 (CST)
-# Last Update:星期日 2016-7-24 20:38:50 (CST)
+# Last Update:星期一 2016-7-25 19:57:23 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -74,7 +74,7 @@ class ReplyPermission(RestBase):
         return redirect(url_for('user.user', user_url=current_user.username))
 
 
-def tag_permission(func):
+def ask_permission(func):
     @wraps(func)
     def decorator(*args, **kwargs):
         permission = Permission(RoleNeed('confirmed'))
@@ -88,6 +88,6 @@ def tag_permission(func):
 
     return decorator
 
-preview_permission = tag_permission
+preview_permission = ask_permission
 topic_permission = TopicPermission()
 reply_permission = ReplyPermission()

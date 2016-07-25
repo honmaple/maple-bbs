@@ -6,7 +6,7 @@
 
 {% macro tag(tag) -%}
 {{ base() }}
-<div class="panel panel-default" style="font-size:13px;">
+<div class="panel panel-default hidden-xs" style="font-size:13px;">
     {{ parents(tag) }}
     {{ children(tag) }}
 </div>

@@ -6,21 +6,21 @@
      if (urlType == 'topic'){
          $('li.topics').addClass('active');
      }else if(urlType == 'reply')
-     {
-         $('li.replies').addClass('active');
-     }else if(urlType == 'collect')
-     {
-         $('li.collects').addClass('active');
-     }else if(urlType == 'collect_detail')
-     {
-         $('li.collects').addClass('active');
-     }else if(urlType == 'notebook')
-     {
-         $('li.notebooks').addClass('active');
-     }else if(urlType == 'follower')
-     {
-         $('li.followers').addClass('active');
-     }
+         {
+             $('li.replies').addClass('active');
+         }else if(urlType == 'collect')
+             {
+                 $('li.collects').addClass('active');
+             }else if(urlType == 'collect_detail')
+                 {
+                     $('li.collects').addClass('active');
+                 }else if(urlType == 'notebook')
+                     {
+                         $('li.notebooks').addClass('active');
+                     }else if(urlType == 'follower')
+                         {
+                             $('li.followers').addClass('active');
+                         }
  });
 </script>
 {% import 'base/link.html' as link_base %}
@@ -32,19 +32,9 @@
         {% include 'user/infor.html' %}
         <div  style="background:#fff;border:1px solid #ddd;border-radius:5px">
             {% if g.user.is_authenticated and current_user.username == g.user_url %}
-            <ul class="nav nav-pills nav-stacked ">
-                {% set class_list = ['topics','replies','collects','followings','followers'] %}
-                {% set href_list = ['user.topic','user.reply','user.collect','user.following','user.follower'] %}
-                {% set show_list = ['我的主题','我的回复','我的收藏','我的关注','我的粉丝'] %}
-                {{ nav_list(class_list,href_list,show_list)}}
-            </ul>
+            {{ nav_list(_('My'))}}
             {% else %}
-            <ul class="nav nav-pills nav-stacked" >
-                <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">{{ g.user_url}}的主题</a></li>
-                <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">{{ g.user_url}}的回复</a></li>
-                <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">{{ g.user_url}}的收藏</a></li>
-                <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">{{ g.user_url}}的粉丝</a></li>
-            </ul>
+            {{ nav_list(g.user_url)}}
             {% endif %}
         </div>
     </div>
@@ -55,9 +45,11 @@
 </div>
 {% endblock %}
 
-{% macro nav_list(class,href,show) -%}
-{% set len = class | length %}
-{% for i in range(len) %}
-<li role="presentation" class="{{ class[i] }}"><a href="{{ url_for(href[i])}}">{{show[i]}}</a></li>
-{% endfor %}
+{% macro nav_list(name) -%}
+<ul class="nav nav-pills nav-stacked" >
+    <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">{{ _("%(n)s's topics",n = name) }}</a></li>
+    <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">{{ _("%(n)s's replies",n = name) }}</a></li>
+    <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">{{ _("%(n)s's collects",n = name) }}</a></li>
+    <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">{{ _("%(n)s's followers",n = name) }}</a></li>
+</ul>
 {%- endmacro %}

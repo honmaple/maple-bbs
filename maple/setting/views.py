@@ -6,27 +6,23 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:04:43 (CST)
-# Last Update:星期五 2016-7-15 18:40:21 (CST)
+# Last Update:星期一 2016-7-25 18:58:28 (CST)
 #          By:jianglin
 # Description: user setting include password , infor and privacy
 # **************************************************************************
 from flask import (render_template, request, url_for, redirect, flash)
 from flask_maple.forms import flash_errors
 from flask_login import current_user, login_required
-from maple.setting.forms import (ProfileForm, PasswordForm, PrivacyForm)
+from maple.setting.forms import (ProfileForm, PasswordForm, PrivacyForm,
+                                 BabelForm)
 from maple.upload.forms import AvatarForm
 from .controls import SettingModel
 
-# site = Blueprint('setting', __name__)
 
-
-# @site.route('', methods=['GET', 'POST'])
-# @site.route('/profile', methods=['GET', 'POST'])
 @login_required
 def setting():
     form = ProfileForm()
     avatarform = AvatarForm()
-    infor = current_user.infor
     if form.validate_on_submit() and request.method == "POST":
         SettingModel.profile(form)
         return redirect(url_for('setting.setting'))
@@ -34,6 +30,7 @@ def setting():
         if form.errors:
             flash_errors(form)
             return redirect(url_for('setting.setting'))
+        infor = current_user.infor
         form.introduce.data = infor.introduce
         form.school.data = infor.school
         form.word.data = infor.word
@@ -41,7 +38,6 @@ def setting():
         return render_template('setting/setting.html', **data)
 
 
-# @site.route('/password', methods=['GET', 'POST'])
 @login_required
 def password():
     form = PasswordForm()
@@ -59,7 +55,6 @@ def password():
         return render_template('setting/password.html', form=form)
 
 
-# @site.route('/privacy', methods=['GET', 'POST'])
 @login_required
 def privacy():
     form = PrivacyForm()
@@ -70,10 +65,26 @@ def privacy():
         if form.errors:
             flash_errors(form)
             return redirect(url_for('setting.privacy'))
-        else:
-            form.online_status.data = current_user.setting.online_status
-            form.topic_list.data = current_user.setting.topic_list
-            form.rep_list.data = current_user.setting.rep_list
-            form.ntb_list.data = current_user.setting.ntb_list
-            form.collect_list.data = current_user.setting.collect_list
-            return render_template('setting/privacy.html', form=form)
+        setting = current_user.setting
+        form.online_status.data = setting.online_status
+        form.topic_list.data = setting.topic_list
+        form.rep_list.data = setting.rep_list
+        form.ntb_list.data = setting.ntb_list
+        form.collect_list.data = setting.collect_list
+        return render_template('setting/privacy.html', form=form)
+
+
+@login_required
+def babel():
+    form = BabelForm()
+    if form.validate_on_submit() and request.method == "POST":
+        SettingModel.babel(form)
+        return redirect(url_for('setting.babel'))
+    else:
+        if form.errors:
+            flash_errors(form)
+            return redirect(url_for('setting.babel'))
+        setting = current_user.setting
+        form.timezone.data = setting.timezone
+        form.locale.data = setting.locale
+        return render_template('setting/babel.html', form=form)
