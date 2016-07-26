@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 {% block content %}
 {{ breadcrumb(active=_('About')) }}
+{% cache 300 %}
 <div class="panel panel-primary">
     <div class="panel-heading">
         {{ _('About')}}
@@ -9,4 +10,5 @@
         about
     </div>
 </div>
+{% endcache %}
 {% endblock %}

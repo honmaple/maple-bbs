@@ -28,6 +28,23 @@
    pip install -r requirements.txt
     #+END_SRC
 
+*** Config
+    #+BEGIN_SRC shell
+    mv config.example config
+    #+END_SRC
+    after finished configure
+
+    *For Production*
+    Please set DEBUG = False or change *maple/__init__.py*
+    #+BEGIN_SRC python
+    app.config.from_object('config.config')
+    #+END_SRC
+    to
+    #+BEGIN_SRC python
+    app.config.from_object('config.production')
+    #+END_SRC
+
+
 *** Comment before init db
 
     place of file: *maple/topic/forms.py*

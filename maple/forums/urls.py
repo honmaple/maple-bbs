@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-15 18:48:57 (CST)
-# Last Update:星期日 2016-7-24 22:3:29 (CST)
+# Last Update:星期二 2016-7-26 10:38:19 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Blueprint
 from flask_login import login_required
 from .views import (index, forums, notice, userlist, message, about, help,
-                    order,contact)
+                    order, contact)
 
 site = Blueprint('forums', __name__)
 

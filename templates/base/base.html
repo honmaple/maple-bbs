@@ -71,11 +71,11 @@
         </ul>
     </div>
     {% else  %}
-    <a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-primary pull-right">{{ _('Register')}}</a>
-    <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-primary pull-right">{{ _('Login') }}</a>
+    {{ a_pull_right('auth.register',_('Register')) }}
+    {{ a_pull_right('auth.login',_('Login'))}}
     {% endif %}
-    <a href="{{ url_for('tag.tag')}}" ><span class="btn btn-sm btn-primary pull-right">{{ _('All Tags')}}</span></a>
-    <a href="{{ url_for('forums.userlist')}}"><span class="btn btn-sm btn-primary pull-right">{{ _('Userlist') }}</span></a>
+    {{ a_pull_right('tag.tag',_('All Tags'))}}
+    {{ a_pull_right('forums.userlist',_('Userlist'))}}
     <a href="{{ url_for('forums.notice')}}"><span class="btn btn-sm btn-primary pull-right">
         {{ _('Notices') }}
         <span class="badge">
@@ -88,3 +88,7 @@
     {% block content %} {% endblock %}
 </div>
 {% endblock %}
+
+{% macro a_pull_right(url,name) -%}
+<a href="{{ url_for(url) }}" class="btn btn-sm btn-primary pull-right">{{ name }}</a>
+{%- endmacro %}

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期一 2016-7-25 20:18:50 (CST)
+# Last Update:星期二 2016-7-26 16:55:5 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -107,7 +107,7 @@ def register_redis(app):
 
 
 def register_cache(app):
-    cache = Cache(config={'CACHE_TYPE': 'redis'})
+    cache = Cache()
     cache.init_app(app)
     return cache
 

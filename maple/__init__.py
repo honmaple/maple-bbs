@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期一 2016-7-25 11:11:52 (CST)
+# Last Update:星期二 2016-7-26 15:13:12 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
@@ -19,6 +19,7 @@ from maple.extensions import (register_form, register_babel,
 from maple.extensions import register_rbac
 from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
+from .logs import register_logging
 import os
 
 
@@ -48,6 +49,7 @@ def register(app):
     register_jinja2(app)
     register_maple(app)
     register_routes(app)
+    register_logging(app)
 
 
 def register_routes(app):

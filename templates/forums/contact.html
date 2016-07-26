@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 {% block content %}
 {{ breadcrumb(active=_('Contact me')) }}
+{% cache 300 %}
 <div class="panel panel-primary">
     <div class="panel-heading">
         {{ _('Contact me') }}
@@ -9,4 +10,5 @@
           root@honmaple.com
     </div>
 </div>
+{% endcache %}
 {% endblock %}
