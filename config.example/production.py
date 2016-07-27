@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:31:46 (CST)
-# Last Update:星期二 2016-7-26 18:9:4 (CST)
+# Last Update:星期五 2016-7-29 13:7:49 (CST)
 #          By: jianglin
 # Description:
 # **************************************************************************
@@ -15,6 +15,10 @@ from datetime import timedelta
 DEBUG = False
 SECRET_KEY = 'secret key'
 SECURITY_PASSWORD_SALT = 'you will never guess'
+
+# for development use localhost:5000
+# for production use xxx.com
+SERVER_NAME = 'localhost:5000'
 
 # remember me to save cookies
 PERMANENT_SESSION_LIFETIME = timedelta(days=3)

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期二 2016-7-26 16:50:16 (CST)
+# Last Update:星期五 2016-7-29 12:32:58 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -60,7 +60,6 @@ def notice():
     return render_template('forums/notice.html', **data)
 
 
-@cache.cached(timeout=60)
 def userlist():
     page = is_num(request.args.get('page'))
     users = User.query.paginate(page,

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期二 2016-7-26 16:55:5 (CST)
+# Last Update:星期五 2016-7-29 12:31:50 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -21,7 +21,7 @@ from flask_mail import Mail
 from flask_principal import Principal
 from flask_avatar import Avatar
 from flask_cache import Cache
-from flask_maple_rbac import Rbac
+from flask_maple.rbac import Rbac
 from redis import StrictRedis
 
 

@@ -3,7 +3,7 @@
      margin-top: -30px;
      height: 100px;
      background-color:#fff;
-     padding:16 0 10 10;
+     padding:16px 0 10 10;
      border:1px solid #ddd;
      border-radius:5px;
  }
@@ -18,7 +18,7 @@
  }
 </style>
 <div class="footer col-md-offset-1 col-md-10">
-    <div class="pull-right" style="margin-right:30px;">
+    <div class="pull-right" style="margin-right:30px;margin-top:10px">
         <p class="aaaa text-right">
             <a href="{{ url_for('forums.help')}}">{{ _('Help')}}</a>
             <span class="pipe"> | </span>
@@ -39,7 +39,7 @@
             <span style="margin-left:10px">{{ _('Time of highest online:')}}<strong>{{ 'high_time' | get_online_users }}</strong></span>
         </p>
     </div>
-    <blockquote style="font-size:13px;">
+    <blockquote style="font-size:13px;margin-top:10px;">
         <p style="font-size:14px;">{{ _(Title.description) }}</p>
         <footer>
             <span> Copyright © 2015-2016 honmaple.</span>

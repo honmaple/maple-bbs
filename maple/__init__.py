@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期二 2016-7-26 15:13:12 (CST)
+# Last Update:星期五 2016-7-29 12:33:47 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
@@ -73,6 +73,8 @@ def before_request():
     g.user = current_user
     g.sort_form = SortForm()
     g.search_form = SearchForm()
+    from maple.main.records import mark_online
+    mark_online(request.remote_addr)
 
 
 @app.route('/robots.txt')

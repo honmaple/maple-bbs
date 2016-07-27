@@ -28,6 +28,17 @@
    pip install -r requirements.txt
     #+END_SRC
 
+    Beacause flask_maple.rbac isn't uploaded to pypi
+    you should 
+    #+BEGIN_SRC shell
+git clone https://github.com/honmaple/flask-maple
+cd flask-maple
+git checkout develop
+pip uninstall flask-maple
+python setup.py install
+    #+END_SRC
+    to install flask-maple
+
 *** Config
     #+BEGIN_SRC shell
     mv config.example config

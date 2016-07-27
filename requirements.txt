@@ -8,8 +8,6 @@ Flask-BabelEx==0.9.3
 Flask-Cache==0.13.1
 Flask-Login==0.3.2
 Flask-Mail==0.9.1
-Flask-Maple==0.3.5
-Flask-Maple-Rbac==0.3.6
 Flask-Migrate==1.8.0
 Flask-Principal==0.4.0
 Flask-Script==2.0.5
