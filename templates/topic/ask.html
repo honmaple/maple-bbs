@@ -26,85 +26,16 @@
      color:#eee;
  }
 </style>
-{{ breadcrumb(active='提问')}}
+{{ breadcrumb(active=_('Ask'))}}
 <div class="panel panel-primary">
-    <div class="panel-heading">
-        提问
-    </div>
+    <div class="panel-heading">{{ _('Ask') }}</div>
     <div class="panel-body" style="border-bottom:1px solid #f6e1e1;padding:10px 0;">
         <div class="row" style="margin:0;padding:0;">
             <form action="{{ url_for('topic.post') }}" method="POST">
-                <div class="col-sm-2">
-                    {{ form.hidden_tag() }}
-                    {{ form.title.label(class="control-label") }}
-                    <span style="font-size:12px;color:#999">
-                        (请用简短的话语描述你的问题)
-                    </span>
-                </div>
-                <div class="col-sm-10" style="margin-bottom:8px;">
-                    {{ form.title(class="form-control") }}
-                </div>
-                <div class="col-sm-2">
-                    {{ form.category.label(class="control-label") }}
-                    <span style="font-size:12px;color:#999">
-                        (请输入分类)
-                    </span>
-                </div>
-                <div class="col-sm-10" style="margin-bottom:8px;">
-                    {{ form.category(class="form-control") }}
-                </div>
-                <div class="col-sm-2">
-                    {{ form.tags.label(class="control-label") }}
-                    <span style="font-size:12px;color:#999">
-                        (请输入节点)
-                    </span>
-                </div>
-                <div class="col-sm-10" style="margin-bottom:8px;">
-                    {{ form.tags(class="form-control",id="tokenfield",placeholder="节点请以英文逗号隔开.请勿输入超过4个节点") }}
-                </div>
-                <div class="col-sm-2">
-                    {{ form.content.label(class="control-label") }}
-                    <table style="font-size:12px;color:#999">
-                        <tr>
-                            <th colspan="2">默认语法支持部分html标签</th>
-                        </tr>
-                        {{ html() }}
-                    </table>
-                </div>
-                <div class="col-sm-10" style="margin-bottom:8px;">
-                    {{ form.content(class="form-control",rows="8",onchange="preview()",placeholder="请输入问题描述") }}
-                </div>
-                <div class="col-sm-offset-2 col-sm-10">
-                    {{ form.choice(class="input-sm pull-right",style="padding:2")}}
-                    <button class="btn btn-sm btn-primary" type="submit">提交问题</button>
-                    <button class="btn btn-sm btn-primary" id="topic-preview" type="button">预览</button>
-                </div>
-                <div class="col-sm-offset-2 col-sm-10" id="show-preview">
-                </div>
+                {% from 'topic/_form.html' import ask %}
+                {{ ask(form) }}
             </form>
         </div>
     </div>
 </div>
 {% endblock %}
-
-
-{% macro html() -%}
-<tr>
-    <td>b:</td>
-    <td>加粗</td>
-</tr>
-<tr>
-    <td>i:</td>
-    <td>倾斜</td>
-</tr>
-<tr>
-    <td>br:</td>
-    <td>换行</td>
-</tr>
-<tr>
-    <td valign="top">font:</td>
-    <td> 设置字体(目前仅允许设置字体颜色)
-        <p>注:字体颜色请勿设置成白色或与白色相近的颜色</p>
-    </td>
-</tr>
-{%- endmacro %}

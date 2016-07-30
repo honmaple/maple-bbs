@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-15 18:12:22 (CST)
-# Last Update:星期日 2016-7-24 20:15:36 (CST)
+# Last Update:星期六 2016-7-30 20:47:52 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Blueprint
-from .views import ask, good, preview, vote_up, vote_down
+from .views import ask, good, preview, vote_up, vote_down, edit
 from .views import TopicAPI, ReplyAPI
 
 site = Blueprint('topic', __name__)
@@ -21,6 +21,7 @@ site.add_url_rule('/good', view_func=good)
 site.add_url_rule('/preview', view_func=preview, methods=['POST'])
 site.add_url_rule('/up/<topicId>', view_func=vote_up, methods=['POST'])
 site.add_url_rule('/down/<topicId>', view_func=vote_down, methods=['POST'])
+site.add_url_rule('/edit/<topicId>', view_func=edit)
 
 topic_view = TopicAPI.as_view('topic')
 # /topic

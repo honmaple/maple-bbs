@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-17 13:25:39 (CST)
-# Last Update:星期一 2016-7-25 20:44:44 (CST)
+# Last Update:星期六 2016-7-30 12:23:21 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -24,16 +24,17 @@ def check_time(func):
     def wrapper(*args, **kw):
         time = redis_data.hget('user:%s' % str(current_user.id),
                                'send_email_time')
-        print(time)
-        try:
-            time = time.split('.')[0]
-            time = datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
-            print(time)
-            if datetime.now() < time + timedelta(seconds=360):
-                return jsonify(judge=False, error="你获取的验证链接还未过期，请尽快验证")
-        except TypeError:
-            set_email_send(current_user.id)
-        except ValueError:
+        if time:
+            try:
+                time = time.split('.')[0]
+                time = datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
+                if datetime.now() < time + timedelta(seconds=360):
+                    return jsonify(judge=False, error="你获取的验证链接还未过期，请尽快验证")
+            except TypeError:
+                set_email_send(current_user.id)
+            except ValueError:
+                set_email_send(current_user.id)
+        else:
             set_email_send(current_user.id)
         return func(*args, **kw)
 

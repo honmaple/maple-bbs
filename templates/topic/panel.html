@@ -5,6 +5,11 @@
     {% else %}
     <button type="button" class="btn btn-info btn-block topicfollow" id="{{ topic.id }}">关注问题</button>
     {% endif %}
+    {% if current_user.is_authenticated and current_user == topic.author %}
+    <a class="btn btn-success btn-block" href="{{ url_for('topic.edit',topicId=topic.uid)}}">
+        编辑问题
+    </a>
+    {%- endif %}
     {% if topic.id | is_collected %}
     <span class="btn btn-default btn-block">已收藏</span>
     {% else %}
@@ -16,6 +21,13 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="sidecollectLabel">收藏夹</h4>
                 </div>
+                {% if not current_user.collects.all() %}
+                <div class="modal-body">
+                    <a href="{{ url_for('mine.collect') }}" style="text-decoration:none">
+                        <i class="icon icon-plus"></i> 创建
+                    </a>
+                </div>
+                {% else %}
                 <form action="{{ url_for('mine.collect_detail',topicId=topic.uid)}}" method="POST">
                     {{ form.hidden_tag() }}
                     <div class="modal-body">
@@ -35,6 +47,7 @@
                         <button type="submit" class="btn btn-primary">提交</button>
                     </div>
                 </form>
+                {% endif %}
             </div>
         </div>
     </div>

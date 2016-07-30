@@ -6,13 +6,15 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-02 20:12:26 (CST)
-# Last Update:星期日 2016-7-24 15:7:4 (CST)
+# Last Update:星期六 2016-7-30 13:44:11 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from maple import db, app
+from maple import db
 from .admin import BaseModelView
 from maple.user.models import User, UserInfor, UserSetting, Role
+from wtforms import PasswordField
+from wtforms.validators import DataRequired
 
 
 class UserModelView(BaseModelView):
@@ -20,9 +22,11 @@ class UserModelView(BaseModelView):
     column_searchable_list = ['username', 'email']
     column_filters = ['email', 'is_superuser', 'is_confirmed', 'register_time']
     column_editable_list = ['is_confirmed', 'is_superuser']
-    form_columns = ('username', 'email', 'password', 'roles', 'is_confirmed')
-    # inline_models = (UserInfor, UserSetting, Role)
     column_details_exclude_list = ['infor', 'setting']
+    form_columns = ('username', 'email', 'roles', 'is_confirmed')
+    # inline_models = (UserInfor, UserSetting, Role)
+    form_extra_fields = {'password': PasswordField('Password',
+                                                   [DataRequired()])}
 
 
 class UserInforModelView(BaseModelView):

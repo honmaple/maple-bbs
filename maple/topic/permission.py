@@ -6,17 +6,61 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-16 16:40:53 (CST)
-# Last Update:星期一 2016-7-25 19:57:23 (CST)
+# Last Update:星期六 2016-7-30 22:2:39 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import (redirect, url_for, flash, request)
+from flask import (redirect, url_for, flash, request, jsonify, g)
 from flask_login import login_required, current_user
 from maple.permission.base import RestBase
 from maple.permission.permission import EditTopicNeed
 from flask_principal import Permission, RoleNeed
 from flask_babelex import gettext as _
 from functools import wraps
+from .models import Topic
+
+
+def ask_permission(func):
+    @wraps(func)
+    def decorator(*args, **kwargs):
+        permission = Permission(RoleNeed('confirmed'))
+        if not permission.can():
+            flash(
+                _("You haven't confirm your account,Please confirmed"),
+                'warning')
+            return redirect(url_for('user.user',
+                                    user_url=current_user.username))
+        return func(*args, **kwargs)
+
+    return decorator
+
+
+def edit_permission(func):
+    @wraps(func)
+    def decorator(*args, **kwargs):
+        topicId = kwargs.get('topicId')
+        topic = Topic.query.filter_by(uid=topicId).first_or_404()
+        permission = Permission(EditTopicNeed(topic.id))
+        if not permission.can():
+            flash(_('You have no permission'), 'warning')
+            return redirect(url_for('topic.topic', topicId=topicId))
+        return func(*args, **kwargs)
+
+    return decorator
+
+
+def vote_permission(func):
+    @wraps(func)
+    def decorator(*args, **kwargs):
+        if not g.user.is_authenticated:
+            topicId = kwargs.get('topicId')
+            return jsonify(judge=False,
+                           url=url_for('auth.login',
+                                       next=url_for('topic.topic',
+                                                    topicId=topicId)))
+        return func(*args, **kwargs)
+
+    return decorator
 
 
 class TopicPermission(RestBase):
@@ -44,12 +88,13 @@ class TopicPermission(RestBase):
             return True
 
     @login_required
+    @edit_permission
     def put(self, topicId):
         def callback():
-            flash(_("You have no permission"), 'warning')
-            return redirect(url_for('topic.topic', topicId=topicId))
+            return jsonify(judge=False, error=_('You have no permission'))
 
-        permission = Permission(EditTopicNeed(topicId))
+        topic = Topic.query.filter_by(uid=topicId).first_or_404()
+        permission = Permission(EditTopicNeed(topic.id))
         if not permission.can():
             self.callback = callback
             return True
@@ -69,24 +114,9 @@ class ReplyPermission(RestBase):
 
     def callback(self):
         flash(
-            _("You haven't confirm your account,Please confirmed"),
-            'warning')
+            _("You haven't confirm your account,Please confirmed"), 'warning')
         return redirect(url_for('user.user', user_url=current_user.username))
 
-
-def ask_permission(func):
-    @wraps(func)
-    def decorator(*args, **kwargs):
-        permission = Permission(RoleNeed('confirmed'))
-        if not permission.can():
-            flash(
-                _("You haven't confirm your account,Please confirmed"),
-                'warning')
-            return redirect(url_for('user.user',
-                                    user_url=current_user.username))
-        return func(*args, **kwargs)
-
-    return decorator
 
 preview_permission = ask_permission
 topic_permission = TopicPermission()

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期日 2016-7-24 18:54:28 (CST)
+# Last Update:星期六 2016-7-30 12:5:38 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -63,4 +63,4 @@ class RedisData(object):
 
 def set_email_send(uid):
     redis_data.hset('user:%s' % str(uid), 'send_email_time',
-                    datetime.now())
+                    datetime.utcnow())

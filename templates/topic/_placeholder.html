@@ -1,0 +1,43 @@
+{% macro title() -%}
+<span style="font-size:12px;color:#999">
+    (请用简短的话语描述你的问题)
+</span>
+{%- endmacro %}
+
+{% macro category() -%}
+<span style="font-size:12px;color:#999">
+    (请输入分类)
+</span>
+{%- endmacro %}
+
+{% macro tags() -%}
+<span style="font-size:12px;color:#999">
+    (请输入节点)
+</span>
+{%- endmacro %}
+
+{% macro content() -%}
+<table style="font-size:12px;color:#999">
+    <tr>
+        <th colspan="2">默认语法支持部分html标签</th>
+    </tr>
+    <tr>
+        <td>b:</td>
+        <td>加粗</td>
+    </tr>
+    <tr>
+        <td>i:</td>
+        <td>倾斜</td>
+    </tr>
+    <tr>
+        <td>br:</td>
+        <td>换行</td>
+    </tr>
+    <tr>
+        <td valign="top">font:</td>
+        <td> 设置字体(目前仅允许设置字体颜色)
+            <p>注:字体颜色请勿设置成白色或与白色相近的颜色</p>
+        </td>
+    </tr>
+</table>
+{%- endmacro %}

@@ -6,18 +6,16 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-03 14:32:06 (CST)
-# Last Update:星期五 2016-7-29 12:34:1 (CST)
+# Last Update:星期六 2016-7-30 22:13:1 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import g, render_template, request
-from maple import cache
 from maple.helpers import is_num
 from maple.topic.models import Topic
 from maple.forums.models import Board
 
 
-@cache.cached(timeout=60)
 def board(child_b):
     page = is_num(request.args.get('page'))
     if child_b is None:

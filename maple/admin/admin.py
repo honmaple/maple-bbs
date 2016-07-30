@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-31 21:42:11 (CST)
-# Last Update:星期二 2016-7-26 17:15:22 (CST)
+# Last Update:星期六 2016-7-30 13:7:51 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -18,11 +18,22 @@ from maple.permission.models import Permiss, Route
 from flask import abort
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask_admin.form import SecureForm
 from flask_wtf import Form
 from flask_principal import Permission, RoleNeed
 
-admin = Admin(app, name='HonMaple', template_mode='bootstrap3')
+admin = Admin(app,
+              url=app.config.get('ADMIN_URL', '/admin'),
+              name='HonMaple',
+              template_mode='bootstrap3')
+
+
+class BaseForm(Form):
+    def __init__(self, formdata=None, obj=None, prefix=u'', **kwargs):
+        self._obj = obj
+        super(BaseForm, self).__init__(formdata=formdata,
+                                       obj=obj,
+                                       prefix=prefix,
+                                       **kwargs)
 
 
 class BaseModelView(ModelView):
@@ -30,10 +41,7 @@ class BaseModelView(ModelView):
     session = db.session
     page_size = 10
     can_view_details = True
-
-    form_base_class = Form
-
-    # form_base_class = SecureForm
+    form_base_class = BaseForm
 
     def is_accessible(self):
         permission = Permission(RoleNeed('super'))

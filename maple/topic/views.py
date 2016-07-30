@@ -6,15 +6,16 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期四 2016-7-28 21:14:7 (CST)
+# Last Update:星期六 2016-7-30 21:58:29 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import (render_template, redirect, url_for, request, g, jsonify,
+from flask import (render_template, redirect, url_for, request, jsonify,
                    current_app)
 from flask.views import MethodView
 from flask_login import login_required
-from flask_maple.forms import flash_errors
+from flask_maple.forms import flash_errors, return_errors
+from flask_babelex import gettext as _
 from maple import db
 from maple.helpers import replies_page
 from maple.helpers import is_num
@@ -24,7 +25,7 @@ from .models import Topic
 from .forms import TopicForm, ReplyForm
 from .controls import TopicModel, ReplyModel, vote
 from .permission import (topic_permission, reply_permission, ask_permission,
-                         preview_permission)
+                         vote_permission, preview_permission, edit_permission)
 
 
 @login_required
@@ -38,6 +39,19 @@ def ask():
 
     data = {'title': '提问 - ', 'form': form}
     return render_template('topic/ask.html', **data)
+
+
+@login_required
+@edit_permission
+def edit(topicId):
+    topic = Topic.query.filter_by(uid=topicId).first_or_404()
+    form = TopicForm()
+    form.title.data = topic.title
+    form.category.data = topic.board_id
+    form.tags.data = ','.join([tag.tagname for tag in topic.tags])
+    form.content.data = topic.content
+    data = {'title': _('Edit -'), 'form': form, 'topic': topic}
+    return render_template('topic/edit.html', **data)
 
 
 def good():
@@ -61,9 +75,8 @@ def preview():
         return Filters.safe_markdown(content)
 
 
+@vote_permission
 def vote_up(topicId):
-    if not g.user.is_authenticated:
-        return jsonify(judge=False, url=url_for('auth.login'))
     topic = Topic.query.filter_by(uid=topicId).first_or_404()
     if not topic.vote:
         topic.vote = 1
@@ -74,9 +87,8 @@ def vote_up(topicId):
     return jsonify(judge=True, html=html)
 
 
+@vote_permission
 def vote_down(topicId):
-    if not g.user.is_authenticated:
-        return jsonify(judge=False, url=url_for('auth.login'))
     topic = Topic.query.filter_by(uid=topicId).first_or_404()
     if not topic.vote:
         topic.vote = -1
@@ -125,7 +137,14 @@ class TopicAPI(MethodView):
             return redirect(url_for('topic.ask'))
 
     def put(self, topicId):
-        return 'put'
+        form = TopicForm()
+        if form.validate_on_submit():
+            TopicModel.put(form, topicId)
+            return jsonify(judge=True)
+        else:
+            if form.errors:
+                return_errors(form)
+            return redirect(url_for('topic.ask'))
 
     def delete(self, topicId):
         return 'delete'
