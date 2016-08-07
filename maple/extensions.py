@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期五 2016-7-29 14:12:55 (CST)
+# Last Update:星期日 2016-8-7 14:12:35 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,7 +15,7 @@ from flask.json import JSONEncoder
 from flask_wtf.csrf import CsrfProtect
 from flask_maple import Bootstrap, Error, Captcha
 from flask_login import LoginManager
-from flask_babelex import Babel
+from flask_babelex import Babel, Domain
 from flask_babelex import lazy_gettext as _
 from flask_mail import Mail
 from flask_principal import Principal
@@ -23,6 +23,7 @@ from flask_avatar import Avatar
 from flask_cache import Cache
 from flask_maple.rbac import Rbac
 from redis import StrictRedis
+import os
 
 
 def register_avatar(app):
@@ -50,28 +51,33 @@ def register_rbac(app):
 
 
 def register_babel(app):
-    babel = Babel()
+    translations = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), os.pardir, 'translations'))
+    domain = Domain(translations)
+    babel = Babel(default_domain=domain)
     babel.init_app(app)
 
-    class CustomJSONEncoder(JSONEncoder):
-        """This class adds support for lazy translation texts to Flask's
-        JSON encoder. This is necessary when flashing translated texts."""
+    # class CustomJSONEncoder(JSONEncoder):
+    #     """This class adds support for lazy translation texts to Flask's
+    #     JSON encoder. This is necessary when flashing translated texts."""
 
-        def default(self, obj):
-            from speaklater import is_lazy_string
-            if is_lazy_string(obj):
-                try:
-                    return unicode(obj)  # python 2
-                except NameError:
-                    return str(obj)  # python 3
-            return super(CustomJSONEncoder, self).default(obj)
+    #     def default(self, obj):
+    #         from speaklater import is_lazy_string
+    #         if is_lazy_string(obj):
+    #             try:
+    #                 return unicode(obj)  # python 2
+    #             except NameError:
+    #                 return str(obj)  # python 3
+    #         return super(CustomJSONEncoder, self).default(obj)
 
-    app.json_encoder = CustomJSONEncoder
+    # app.json_encoder = CustomJSONEncoder
 
     @babel.localeselector
     def get_locale():
         user = getattr(g, 'user', None)
         if user is not None:
+            if request.path.startswith('/admin'):
+                return 'zh_Hans_CN'
             if g.user.is_authenticated:
                 return user.setting.locale or 'zh'
         return request.accept_languages.best_match(app.config[
@@ -150,7 +156,6 @@ def register_principal(app):
 
 
 def register_jinja2(app):
-    from maple.main.records import load_online_users
     from .filters import Filters, safe_clean
 
     app.jinja_env.globals['Title'] = Filters.Title
@@ -162,7 +167,7 @@ def register_jinja2(app):
     app.jinja_env.filters['get_user_infor'] = Filters.get_user_infor
     app.jinja_env.filters['get_read_count'] = Filters.get_read_count
     app.jinja_env.filters['timesince'] = Filters.timesince
-    app.jinja_env.filters['get_online_users'] = load_online_users
     app.jinja_env.filters['markdown'] = Filters.safe_markdown
     app.jinja_env.filters['safe_clean'] = safe_clean
     app.jinja_env.filters['is_collected'] = Filters.is_collected
+    app.jinja_env.filters['is_online'] = Filters.is_online

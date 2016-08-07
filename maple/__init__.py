@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期五 2016-7-29 12:33:47 (CST)
+# Last Update:星期日 2016-8-7 13:44:23 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
@@ -70,11 +70,21 @@ register(app)
 @app.before_request
 def before_request():
     from maple.forums.forms import SortForm, SearchForm
+    from maple.main.records import mark_online
     g.user = current_user
     g.sort_form = SortForm()
     g.search_form = SearchForm()
-    from maple.main.records import mark_online
-    mark_online(request.remote_addr)
+    if g.user.is_authenticated:
+        mark_online(g.user.username)
+    else:
+        mark_online(request.remote_addr)
+    g.get_online = get_online()
+
+
+def get_online():
+    from maple.main.records import load_online_users
+    return (load_online_users(1), load_online_users(2), load_online_users(3),
+            load_online_users(4), load_online_users(5))
 
 
 @app.route('/robots.txt')

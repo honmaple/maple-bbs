@@ -6,15 +6,16 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:56:43 (CST)
-# Last Update:星期日 2016-7-24 16:47:23 (CST)
+# Last Update:星期日 2016-8-7 16:58:36 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import abort, current_app
+from flask import abort, current_app, Markup
 from flask_login import current_user
 from time import time
 from random import randint
 from maple import redis_data
+from bleach import clean
 
 
 def is_num(num):
@@ -27,6 +28,13 @@ def is_num(num):
                 abort(404)
         except ValueError:
             abort(404)
+
+
+def html_clean(text):
+    tags = ['b', 'i', 'font', 'br']
+    attrs = {'*': ['style', 'id', 'class'], 'font': ['color']}
+    styles = ['color']
+    return clean(text, tags=tags, attributes=attrs, styles=styles)
 
 
 def replies_page(topicId):
@@ -63,9 +71,9 @@ def make_uid():
     return a + b + c
 
 
-class Map(dict):
+class ToJson(dict):
     def __init__(self, *args, **kwargs):
-        super(Map, self).__init__(*args, **kwargs)
+        super(ToJson, self).__init__(*args, **kwargs)
         for arg in args:
             if isinstance(arg, dict):
                 for k, v in arg.items():
@@ -82,12 +90,12 @@ class Map(dict):
         self.__setitem__(key, value)
 
     def __setitem__(self, key, value):
-        super(Map, self).__setitem__(key, value)
+        super(ToJson, self).__setitem__(key, value)
         self.__dict__.update({key: value})
 
     def __delattr__(self, item):
         self.__delitem__(item)
 
     def __delitem__(self, key):
-        super(Map, self).__delitem__(key)
+        super(ToJson, self).__delitem__(key)
         del self.__dict__[key]

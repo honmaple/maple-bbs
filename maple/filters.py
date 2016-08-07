@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:39:29 (CST)
-# Last Update:星期一 2016-7-25 20:58:51 (CST)
+# Last Update:星期二 2016-8-2 21:39:12 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -24,8 +24,8 @@ from bleach import clean
 
 
 def safe_clean(text):
-    tags = ['b', 'i', 'font', 'br', 'blockquote', 'div', 'h2']
-    attrs = {'*': ['style', 'id', 'class'], 'font': ['color']}
+    tags = ['b', 'i', 'font', 'br', 'blockquote', 'div', 'h2', 'a']
+    attrs = {'*': ['style', 'id', 'class'], 'font': ['color'], 'a': ['href']}
     styles = ['color']
     return Markup(clean(text, tags=tags, attributes=attrs, styles=styles))
 
@@ -131,6 +131,14 @@ class Filters(object):
         from maple.tag.models import Tags
         tags = Tags.query.order_by(Tags.time.desc()).limit(12).all()
         return tags
+
+    def is_online(username):
+        from maple.main.records import load_online_sign_users
+        online_users = load_online_sign_users()
+        if username in online_users:
+            return True
+        return False
+
 
     class Title(object):
         title = setting['title']

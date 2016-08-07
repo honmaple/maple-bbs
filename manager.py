@@ -41,7 +41,7 @@ def babel_init():
     pybabel = 'pybabel'
     os.system(pybabel +
               ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple')
-    os.system(pybabel + ' init -i messages.pot -d maple/translations -l zh')
+    os.system(pybabel + ' init -i messages.pot -d translations -l zh')
     os.unlink('messages.pot')
 
 
@@ -50,14 +50,14 @@ def babel_update():
     pybabel = 'pybabel'
     os.system(pybabel +
               ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple templates')
-    os.system(pybabel + ' update -i messages.pot -d maple/translations')
+    os.system(pybabel + ' update -i messages.pot -d translations')
     os.unlink('messages.pot')
 
 
 @manager.command
 def babel_compile():
     pybabel = 'pybabel'
-    os.system(pybabel + ' compile -d maple/translations')
+    os.system(pybabel + ' compile -d translations')
 
 
 @manager.option('-u', '--username', dest='username', default='admin')

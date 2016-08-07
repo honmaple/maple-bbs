@@ -15,8 +15,11 @@
      font-size:12px;
      color:#999;
  }
+ .reply-content a {
+     color:#778087;
+ }
 </style>
-<div class="panel panel-default" id="replies-content">
+<div class="panel panel-default">
     <div class="panel-heading">
         {{ _('Received %(total)s replies',total=replies.total) }}
         <ul class="pull-right list-inline reply-order">
@@ -39,7 +42,7 @@
                 <span>{{ reply.publish | timesince }}</span>
                 <a name="reply{{ reply.id }}" class="anchor" href="#reply{{ num }}" aria-hidden="true">#{{ num }}</a>
             </small>
-            <div>
+            <div  class="reply-content">
                 {{ reply.content | safe_clean }}
             </div>
         </div>

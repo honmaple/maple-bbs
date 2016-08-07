@@ -5,22 +5,17 @@
      var urlType = '{{type}}';
      if (urlType == 'topic'){
          $('li.topics').addClass('active');
-     }else if(urlType == 'reply')
-         {
-             $('li.replies').addClass('active');
-         }else if(urlType == 'collect')
-             {
-                 $('li.collects').addClass('active');
-             }else if(urlType == 'collect_detail')
-                 {
-                     $('li.collects').addClass('active');
-                 }else if(urlType == 'notebook')
-                     {
-                         $('li.notebooks').addClass('active');
-                     }else if(urlType == 'follower')
-                         {
-                             $('li.followers').addClass('active');
-                         }
+     }else if(urlType == 'reply') {
+         $('li.replies').addClass('active');
+     }else if(urlType == 'collect') {
+         $('li.collects').addClass('active');
+     }else if(urlType == 'collect_detail') {
+         $('li.collects').addClass('active');
+     }else if(urlType == 'notebook') {
+         $('li.notebooks').addClass('active');
+     }else if(urlType == 'follower') {
+         $('li.followers').addClass('active');
+     }
  });
 </script>
 {% import 'base/link.html' as link_base %}
@@ -29,17 +24,17 @@
 <div class="row">
     <div class="col-md-3" style="padding-right:0;">
         {% set user = g.user_url | get_user_infor %}
+        {% set setting = user.setting %}
         {% include 'user/infor.html' %}
         <div  style="background:#fff;border:1px solid #ddd;border-radius:5px">
             {% if g.user.is_authenticated and current_user.username == g.user_url %}
-            {{ nav_list(_('My'))}}
+            {{ nav_list(_('me'))}}
             {% else %}
             {{ nav_list(g.user_url)}}
             {% endif %}
         </div>
     </div>
     <div class="col-md-9">
-        {% set setting = user.setting %}
         {% include "user/" + type + ".html" %}
     </div>
 </div>
@@ -47,9 +42,9 @@
 
 {% macro nav_list(name) -%}
 <ul class="nav nav-pills nav-stacked" >
-    <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">{{ _("%(n)s's topics",n = name) }}</a></li>
-    <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">{{ _("%(n)s's replies",n = name) }}</a></li>
-    <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">{{ _("%(n)s's collects",n = name) }}</a></li>
-    <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">{{ _("%(n)s's followers",n = name) }}</a></li>
+    <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">{{ _("topics of %(n)s",n = name) }}</a></li>
+    <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">{{ _("replies of %(n)s",n = name) }}</a></li>
+    <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">{{ _("collects of %(n)s",n = name) }}</a></li>
+    <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">{{ _("followers of %(n)s",n = name) }}</a></li>
 </ul>
 {%- endmacro %}

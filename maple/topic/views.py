@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期六 2016-7-30 21:58:29 (CST)
+# Last Update:星期日 2016-8-7 17:23:42 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -157,7 +157,8 @@ class ReplyAPI(MethodView):
         form = ReplyForm()
         topic = Topic.query.filter_by(id=topicId).first_or_404()
         if form.validate_on_submit():
-            reply = ReplyModel.post_data(form, topicId)
+            rep = ReplyModel()
+            reply = rep.post(form, topicId)
             page = replies_page(topic.id)
             return redirect(url_for('topic.topic',
                                     topicId=topic.uid,
@@ -170,7 +171,7 @@ class ReplyAPI(MethodView):
             return redirect(url_for('topic.topic',
                                     topicId=topic.uid,
                                     page=page,
-                                    _anchor='replies-content'))
+                                    _anchor='content'))
 
     # def put(self, uid):
     #     return 'put'

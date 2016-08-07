@@ -2,20 +2,7 @@
 {% block script -%}
 {{ super() }}
 <script type="text/javascript">
- $(document).ready(function(){
-     $('#topic-preview').click(function() {
-         var content = $('#content').val();
-         $.post("{{ url_for('topic.preview') }}", {
-             content: $("#content").val(),
-             choice: $("#choice").val()
-         }, function(data) {
-             $("#show-preview").html(data);
-         });
-     });
-     $('#tokenfield').tokenfield({
-         limit:4
-     });
- });
+ AskTopic("{{ url_for('topic.preview') }}")
 </script>
 {%- endblock script %}
 {% block content %}

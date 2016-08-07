@@ -7,7 +7,7 @@
      border:1px solid #ddd;
      border-radius:5px;
  }
- p.aaaa a{
+ p.heading a{
      color: #aaa;
      text-decoration: none;
      border-bottom: 1px dotted #999;
@@ -19,7 +19,7 @@
 </style>
 <div class="footer col-md-offset-1 col-md-10">
     <div class="pull-right" style="margin-right:30px;margin-top:10px">
-        <p class="aaaa text-right">
+        <p class="heading text-right">
             <a href="{{ url_for('forums.help')}}">{{ _('Help')}}</a>
             <span class="pipe"> | </span>
             <a href="{{ url_for('forums.about')}}">{{ _('About')}}</a>
@@ -29,21 +29,23 @@
             <a href="https://github.com/honmaple/maple-bbs" target="_blank">GitHub</a>
         </p>
         <p class="text-right hidden-xs" style="font-size:12px;color:#777">
-            <span>{{ _('Now users online:')}}<strong>{{ 'all_counts' | get_online_users }}</strong></span>
-            <span style="margin-left:10px">{{ _('Registered users online:') }}<strong>{{ 'sign_counts' | get_online_users }}</strong></span>
-            <span style="margin-left:10px">{{ _('Guests online:')}}<strong>{{ 'counts' | get_online_users }}</strong></span>
+            {% set footer_count = g.get_online %}
+            <span>{{ _('Now users online:')}}<strong>{{ footer_count[0] }}</strong></span>
+            <span style="margin-left:10px">{{ _('Registered users online:') }}<strong>{{ footer_count[1] }}</strong></span>
+            <span style="margin-left:10px">{{ _('Guests online:')}}<strong>{{ footer_count[2] }}</strong></span>
         </p>
         <p class="text-right  hidden-xs"  style="font-size:12px;color:#777">
             <span>{{ show_time() }}</span>
-            <span style="margin-left:10px">{{ _('Highest online:')}}<strong>{{ 'high' | get_online_users }}</strong></span>
-            <span style="margin-left:10px">{{ _('Time of highest online:')}}<strong>{{ 'high_time' | get_online_users }}</strong></span>
+            <span style="margin-left:10px">{{ _('Highest online:')}}<strong>{{ footer_count[3] }}</strong></span>
+            <span style="margin-left:10px">{{ _('Time of highest online:')}}<strong>{{ footer_count[4] }}</strong></span>
         </p>
     </div>
-    <blockquote style="font-size:13px;margin-top:10px;">
-        <p style="font-size:14px;">{{ _(Title.description) }}</p>
-        <footer>
-            <span> Copyright © 2015-2016 honmaple.</span>
-
-        </footer>
-    </blockquote>
+    <div style="font-size:13px;margin-top:10px;">
+        <blockquote>
+            <p style="font-size:14px;">{{ _(Title.description) }}</p>
+            <footer>
+                <span> Copyright © 2015-2016 honmaple.</span>
+            </footer>
+        </blockquote>
+    </div>
 </div>

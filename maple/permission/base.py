@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-16 15:25:16 (CST)
-# Last Update:星期一 2016-7-25 15:7:1 (CST)
+# Last Update:星期日 2016-8-7 14:0:7 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -64,7 +64,7 @@ def on_identity_loaded(sender, identity):
 
     if hasattr(current_user, 'topics'):
         for topic in current_user.topics:
-            identity.provides.add(EditTopicNeed(topic.id))
+            identity.provides.add(EditTopicNeed(topic.uid))
 
     if hasattr(current_user, 'collects'):
         for collect in current_user.collects:

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期日 2016-7-24 17:16:21 (CST)
+# Last Update:星期一 2016-8-1 16:40:43 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -22,6 +22,7 @@ from werkzeug.contrib.atom import AtomFeed
 
 
 def tag(tag):
+    print(url_for('.tag'))
     if tag is None:
         tags = Tags.query.distinct(Tags.tagname).all()
         data = {'title': '所有标签 - ', 'tags': tags}

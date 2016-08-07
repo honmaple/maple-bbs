@@ -6,15 +6,34 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-30 19:39:13 (CST)
-# Last Update:星期一 2016-7-25 20:49:19 (CST)
+# Last Update:星期日 2016-8-7 16:51:10 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import url_for
 from flask_login import current_user
 from maple.helpers import replies_page
+from maple.user.models import User
 from .models import db
 from .models import Notice
+
+
+def rereply(topic, reply, rece_username):
+    user = User.query.filter_by(username=rece_username).first()
+    page = replies_page(topic.id)
+    url = url_for('topic.topic',
+                  topicId=topic.uid,
+                  page=page,
+                  _anchor='reply' + str(reply.id))
+    notice = Notice()
+    notice.category = 'rereply'
+    notice.content = {'url': url,
+                      'content': reply.content[:100],
+                      'title': topic.title}
+    notice.rece_id = user.id
+    notice.send_user = current_user
+    db.session.add(notice)
+    db.session.commit()
 
 
 def reply(topic, reply):

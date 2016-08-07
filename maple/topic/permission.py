@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-16 16:40:53 (CST)
-# Last Update:星期六 2016-7-30 22:2:39 (CST)
+# Last Update:星期日 2016-8-7 14:3:10 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -39,8 +39,7 @@ def edit_permission(func):
     @wraps(func)
     def decorator(*args, **kwargs):
         topicId = kwargs.get('topicId')
-        topic = Topic.query.filter_by(uid=topicId).first_or_404()
-        permission = Permission(EditTopicNeed(topic.id))
+        permission = Permission(EditTopicNeed(topicId))
         if not permission.can():
             flash(_('You have no permission'), 'warning')
             return redirect(url_for('topic.topic', topicId=topicId))
@@ -88,13 +87,11 @@ class TopicPermission(RestBase):
             return True
 
     @login_required
-    @edit_permission
     def put(self, topicId):
         def callback():
             return jsonify(judge=False, error=_('You have no permission'))
 
-        topic = Topic.query.filter_by(uid=topicId).first_or_404()
-        permission = Permission(EditTopicNeed(topic.id))
+        permission = Permission(EditTopicNeed(topicId))
         if not permission.can():
             self.callback = callback
             return True

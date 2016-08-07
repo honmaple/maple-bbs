@@ -63,6 +63,7 @@
     </div>
 </div>
 {% endblock %}
+
 {% macro votes(topic) -%}
 <div class="votes">
     {% if topic.vote and topic.vote > 0 -%}
@@ -77,6 +78,7 @@
     {%- endif %}
 </div>
 {%- endmacro %}
+
 {% macro vote_a(vo,count=None) -%}
 {% if count -%}
 <a id="topic-{{ vo }}-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">

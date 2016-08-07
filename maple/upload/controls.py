@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-25 00:54:15 (CST)
-# Last Update:星期六 2016-6-25 10:39:1 (CST)
+# Last Update:星期日 2016-8-7 18:53:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import request
+from flask import request, current_app
 from flask_login import current_user
 from werkzeug import secure_filename
-from maple import db, app
+from maple import db
 from time import time
 from random import randint
 from PIL import Image
@@ -29,17 +29,20 @@ class UploadModel(object):
         img = Image.open(file)
         size = 150, 150
         img.thumbnail(size, Image.ANTIALIAS)
-        avatar_path = os.path.join(app.static_folder,
-                                   app.config['AVATAR_FOLDER'])
+        current_app.config.setdefault('AVATAR_FOLDER',
+                                      os.path.join(current_app.static_folder,
+                                                   'avatars/'))
+        avatar_path = current_app.config['AVATAR_FOLDER']
         avatar = os.path.join(avatar_path, filename + '.png')
         if not os.path.exists(avatar_path):
             os.mkdir(avatar_path)
         img.save(avatar)
         img.close()
         infor = current_user.infor
-        ef = os.path.join(avatar_path, infor.avatar)
-        if os.path.exists(ef):
-            os.remove(ef)
+        if infor.avatar:
+            ef = os.path.join(avatar_path, infor.avatar)
+            if os.path.exists(ef):
+                os.remove(ef)
         # file.save(os.path.join(app.static_folder, filename + '.png'))
         infor.avatar = filename + '.png'
         db.session.commit()

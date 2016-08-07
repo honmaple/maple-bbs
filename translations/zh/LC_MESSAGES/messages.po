@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-07-25 21:38+0800\n"
+"POT-Creation-Date: 2016-08-07 13:53+0800\n"
 "PO-Revision-Date: 2016-06-16 14:36+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
@@ -31,7 +31,7 @@ msgid "Login - "
 msgstr "登陆 - "
 
 #: templates/auth/login.html:5 templates/auth/login.html:8
-#: templates/base/base.html:75 templates/topic/replies.html:90
+#: templates/base/base.html:75 templates/topic/replies.html:93
 msgid "Login"
 msgstr "登陆"
 
@@ -44,19 +44,19 @@ msgstr "注册 - "
 msgid "Register"
 msgstr "注册"
 
-#: templates/base/base.html:29 templates/forums/index.html:39
+#: templates/base/base.html:29
 msgid "Forums"
 msgstr "社区"
 
-#: templates/base/base.html:30 templates/forums/index.html:40
+#: templates/base/base.html:30
 msgid "Wiki"
 msgstr "文档"
 
-#: templates/base/base.html:31 templates/forums/index.html:41
+#: templates/base/base.html:31
 msgid "Blog"
 msgstr "博客"
 
-#: templates/base/base.html:32 templates/forums/index.html:42
+#: templates/base/base.html:32
 msgid "Good"
 msgstr "精华文章"
 
@@ -200,32 +200,9 @@ msgstr "没有帖子"
 msgid "No Following"
 msgstr "暂无关注"
 
-#: templates/forums/about.html:3 templates/forums/about.html:6
-#: templates/maple/footer.html:25
-msgid "About"
-msgstr "关于"
-
-#: templates/forums/contact.html:3 templates/forums/contact.html:6
-#: templates/maple/footer.html:27
-msgid "Contact me"
-msgstr "联系我"
-
 #: templates/forums/forums.html:3
 msgid "Board"
 msgstr "版块"
-
-#: templates/forums/help.html:3 templates/forums/help.html:6
-#: templates/maple/footer.html:23
-msgid "Help"
-msgstr "帮助"
-
-#: templates/forums/index.html:12
-msgid "Office Source Code"
-msgstr "官方网站源码"
-
-#: templates/forums/index.html:51
-msgid "more good topics"
-msgstr "查看更多精华文章"
 
 #: templates/forums/notice.html:8
 msgid "mark all to is read"
@@ -235,23 +212,35 @@ msgstr "全部标记为已读"
 msgid "No Notices"
 msgstr "没有通知"
 
-#: templates/maple/footer.html:32
+#: templates/maple/footer.html:23
+msgid "Help"
+msgstr "帮助"
+
+#: templates/maple/footer.html:25
+msgid "About"
+msgstr "关于"
+
+#: templates/maple/footer.html:27
+msgid "Contact me"
+msgstr "联系我"
+
+#: templates/maple/footer.html:33
 msgid "Now users online:"
 msgstr "当前在线用户:"
 
-#: templates/maple/footer.html:33
+#: templates/maple/footer.html:34
 msgid "Registered users online:"
 msgstr "注册用户:"
 
-#: templates/maple/footer.html:34
+#: templates/maple/footer.html:35
 msgid "Guests online:"
 msgstr "当前访客:"
 
-#: templates/maple/footer.html:38
+#: templates/maple/footer.html:39
 msgid "Highest online:"
 msgstr "最高在线:"
 
-#: templates/maple/footer.html:39
+#: templates/maple/footer.html:40
 msgid "Time of highest online:"
 msgstr "最高在线时间:"
 
@@ -333,6 +322,10 @@ msgstr "确认上传"
 msgid "No Tag"
 msgstr "暂无标签"
 
+#: templates/topic/ask.html:16 templates/topic/ask.html:18
+msgid "Ask"
+msgstr "提问"
+
 #: templates/topic/content.html:36
 #, python-format
 msgid "published at %(time)s"
@@ -343,40 +336,44 @@ msgstr "于%(time)s发布"
 msgid "The last reply published by %(author)s at %(time)s"
 msgstr "最后由%(author)s于%(time)s发布"
 
-#: templates/topic/replies.html:21
+#: templates/topic/edit.html:19
+msgid "Edit"
+msgstr "编辑"
+
+#: templates/topic/replies.html:24
 #, python-format
 msgid "Received %(total)s replies"
 msgstr "共收到%(total)s条回复"
 
-#: templates/topic/replies.html:23 templates/user/follower.html:7
+#: templates/topic/replies.html:26 templates/user/follower.html:7
 #: templates/user/follower.html:10 templates/user/reply.html:7
 #: templates/user/reply.html:10 templates/user/topic.html:7
 #: templates/user/topic.html:10
 msgid "time"
 msgstr "时间"
 
-#: templates/topic/replies.html:24 templates/user/reply.html:8
+#: templates/topic/replies.html:27 templates/user/reply.html:8
 #: templates/user/reply.html:11
 msgid "likers"
 msgstr "点赞"
 
-#: templates/topic/replies.html:71
+#: templates/topic/replies.html:74
 msgid "no reply"
 msgstr "暂无回复"
 
-#: templates/topic/replies.html:78
+#: templates/topic/replies.html:81
 msgid "Reply this topic"
 msgstr "回帖"
 
-#: templates/topic/replies.html:83
+#: templates/topic/replies.html:86
 msgid "Post reply"
 msgstr "发表回复"
 
-#: templates/topic/replies.html:90
+#: templates/topic/replies.html:93
 msgid "You need"
 msgstr "你需要"
 
-#: templates/topic/replies.html:90
+#: templates/topic/replies.html:93
 msgid "before you can reply."
 msgstr "后才能发表回复"
 
@@ -428,14 +425,22 @@ msgstr "积分"
 msgid "No Follower"
 msgstr "暂无关注者"
 
-#: maple/topic/permission.py:36 maple/topic/permission.py:72
-#: maple/topic/permission.py:83 templates/user/infor.html:22
+#: maple/topic/permission.py:29 maple/topic/permission.py:80
+#: maple/topic/permission.py:117 templates/user/infor.html:22
 msgid "You haven't confirm your account,Please confirmed"
 msgstr "你的账户未验证，请尽快验证！"
 
 #: templates/user/infor.html:23
 msgid "Activate  Account"
 msgstr "验证帐户"
+
+#: templates/user/infor.html:39
+msgid "ONLINE"
+msgstr "在线"
+
+#: templates/user/infor.html:41
+msgid "OUTLINE"
+msgstr "离线"
 
 #: templates/user/reply.html:21
 #, python-format
@@ -463,31 +468,31 @@ msgstr "创建时间:"
 msgid "the last reply published by %(author)s"
 msgstr "最后回复来自%(author)s"
 
-#: templates/user/user.html:35
-msgid "My"
+#: templates/user/user.html:31
+msgid "me"
 msgstr "我"
 
-#: templates/user/user.html:50
+#: templates/user/user.html:45
 #, python-format
-msgid "%(n)s's topics"
+msgid "topics of %(n)s"
 msgstr "%(n)s的主题"
 
-#: templates/user/user.html:51
+#: templates/user/user.html:46
 #, python-format
-msgid "%(n)s's replies"
+msgid "replies of %(n)s"
 msgstr "%(n)s的回复"
 
-#: templates/user/user.html:52
+#: templates/user/user.html:47
 #, python-format
-msgid "%(n)s's collects"
+msgid "collects of %(n)s"
 msgstr "%(n)s的收藏"
 
-#: templates/user/user.html:53
+#: templates/user/user.html:48
 #, python-format
-msgid "%(n)s's followers"
+msgid "followers of %(n)s"
 msgstr "%(n)s的粉丝"
 
-#: maple/extensions.py:126
+#: maple/extensions.py:130
 msgid "Please login to access this page."
 msgstr "这个页面要求登陆，请登陆"
 
@@ -495,11 +500,11 @@ msgstr "这个页面要求登陆，请登陆"
 msgid "I love freedom more than life."
 msgstr "爱生活，更爱自由"
 
-#: maple/auth/views.py:68
+#: maple/auth/views.py:69
 msgid "Your account has been confirmed,don't need again"
 msgstr "你的账户已经验证，不能重复验证"
 
-#: maple/auth/views.py:74
+#: maple/auth/views.py:75
 msgid "An email has been sent to your.Please receive"
 msgstr "验证邮件已发送到你的邮箱，请及时查收！"
 
@@ -547,23 +552,23 @@ msgstr "首页 - "
 msgid "Notice - "
 msgstr "消息提醒 - "
 
-#: maple/forums/views.py:69
+#: maple/forums/views.py:68
 msgid "Userlist - "
 msgstr "用户列表 - "
 
-#: maple/forums/views.py:84
+#: maple/forums/views.py:83
 msgid "send succeccfully"
 msgstr "成功发送"
 
-#: maple/forums/views.py:94
+#: maple/forums/views.py:93
 msgid "About - "
 msgstr "关于 - "
 
-#: maple/forums/views.py:100
+#: maple/forums/views.py:99
 msgid "Help - "
 msgstr "帮助 - "
 
-#: maple/forums/views.py:106
+#: maple/forums/views.py:105
 msgid "Contact - "
 msgstr "联系我 - "
 
@@ -663,11 +668,21 @@ msgstr "分类:"
 msgid "Tags:"
 msgstr "节点:"
 
-#: maple/topic/permission.py:49
+#: maple/topic/permission.py:45 maple/topic/permission.py:94
 msgid "You have no permission"
 msgstr "你没有权限！"
+
+#: maple/topic/views.py:53
+msgid "Edit -"
+msgstr "编辑 - "
 
 #: maple/upload/forms.py:20
 msgid "Upload Avatar:"
 msgstr "上传头像"
+
+#~ msgid "Office Source Code"
+#~ msgstr "官方网站源码"
+
+#~ msgid "more good topics"
+#~ msgstr "查看更多精华文章"
 

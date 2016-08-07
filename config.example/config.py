@@ -6,15 +6,23 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:31:46 (CST)
-# Last Update:星期五 2016-7-29 13:8:2 (CST)
+# Last Update:星期日 2016-8-7 19:23:19 (CST)
 #          By: jianglin
 # Description:
 # **************************************************************************
 from datetime import timedelta
+from os import path, pardir
 
 DEBUG = True
 SECRET_KEY = 'secret key'
 SECURITY_PASSWORD_SALT = 'you will never guess'
+
+
+# avatar upload directory
+AVATAR_FOLDER = path.abspath(path.join(
+    path.dirname(__file__), pardir, 'avatars'))
+# avatar generate range
+AVATAR_RANGE = [122, 512]
 
 # for development use localhost:5000
 # for production use xxx.com

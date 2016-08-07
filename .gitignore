@@ -1,5 +1,6 @@
 venv/
 config/
+avatars/
 migrations/
 backup/
 fabfile.py

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期日 2016-7-24 19:58:44 (CST)
+# Last Update:星期六 2016-7-30 22:44:6 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -66,6 +66,19 @@ class Topic(db.Model):
     #     app = current_app._get_current_object()
     #     per_page = app.config['PER_PAGE']
     #     return Topic.paginate(page, per_page, True)
+    def to_json(self):
+        data = {
+            'id': self.id,
+            'uid': self.uid,
+            'title': self.uid,
+            'tags': self.tags,
+            'content': self.content,
+            'is_good': self.is_good,
+            'is_markdown': self.is_markdown,
+            'is_top': self.is_top,
+            'publish': self.publish,
+            'author':self.author.username
+        }
 
 
 @event.listens_for(Topic, 'before_update')

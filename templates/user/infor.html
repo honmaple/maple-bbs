@@ -31,7 +31,16 @@
             <img class="media-object img-circle" src="{{ link_base.avatar(user) }}" alt="avatar" style="width:64px;height:64px">
         </div>
         <div class="media-body">
-            <h4 class="media-heading">{{ user.username}}</h4>
+            <h4 class="media-heading">
+                {{ user.username}}
+                {%- set _a = (setting.online_status == 1 and user.username | is_online) %}
+                {%- set _b = (setting.online_status == 2 and current_user.is_authenticated and user.username | is_online) %}
+                {%- if _a or _b %}
+                <span class="online">{{ _('ONLINE') }} </span>
+                {%- else %}
+                <span class="online">{{ _('OUTLINE') }}</span>
+                {% endif -%}
+            </h4>
             <small style="color:#999">
                 <span>第{{ user.id }}号会员</span>/
                 <span>{{user.register_time | timesince }}</span>

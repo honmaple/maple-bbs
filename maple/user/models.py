@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:24:19 (CST)
-# Last Update:星期六 2016-7-30 13:23:46 (CST)
+# Last Update:星期二 2016-8-2 20:47:53 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -109,6 +109,7 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
 
 
 roles_parents = db.Table(
