@@ -1,3 +1,5 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
 # *************************************************************************
 #   Copyright © 2015 JiangLin. All rights reserved.
 #   File Name: db_create.py
@@ -5,8 +7,6 @@
 #   Mail:xiyang0807@gmail.com
 #   Created Time: 2016-02-11 13:34:38
 # *************************************************************************
-# !/usr/bin/env python
-# -*- coding=UTF-8 -*-
 from flask import url_for
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
@@ -48,8 +48,9 @@ def babel_init():
 @manager.command
 def babel_update():
     pybabel = 'pybabel'
-    os.system(pybabel +
-              ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple templates')
+    os.system(
+        pybabel +
+        ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple templates')
     os.system(pybabel + ' update -i messages.pot -d translations')
     os.unlink('messages.pot')
 
@@ -60,12 +61,12 @@ def babel_compile():
     os.system(pybabel + ' compile -d translations')
 
 
-@manager.option('-u', '--username', dest='username', default='admin')
+@manager.option('-u', '--username', dest='username')
 @manager.option('-e', '--email', dest='email')
 @manager.option('-w', '--password', dest='password')
 def create_user(username, email, password):
-    if username == 'admin':
-        username = input('Username(default admin):')
+    if username is None:
+        username = input('Username(default admin):') or 'admin'
     if email is None:
         email = input('Email:')
     if password is None:
