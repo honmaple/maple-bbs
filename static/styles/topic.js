@@ -54,7 +54,7 @@ function DoVote(voteData) {
       });
       $.ajax ({
         type : "POST",
-        url : voteData.vote_up,
+        url : voteData.vote_url,
         data:data,
         contentType: 'application/json;charset=UTF-8',
         success: function(result) {
@@ -71,8 +71,8 @@ function DoVote(voteData) {
       var data = JSON.stringify({
       });
       $.ajax ({
-        type : "POST",
-        url : voteData.vote_down,
+        type : "DELETE",
+        url : voteData.vote_url,
         data:data,
         contentType: 'application/json;charset=UTF-8',
         success: function(result) {

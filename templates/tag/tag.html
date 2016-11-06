@@ -9,7 +9,7 @@
 {{ super()}}
 {% endblock %}
 {% block content %}
-{{ breadcrumb(hrefs={_('All Tags'):url_for('tag.tag')},active=tag.tagname)}}
+{{ breadcrumb(hrefs={_('All Tags'):url_for('tag.taglist')},active=tag.tagname)}}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">

@@ -18,7 +18,7 @@
     <div class="panel-heading">{{ _('Ask') }}</div>
     <div class="panel-body" style="border-bottom:1px solid #f6e1e1;padding:10px 0;">
         <div class="row" style="margin:0;padding:0;">
-            <form action="{{ url_for('topic.post') }}" method="POST">
+            <form action="{{ url_for('topic.topiclist') }}" method="POST">
                 {% from 'topic/_form.html' import ask %}
                 {{ ask(form) }}
             </form>

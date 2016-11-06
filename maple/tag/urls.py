@@ -6,15 +6,19 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-15 18:17:10 (CST)
-# Last Update:星期五 2016-7-15 18:34:33 (CST)
+# Last Update:星期日 2016-11-6 10:7:59 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Blueprint
-from .views import tag, rss
+# from .views import tag, rss
+from .views import TagListView, TagView, TagRssView
 
 site = Blueprint('tag', __name__)
+taglist_view = TagListView.as_view('taglist')
+tag_view = TagView.as_view('tag')
+rss_view = TagRssView.as_view('rss')
 
-site.add_url_rule('', view_func=tag, defaults={'tag': None})
-site.add_url_rule('/<tag>', view_func=tag)
-site.add_url_rule('/<tag>/feed', view_func=rss)
+site.add_url_rule('', view_func=taglist_view)
+site.add_url_rule('/<tag>', view_func=tag_view)
+site.add_url_rule('/<tag>/feed', view_func=rss_view)

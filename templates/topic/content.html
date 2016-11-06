@@ -3,8 +3,7 @@
 {{ super() }}
 <script type="text/javascript">
  var voteData = {
-     'vote_up': "{{ url_for('topic.vote_up',topicId=topic.uid)}}",
-     'vote_down': "{{ url_for('topic.vote_down',topicId=topic.uid)}}"
+     'vote_url': "{{ url_for('topic.vote',topicId=topic.uid)}}",
  };
  DoVote(voteData);
 </script>

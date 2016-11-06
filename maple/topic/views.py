@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期日 2016-8-7 17:23:42 (CST)
+# Last Update:星期日 2016-11-6 11:3:17 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -28,103 +28,114 @@ from .permission import (topic_permission, reply_permission, ask_permission,
                          vote_permission, preview_permission, edit_permission)
 
 
-@login_required
-@ask_permission
-def ask():
-    form = TopicForm()
-    boardId = request.args.get('boardId')
-    if boardId is not None:
-        board = Board.query.filter_by(id=boardId).first()
-        form.category.data = board.id
+class TopicBaseView(MethodView):
+    form = TopicForm
 
-    data = {'title': '提问 - ', 'form': form}
-    return render_template('topic/ask.html', **data)
+    def get_sort_tuple(self):
+        sort_tuple = ()
+        return sort_tuple
 
+    def get_filter_dict(self):
+        filter_dict = {}
+        return filter_dict
 
-@login_required
-@edit_permission
-def edit(topicId):
-    topic = Topic.query.filter_by(uid=topicId).first_or_404()
-    form = TopicForm()
-    form.title.data = topic.title
-    form.category.data = topic.board_id
-    form.tags.data = ','.join([tag.tagname for tag in topic.tags])
-    form.content.data = topic.content
-    data = {'title': _('Edit -'), 'form': form, 'topic': topic}
-    return render_template('topic/edit.html', **data)
+    def get_page_info(self):
+        page = request.args.get('page', 1, type=int)
+        number = request.args.get('number', 20, type=int)
+        return page, number
 
 
-def good():
-    page = is_num(request.args.get('page'))
-    topics = Topic.query.filter_by(is_good=True).paginate(
-        page, current_app.config['PER_PAGE'],
-        error_out=True)
-    data = {'title': '精华文章 - ', 'topics': topics}
-    return render_template('topic/topic_good.html', **data)
+class TopicAskView(TopicBaseView):
+    decorators = [ask_permission, login_required]
+
+    def get(self):
+        boardId = request.args.get('boardId', type=int)
+        form = self.form()
+        if boardId is not None:
+            board = Board.query.filter_by(id=boardId).first()
+            form.category.data = board.id
+        data = {'title': _('Ask - '), 'form': form}
+        return render_template('topic/ask.html', **data)
 
 
-@login_required
-@preview_permission
-def preview():
-    choice = request.values.get('choice')
-    content = request.values.get('content')
-    print(choice)
-    if choice == '2':
-        return safe_clean(content)
-    else:
-        return Filters.safe_markdown(content)
-
-
-@vote_permission
-def vote_up(topicId):
-    topic = Topic.query.filter_by(uid=topicId).first_or_404()
-    if not topic.vote:
-        topic.vote = 1
-    else:
-        topic.vote += 1
-    db.session.commit()
-    html = vote(topic.vote)
-    return jsonify(judge=True, html=html)
-
-
-@vote_permission
-def vote_down(topicId):
-    topic = Topic.query.filter_by(uid=topicId).first_or_404()
-    if not topic.vote:
-        topic.vote = -1
-    else:
-        topic.vote -= 1
-    db.session.commit()
-    html = vote(topic.vote)
-    return jsonify(judge=True, html=html)
-
-
-class TopicAPI(MethodView):
-    decorators = [topic_permission]
-
-    def template_with_uid(self, data):
-        return render_template('topic/content.html', **data)
-
-    def template_without_uid(self, data):
-        return render_template('topic/topic.html', **data)
+class TopicEditView(TopicBaseView):
+    decorators = [edit_permission, login_required]
 
     def get(self, topicId):
-        page = is_num(request.args.get('page'))
-        order = request.args.get('orderby')
-        if topicId is None:
-            topics, top_topics = TopicModel.get_list(page)
-            data = {'title': '所有主题 - ',
-                    'topics': topics,
-                    'top_topics': top_topics}
-            return self.template_without_uid(data)
+        topic = Topic.query.filter_by(uid=topicId).first_or_404()
+        form = self.form()
+        form.title.data = topic.title
+        form.category.data = topic.board_id
+        form.tags.data = ','.join([tag.tagname for tag in topic.tags])
+        form.content.data = topic.content
+        data = {'title': _('Edit -'), 'form': form, 'topic': topic}
+        return render_template('topic/edit.html', **data)
+
+
+class TopicPreviewView(MethodView):
+    decorators = [preview_permission, login_required]
+
+    def post(self):
+        choice = request.values.get('choice')
+        content = request.values.get('content')
+        if choice == '2':
+            return safe_clean(content)
         else:
-            form = ReplyForm()
-            topic, replies = TopicModel.get_detail(page, topicId, order)
-            data = {'title': '%s - ' % topic.title,
-                    'form': form,
-                    'topic': topic,
-                    'replies': replies}
-            return self.template_with_uid(data)
+            return Filters.safe_markdown(content)
+
+
+class TopicVoteView(MethodView):
+    decorators = [vote_permission]
+
+    def post(self, topicId):
+        topic = Topic.query.filter_by(uid=topicId).first_or_404()
+        if topic.vote == 0:
+            topic.vote = 1
+        else:
+            topic.vote += 1
+        db.session.commit()
+        html = vote(topic.vote)
+        return jsonify(judge=True, html=html)
+
+    def delete(self, topicId):
+        topic = Topic.query.filter_by(uid=topicId).first_or_404()
+        if topic.vote == 0:
+            topic.vote = -1
+        else:
+            topic.vote -= 1
+        db.session.commit()
+        html = vote(topic.vote)
+        return jsonify(judge=True, html=html)
+
+
+class TopicGoodListView(TopicBaseView):
+    def get(self):
+        page = is_num(request.args.get('page'))
+        topics = Topic.query.filter_by(is_good=True).paginate(
+            page, current_app.config['PER_PAGE'], error_out=True)
+        data = {'title': _('Good Topics - '), 'topics': topics}
+        return render_template('topic/topic_good.html', **data)
+
+
+class TopicTopListView(TopicBaseView):
+    def get(self):
+        page = is_num(request.args.get('page'))
+        topics = Topic.query.filter_by(is_top=True).paginate(
+            page, current_app.config['PER_PAGE'], error_out=True)
+        data = {'title': _('Top Topics - '), 'topics': topics}
+        return render_template('topic/topic_top.html', **data)
+
+
+class TopicListView(TopicBaseView):
+    def get(self):
+        page = is_num(request.args.get('page'))
+        topics, top_topics = TopicModel.get_list(page)
+        data = {
+            'title': 'All Topics - ',
+            'topics': topics,
+            'top_topics': top_topics
+        }
+        return render_template('topic/topic.html', **data)
 
     def post(self):
         form = TopicForm()
@@ -132,12 +143,29 @@ class TopicAPI(MethodView):
             topic = TopicModel.post(form)
             return redirect(url_for('topic.topic', topicId=topic.uid))
         else:
-            if form.errors:
+            if self.form.errors:
                 flash_errors(form)
             return redirect(url_for('topic.ask'))
 
+
+class TopicView(TopicBaseView):
+    decorators = [topic_permission]
+
+    def get(self, topicId):
+        page = is_num(request.args.get('page'))
+        order = request.args.get('orderby')
+        form = ReplyForm()
+        topic, replies = TopicModel.get_detail(page, topicId, order)
+        data = {
+            'title': '%s - ' % topic.title,
+            'form': form,
+            'topic': topic,
+            'replies': replies
+        }
+        return render_template('topic/content.html', **data)
+
     def put(self, topicId):
-        form = TopicForm()
+        form = self.form()
         if form.validate_on_submit():
             TopicModel.put(form, topicId)
             return jsonify(judge=True)
@@ -150,8 +178,8 @@ class TopicAPI(MethodView):
         return 'delete'
 
 
-class ReplyAPI(MethodView):
-    decorators = [reply_permission]
+class ReplyListView(MethodView):
+    decorators = [reply_permission, login_required]
 
     def post(self, topicId):
         form = ReplyForm()
@@ -160,21 +188,19 @@ class ReplyAPI(MethodView):
             rep = ReplyModel()
             reply = rep.post(form, topicId)
             page = replies_page(topic.id)
-            return redirect(url_for('topic.topic',
-                                    topicId=topic.uid,
-                                    page=page,
-                                    _anchor='reply' + str(reply.id)))
+            return redirect(
+                url_for(
+                    'topic.topic',
+                    topicId=topic.uid,
+                    page=page,
+                    _anchor='reply' + str(reply.id)))
         else:
             if form.errors:
                 flash_errors(form)
             page = replies_page(topic.id)
-            return redirect(url_for('topic.topic',
-                                    topicId=topic.uid,
-                                    page=page,
-                                    _anchor='content'))
-
-    # def put(self, uid):
-    #     return 'put'
-
-    # def delete(self, uid):
-    #     return 'delete'
+            return redirect(
+                url_for(
+                    'topic.topic',
+                    topicId=topic.uid,
+                    page=page,
+                    _anchor='content'))

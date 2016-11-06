@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:02:50 (CST)
-# Last Update:星期日 2016-8-7 14:12:35 (CST)
+# Last Update:星期日 2016-11-6 10:16:37 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -57,20 +57,20 @@ def register_babel(app):
     babel = Babel(default_domain=domain)
     babel.init_app(app)
 
-    # class CustomJSONEncoder(JSONEncoder):
-    #     """This class adds support for lazy translation texts to Flask's
-    #     JSON encoder. This is necessary when flashing translated texts."""
+    class CustomJSONEncoder(JSONEncoder):
+        """This class adds support for lazy translation texts to Flask's
+        JSON encoder. This is necessary when flashing translated texts."""
 
-    #     def default(self, obj):
-    #         from speaklater import is_lazy_string
-    #         if is_lazy_string(obj):
-    #             try:
-    #                 return unicode(obj)  # python 2
-    #             except NameError:
-    #                 return str(obj)  # python 3
-    #         return super(CustomJSONEncoder, self).default(obj)
+        def default(self, obj):
+            from speaklater import is_lazy_string
+            if is_lazy_string(obj):
+                try:
+                    return unicode(obj)  # python 2
+                except NameError:
+                    return str(obj)  # python 3
+            return super(CustomJSONEncoder, self).default(obj)
 
-    # app.json_encoder = CustomJSONEncoder
+    app.json_encoder = CustomJSONEncoder
 
     @babel.localeselector
     def get_locale():
