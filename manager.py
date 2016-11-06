@@ -1,5 +1,5 @@
 # !/usr/bin/env python
-# -*- coding=UTF-8 -*-
+# -*- coding: utf-8 -*-
 # *************************************************************************
 #   Copyright © 2015 JiangLin. All rights reserved.
 #   File Name: db_create.py
@@ -48,8 +48,9 @@ def babel_init():
 @manager.command
 def babel_update():
     pybabel = 'pybabel'
-    os.system(pybabel +
-              ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple templates')
+    os.system(
+        pybabel +
+        ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple templates')
     os.system(pybabel + ' update -i messages.pot -d translations')
     os.unlink('messages.pot')
 
