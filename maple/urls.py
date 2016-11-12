@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-15 18:43:51 (CST)
-# Last Update:星期一 2016-8-1 17:16:41 (CST)
+# Last Update:星期六 2016-11-12 21:28:16 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -18,10 +18,10 @@ from maple.mine.urls import site as mine_site
 from maple.setting.urls import site as setting_site
 from maple.upload.urls import site as upload_site
 from maple.tag.urls import site as tag_site
-from maple.docs.views import site as docs_site
+from docs.views import site as docs_site
 
 
-def register_urls(app):
+def register_routes(app):
     app.register_blueprint(forums_site)
     app.register_blueprint(board_site, url_prefix='/<parent_b>')
     app.register_blueprint(tag_site, url_prefix='/t')
@@ -31,5 +31,3 @@ def register_urls(app):
     app.register_blueprint(setting_site, url_prefix='/setting')
     app.register_blueprint(upload_site)
     app.register_blueprint(docs_site, subdomain='docs')
-    from maple.auth import views
-    from maple.admin import admin

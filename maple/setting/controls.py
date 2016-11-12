@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 10:03:28 (CST)
-# Last Update:星期一 2016-7-25 15:44:44 (CST)
+# Last Update:星期六 2016-11-12 20:41:12 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_login import logout_user, current_user
-from maple import db
+from maple.extension import db
 
 
 class SettingModel(object):

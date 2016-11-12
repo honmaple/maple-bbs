@@ -6,11 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-20 17:00:08 (CST)
-# Last Update:星期四 2016-7-28 22:30:37 (CST)
+# Last Update:星期六 2016-11-12 20:20:28 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from maple import db
+from maple.extension import db
 from datetime import datetime
 
 tag_topic = db.Table('tag_topic', db.Column('tags_id', db.Integer,

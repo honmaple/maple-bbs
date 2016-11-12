@@ -6,11 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-24 15:10:52 (CST)
-# Last Update:星期日 2016-7-24 15:11:46 (CST)
+# Last Update:星期六 2016-11-12 20:24:58 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from maple import db
+from maple.extension import db
 from maple.tag.models import Tags
 from datetime import datetime
 from flask_login import UserMixin

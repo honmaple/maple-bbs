@@ -6,12 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 00:39:29 (CST)
-# Last Update:星期二 2016-8-2 21:39:12 (CST)
+# Last Update:星期六 2016-11-12 21:44:8 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from datetime import datetime
-from maple import redis_data, cache
 from maple.settings import setting
 from maple.topic.models import Reply, Topic
 from maple.user.models import User
@@ -21,6 +20,7 @@ from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 from bleach import clean
+from maple.extension import redis_data, cache
 
 
 def safe_clean(text):
@@ -65,8 +65,8 @@ class Filters(object):
         for period, singular, plural in periods:
 
             if period:
-                return "%d %s ago" % (period, singular if period == 1 else
-                                      plural)
+                return "%d %s ago" % (period, singular
+                                      if period == 1 else plural)
 
         return default
 
@@ -105,8 +105,8 @@ class Filters(object):
         from maple.topic.models import CollectTopic
         from flask_login import current_user
         for collect in current_user.collects:
-            cid = CollectTopic.query.filter_by(collect_id=collect.id,
-                                               topic_id=topicId).first()
+            cid = CollectTopic.query.filter_by(
+                collect_id=collect.id, topic_id=topicId).first()
             if cid is not None:
                 return True
         return False
@@ -114,8 +114,8 @@ class Filters(object):
     def notice_count():
         from maple.forums.models import Notice
         if g.user.is_authenticated:
-            count = Notice.query.filter_by(rece_id=g.user.id,
-                                           is_read=False).count()
+            count = Notice.query.filter_by(
+                rece_id=g.user.id, is_read=False).count()
             if count > 0:
                 return count
         return None
@@ -139,8 +139,23 @@ class Filters(object):
             return True
         return False
 
-
     class Title(object):
         title = setting['title']
         picture = setting['picture']
         description = setting['description']
+
+
+def register_jinja2(app):
+    app.jinja_env.globals['Title'] = Filters.Title
+    app.jinja_env.globals['hot_tags'] = Filters.hot_tags
+    app.jinja_env.globals['recent_tags'] = Filters.recent_tags
+    app.jinja_env.globals['notice_count'] = Filters.notice_count
+    app.jinja_env.globals['show_time'] = Filters.show_time
+    app.jinja_env.filters['get_last_reply'] = Filters.get_last_reply
+    app.jinja_env.filters['get_user_infor'] = Filters.get_user_infor
+    app.jinja_env.filters['get_read_count'] = Filters.get_read_count
+    app.jinja_env.filters['timesince'] = Filters.timesince
+    app.jinja_env.filters['markdown'] = Filters.safe_markdown
+    app.jinja_env.filters['safe_clean'] = safe_clean
+    app.jinja_env.filters['is_collected'] = Filters.is_collected
+    app.jinja_env.filters['is_online'] = Filters.is_online

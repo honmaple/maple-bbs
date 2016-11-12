@@ -6,88 +6,57 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:35:52 (CST)
-# Last Update:星期日 2016-8-7 13:44:23 (CST)
+# Last Update:星期六 2016-11-12 21:43:0 (CST)
 #          By:jianglin
 # Description:
 # **************************************************************************
-from flask import Flask, g, send_from_directory, request
-from maple.extensions import (register_login, register_redis, register_mail,
-                              register_cache)
-from maple.extensions import (register_form, register_babel,
-                              register_principal, register_jinja2,
-                              register_avatar, register_maple)
-from maple.extensions import register_rbac
-from flask_login import current_user
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
+from flask_maple.lazy import LazyExtension
+from maple.auth.views import register_auth
+from maple.admin.urls import admin
+from .filters import register_jinja2
 from .logs import register_logging
+from .urls import register_routes
+from .app import register_app
+from .extension import register_rbac
 import os
 
 
 def create_app():
-    templates = os.path.abspath(os.path.join(
-        os.path.dirname(__file__), os.pardir, 'templates'))
-    static = os.path.abspath(os.path.join(
-        os.path.dirname(__file__), os.pardir, 'static'))
+    templates = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), os.pardir, 'templates'))
+    static = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), os.pardir, 'static'))
 
     app = Flask(__name__, template_folder=templates, static_folder=static)
     app.config.from_object('config.config')
     app.url_map._rules.clear()
     app.url_map._rules_by_endpoint.clear()
     app.url_map.default_subdomain = 'forums'
-    app.add_url_rule(app.static_url_path + '/<path:filename>',
-                     endpoint='static',
-                     view_func=app.send_static_file,
-                     subdomain='forums')
+    app.add_url_rule(
+        app.static_url_path + '/<path:filename>',
+        endpoint='static',
+        view_func=app.send_static_file,
+        subdomain='forums')
+    register(app)
     return app
 
 
 def register(app):
-    register_avatar(app)
-    register_babel(app)
-    register_form(app)
-    register_principal(app)
+    register_extension(app)
+    register_rbac(app)
     register_jinja2(app)
-    register_maple(app)
     register_routes(app)
     register_logging(app)
+    register_auth(app)
+    register_app(app)
 
 
-def register_routes(app):
-    from .urls import register_urls
-    register_urls(app)
-
-
-app = create_app()
-db = SQLAlchemy(app)
-mail = register_mail(app)
-login_manager = register_login(app)
-redis_data = register_redis(app)
-cache = register_cache(app)
-rbac = register_rbac(app)
-register(app)
-
-
-@app.before_request
-def before_request():
-    from maple.forums.forms import SortForm, SearchForm
-    from maple.main.records import mark_online
-    g.user = current_user
-    g.sort_form = SortForm()
-    g.search_form = SearchForm()
-    if g.user.is_authenticated:
-        mark_online(g.user.username)
-    else:
-        mark_online(request.remote_addr)
-    g.get_online = get_online()
-
-
-def get_online():
-    from maple.main.records import load_online_users
-    return (load_online_users(1), load_online_users(2), load_online_users(3),
-            load_online_users(4), load_online_users(5))
-
-
-@app.route('/robots.txt')
-@app.route('/favicon.ico')
-def static_from_root():
-    return send_from_directory(app.static_folder, request.path[1:])
+def register_extension(app):
+    extension = LazyExtension(
+        module='maple.extension.',
+        extension=['db', 'avatar', 'cache', 'csrf', 'bootstrap', 'captcha',
+                   'error', 'redis_data', 'principal', 'mail', 'babel',
+                   'login_manager', 'maple_app', 'middleware'])
+    extension.init_app(app)
+    admin.init_app(app)

@@ -6,11 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-02 20:12:26 (CST)
-# Last Update:星期六 2016-7-30 13:44:11 (CST)
+# Last Update:星期六 2016-11-12 21:13:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from maple import db
+from maple.extension import db
 from .admin import BaseModelView
 from maple.user.models import User, UserInfor, UserSetting, Role
 from wtforms import PasswordField

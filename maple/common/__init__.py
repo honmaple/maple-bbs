@@ -1,12 +1,13 @@
 #!/usr/bin/env python
-# -*- coding=UTF-8 -*-
+# -*- coding: utf-8 -*-
 # **************************************************************************
 # Copyright © 2016 jianglin
 # File Name: __init__.py
 # Author: jianglin
 # Email: xiyang0807@gmail.com
-# Created: 2016-06-15 00:11:49 (CST)
-# Last Update:星期三 2016-6-15 0:11:50 (CST)
+# Created: 2016-11-12 20:54:02 (CST)
+# Last Update:星期六 2016-11-12 21:4:2 (CST)
 #          By:
 # Description:
 # **************************************************************************
+from .middleware import CommonMiddleware, OnlineMiddleware

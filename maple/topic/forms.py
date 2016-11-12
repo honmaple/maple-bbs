@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:08:44 (CST)
-# Last Update:星期二 2016-7-26 17:27:30 (CST)
+# Last Update:星期六 2016-11-12 20:26:36 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -20,11 +20,11 @@ from maple.forums.models import Board
 class TopicForm(Form):
     title = StringField(_('Title:'), [DataRequired(), Length(min=4, max=36)])
     content = TextAreaField(_('Content:'), [DataRequired(), Length(min=6)])
-    category = SelectField(
-        _('Category:'),
-        choices=[(b.id, b.board + '   --' + b.parent_board)
-                 for b in Board.query.all()],
-        coerce=int)
+    # category = SelectField(
+    #     _('Category:'),
+    #     choices=[(b.id, b.board + '   --' + b.parent_board)
+    #              for b in Board.query.all()],
+    #     coerce=int)
     tags = StringField(_('Tags:'), [DataRequired(), Length(min=2, max=36)])
     choice = SelectField('choice',
                          choices=[(1, 'Markdown'), (2, 'Default')],

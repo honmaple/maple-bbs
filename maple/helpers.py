@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:56:43 (CST)
-# Last Update:星期日 2016-8-7 16:58:36 (CST)
+# Last Update:星期六 2016-11-12 20:38:1 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,7 +14,7 @@ from flask import abort, current_app, Markup
 from flask_login import current_user
 from time import time
 from random import randint
-from maple import redis_data
+from maple.extension import redis_data
 from bleach import clean
 
 

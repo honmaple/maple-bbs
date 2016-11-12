@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期六 2016-7-30 22:44:6 (CST)
+# Last Update:星期六 2016-11-12 20:20:43 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import current_app
-from maple import db
+from maple.extension import db
 from datetime import datetime
 from sqlalchemy import event
 

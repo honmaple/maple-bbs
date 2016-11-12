@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期日 2016-11-6 11:3:17 (CST)
+# Last Update:星期六 2016-11-12 20:38:35 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,7 +16,7 @@ from flask.views import MethodView
 from flask_login import login_required
 from flask_maple.forms import flash_errors, return_errors
 from flask_babelex import gettext as _
-from maple import db
+from maple.extension import db
 from maple.helpers import replies_page
 from maple.helpers import is_num
 from maple.forums.models import Board

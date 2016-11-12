@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-25 00:54:15 (CST)
-# Last Update:星期日 2016-8-7 18:53:44 (CST)
+# Last Update:星期六 2016-11-12 20:41:29 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import request, current_app
 from flask_login import current_user
 from werkzeug import secure_filename
-from maple import db
+from maple.extension import db
 from time import time
 from random import randint
 from PIL import Image

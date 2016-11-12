@@ -6,13 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-04 19:57:49 (CST)
-# Last Update:星期二 2016-8-2 21:58:28 (CST)
+# Last Update:星期六 2016-11-12 21:5:45 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from time import time
 from datetime import datetime
-from maple import redis_data
+from maple.extension import redis_data
 from flask import current_app, g
 
 

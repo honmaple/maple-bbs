@@ -30,18 +30,20 @@ $(document).ready(function(){
   $('span#email-confirm').click(function(){
     $.ajax ({
       type : "POST",
-      url : "/confirm-email",
+      url : "/confirm",
       data:JSON.stringify({
       }),
       contentType: 'application/json;charset=UTF-8',
-      success: function(result) {
-        if (result.judge === true)
+      success: function(response) {
+        if (response.description !== "")
         {
-          alert(result.error);
-        } else
+          alert(response.description);
+        }
+        else
         {
-          alert(result.error);
-        }}
+          alert(response.message);
+        }
+      }
     });
   });
 });

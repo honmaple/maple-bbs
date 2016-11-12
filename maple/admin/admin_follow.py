@@ -6,11 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-02 20:18:14 (CST)
-# Last Update:星期日 2016-7-24 19:57:23 (CST)
+# Last Update:星期六 2016-11-12 21:13:26 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from maple import db
+from maple.extension import db
 from maple.user.models import User
 from .admin import BaseModelView
 

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-26 15:10:14 (CST)
-# Last Update:星期二 2016-7-26 16:38:55 (CST)
+# Last Update:星期六 2016-11-12 21:43:41 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -20,6 +20,8 @@ def register_logging(app):
     config = app.config
     logs_folder = os.path.abspath(os.path.join(
         os.path.dirname(__file__), os.pardir, 'logs'))
+    if not os.path.exists(logs_folder):
+        os.mkdir(logs_folder)
     formatter = Formatter('''
         Message type:       %(levelname)s
         Location:           %(pathname)s:%(lineno)d

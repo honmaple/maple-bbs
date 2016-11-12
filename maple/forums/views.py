@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:18:19 (CST)
-# Last Update:星期二 2016-8-2 20:21:17 (CST)
+# Last Update:星期六 2016-11-12 20:38:20 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -20,7 +20,7 @@ from maple.user.models import User
 from maple.forums.models import Notice, Board
 from maple.topic.models import Topic
 from .forms import MessageForm
-from maple import cache, db
+from maple.extension import cache, db
 
 
 def index():

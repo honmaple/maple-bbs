@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:32:12 (CST)
-# Last Update:星期六 2016-7-30 12:5:38 (CST)
+# Last Update:星期六 2016-11-12 22:12:39 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_login import current_user
-from maple import redis_data
+from maple.extension import redis_data
 from datetime import datetime
 
 
@@ -62,5 +62,7 @@ class RedisData(object):
 
 
 def set_email_send(uid):
-    redis_data.hset('user:%s' % str(uid), 'send_email_time',
-                    datetime.utcnow())
+    date = datetime.utcnow()
+    date_string = date.strftime('%Y-%m-%d %H:%M:%S')
+    date = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
+    redis_data.hset('user:%s' % str(uid), 'send_email_time', date)

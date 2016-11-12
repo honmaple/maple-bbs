@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-# -*- coding=UTF-8 -*-
+# -*- coding: utf-8 -*-
 # **************************************************************************
 # Copyright © 2016 jianglin
-# File Name: views.py
+# File Name: __init__.py
 # Author: jianglin
 # Email: xiyang0807@gmail.com
-# Created: 2016-06-15 00:11:56 (CST)
-# Last Update:星期一 2016-8-1 17:16:55 (CST)
+# Created: 2016-11-12 21:25:46 (CST)
+# Last Update:星期六 2016-11-12 21:26:4 (CST)
 #          By:
 # Description:
 # **************************************************************************

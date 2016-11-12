@@ -6,11 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-03 19:27:58 (CST)
-# Last Update:星期二 2016-7-26 10:38:39 (CST)
+# Last Update:星期六 2016-11-12 21:22:54 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask_wtf import Form
+from flask_wtf import FlaskForm as Form
 from wtforms import SelectField, StringField, TextAreaField
 from wtforms.validators import DataRequired
 from flask_babelex import lazy_gettext as _

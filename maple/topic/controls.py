@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 10:22:42 (CST)
-# Last Update:星期日 2016-8-7 17:41:8 (CST)
+# Last Update:星期六 2016-11-12 20:38:49 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import current_app
 from flask_login import current_user
 from sqlalchemy.sql import func
-from maple import db
+from maple.extension import db
 from maple.helpers import make_uid
 from maple.main.models import RedisData
 from maple.forums.controls import reply as notice_reply

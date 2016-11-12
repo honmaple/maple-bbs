@@ -6,13 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-06-15 09:44:01 (CST)
-# Last Update:星期日 2016-7-24 13:58:50 (CST)
+# Last Update:星期六 2016-11-12 20:40:59 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import flash
 from flask_login import current_user
-from maple import db
+from maple.extension import db
 from maple.topic.models import Collect, Topic, Reply
 from maple.tag.models import Tags
 from maple.user.models import User

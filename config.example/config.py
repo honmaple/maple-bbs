@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:31:46 (CST)
-# Last Update:星期日 2016-8-7 19:23:19 (CST)
+# Last Update:星期六 2016-11-12 22:19:47 (CST)
 #          By: jianglin
 # Description:
 # **************************************************************************
@@ -44,6 +44,10 @@ CACHE_REDIS_HOST = '127.0.0.1'
 CACHE_REDIS_PORT = '6379'
 CACHE_REDIS_PASSWORD = 'redis password'
 CACHE_REDIS_DB = 1
+
+# Redis setting
+REDIS_PASSWORD = 'redis'
+REDIS_DB = 1
 
 
 # Mail such as qq
