@@ -10,12 +10,14 @@
 from flask import url_for
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from maple import app, db
+from maple import create_app
+from maple.extension import db
 from maple.user.models import User, UserInfor, UserSetting, Role
 from getpass import getpass
 from werkzeug.security import generate_password_hash
 import os
 
+app = create_app()
 migrate = Migrate(app, db)
 manager = Manager(app)
 
