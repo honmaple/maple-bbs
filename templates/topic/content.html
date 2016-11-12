@@ -13,7 +13,7 @@
 {% set board = topic.board %}
 <ol class="breadcrumb" style="margin:0">
     <li><a href="{{ url_for('forums.forums') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>{{ _('Index') }}</a></li>
-    <li><a href="{{ url_for('board.board',parent_b=board.parent_board) }}">{{ board.parent_board }}</a></li>
+    <li><a href="{{ url_for('board.boardlist',parent_b=board.parent_board) }}">{{ board.parent_board }}</a></li>
     <li><a href="{{ url_for('board.board',parent_b=board.parent_board,child_b=board.board)}}">{{ board.board }}</a></li>
     <li class="active">{{ topic.title }}</li>
 </ol>

@@ -4,7 +4,7 @@
 {% for parent_board,child_boards in boards.items() %}
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <a href="{{ url_for('board.board',parent_b=parent_board)}}" style="color:#fff"> {{ parent_board }} </a>
+        <a href="{{ url_for('board.boardlist',parent_b=parent_board)}}" style="color:#fff"> {{ parent_board }} </a>
     </div>
     {% from 'board/board_base.html' import body as board_body %}
     {{ board_body(child_boards)}}

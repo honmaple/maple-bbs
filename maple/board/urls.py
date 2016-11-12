@@ -6,13 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-15 18:40:33 (CST)
-# Last Update:星期五 2016-7-15 19:13:28 (CST)
+# Last Update:星期日 2016-11-13 0:11:41 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Blueprint, g, abort
 from maple.forums.models import Board
-from .views import board
+from .views import BoardListView, BoardView
 
 site = Blueprint('board', __name__)
 
@@ -32,5 +32,8 @@ def add_url(endpoint, values):
     values['parent_b'] = g.parent_b
 
 
-site.add_url_rule('', view_func=board, defaults={'child_b': None})
-site.add_url_rule('/<child_b>', view_func=board)
+boardlist_view = BoardListView.as_view('boardlist')
+board_view = BoardView.as_view('board')
+
+site.add_url_rule('', view_func=boardlist_view)
+site.add_url_rule('/<child_b>', view_func=board_view)

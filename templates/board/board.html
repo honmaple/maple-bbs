@@ -10,7 +10,7 @@
 {{ super()}}
 {% endblock %}
 {% block content %}
-{{ breadcrumb(hrefs={g.parent_b:url_for('board.board')},active=board.board)}}
+{{ breadcrumb(hrefs={g.parent_b:url_for('board.boardlist')},active=board.board)}}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
