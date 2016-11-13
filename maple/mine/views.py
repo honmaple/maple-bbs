@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 18:04:43 (CST)
-# Last Update:星期日 2016-7-24 17:16:21 (CST)
+# Last Update:星期日 2016-11-13 12:23:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,7 +16,6 @@ from flask.views import MethodView
 from flask_maple.forms import flash_errors
 from flask_login import current_user
 from flask_maple.forms import return_errors
-from maple import app
 from maple.helpers import is_num
 from maple.topic.models import Collect
 from maple.mine.forms import CollectForm
@@ -38,7 +37,7 @@ class CollectAPI(MethodView):
         if collectId is None:
             page = is_num(request.args.get('page'))
             collects = current_user.collects.paginate(page,
-                                                      app.config['PER_PAGE'],
+                                                      current_app.config['PER_PAGE'],
                                                       error_out=True)
             data = {'collects': collects}
             return self.template_without_uid(data)

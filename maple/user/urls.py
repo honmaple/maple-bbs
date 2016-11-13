@@ -6,14 +6,15 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-07-15 19:23:48 (CST)
-# Last Update:星期日 2016-7-24 14:10:2 (CST)
+# Last Update:星期日 2016-11-13 12:26:30 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Blueprint, abort, g
 from maple.user.models import User
 from maple.forums.forms import MessageForm
-from .views import user, topic, reply, collect, following, follower,collect_detail
+from .views import (UserView, TopicView, ReplyView, CollectView,
+                    CollectListView, FollowerView, FollowingView)
 
 site = Blueprint('user', __name__)
 
@@ -38,10 +39,18 @@ def add_user_url(endpoint, values):
     values['user_url'] = g.user_url
 
 
-site.add_url_rule('', view_func=user)
-site.add_url_rule('/topics', view_func=topic)
-site.add_url_rule('/replies', view_func=reply)
-site.add_url_rule('/collects', view_func=collect)
-site.add_url_rule('/collects/<int:collectId>', view_func=collect_detail)
-site.add_url_rule('/following', view_func=following)
-site.add_url_rule('/followers', view_func=follower)
+user_view = UserView.as_view('user')
+topic_view = TopicView.as_view('topic')
+reply_view = ReplyView.as_view('reply')
+collectlist_view = CollectListView.as_view('collect')
+collect_view = CollectView.as_view('collect_detail')
+follower_view = FollowerView.as_view('follower')
+following_view = FollowingView.as_view('following')
+
+site.add_url_rule('', view_func=user_view)
+site.add_url_rule('/topics', view_func=topic_view)
+site.add_url_rule('/replies', view_func=reply_view)
+site.add_url_rule('/collects', view_func=collectlist_view)
+site.add_url_rule('/collects/<int:collectId>', view_func=collect_view)
+site.add_url_rule('/following', view_func=following_view)
+site.add_url_rule('/followers', view_func=follower_view)

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:47:04 (CST)
-# Last Update:星期六 2016-11-12 20:38:35 (CST)
+# Last Update:星期日 2016-11-13 12:35:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -51,6 +51,8 @@ class TopicAskView(TopicBaseView):
     def get(self):
         boardId = request.args.get('boardId', type=int)
         form = self.form()
+        form.category.choices = [(b.id, b.board + '   --' + b.parent_board)
+                                 for b in Board.query.all()]
         if boardId is not None:
             board = Board.query.filter_by(id=boardId).first()
             form.category.data = board.id
@@ -64,6 +66,8 @@ class TopicEditView(TopicBaseView):
     def get(self, topicId):
         topic = Topic.query.filter_by(uid=topicId).first_or_404()
         form = self.form()
+        form.category.choices = [(b.id, b.board + '   --' + b.parent_board)
+                                 for b in Board.query.all()]
         form.title.data = topic.title
         form.category.data = topic.board_id
         form.tags.data = ','.join([tag.tagname for tag in topic.tags])
