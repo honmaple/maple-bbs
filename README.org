@@ -1,4 +1,4 @@
-* Honmaple(maplebb)
+* Honmaple
 
   [[license][https://img.shields.io/badge/license-GPL3.0-blue.svg]]
 
