@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+{% import 'base/link.html' as link %}
+{% block content %}
+{% from 'setting/_macro.html' import title,avatar %}
+{{ breadcrumb(active=_('Profile '))}}
+<style>
+ .avatar {
+     width: 100px;
+     height: 100px;
+ }
+</style>
+<div class="row">
+    <div class="col-md-3" style="padding-right:0">
+        {{ title('setting') }}
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ _('Profile ')}}
+            </div>
+            <div class="panel-body" style="border-bottom:1px solid #f6e1e1;">
+                <form action="{{ url_for('upload.avatar') }}" method="POST" enctype=multipart/form-data>
+                    {{ avatar(avatarform) }}
+                </form>
+                <form action="{{ url_for('setting.setting')}}" method="POST">
+                    {% from 'base/form.html' import forms %}
+                    {{ forms(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

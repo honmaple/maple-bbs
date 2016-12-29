@@ -1,0 +1,60 @@
+{% from 'base/panel.html' import base %}
+{% from 'base/panel.html' import count %}
+{% macro tag_list() -%}
+{{ base() }}
+{%- endmacro %}
+
+{% macro tag(tag) -%}
+{{ base() }}
+<div class="panel panel-default hidden-xs" style="font-size:13px;">
+    {{ parents(tag) }}
+    {{ children(tag) }}
+</div>
+{{ count() }}
+{%- endmacro %}
+
+{% macro parents(tag) -%}
+<div class="panel-body" style="padding:10;margin:0;">
+    <strong>父节点</strong>
+</div>
+{% if tag.parents -%}
+{% for parent in tag.parents -%}
+{{ link(parent.name) }}
+{%- endfor %}
+<div style="border-bottom:1px solid #eee"></div>
+{{ relation(tag) }}
+{% else %}
+{{ link('honmaple') }}
+{%- endif %}
+<div style="border-bottom:1px solid #eee"></div>
+{%- endmacro %}
+
+{% macro children(tag) -%}
+{% if tag.children -%}
+<div class="panel-body" style="padding:10;margin:0;">
+    <strong>子节点</strong>
+</div>
+{% for child in tag.children -%}
+{{ link(child.name) }}
+{%- endfor %}
+{%- endif %}
+{%- endmacro %}
+
+{% macro relation(tag) -%}
+{% set parent = tag.parents[0] %}
+{% if parent.children -%}
+<div class="panel-body" style="padding:10;margin:0;">
+    <strong>相关节点</strong>
+</div>
+{% for child in parent.children if child.name != tag.name -%}
+{{ link(child.name) }}
+{%- endfor %}
+{%- endif %}
+{%- endmacro %}
+
+{% macro link(name) -%}
+<div class="panel-body" style="padding:10px;margin-top:0;padding-top:0">
+    <img alt="" src="{{ url_for('avatar',text=name)}}" style="width:24px;"/>
+    <a class="text-capitalize" href="{{ url_for('tag.tag',name=name)}}" style="color:#555;">{{ name }}</a>
+</div>
+{%- endmacro %}

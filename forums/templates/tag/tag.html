@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% from 'tag/_macro.html' import title %}
+{% from 'topic/_list_macro.html' import form as topic_form %}
+{% from 'topic/_list_macro.html' import body as topic_body %}
+{% from 'topic/_list_macro.html' import no_topics as topic_no_topics %}
+{{ breadcrumb(hrefs={_('All Tags'):url_for('tag.list')},active=tag.name)}}
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-body" style="border-bottom: 1px solid #ddd;">
+                {{ title(tag) }}
+            </div>
+        </div>
+        <div class="panel panel-default">
+            {{ topic_form() }}
+            {% for topic in tag.topics %}
+            {{ topic_body(topic) }}
+            {% else %}
+            {{ topic_no_topics() }}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {% from 'tag/panel.html' import tag as tag_panel %}
+        {{ tag_panel(tag) }}
+    </div>
+</div>
+{% endblock %}

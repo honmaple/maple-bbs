@@ -1,0 +1,10 @@
+{% import 'base/link.html' as link %}
+
+{% macro nav_title(type) -%}
+<ul class="nav nav-tabs follow-panel">
+    <li role="presentation" {% if type =='topic' %}class="active"{% endif %}>{{ link.following_topic()}}</li>
+    <li role="presentation" {% if type =='tag' %}class="active"{% endif %}>{{ link.following_tag()}}</li>
+    <li role="presentation" {% if type =='user' %}class="active"{% endif %}>{{ link.following_user()}}</li>
+    <li role="presentation" {% if type =='collect' %}class="active"{% endif %}>{{ link.following_collect()}}</li>
+</ul>
+{%- endmacro %}

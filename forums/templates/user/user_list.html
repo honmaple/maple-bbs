@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{{ breadcrumb(active=_('Userlist'))}}
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ _('Userlist') }}
+            </div>
+            {% for user in users.items %}
+            <div class="panel-body" style="border-bottom:1px solid #eee">
+                {{ user.username }}
+            </div>
+            {% endfor %}
+            {{ p_footer(users, 'user.list')}}
+        </div>
+    </div>
+    <div class="col-md-3"  style="padding-left:0">
+    </div>
+</div>
+{% endblock %}

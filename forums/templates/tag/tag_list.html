@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{{ breadcrumb(active=_('All Tags'))}}
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{ _('All Tags') }}
+            </div>
+            <div class="panel-body">
+                {% for tag in tags.items %}
+                <a class="tag" href="{{ url_for('tag.tag',name=tag.name)}}">{{ tag.name }}</a>
+                {% else %}
+                <span class="text-center">
+                    {{ _('No Tags') }}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {{ panel_base.tag_list() }}
+    </div>
+</div>
+{% endblock %}

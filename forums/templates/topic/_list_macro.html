@@ -1,0 +1,106 @@
+{% import 'base/link.html' as link %}
+{% macro form() -%}
+<div class="panel-heading" style="font-size:12px;">
+    <div class="row">
+        <div class="col-sm-6">
+            {{ _('Choice:') }}
+            {{ g.sort_form.display() }}
+            {{ _('Order:') }}
+            {{ g.sort_form.sort() }}
+            {{ g.sort_form.st() }}
+        </div>
+        <div class="col-sm-2 hidden-xs">
+            {{ _('Author') }}
+        </div>
+        <div class="col-sm-2 hidden-xs">
+            {{_('Replies/Read')}}
+        </div>
+        <div class="col-sm-2 hidden-xs">
+            {{_('Last reply')}}
+        </div>
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro body(topic) -%}
+<div class="panel-body" style="padding:6px;border-bottom:1px solid #eee">
+    <div class="row">
+        {{ body_header(topic) }}
+        {{ body_title(topic) }}
+        {{ body_read(topic) }}
+        {{ body_reply(topic) }}
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro body_header(topic) -%}
+{% set author = topic.author %}
+{% set tags = topic.tags %}
+<div class="col-md-6 media">
+    <div class="media-left">
+        {{ link.user_avatar(author) }}
+                        </div>
+    <div class="media-body">
+        <div class="media-heading">
+        {% if topic.is_top %}
+        <span><i class="icon-pushpin text-danger">&nbsp</i></span>
+        {% endif %}
+        <a href="{{url_for('topic.topic',topicId=topic.id)}}" style="color:#555">{{ topic.title }}</a>
+        </div>
+        <span class="visible-xs-inline">
+        <small style="font-size:10px;">由{{ link.user(author) }}</small>
+        <small style="color:#999;font-size:10px;">
+        {{ topic.created_at | timesince }}发布
+            </small>
+        </span>
+        <div class="hidden-xs">
+        {% for tag in tags %}
+        {{ link.tag(tag) }}
+        {% endfor %}
+        </div>
+                        </div>
+</div>
+{%- endmacro %}
+
+{% macro body_title(topic) -%}
+<div class="col-md-2 hidden-xs" style="padding-top:5px;">
+    <small>{{ link.user(topic.author) }}</small>
+    <br/>
+    <small style="color:#999;">
+        {{ topic.created_at | timesince }}
+    </small>
+</div>
+{%- endmacro %}
+
+{% macro body_read(topic) -%}
+<div class="col-md-2  hidden-xs" style="padding:5px 5px 5px 20px;margin:0">
+    {% set rep,read = topic.id,1 %}
+    <span>{{ rep }}</span> /
+    <span style="font-size:12px;color:#999;">
+        {{ read }}
+    </span>
+</div>
+{%- endmacro %}
+
+{% macro body_reply(topic) -%}
+<div class="col-md-2 hidden-xs" style="padding:5px;margin:0;">
+    {% set last_reply = topic.replies.first() %}
+    {% if last_reply %}
+    <span style="font-size:12px">{{ link.user(last_reply.author) }}</span>
+    <br/>
+    <span style="font-size:12px;color:#999;">{{ last_reply.created_at | timesince }}</span>
+    {% else %}
+    <span style="font-size:12px">{{ link.user(topic.author) }}</span>
+    <br/>
+    <span style="font-size:12px;color:#999;">{{ topic.created_at | timesince }}</span>
+    {% endif %}
+</div>
+{%- endmacro %}
+
+{% macro no_topics() -%}
+<div class="panel-body">
+    <span class="text-center" style="display:block;width:100%;color:#999">
+        {{ _('No Topic')}}
+    </span>
+</div>
+{%- endmacro %}

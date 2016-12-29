@@ -1,0 +1,30 @@
+{% macro title(tag) -%}
+<div class="media">
+    <div class="media-left">
+        <a href="{{ request.path }}">
+            <img class="media-object img-circle" src="{{ url_for('avatar',text=tag.name)}}" alt="avatar" style="width:56px;height:56px">
+        </a>
+    </div>
+    <div class="media-body">
+        <h4 class="media-heading"><strong class="text-capitalize">{{ tag.name }}</strong></h4>
+        {% set description = tag.description %}
+        {% if description -%}
+        {{ description }}
+        {%- endif %}
+    </div>
+    <div class="media-right">
+        <span class="rss">
+            <a href="{{ url_for('tag.feed',name=tag.name)}}">
+                <i class="icon-rss" style="padding:2px;white-space:nowrap;">Rss</i>
+            </a>
+        </span>
+        {% if g.user.is_authenticated %}
+        {% if current_user in tag.followers %}
+        <button class="btn btn-sm btn-default tagfollow active" id="{{ tag.id}}" style="padding:0 5px">取消关注</button>
+        {% else %}
+        <button class="btn btn-sm btn-default tagfollow" id="{{ tag.id}}" style="padding:0 5px">关注</button>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+{%- endmacro %}

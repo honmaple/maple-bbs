@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% block script -%}
+{{ super() }}
+<script type="text/javascript">
+ EditTopic("{{ url_for('topic.preview') }}","{{ url_for('topic.topic',topicId=topic.uid) }}")
+</script>
+{%- endblock script %}
+{% block content %}
+{{ breadcrumb(active='编辑')}}
+<style>
+ .tokenfield .token {
+     border: 1px solid #5cb85c;
+     background-color: #5cb85c;
+     color:#eee;
+ }
+</style>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        {{ _('Edit' )}}
+    </div>
+    <div class="panel-body" style="border-bottom:1px solid #f6e1e1;padding:10px 0;">
+        <div class="row" style="margin:0;padding:0;">
+            <form id="topic-put">
+                {% from 'topic/_form.html' import edit %}
+                {{ edit(form) }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

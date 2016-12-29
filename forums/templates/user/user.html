@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{{ breadcrumb(hrefs={_('UserList'):url_for('user.list')},active=user.username) }}
+<div class="row">
+    <div class="col-md-3" style="padding-right:0;">
+        {% set setting = user.setting %}
+        {% include 'user/info.html' %}
+        <div  style="background:#fff;border:1px solid #ddd;border-radius:5px">
+            {% if g.user.is_authenticated and current_user.username == g.user_url %}
+            {{ nav_list(_('me'))}}
+            {% else %}
+            {{ nav_list(g.user_url)}}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-9">
+        {% include "user/" + type + ".html" %}
+    </div>
+</div>
+{% endblock %}
+
+{% macro nav_list(name) -%}
+<ul class="nav nav-pills nav-stacked" >
+    <li role="presentation" class="topics"><a href="{{ url_for('user.topic')}}">{{ _("topics of %(n)s",n = name) }}</a></li>
+    <li role="presentation" class="replies"><a href="{{ url_for('user.reply')}}">{{ _("replies of %(n)s",n = name) }}</a></li>
+    <li role="presentation" class="collects"><a href="{{ url_for('user.collect')}}">{{ _("collects of %(n)s",n = name) }}</a></li>
+    <li role="presentation" class="followers"><a href="{{ url_for('user.follower')}}">{{ _("followers of %(n)s",n = name) }}</a></li>
+</ul>
+{%- endmacro %}

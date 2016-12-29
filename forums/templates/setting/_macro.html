@@ -1,0 +1,31 @@
+{% import 'base/link.html' as link %}
+{% macro title(type) -%}
+<div class="list-group">
+    <a href="{{ url_for('setting.setting')}}" class="list-group-item {% if type =='setting' %}active{% endif %}"> {{ _('Profile ') }}</a>
+    <a href="{{ url_for('setting.password')}}" class="list-group-item {% if type =='password' %}active{% endif %}">{{_('Password ')}}</a>
+    <a href="{{ url_for('setting.privacy')}}" class="list-group-item {% if type =='privacy' %}active{% endif %}">{{_('Privacy ')}}</a>
+    <a href="{{ url_for('setting.babel')}}" class="list-group-item {% if type =='babel' %}active{% endif %}">{{_('Timezone and Locale')}}</a>
+</div>
+{%- endmacro %}
+
+{% macro avatar(form) -%}
+{{ form.hidden_tag() }}
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{ form.avatar.label }}</label>
+        <div class="col-sm-10">
+            <span>
+                {{ link.user_avatar(g.user,100) }}
+            </span>
+            <span id="show-avatar">
+            </span>
+            {{ form.avatar(class="form-control",onchange="loadFile(event)")}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default btn-sm">{{_('confirm upload')}}</button>
+        </div>
+    </div>
+</div>
+{%- endmacro %}

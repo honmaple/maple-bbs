@@ -1,9 +1,10 @@
 venv/
-config/
+**/config/
 migrations/
 backup/
 fabfile.py
 **/__pycache__/
+**/avatar/
 *.swp
 *.log
 *.pyc

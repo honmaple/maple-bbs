@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% from 'follow/_macro.html' import nav_title %}
+{{ breadcrumb(active=_('Following Collects'))}}
+<div class="row">
+    <div class="col-md-9">
+        {{ nav_title('collect') }}
+        <div class="panel panel-default">
+            {% for collect in collects.items %}
+            <div class="panel-body" style="border-bottom:1px solid #eee">
+                <span style="float:right">
+                    <button class="btn btn-sm btn-default collectfollow active" id="{{ collect.id}}" style="padding:0 5px">取消关注</button>
+                </span>
+                {{ link.collect(collect)}}
+            </div>
+            {%- else %}
+            {% include 'follow/none.html' %}
+            {% endfor  %}
+            {{ p_footer(collects,'follow.collect')}}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {{ panel_base.follow() }}
+    </div>
+</div>
+{% endblock %}

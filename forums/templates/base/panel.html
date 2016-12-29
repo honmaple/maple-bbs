@@ -1,0 +1,110 @@
+{% macro base() -%}
+{% if g.user.is_authenticated %}
+<ul class="list-group">
+    <a class="list-group-item list-group-item-info" href="{{ ask_url or url_for('topic.ask')}}">
+        <span class="btn btn-info btn-block">{{ _('Ask Questions') }}</span>
+    </a>
+</ul>
+<div class="list-group">
+    <a href="{{ url_for('follow.collect')}}" class="list-group-item">
+        {{ _('Collects')}}
+    </a>
+    <a href="{{ url_for('follow.topic')}}" class="list-group-item">
+        {{ _('Followings')}}
+    </a>
+</div>
+{% else %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Honmaple
+    </div>
+    <div class="panel-body text-center">
+        <a class="btn btn-primary" href="{{ url_for('auth.register')}}">
+            <i class="icon-user"></i>
+            {{ _('now register')}}
+        </a>
+    </div>
+    <div class="panel-footer text-center">
+        {{ _('If you have a account,please') }}<a href="{{ url_for('auth.login')}}"> {{ _('login') }}</a>
+    </div>
+</div>
+{% endif %}
+{%- endmacro %}
+
+{% macro board_list() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro board() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro collect() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro follow() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro tag_list() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro tag_panel() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro topic_list() -%}
+{{ base() }}
+{{ count() }}
+{%- endmacro %}
+
+{% macro index() -%}
+{{ base() }}
+{{ tags_panel(_('Hot Tags'),hot_tags) }}
+{{ tags_panel(_('Recent Tags'),recent_tags) }}
+{{ count() }}
+{%- endmacro %}
+{% macro tags_panel(text,tags) -%}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>{{ text }}</h3>
+    </div>
+    <div class="panel-body text-center tags">
+        {% set tags = tags() %}
+        {% for tag in tags -%}
+        <a href="{{ url_for('tag.tag',name=tag.name)}}" class="item_node">{{ tag.name }}</a>
+        {%- endfor %}
+    </div>
+</div>
+{%- endmacro %}
+{% macro count() -%}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{ _('Forums Count') }}
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">{{ _('Total number of registered users:')}} 0</li>
+        <li class="list-group-item">{{ _('Total number of topics:') }} 0 </li>
+        <li class="list-group-item">{{ _('Total number of posts:') }} 0 </li>
+    </ul>
+</div>
+{%- endmacro %}
+
+{% macro panel(heading,body) -%}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{ heading }}
+    </div>
+    <div class="panel-body text-center">
+        {{ body }}
+    </div>
+</div>
+{%- endmacro %}

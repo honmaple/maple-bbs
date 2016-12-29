@@ -1,0 +1,86 @@
+.chatroom-msg {
+    background:#bbb;
+    border-radius:5px;
+    font-size:8px;
+    padding:3px 5px;
+    color:#fff;
+}
+.chatroom-left-infor {
+    margin:10px 10px 10px 30px;
+    width:80%;
+}
+.chatroom-right-infor {
+    margin:10px 30px 10px 10px;
+}
+.chatroom-infor {
+    padding:8px;
+    border-radius:4px;
+    display:inline-block;
+    text-align:left;
+}
+.chatroom {
+    font-size: 12px;
+    position: fixed;
+    right: -3px;
+    bottom: -3px;
+    width: 150px;
+    height: 36px;
+    z-index: 998;
+    overflow: hidden;
+    background: #FFF;
+    box-shadow: -3px -2px 8px -1px rgba(0,0,0,0.2);
+    border-radius: 4px 0px 0px 4px;
+    transition: all 0.3s;
+}
+.chatroom-heading {
+    margin:7px;
+    background-color:#a5eeee;
+}
+.chatroom-feedback {
+    display:block;
+    width:100%;
+    text-align:right;
+}
+.chatroom-panel {
+    bottom:0px;
+}
+.chatroom-send {
+    margin-bottom:2px;
+    position: fixed;
+    bottom:0px;
+}
+.chatroom-open {
+    color:#f40;
+    font-size:12px;
+    cursor: pointer;
+}
+.chatroom .panel-body {
+    padding:0;
+}
+.chatroom-close {
+    color:#fff;
+    font-size:12px;
+    cursor: pointer;
+}
+.chatroom-open:after {
+    content:'[展开聊天]';
+}
+.chatroom-close:after {
+    content:'[关闭聊天]';
+}
+.form-inline .chatroom-input {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+}
+.chatroom-input {
+    resize: none;
+    height:62px;
+    width:1200px;
+    bottom:0;
+    outline: none;
+    font-size: 12px;
+    overflow-y: auto;
+    border:none;
+    border-right:1px solid #f2f2f5;
+}

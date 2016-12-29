@@ -1,0 +1,48 @@
+{% import 'base/link.html' as link_base %}
+{% macro privacy(notice) -%}
+<small style="color:#999;">由{{ link_base.user(notice.send_user) }} 发来的私信:</small>
+<small class="pull-right">{{ notice.publish | timesince }}</small>
+<p style="margin-bottom:0px">{{ notice.content['content'] }}</p>
+{%- endmacro %}
+
+{% macro reply(notice) -%}
+{% set content = notice.content %}
+<small style="color:#999;"> {{ link_base.user(notice.send_user)}} 回复了你创建的主题:
+    <a href="{{ content['url'] }}">{{ content['title'] }}</a>
+</small>
+<small class="pull-right"> {{ notice.publish | timesince }} </small>
+<p style="margin-bottom:0px">{{ content["content"] | safe_clean }}</p>
+{%- endmacro %}
+
+{% macro rereply(notice) -%}
+{% set content = notice.content %}
+<small style="color:#999;">
+    {{ link_base.user(notice.send_user)}}在回复
+    <a href="{{ content['url'] }}">{{ content['title'] }}</a>时提到了你
+</small>
+<small class="pull-right"> {{ notice.publish | timesince }} </small>
+<p style="margin-bottom:0px">{{ content["content"] | safe_clean }}</p>
+{%- endmacro %}
+
+{% macro collect(notice) -%}
+{% set content = notice.content %}
+<small style="color:#999;"> {{ link_base.user(notice.send_user)}} 收藏了你创建的主题:
+    <a href="{{ content['url'] }}">{{ content['title'] }}</a>
+</small>
+<small class="pull-right"> {{ notice.publish | timesince }} </small>
+{%- endmacro %}
+
+{% macro like(notice) -%}
+{% set content = notice.content %}
+<small style="color:#999;"> {{ link_base.user(notice.send_user)}} 在
+    <a href="{{ content['url'] }}">{{ content['title'] }}</a> 赞了你回复
+</small>
+<small class="pull-right"> {{ notice.publish | timesince }} </small>
+<p style="margin-bottom:0px">{{ content["content"] | safe_clean }}</p>
+{%- endmacro %}
+
+{% macro user(notice) -%}
+{% set content = notice.content %}
+<small style="color:#999;"> {{ link_base.user(notice.send_user)}} 关注了你 </small>
+<small class="pull-right"> {{ notice.publish | timesince }} </small>
+{%- endmacro %}

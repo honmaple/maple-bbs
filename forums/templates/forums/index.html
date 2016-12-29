@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% from 'forums/_macro.html' import forums_title,forums_item %}
+{% from 'topic/_list_macro.html' import form as topic_form %}
+{% from 'topic/_list_macro.html' import body as topic_body %}
+{{ breadcrumb() }}
+{{ forums_title() }}
+<div class="row hidden-sm hidden-xs">
+    {{ forums_item(_('Forums'),url_for('forums.forums'),"icon-comments","#F86334")}}
+    {{ forums_item(_('Wiki'),url_for('docs.list'),"icon-book","#eeccaa")}}
+    {{ forums_item(_('Blog'),'https//honmaple.com',"icon-tasks")}}
+    {{ forums_item(_('Good'),url_for('topic.good'),"icon-globe","#017e66")}}
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            {{ topic_form() }}
+            {% for topic in topics.items %}
+            {{ topic_body(topic) }}
+            {% endfor %}
+            <div class="panel-footer clearfix">
+                <a class="pull-right" href="{{ url_for('topic.good')}}">
+                    {{ _('more good topics') }}
+                    <i class="icon-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {{ panel_base.index() }}
+    </div>
+</div>
+{% endblock %}

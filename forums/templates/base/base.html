@@ -1,0 +1,51 @@
+{% extends 'maple/base.html' %}
+{% from 'base/paginate.html' import paginate%}
+{% from 'base/paginate.html' import footer as p_footer %}
+{% import 'base/link.html' as link %}
+{% import 'base/panel.html' as panel_base %}
+{% from 'base/head.html' import breadcrumb %}
+{% block main %}
+{% include "base/header.html" %}
+<div class="col-md-offset-1 col-md-10" style="padding:0;margin-top:60px">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category,message in messages %}
+    {% if category == 'message' -%}
+    {% set category = 'info' %}
+    {%- endif %}
+    <div class="alert alert-{{ category }}" style="padding:8px">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul>
+            <li style="list-style-type:none">{{ message }} </li>
+        </ul>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% if g.user.is_authenticated %}
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ g.user.username }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="{{ url_for('user.user',username=g.user.username) }}">{{ _('My Page') }}</a></li>
+            <li><a href="{{ url_for('setting.setting') }}">{{ _('Setting')}}</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout')}}</a></li>
+        </ul>
+    </div>
+    {% else  %}
+    {{ a_pull_right('auth.register',_('Register')) }}
+    {{ a_pull_right('auth.login',_('Login'))}}
+    {% endif %}
+    {{ a_pull_right('tag.list',_('TagList'))}}
+    {{ a_pull_right('user.list',_('Userlist'))}}
+    {% block content %}{% endblock %}
+</div>
+{% endblock %}
+
+{% macro a_pull_right(url,name) -%}
+<a href="{{ url_for(url) }}" class="btn btn-sm btn-primary pull-right">{{ name }}</a>
+{%- endmacro %}

@@ -1,0 +1,97 @@
+<style>
+ .like-active {
+     color:#a40004;
+ }
+ .like-no-active {
+     color:#ccc;
+ }
+ .reply-order a{
+     padding: 1px 2px;
+     color: #778087;
+     text-decoration: none;
+     font-size:13px;
+ }
+ .reply-count {
+     font-size:12px;
+     color:#999;
+ }
+ .reply-content a {
+     color:#778087;
+ }
+</style>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{ _('Received %(total)s replies',total=replies.total) }}
+        <ul class="pull-right list-inline reply-order">
+            <li><a href="{{ url_for('topic.topic',topicId=topic.uid,orderby='time')}}"> <i class="icon icon-time"></i>{{_('time')}}</a></li>
+            <li><a href="{{ url_for('topic.topic',topicId=topic.uid,orderby='like')}}"> <i class="icon icon-thumbs-up"></i>{{_('likers')}}</a></li>
+        </ul>
+    </div>
+    {% if replies.items %}
+    {% set num = 1 %}
+    {% for reply in replies.items %}
+    <div class="panel-body media" id="reply-{{ reply.id }}" style="border-bottom:1px solid #eee;margin:0">
+        <div class="media-left">
+            <a href="{{ url_for('user.user',user_url=reply.author.username) }}">
+                <img class="media-object img-circle" src="{{ link_base.avatar(reply.author)}}" alt="avatar" style="width:48px;height:48px">
+            </a>
+        </div>
+        <div class="media-body">
+            <small class="media-heading" style="color:#999">
+                <span>{{ link_base.user(reply.author.username)}}</span>
+                <span>{{ reply.publish | timesince }}</span>
+                <a name="reply{{ reply.id }}" class="anchor" href="#reply{{ num }}" aria-hidden="true">#{{ num }}</a>
+            </small>
+            <div  class="reply-content">
+                {{ reply.content | safe_clean }}
+            </div>
+        </div>
+        <div class="media-right">
+            {% if reply in current_user.likes and g.user.is_authenticated %}
+            <a href="javascript:void(0);" style="padding:0" class="like-reply btn btn-sm like-active" data-id="{{ reply.id}}" title="取消赞">
+                <i class="icon-thumbs-up"></i>
+                <span class="reply-count">{{ reply.likers | length }}</span>
+            </a>
+            {% else %}
+            <a href="javascript:void(0);" style="padding:0" class="like-reply btn btn-sm like-no-active" data-id="{{ reply.id}}" title="赞">
+                <i class="icon-thumbs-up"></i>
+                <span class="reply-count">{{ reply.likers | length }}</span>
+            </a>
+            {% endif %}
+        </div>
+        <div class="media-right">
+            <a href="javascript:void(0);" style="color:#ccc;padding:0" class="reply-author btn btn-sm" data-id="{{ reply.author.username }}" title="回复">
+                <i class="icon-reply"></i>
+            </a>
+        </div>
+    </div>
+    {% set num = num + 1 %}
+    {% endfor %}
+    {{ p_footer(replies,'topic.topic',dict(topicId=topic.uid))}}
+    {% else %}
+    <div class="panel-body">
+        <span class="text-center" style="display:block;width:100%;color:#999">
+            {{_('no reply')}}
+        </span>
+    </div>
+    {% endif %}
+</div>
+<div class="panel panel-default">
+    {% if g.user.is_authenticated %}
+    <div class="panel-heading"> {{ _('Reply this topic') }} </div>
+    <div class="panel-body">
+        <form action="{{ url_for('topic.reply',topicId=topic.id)}}" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.content(class='form-control',rows=4)}}
+            <button class="btn btn-sm btn-primary" type="submit" style="margin-top:10px;">{{ _('Post reply') }}</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
+        <span class="text-center" style="display:block;width:100%;color:#999">
+            <span class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size:16px;"></span>
+            {{_('You need')}} <a href="{{ url_for('auth.login') }}">{{ _('Login')}}</a> {{_('before you can reply.')}}
+        </span>
+    </div>
+    {% endif %}
+</div>

@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% set board = topic.board %}
+{{ breadcrumb(hrefs={board.name:url_for('board.board',boardId=board.id)},active=topic.title) }}
+{% from 'topic/_content_macro.html' import title,body %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            {{ title(topic) }}
+            {{ body(topic) }}
+        </div>
+        <div id="replies"></div>
+        <script type="text/javascript">
+         $.get("{{ url_for('reply.list',topicId=topic.id) }}",function(data){
+             $('#replies').html(data);
+         });
+        </script>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {% set ask_url = url_for('topic.ask',boardId=topic.board_id) %}
+        {{ panel_base.board() }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% macro body(board) -%}
+{% import 'base/link.html' as link %}
+<div class="panel-body" style="border-bottom:1px solid #eea">
+    <div class="row" style="padding:0;margin:0;">
+        <div class="col-md-2">
+            <dl style="margin:0;">
+                <dd>{{ link.board(board) }}</dd>
+                <dd style="font-size:12px;">
+                    <span style="color:#999;">{{_('Topics:')}}</span>
+                    <span>1</span>
+                    <span style="color:#999;">{{ _('Posts:')}}</span>
+                    <span>2</span>
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-offset-8 col-md-2" style="font-size:12px">
+            {% set last_topic = board.topics.first() %}
+            {% if last_topic  %}
+            <dl style="margin:0;">
+                <dt style="word-wrap: break-word;word-break: normal;">{{ link.topic(last_topic)}}</dt>
+                <dd>{{ _('published by %(author)s',author=link.user(last_topic.author.username)) }}</dd>
+                <dd>{{ last_topic.created_at | timesince }}</dd>
+            </dl>
+            {% else %}
+            {{_('No Topic')}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{%- endmacro %}

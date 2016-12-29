@@ -1,0 +1,17 @@
+{% macro col_row(heading,body,other) -%}
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{ heading }}
+            </div>
+            <div class="panel-body">
+                {{ body }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {{ other }}
+    </div>
+</div>
+{%- endmacro %}
