@@ -1,0 +1,90 @@
+{% macro collect_create(form) -%}
+<div class="modal fade" id="addcollect" tabindex="-1" role="dialog" aria-labelledby="addcollectLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addcollectLabel">{{_('Create Collect')}}</h4>
+            </div>
+            <form action="{{ url_for('topic.collectlist')}}" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="modal-body">
+                    <div class="form-group">
+                        {{ form.name.label }}
+                        {{ form.name(class="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{ form.description.label }}
+                        {{ form.description(class="form-control")}}
+                    </div>
+                    {% for subfield in form.private %}
+                    <div class="form-group" style="display:inline;">
+                        {{subfield}}
+                        {{subfield.label}}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_('cancel')}}</button>
+                    <button type="submit" class="btn btn-primary">{{_('confirm')}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{%- endmacro %}
+{% macro collect_edit(form) -%}
+<div class="modal fade" id="editcollect" tabindex="-1" role="dialog" aria-labelledby="editcollectLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="editcollectLabel">{{_('Edit the collect')}}</h4>
+            </div>
+            <form id="editcollectform">
+                <div class="modal-body">
+                    <div class="form-group">
+                        {{ form.name.label }}
+                        {{ form.name(class="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        {{ form.description.label }}
+                        {{ form.description(class="form-control")}}
+                    </div>
+                    {% for subfield in form.is_privacy %}
+                    <div class="form-group">
+                        {{subfield}}
+                        {{subfield.label}}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ _('cancel')}}</button>
+                    <button type="button" id="edit-collect-form" class="btn btn-primary">{{_('confirm')}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro collect_delete() -%}
+<div class="modal fade" id="deletecollect" tabindex="-1" role="dialog" aria-labelledby="deletecollectLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="deletecollectLabel">{{_('Delete this collect')}}</h4>
+            </div>
+                    <div class="modal-body">
+                        <p>确认要删除收藏夹「flask相关」么？</p>
+                        注意：收藏夹下的收藏也会被删除！
+            </div>
+                    <div class="modal-footer" style="padding-top:5px;padding-bottom:5px;">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{_('cancel')}}</button>
+                        <button type="button" id="delete-collect-form" class="btn btn-danger">{{_('confirm')}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{%- endmacro %}

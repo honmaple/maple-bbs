@@ -1,6 +1,25 @@
 body {
     background:#f5f5f5;
 }
+.online {
+    color: #fff;
+    font-size: 10px;
+    line-height: 10px;
+    font-weight: 500;
+    padding: 2px 5px 2px 5px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    background: #52bf1c;
+    background: -moz-linear-gradient(top, #52bf1c 0%, #438906 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#52bf1c), color-stop(100%,#438906));
+    background: -webkit-linear-gradient(top, #52bf1c 0%,#438906 100%);
+    background: -o-linear-gradient(top, #52bf1c 0%,#438906 100%);
+    background: -ms-linear-gradient(top, #52bf1c 0%,#438906 100%);
+    background: linear-gradient(top, #52bf1c 0%,#438906 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#52bf1c', endColorstr='#438906',GradientType=0 );
+}
 a.tag {
     background:rgba(1,126,102,.08);
     font-size: 10px;
@@ -68,4 +87,12 @@ a.item_node {
 .follow-panel {
     background-color:#fff;
     border-bottom:None;
+}
+select {
+    background-color: #fff;
+    border-color: #c6c6c6;
+    color: #141414;
+}
+div.alert ul li {
+    list-style-type:none
 }

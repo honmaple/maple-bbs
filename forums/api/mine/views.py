@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-21 22:08:37 (CST)
-# Last Update:星期四 2016-12-22 22:39:2 (CST)
+# Last Update:星期四 2016-12-29 21:18:30 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,7 +15,7 @@ from flask.views import MethodView
 from api.topic.models import Topic, Collect
 from api.reply.models import Reply
 from api.user.models import User
-from api.common.views import ViewListMixin
+from common.views import ViewListMixin
 
 
 class UserTopicListView(MethodView, ViewListMixin):

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:04 (CST)
-# Last Update:星期六 2016-12-17 22:59:35 (CST)
+# Last Update:星期四 2016-12-29 21:18:30 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,7 +14,7 @@ from flask import request, url_for, current_app, render_template
 from flask.views import MethodView
 from flask_maple.serializer import FlaskSerializer as Serializer
 from flask_maple.response import HTTPResponse
-from api.common.views import ViewListMixin
+from common.views import ViewListMixin
 from api.topic.models import Topic
 from .models import Tags
 from urllib.parse import urljoin

@@ -1,21 +1,26 @@
-# !/usr/bin/env python
-# -*- coding=UTF-8 -*-
-# *************************************************************************
-#   Copyright © 2015 JiangLin. All rights reserved.
-#   File Name: db_create.py
-#   Author:JiangLin
-#   Mail:xiyang0807@gmail.com
-#   Created Time: 2016-02-11 13:34:38
-# *************************************************************************
-from flask import url_for
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# **************************************************************************
+# Copyright © 2016 jianglin
+# File Name: manager.py
+# Author: jianglin
+# Email: xiyang0807@gmail.com
+# Created: 2016-10-25 22:08:39 (CST)
+# Last Update:星期四 2016-12-29 21:42:7 (CST)
+#          By:
+# Description:
+# **************************************************************************
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from maple import app, db
-from maple.user.models import User, UserInfor, UserSetting, Role
+from maple import create_app
+from maple.extension import db
+from api.user.models import User, UserInfo, UserSetting
 from getpass import getpass
 from werkzeug.security import generate_password_hash
+from datetime import datetime
 import os
 
+app = create_app()
 migrate = Migrate(app, db)
 manager = Manager(app)
 
@@ -30,7 +35,7 @@ def init_db():
     """
     Drops and re-creates the SQL schema
     """
-    db.drop_all()
+    # db.drop_all()
     db.configure_mappers()
     db.create_all()
     db.session.commit()
@@ -41,71 +46,51 @@ def babel_init():
     pybabel = 'pybabel'
     os.system(pybabel +
               ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple')
-    os.system(pybabel + ' init -i messages.pot -d maple/translations -l zh')
+    os.system(pybabel + ' init -i messages.pot -d translations -l zh')
     os.unlink('messages.pot')
 
 
 @manager.command
 def babel_update():
     pybabel = 'pybabel'
-    os.system(pybabel +
-              ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple templates')
-    os.system(pybabel + ' update -i messages.pot -d maple/translations')
+    os.system(
+        pybabel +
+        ' extract -F babel.cfg -k lazy_gettext -o messages.pot maple templates')
+    os.system(pybabel + ' update -i messages.pot -d translations')
     os.unlink('messages.pot')
 
 
 @manager.command
 def babel_compile():
     pybabel = 'pybabel'
-    os.system(pybabel + ' compile -d maple/translations')
+    os.system(pybabel + ' compile -d translations')
 
 
-@manager.option('-u', '--username', dest='username', default='admin')
+@manager.option('-u', '--username', dest='username')
 @manager.option('-e', '--email', dest='email')
 @manager.option('-w', '--password', dest='password')
 def create_user(username, email, password):
-    if username == 'admin':
-        username = input('Username(default admin):')
+    if username is None:
+        username = input('Username(default admin):') or 'admin'
     if email is None:
         email = input('Email:')
     if password is None:
         password = getpass('Password:')
     user = User()
     user.username = username
-    user.password = generate_password_hash(password)
+    user.password = password
     user.email = email
     user.is_superuser = True
-    userinfor = UserInfor()
-    user.infor = userinfor
-    usersetting = UserSetting()
-    user.setting = usersetting
-    role = Role.query.filter_by(name='super').first()
-    if role is None:
-        role = Role()
-        role.rolename = 'super'
-    user.roles.append(role)
+    user.is_confirmed = True
+    # user.roles = 'Super'
+    # user.confirmed_time = datetime.utcnow()
     db.session.add(user)
     db.session.commit()
-
-
-@manager.command
-def list_routes():
-    import urllib
-    output = []
-    for rule in app.url_map.iter_rules():
-
-        options = {}
-        for arg in rule.arguments:
-            options[arg] = "<{0}>".format(arg)
-
-        methods = ','.join(rule.methods)
-        url = url_for(rule.endpoint, **options)
-        line = urllib.parse.unquote("{:50s} {:20s} {}".format(rule.endpoint,
-                                                              methods, url))
-        output.append(line)
-
-    for line in sorted(output):
-        print(line)
+    info = UserInfo()
+    info.user = user
+    setting = UserSetting()
+    setting.user = user
+    db.session.commit()
 
 
 @manager.option('-h', '--host', dest='host', default='127.0.0.1')

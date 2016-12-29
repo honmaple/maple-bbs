@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-22 21:49:05 (CST)
-# Last Update:星期四 2016-12-22 22:23:39 (CST)
+# Last Update:星期四 2016-12-29 21:18:30 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,7 +14,7 @@ from flask.views import MethodView
 from flask import (render_template, request, redirect, url_for, jsonify,
                    current_app)
 from flask_login import current_user
-from api.common.views import ViewListMixin
+from common.views import ViewListMixin
 from api.tag.models import Tags
 from api.topic.models import Topic, Collect
 

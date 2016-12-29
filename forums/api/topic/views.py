@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期日 2016-12-18 19:59:28 (CST)
+# Last Update:星期四 2016-12-29 22:56:58 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -19,10 +19,11 @@ from flask_login import current_user
 from flask_babelex import gettext as _
 from api.board.models import Board
 from api.tag.models import Tags
-from api.common.views import ViewListMixin
-from maple.helper import form_board
+from common.views import ViewListMixin
+from common.helper import form_board
 from .models import Topic, Collect
-from .forms import TopicForm, ReplyForm, error_callback
+from .forms import (TopicForm, ReplyForm, CollectForm, error_callback,
+                    collect_error_callback)
 
 
 class TopicAskView(MethodView):
@@ -144,32 +145,35 @@ class TopicView(MethodView):
                             **serializer.data).to_response()
 
 
-class CollectListView(MethodView):
+class CollectListView(MethodView, ViewListMixin):
     def get(self):
+        form = CollectForm()
         page, number = self.page_info
         collects = Collect.get_list(page, number)
-        serializer = Serializer(collects, many=True)
-        return HTTPResponse(HTTPResponse.NORMAL_STATUS,
-                            **serializer.data).to_response()
+        data = {'collects': collects, 'form': form}
+        return render_template('collect/collect_list.html', **data)
 
+    @form_validate(CollectForm, error=collect_error_callback, f='')
     def post(self):
-        post_data = request.data
+        form = CollectForm()
+        post_data = form.data
         name = post_data.pop('name', None)
         description = post_data.pop('description', None)
-        privacy = post_data.pop('privacy', None)
+        privacy = post_data.pop('private', None)
+        privacy = True if privacy == '0' else False
         collect = Collect(name=name, description=description, privacy=privacy)
         collect.author = current_user
-        serializer = Serializer(collect, many=False)
-        return HTTPResponse(HTTPResponse.NORMAL_STATUS,
-                            **serializer.data).to_response()
+        collect.save()
+        return collect_error_callback()
 
 
 class CollectView(MethodView):
     def get(self, collectId):
+        form = CollectForm()
         collect = Collect.get(id=collectId)
-        serializer = Serializer(collect, many=False)
-        return HTTPResponse(
-            HTTPResponse.NORMAL_STATUS, data=serializer.data).to_response()
+        topics = collect.topics.paginate(1, 23, True)
+        data = {'collect': collect, 'topics': topics,'form':form}
+        return render_template('collect/collect.html', **data)
 
     def put(self, collectId):
         post_data = request.data

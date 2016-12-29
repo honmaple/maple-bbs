@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:46:13 (CST)
-# Last Update:星期六 2016-12-17 13:10:1 (CST)
+# Last Update:星期四 2016-12-29 21:44:17 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -33,7 +33,7 @@ class Tags(db.Model, ModelMixin):
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
-    description = db.Column(db.Text(128), nullable=False)
+    description = db.Column(db.String(128), nullable=False)
     parents = db.relationship(
         'Tags',
         secondary=tags_parents,

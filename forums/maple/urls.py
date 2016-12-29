@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 # **************************************************************************
 # Copyright © 2016 jianglin
-# File Name: log.py
+# File Name: urls.py
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:37 (CST)
-# Last Update:星期日 2016-12-25 13:23:47 (CST)
+# Last Update:星期四 2016-12-29 21:33:52 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -23,19 +23,6 @@ from api.follow.urls import site as follow_site
 from api.setting.urls import site as setting_site
 from api.upload.urls import site as upload_site
 from docs.views import site as docs_site
-
-# from maple.forums.urls import site as forums_site
-# from docs.views import site as docs_site
-# from api.urls import site as api_site
-# from maple.auth.views import register_auth
-
-# from flask_cors import CORS
-# CORS(user_site)
-# CORS(perm_site)
-# CORS(topic_site)
-# CORS(reply_site)
-# CORS(auth_site)
-# CORS(board_site)
 
 
 def register_routes(app):

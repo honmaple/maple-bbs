@@ -6,24 +6,24 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-02 19:31:52 (CST)
-# Last Update:星期四 2016-12-29 20:55:55 (CST)
+# Last Update:星期四 2016-12-29 21:45:14 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Flask
+from flask_maple.lazy import LazyExtension
 from api.admin.urls import admin
 from .urls import register_routes
 from .logs import register_logging
-from .register import LazyExtension
 from .filters import register_jinja2
 import os
 
 
 def create_app(config=None):
     templates = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.pardir, 'static/templates'))
+        os.path.join(os.path.dirname(__file__), os.pardir, 'templates'))
     static = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.pardir, 'static/static'))
+        os.path.join(os.path.dirname(__file__), os.pardir, 'static'))
 
     app = Flask(__name__, template_folder=templates, static_folder=static)
     if config is None:

@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% from 'collect/_macro.html' import collect_edit,collect_delete %}
+{{ breadcrumb(hrefs={_('My Collects'):url_for('topic.collectlist')},active=collect.name)}}
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="pull-right">
+                    <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#editcollect">{{ _('edit') }}</a>
+                    <a class="btn btn-default btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#deletecollect">{{ _('delete')}}</a>
+                </span>
+                <h4> <strong>{{ collect.name }}</strong></h4>
+            </div>
+            {% if topics.items %}
+            {% for topic in topics.items %}
+            <div class="panel-body" style="border-bottom:1px solid #eee">
+                <a href="{{ url_for('topic.topic',topicId=topic.uid)}}">{{ topic.title}}</a>
+                <span id="delete-from-collect" class="pull-right btn btn-sm btn-danger" data-id="{{ topic.uid }}">{{_('delete')}}</span>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="panel-body">
+                <span class="text-center" style="display:block;width:100%;color:#999">
+                    {{_('No Collect')}}
+                </span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {{ panel_base.collect() }}
+    </div>
+</div>
+{{ collect_edit(form) }}
+{{ collect_delete() }}
+{% endblock %}

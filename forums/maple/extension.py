@@ -6,13 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:57:10 (CST)
-# Last Update:星期四 2016-12-29 20:56:11 (CST)
+# Last Update:星期四 2016-12-29 21:27:54 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import request, g, current_app
 from flask_wtf.csrf import CsrfProtect
-from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_babelex import Babel, Domain
 from flask_babelex import lazy_gettext as _
@@ -40,12 +39,12 @@ def register_babel():
 
     @babel.localeselector
     def get_locale():
-        # user = getattr(g, 'user', None)
-        # if user is not None:
-        #     if request.path.startswith('/admin'):
-        #         return 'zh_Hans_CN'
-        #     if g.user.is_authenticated:
-        #         return user.setting.locale or 'zh'
+        user = getattr(g, 'user', None)
+        if user is not None:
+            if request.path.startswith('/admin'):
+                return 'zh_Hans_CN'
+            if g.user.is_authenticated:
+                return user.setting.locale or 'zh'
         return request.accept_languages.best_match(current_app.config[
             'LANGUAGES'].keys())
 
@@ -68,19 +67,14 @@ def register_login():
     # login_manager.anonymous_user = Anonymous
     from api.user.models import User
 
-    # @login_manager.token_loader
-    # def load_token(token):
-    #     max_age = app.config["REMEMBER_COOKIE_DURATION"].total_seconds()
-    #     data = login_serializer.loads(token, max_age=max_age)
-    #     user = User.load_by_name(data[0])
-    #     if user and data[1] == user.password:
-    #         return user
-    #     return None
-
     @login_manager.user_loader
     def user_loader(id):
         user = User.query.get(int(id))
         return user
+
+    # @login_manager.token_loader
+    # def load_token(token):
+    #     return None
 
     return login_manager
 

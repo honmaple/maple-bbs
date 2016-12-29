@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-28 10:26:10 (CST)
-# Last Update:星期日 2016-12-25 13:32:56 (CST)
+# Last Update:星期四 2016-12-29 22:24:8 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -18,7 +18,7 @@ from flask_maple.serializer import Serializer
 from flask_maple.auth.forms import (LoginForm, RegisterForm, ForgetForm,
                                     form_validate)
 from api.user.models import User
-from maple.common.response import HTTPResponse
+from common.response import HTTPResponse
 from random import sample
 from string import ascii_letters, digits
 
@@ -82,7 +82,7 @@ class RegisterView(MethodView):
         return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
 
     def email(self, user):
-        token = user.email_token()
+        token = user.email_token
         confirm_url = url_for(
             'auth.confirm_token', token=token, _external=True)
         html = render_template('templet/email.html', confirm_url=confirm_url)

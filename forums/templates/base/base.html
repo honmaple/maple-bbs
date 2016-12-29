@@ -18,34 +18,34 @@
             <span aria-hidden="true">&times;</span>
         </button>
         <ul>
-            <li style="list-style-type:none">{{ message }} </li>
+            <li>{{ message }} </li>
         </ul>
     </div>
     {% endfor %}
     {% endif %}
     {% endwith %}
-    {% if g.user.is_authenticated %}
-    <div class="btn-group pull-right">
-        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ g.user.username }} <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a href="{{ url_for('user.user',username=g.user.username) }}">{{ _('My Page') }}</a></li>
-            <li><a href="{{ url_for('setting.setting') }}">{{ _('Setting')}}</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout')}}</a></li>
-        </ul>
-    </div>
-    {% else  %}
-    {{ a_pull_right('auth.register',_('Register')) }}
-    {{ a_pull_right('auth.login',_('Login'))}}
-    {% endif %}
-    {{ a_pull_right('tag.list',_('TagList'))}}
-    {{ a_pull_right('user.list',_('Userlist'))}}
+    {{ dropdown() }}
     {% block content %}{% endblock %}
 </div>
 {% endblock %}
 
-{% macro a_pull_right(url,name) -%}
-<a href="{{ url_for(url) }}" class="btn btn-sm btn-primary pull-right">{{ name }}</a>
+{% macro dropdown() -%}
+{% if g.user.is_authenticated %}
+<div class="btn-group pull-right">
+    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{ g.user.username }} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a href="{{ url_for('user.user',username=g.user.username) }}">{{ _('Home Page') }}</a></li>
+        <li><a href="{{ url_for('setting.setting') }}">{{ _('Setting')}}</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout')}}</a></li>
+    </ul>
+</div>
+{% else  %}
+<a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-primary pull-right">{{ _('Register') }}</a>
+<a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-primary pull-right">{{ _('Login') }}</a>
+{% endif %}
+<a href="{{ url_for('tag.list') }}" class="btn btn-sm btn-primary pull-right">{{ _('TagList') }}</a>
+<a href="{{ url_for('user.list') }}" class="btn btn-sm btn-primary pull-right">{{ _('UserList') }}</a>
 {%- endmacro %}

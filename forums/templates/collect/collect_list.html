@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% from 'collect/_macro.html' import collect_create %}
+{{ breadcrumb(active=_('My Collects'))}}
+<div class="row">
+    <div class="col-md-9">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active">{{ link.collectlist() }}</li>
+            <li role="presentation">{{ link.following_collect() }}</li>
+        </ul>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#addcollect">{{_('Create Collect')}}</button>
+            </div>
+            {% for collect in collects.items %}
+            <div class="panel-body" style="border-bottom:1px solid #eee">
+                <a href="{{ url_for('topic.collect',collectId=collect.id)}}">{{ collect.name}}</a>
+                {% if collect.privacy %}
+                <span class="pull-right">{{_('Privacy')}}</span>
+                {% else %}
+                <span class="pull-right">{{_('Public')}}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {{ p_footer(collects,'topic.collectlist')}}
+        </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+        {{ panel_base.collect() }}
+    </div>
+</div>
+{{ collect_create(form) }}
+{% endblock %}

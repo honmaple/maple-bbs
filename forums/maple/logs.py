@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:43:17 (CST)
-# Last Update:星期一 2016-11-7 21:47:21 (CST)
+# Last Update:星期四 2016-12-29 21:40:15 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -18,8 +18,8 @@ from logging import Formatter
 
 def register_logging(app):
     config = app.config
-    logs_folder = os.path.abspath(os.path.join(
-        os.path.dirname(__file__), os.pardir, 'logs'))
+    logs_folder = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), os.pardir, 'logs'))
     if not os.path.exists(logs_folder):
         os.mkdir(logs_folder)
     formatter = Formatter('''
@@ -53,14 +53,16 @@ def register_logging(app):
     app.logger.addHandler(error_file_handler)
 
     if app.config["SEND_LOGS"]:
+        from common.helper import ThreadedSMTPHandler
         credentials = (config['MAIL_USERNAME'], config['MAIL_PASSWORD'])
         mailhost = (config['MAIL_SERVER'], config['MAIL_PORT'])
-        mail_handler = SMTPHandler(secure=(),
-                                   mailhost=mailhost,
-                                   fromaddr=config['MAIL_DEFAULT_SENDER'],
-                                   toaddrs=config['RECEIVER'],
-                                   subject='Your Application Failed',
-                                   credentials=credentials)
+        mail_handler = ThreadedSMTPHandler(
+            secure=(),
+            mailhost=mailhost,
+            fromaddr=config['MAIL_DEFAULT_SENDER'],
+            toaddrs=config['RECEIVER'],
+            subject='Your Application Failed',
+            credentials=credentials)
 
         mail_handler.setLevel(logging.ERROR)
         mail_handler.setFormatter(formatter)

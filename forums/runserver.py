@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:01:29 (CST)
-# Last Update:星期四 2016-12-29 20:38:13 (CST)
+# Last Update:星期四 2016-12-29 21:29:2 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -18,3 +18,4 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
     app.run()
+    print(app.url_map)

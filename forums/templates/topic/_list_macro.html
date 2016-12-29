@@ -39,26 +39,26 @@
 <div class="col-md-6 media">
     <div class="media-left">
         {{ link.user_avatar(author) }}
-                        </div>
+    </div>
     <div class="media-body">
         <div class="media-heading">
-        {% if topic.is_top %}
-        <span><i class="icon-pushpin text-danger">&nbsp</i></span>
-        {% endif %}
-        <a href="{{url_for('topic.topic',topicId=topic.id)}}" style="color:#555">{{ topic.title }}</a>
+            {% if topic.is_top %}
+            <span><i class="icon-pushpin text-danger">&nbsp</i></span>
+            {% endif %}
+            <a href="{{url_for('topic.topic',topicId=topic.id)}}" style="color:#555">{{ topic.title }}</a>
         </div>
         <span class="visible-xs-inline">
-        <small style="font-size:10px;">由{{ link.user(author) }}</small>
-        <small style="color:#999;font-size:10px;">
-        {{ topic.created_at | timesince }}发布
+            <small style="font-size:10px;">由{{ link.user(author) }}</small>
+            <small style="color:#999;font-size:10px;">
+                {{ topic.created_at | timesince }}发布
             </small>
         </span>
         <div class="hidden-xs">
-        {% for tag in tags %}
-        {{ link.tag(tag) }}
-        {% endfor %}
+            {% for tag in tags %}
+            {{ link.tag(tag) }}
+            {% endfor %}
         </div>
-                        </div>
+    </div>
 </div>
 {%- endmacro %}
 

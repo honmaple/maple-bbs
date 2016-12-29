@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:08:06 (CST)
-# Last Update:星期四 2016-12-22 21:46:53 (CST)
+# Last Update:星期四 2016-12-29 21:18:30 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,7 +14,7 @@ from flask import render_template, redirect, url_for
 from flask.views import MethodView
 from flask_maple.serializer import FlaskSerializer as Serializer
 from flask_maple.response import HTTPResponse
-from api.common.views import ViewListMixin
+from common.views import ViewListMixin
 from .models import User
 
 

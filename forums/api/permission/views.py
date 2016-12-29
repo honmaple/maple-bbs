@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 09:31:49 (CST)
-# Last Update:星期六 2016-12-17 9:36:41 (CST)
+# Last Update:星期四 2016-12-29 21:18:31 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask.views import MethodView
 from flask_maple.serializer import FlaskSerializer as Serializer
 from flask_maple.response import HTTPResponse
-from api.common.views import ViewListMixin
+from common.views import ViewListMixin
 from .models import Group
 
 

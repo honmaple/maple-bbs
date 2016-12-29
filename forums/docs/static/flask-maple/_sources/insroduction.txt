@@ -1,0 +1,43 @@
+:tocdepth: 2
+
+Introduction To Flask-Admin
+###########################
+
+Getting Started
+===============
+
+****
+
+Initialization
+--------------
+
+The first step is to initialize an empty admin interface for your Flask app::
+
+    from flask import Flask
+    from flask_admin import Admin
+
+    app = Flask(__name__)
+
+    admin = Admin(app, name='microblog', template_mode='bootstrap3')
+    # Add administrative views here
+
+    app.run()
+
+Here, both the *name* and *template_mode* parameters are optional. Alternatively,
+you could use the :meth:`~flask_admin.base.Admin.init_app` method.
+
+If you start this application and navigate to `http://localhost:5000/admin/ <http://localhost:5000/admin/>`_,
+you should see an empty page with a navigation bar on top.
+
+Adding Model Views
+------------------
+
+Model views allow you to add a dedicated set of admin pages for managing any model in your database. Do this by creating
+instances of the *ModelView* class, which you can import from one of Flask-Admin's built-in ORM backends. An example
+is the SQLAlchemy backend, which you can use as follows::
+
+    from flask_admin.contrib.sqla import ModelView
+
+    # Flask and Flask-SQLAlchemy initialization here
+
+    admin = Admin(app, name='
