@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:07:00 (CST)
-# Last Update:星期六 2016-12-17 10:38:49 (CST)
+# Last Update:星期三 2017-1-25 21:43:35 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -27,6 +27,8 @@ class HTTPResponse(object):
 
     FORBIDDEN = '403'
 
+    OTHER_ERROR = '500'
+
     STATUS_DESCRIPTION = {
         NORMAL_STATUS: 'normal',
         AUTH_USER_OR_PASSWORD_ERROR: _('Username or Password Error'),
@@ -39,7 +41,8 @@ class HTTPResponse(object):
         AUTH_TOKEN_VERIFY_FAIL:
         _('Token is out of time,please get token again!'),
         FORM_VALIDATE_ERROR: _('Form validate error'),
-        FORBIDDEN: _('You have no permission!')
+        FORBIDDEN: _('You have no permission!'),
+        OTHER_ERROR: _('Other error')
     }
 
     def __init__(self,

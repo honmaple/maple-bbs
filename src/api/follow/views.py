@@ -6,20 +6,19 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-22 21:49:05 (CST)
-# Last Update:星期四 2016-12-29 21:18:30 (CST)
+# Last Update:星期三 2017-1-25 21:48:45 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask.views import MethodView
 from flask import (render_template, request, redirect, url_for, jsonify,
                    current_app)
 from flask_login import current_user
-from common.views import ViewListMixin
+from common.views import BaseMethodView as MethodView
 from api.tag.models import Tags
 from api.topic.models import Topic, Collect
 
 
-class FollowingTagsView(MethodView, ViewListMixin):
+class FollowingTagsView(MethodView):
     def get(self):
         page, number = self.page_info
         filter_dict = {'followers__username': current_user.username}
@@ -28,7 +27,7 @@ class FollowingTagsView(MethodView, ViewListMixin):
         return render_template('follow/following_tags.html', **data)
 
 
-class FollowingTopicsView(MethodView, ViewListMixin):
+class FollowingTopicsView(MethodView):
     def get(self):
         page, number = self.page_info
         filter_dict = {'followers__username': current_user.username}
@@ -37,7 +36,7 @@ class FollowingTopicsView(MethodView, ViewListMixin):
         return render_template('follow/following_topics.html', **data)
 
 
-class FollowingUsersView(MethodView, ViewListMixin):
+class FollowingUsersView(MethodView):
     def get(self):
         page, number = self.page_info
         users = current_user.following_users.paginate(page, number, True)
@@ -45,7 +44,7 @@ class FollowingUsersView(MethodView, ViewListMixin):
         return render_template('follow/following_users.html', **data)
 
 
-class FollowingCollectsView(MethodView, ViewListMixin):
+class FollowingCollectsView(MethodView):
     def get(self):
         page, number = self.page_info
         filter_dict = {'followers__username': current_user.username}

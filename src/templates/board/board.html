@@ -15,7 +15,7 @@
         </div>
         <div class="panel panel-default">
             {{ topic_form() }}
-            {% for topic in topics %}
+            {% for topic in topics.items %}
             {{ topic_body(topic) }}
             {% else %}
             {{ no_topics() }}

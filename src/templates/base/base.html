@@ -4,6 +4,16 @@
 {% import 'base/link.html' as link %}
 {% import 'base/panel.html' as panel_base %}
 {% from 'base/head.html' import breadcrumb %}
+{% block script -%}
+{{ super() }}
+<script type="text/javascript" src="{{ url_for('static',filename='assets/home.js')}}"></script>
+{%- endblock script %}
+
+{% block style -%}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='assets/home.css')}}" type="text/css" media="screen" />
+{%- endblock style %}
+
 {% block main %}
 {% include "base/header.html" %}
 <div class="col-md-offset-1 col-md-10" style="padding:0;margin-top:60px">

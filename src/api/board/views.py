@@ -6,58 +6,33 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:04:05 (CST)
-# Last Update:星期三 2017-1-25 20:25:9 (CST)
+# Last Update:星期三 2017-1-25 22:0:46 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import request, render_template
-from flask.views import MethodView
-from flask_maple.serializer import FlaskSerializer as Serializer
-from flask_maple.response import HTTPResponse
-from common.views import ViewListMixin
+from common.views import BaseMethodView as MethodView
 from .models import Board
+from api.topic.models import Topic
 
 
-class BoardListView(MethodView, ViewListMixin):
+class BoardListView(MethodView):
     def get(self):
         page, number = self.page_info
         boards = Board.get_list(page, number)
-        return render_template('board/board_list.html', boards=boards)
-        # serializer = Serializer(boards, many=True)
-        # return HTTPResponse(HTTPResponse.NORMAL_STATUS,
-        #                     **serializer.data).to_response()
-
-    def post(self):
-        post_data = request.data
-        name = post_data.pop('name', None)
-        description = post_data.pop('description', None)
-        parents = post_data.pop('parents', None)
-        children = post_data.pop('children', None)
-        board = Board(name=name, description=description)
-        if parents is not None:
-            parent_boards = Board.query.filter_by(id__in=parents)
-            board.parents += parent_boards
-        if children is not None:
-            child_boards = Board.query.filter_by(id__in=children)
-            board.children += child_boards
-        board.save()
-        serializer = Serializer(board, many=False)
-        return HTTPResponse(HTTPResponse.NORMAL_STATUS,
-                            **serializer.data).to_response()
+        data = {'title': 'Board', 'boards': boards}
+        return render_template('board/board_list.html', **data)
 
 
 class BoardView(MethodView):
     def get(self, boardId):
         board = Board.get(id=boardId)
-        topics = board.topics.all()
-        data = {'board': board, 'topics': topics}
+        topics = self.topics(boardId)
+        data = {'title': 'Board', 'board': board, 'topics': topics}
         return render_template('board/board.html', **data)
-        # serializer = Serializer(user, many=False)
-        # return HTTPResponse(
-        #     HTTPResponse.NORMAL_STATUS, data=serializer.data).to_response()
 
-    def put(self, boardId):
-        return 'put'
-
-    def delete(self, boardId):
-        return 'delete'
+    def topics(self, boardId):
+        page, number = self.page_info
+        filter_dict = dict(board_id=boardId)
+        topics = Topic.get_list(page, number, filter_dict)
+        return topics

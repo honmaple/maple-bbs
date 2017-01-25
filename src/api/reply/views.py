@@ -6,17 +6,16 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:06:39 (CST)
-# Last Update:星期三 2017-1-25 20:25:9 (CST)
+# Last Update:星期三 2017-1-25 21:47:19 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import request, render_template, g, redirect
-from flask.views import MethodView
 from flask_maple.serializer import FlaskSerializer as Serializer
 from flask_maple.response import HTTPResponse
 from flask_maple.auth.forms import form_validate
 from flask_login import current_user
-from common.views import ViewListMixin
+from common.views import BaseMethodView as MethodView
 from .models import Reply
 from .forms import ReplyForm
 
@@ -25,7 +24,7 @@ def error_callback():
     return redirect('/')
 
 
-class ReplyListView(MethodView, ViewListMixin):
+class ReplyListView(MethodView):
     def get(self):
         form = ReplyForm()
         page, number = self.page_info

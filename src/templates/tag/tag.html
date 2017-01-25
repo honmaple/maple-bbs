@@ -11,8 +11,6 @@
             <div class="panel-body" style="border-bottom: 1px solid #ddd;">
                 {{ title(tag) }}
             </div>
-        </div>
-        <div class="panel panel-default">
             {{ topic_form() }}
             {% for topic in tag.topics %}
             {{ topic_body(topic) }}

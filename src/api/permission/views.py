@@ -6,18 +6,17 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 09:31:49 (CST)
-# Last Update:星期三 2017-1-25 20:25:9 (CST)
+# Last Update:星期三 2017-1-25 21:46:14 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask.views import MethodView
 from flask_maple.serializer import FlaskSerializer as Serializer
 from flask_maple.response import HTTPResponse
-from common.views import ViewListMixin
+from common.views import BaseMethodView as MethodView
 from .models import Group
 
 
-class GroupListView(MethodView, ViewListMixin):
+class GroupListView(MethodView):
     def get(self):
         page, number = self.page_info
         users = Group.get_list(page, number)

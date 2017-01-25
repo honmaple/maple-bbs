@@ -6,12 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期三 2017-1-25 20:25:8 (CST)
+# Last Update:星期三 2017-1-25 21:47:3 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import request, render_template, redirect, url_for
-from flask.views import MethodView
 from flask_maple.serializer import FlaskSerializer as Serializer
 from flask_maple.response import HTTPResponse
 from flask_maple.auth.forms import form_validate
@@ -19,7 +18,7 @@ from flask_login import current_user
 from flask_babelex import gettext as _
 from api.board.models import Board
 from api.tag.models import Tags
-from common.views import ViewListMixin
+from common.views import BaseMethodView as MethodView
 from common.helper import form_board
 from .models import Topic, Collect
 from .forms import (TopicForm, ReplyForm, CollectForm, error_callback,
@@ -57,7 +56,7 @@ class TopicPreviewView(MethodView):
         return
 
 
-class TopicListView(MethodView, ViewListMixin):
+class TopicListView(MethodView):
     @property
     def filter_dict(self):
         _dict = {}
@@ -145,7 +144,7 @@ class TopicView(MethodView):
                             **serializer.data).to_response()
 
 
-class CollectListView(MethodView, ViewListMixin):
+class CollectListView(MethodView):
     def get(self):
         form = CollectForm()
         page, number = self.page_info

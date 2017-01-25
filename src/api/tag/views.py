@@ -6,15 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:04 (CST)
-# Last Update:星期三 2017-1-25 20:25:9 (CST)
+# Last Update:星期三 2017-1-25 21:47:45 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import request, url_for, current_app, render_template
-from flask.views import MethodView
 from flask_maple.serializer import FlaskSerializer as Serializer
 from flask_maple.response import HTTPResponse
-from common.views import ViewListMixin
+from common.views import BaseMethodView as MethodView
 from api.topic.models import Topic
 from .models import Tags
 from urllib.parse import urljoin
@@ -22,7 +21,7 @@ from werkzeug.utils import escape
 from werkzeug.contrib.atom import AtomFeed
 
 
-class TagsListView(MethodView, ViewListMixin):
+class TagsListView(MethodView):
     per_page = 99
 
     def get(self):
@@ -33,23 +32,15 @@ class TagsListView(MethodView, ViewListMixin):
         # return HTTPResponse(HTTPResponse.NORMAL_STATUS,
         #                     **serializer.data).to_response()
 
-    def post(self):
-        return 'post'
-
 
 class TagsView(MethodView):
     def get(self, name):
         tag = Tags.get(name=name)
-        return render_template('tag/tag.html', tag=tag)
+        data = {'title': tag.name, 'tag': tag}
+        return render_template('tag/tag.html', **data)
         # serializer = Serializer(user, many=False)
         # return HTTPResponse(
         #     HTTPResponse.NORMAL_STATUS, data=serializer.data).to_response()
-
-    def put(self, name):
-        return 'put'
-
-    def delete(self, name):
-        return 'delete'
 
 
 class TagFeedView(MethodView):

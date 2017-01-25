@@ -6,19 +6,18 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:08:06 (CST)
-# Last Update:星期三 2017-1-25 20:25:9 (CST)
+# Last Update:星期三 2017-1-25 21:45:53 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import render_template, redirect, url_for
-from flask.views import MethodView
 from flask_maple.serializer import FlaskSerializer as Serializer
 from flask_maple.response import HTTPResponse
-from common.views import ViewListMixin
+from common.views import BaseMethodView as MethodView
 from .models import User
 
 
-class UserListView(MethodView, ViewListMixin):
+class UserListView(MethodView):
     def get(self):
         page, number = self.page_info
         users = User.get_list(page, number)
