@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-01-25 20:10:50 (CST)
-# Last Update:星期三 2017-1-25 20:25:57 (CST)
+# Last Update:星期六 2017-2-18 21:42:16 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -26,10 +26,7 @@ def create_app(config=None):
         os.path.join(os.path.dirname(__file__), os.pardir, 'static'))
 
     app = Flask(__name__, template_folder=templates, static_folder=static)
-    if config is None:
-        app.config.from_object('config.config')
-    else:
-        app.config.from_object(config)
+    app.config.from_object(config)
     register(app)
     return app
 

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:08:39 (CST)
-# Last Update:星期三 2017-1-25 20:25:10 (CST)
+# Last Update:星期六 2017-2-18 21:58:48 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -20,7 +20,7 @@ from werkzeug.security import generate_password_hash
 from datetime import datetime
 import os
 
-app = create_app()
+app = create_app('config')
 migrate = Migrate(app, db)
 manager = Manager(app)
 
@@ -55,7 +55,8 @@ def babel_update():
     pybabel = 'pybabel'
     os.system(
         pybabel +
-        ' extract -F babel.cfg -k lazy_gettext -o messages.pot forums templates')
+        ' extract -F babel.cfg -k lazy_gettext -o messages.pot forums templates'
+    )
     os.system(pybabel + ' update -i messages.pot -d translations')
     os.unlink('messages.pot')
 

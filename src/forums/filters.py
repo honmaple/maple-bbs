@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update:星期三 2017-1-25 20:25:57 (CST)
+# Last Update:星期六 2017-2-18 21:43:52 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -95,7 +95,7 @@ def get_read_count(id):
 
 
 def is_collected(topicId):
-    from maple.topic.models import CollectTopic
+    from api.topic.models import CollectTopic
     from flask_login import current_user
     for collect in current_user.collects:
         cid = CollectTopic.query.filter_by(
@@ -106,7 +106,7 @@ def is_collected(topicId):
 
 
 def notice_count():
-    from maple.forums.models import Notice
+    from api.forums.models import Notice
     if g.user.is_authenticated:
         count = Notice.query.filter_by(
             rece_id=g.user.id, is_read=False).count()
