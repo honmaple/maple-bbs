@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{{ breadcrumb(active=user.username) }}
+<div class="row">
+  <div class="col-md-3" style="padding-right:0;">
+    {% set setting = user.setting %}
+    {% set info = user.info %}
+    {% include 'user/info.html' %}
+    <div  style="background:#fff;border:1px solid #ddd;border-radius:5px">
+      <ul class="nav nav-pills nav-stacked" >
+        {% set name = user.username %}
+        <li role="presentation" class="topics"><a href="{{ url_for('user.user',username=user.username)}}">{{ _("topics of %(n)s",n = name) }}</a></li>
+        <li role="presentation" class="replies"><a href="{{ url_for('user.reply',username=user.username)}}">{{ _("replies of %(n)s",n = name) }}</a></li>
+        <li role="presentation" class="collects"><a href="{{ url_for('user.collect',username=user.username)}}">{{ _("collects of %(n)s",n = name) }}</a></li>
+        <li role="presentation" class="followers"><a href="{{ url_for('user.follower',username=user.username)}}">{{ _("followers of %(n)s",n = name) }}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-9">
+    {% block mmm -%}
+    {%- endblock mmm %}
+  </div>
+</div>
+{% endblock %}

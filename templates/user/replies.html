@@ -1,0 +1,42 @@
+{% extends 'user/base.html' %}
+{% from 'user/_macro.html' import not_allowed %}
+{% block mmm -%}
+{% set orderby =  request.args.get('orderby') %}
+{% set username =  user.username %}
+{% set setting =  user.setting %}
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <span style="float:right">
+      {{_("Sort:")}}
+      <div class="btn-group btn-group-xs" role="group">
+        <a href="{{ url_for('user.reply',username=username,orderby='publish')}}" class="btn btn-default">{{_('time')}}</a>
+        <a href="{{ url_for('user.reply',username=username,orderby='like')}}" class="btn btn-default active">{{_('likers')}}</a>
+      </div>
+    </span>
+  </div>
+  {% if replies_is_allowed %}
+  {{ itemlist(replies) }}
+  {% else %}
+  {{ not_allowed() }}
+  {% endif %}
+</div>
+{%- endblock mmm %}
+
+{% macro itemlist(replies) -%}
+{% for reply in replies.items %}
+<div class="panel-body" style="border-bottom:1px solid #eee">
+  <span style="font-size:12px;color:#999;">
+    {{_('replied %(title)s created by %(author)s',title=link.topic(reply.topic),author = link.user(reply.author))}}
+  </span>
+  <p>{{ reply.content | safe_clean }}</p>
+  <span style="font-size:12px;color:#999;">
+    {{_('replied time:')}}{{ reply.publish | timesince }}
+  </span>
+</div>
+{% else %}
+<div class="panel-body text-center">
+  {{_('No Reply')}}
+</div>
+{% endfor  %}
+{{ p_footer(replies,'user.reply')}}
+{%- endmacro %}

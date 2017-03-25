@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% set board = topic.board %}
+{{ breadcrumb(hrefs={board.name:url_for('forums.board',boardId=board.id)},active=topic.title) }}
+<div class="row">
+  <div class="col-md-9">
+    <div class="panel panel-default">
+      {% include "topic/item/heading.html" %}
+      {% include "topic/item/body.html" %}
+    </div>
+    <div id="replies">
+      {% include "topic/reply/itemlist.html" %}
+    </div>
+  </div>
+  <div class="col-md-3" style="padding-left:0">
+    {% include "topic/panel.html" %}
+    {% set ask_url = url_for('topic.ask',boardId=topic.board_id) %}
+    {{ panel_base.board() }}
+  </div>
+</div>
+{% endblock %}

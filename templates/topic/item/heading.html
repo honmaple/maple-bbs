@@ -1,0 +1,15 @@
+{% from 'topic/item/_macro.html' import title %}
+{% set author = topic.author %}
+<div class="panel-heading media">
+  <div class="media-body">
+    <h3 class="media-heading" style="font-size:20px;"><b>{{ topic.title }}</b></h3>
+    <small style="color:#999">
+      {{ title(topic) }}
+    </small>
+  </div>
+  <div class="media-right">
+    <a href="{{ url_for('user.user',username=topic.author.username)}}">
+      <img class="media-object img-circle" src="{{ url_for('avatar',text=author.username)}}" style="width:56px;height:56px">
+    </a>
+  </div>
+</div>

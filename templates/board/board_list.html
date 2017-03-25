@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% from 'board/_macro.html' import body %}
+{{ breadcrumb(active=_('Board')) }}
+{% for board in boards.items %}
+{% if not board.parents %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <a href="{{ url_for('forums.board',boardId=board.id) }}" style="color:#fff"> {{ board.name }} </a>
+  </div>
+  {% for child in board.children -%}
+  {{ body(child) }}
+  {% else %}
+  {{ body(board) }}
+  {%- endfor %}
+</div>
+{% endif %}
+{% endfor %}
+{% endblock %}

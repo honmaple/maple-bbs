@@ -1,0 +1,52 @@
+{% import 'base/link.html' as link %}
+
+{% macro votes(topic) -%}
+<div class="votes">
+  {% if topic.vote and topic.vote > 0 -%}
+  {{ vote_a('up',topic.vote) }}
+  {% else %}
+  {{ vote_a('up') }}
+  {%- endif %}
+  {% if topic.vote and topic.vote < 0 %}
+  {{ vote_a('down',topic.vote) }}
+  {% else %}
+  {{ vote_a('down') }}
+  {%- endif %}
+</div>
+{%- endmacro %}
+
+{% macro vote_a(vo,count=None) -%}
+{% if count -%}
+<a id="topic-{{ vo }}-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
+  <i class="fa fa-chevron-{{ vo }}">{{ count }}</i>
+</a>
+{% else %}
+<a id="topic-{{ vo }}-vote" class="vote" href="javascript:void(0)" style="text-decoration:none;">
+  <i class="fa fa-chevron-{{ vo }}"></i>
+</a>
+{%- endif %}
+{%- endmacro %}
+
+{% macro tags(topic) -%}
+{% for tag in topic.tags %}
+{{ link.tag(tag) }}
+{% endfor %}
+{%- endmacro %}
+
+
+{% macro last_reply(topic) -%}
+<span style="margin-left:10px;">
+  {% set last_reply = topic.replies.first() %}
+  {{ topic.author.username }}
+  {{ _('published at %(time)s',time = topic.created_at | timesince ) }}
+  {% if last_reply %}
+  · {{ _('The last reply published by %(author)s at %(time)s',author=link.user(last_reply.author.username),time=last_reply.created_at | timesince)}}
+  {% endif %}
+</span>
+{%- endmacro %}
+
+{% macro title(topic) -%}
+{{ votes(topic) }}
+{{ tags(topic) }}
+{{ last_reply(topic) }}
+{%- endmacro %}

@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+  {% if g.user.is_authenticated %}
+  <div class="panel-heading"> {{ _('Reply this topic') }} </div>
+  <div class="panel-body">
+    <form action="{{ url_for('topic.reply_list',topicId=topic.id)}}" method="POST">
+      {{ form.hidden_tag() }}
+      {{ form.content(class='form-control',rows=4)}}
+      <button class="btn btn-sm btn-primary" type="submit" style="margin-top:10px;">{{ _('Post reply') }}</button>
+    </form>
+  </div>
+  {% else %}
+  <div class="panel-body" style="border:1px dashed #337ab7;margin:5px;">
+    <span class="text-center" style="display:block;width:100%;color:#999">
+      <i class="fa fa-lock" style="font-size:16px;"></i>
+      {{_('You need')}} <a href="{{ url_for('auth.login') }}">{{ _('Login')}}</a> {{_('before you can reply.')}}
+    </span>
+  </div>
+  {% endif %}
+</div>

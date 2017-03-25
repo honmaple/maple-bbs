@@ -1,0 +1,21 @@
+{% macro like(reply) -%}
+{% if reply.id | is_liked %}
+<a href="javascript:void(0);" style="padding:0" class="like-reply btn btn-sm like-active" data-id="{{ reply.id}}" title="取消赞">
+  <i class="fa fa-thumbs-up"></i>
+  <span class="reply-count">{{ reply.likers.count() }}</span>
+</a>
+{% else %}
+<a href="javascript:void(0);" style="padding:0" class="like-reply btn btn-sm like-no-active" data-id="{{ reply.id}}" title="赞">
+  <i class="fa fa-thumbs-up"></i>
+  <span class="reply-count">{{ reply.likers.count() }}</span>
+</a>
+{% endif %}
+{%- endmacro %}
+
+{% macro no_replies() -%}
+<div class="panel-body">
+  <span class="text-center" style="display:block;width:100%;color:#999">
+    {{_('no reply')}}
+  </span>
+</div>
+{%- endmacro %}

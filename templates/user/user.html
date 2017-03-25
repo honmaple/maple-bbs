@@ -1,0 +1,41 @@
+{% extends 'user/base.html' %}
+{% from 'user/_macro.html' import not_allowed %}
+{% block mmm -%}
+{% set orderby =  request.args.get('orderby') %}
+{% set username =  user.username %}
+{% set setting =  user.setting %}
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <span style="float:right">
+      {{_('Sort:')}}
+      <div class="btn-group btn-group-xs" role="group">
+        <a href="{{ url_for('user.topic',username=username,orderby='publish')}}" class="btn btn-default">{{_('time')}}</a>
+        <a href="{{ url_for('user.topic',username=username,orderby='vote')}}" class="btn btn-default active">{{_('vote')}}</a>
+      </div>
+    </span>
+  </div>
+  {% if topic_is_allowed %}
+  {{ itemlist(topics) }}
+  {% else %}
+  {{ not_allowed() }}
+  {% endif %}
+</div>
+{%- endblock mmm %}
+
+{% macro itemlist(topics) -%}
+{% for topic in topics.items %}
+<div class="panel-body" style="border-bottom:1px solid #eee;font-size:16px;">
+  <span style="color:#666">{{ topic.board.board }}</span>
+  {{ link.topic(topic) }}
+  <div style="font-size:12px;color:#999;">
+    {{_('create time:')}}{{ topic.publish | timesince }}
+    · {{ _('the last reply published by %(author)s',author=link.user(topic.author.username))}}
+  </div>
+</div>
+{% else %}
+<div class="panel-body text-center">
+  {{_('No Topic')}}
+</div>
+{% endfor  %}
+{{ p_footer(topics,'user.topic')}}
+{%- endmacro %}

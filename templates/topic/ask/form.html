@@ -1,0 +1,32 @@
+{% import 'topic/ask/_macro.html' as place %}
+<div class="row" style="padding:0;margin:0;">
+    <div class="col-sm-2">
+        {{ form.hidden_tag() }}
+        {{ form.title.label(class="control-label") }}
+        {{ place.title() }}
+    </div>
+    <div class="col-sm-10" style="margin-bottom:8px;">
+        {{ form.title(class="form-control") }}
+    </div>
+</div>
+<div class="col-sm-2">
+    {{ form.category.label(class="control-label") }}
+    {{ place.category() }}
+</div>
+<div class="col-sm-10" style="margin-bottom:8px;">
+    {{ form.category(class="form-control") }}
+</div>
+<div class="col-sm-2">
+    {{ form.tags.label(class="control-label") }}
+    {{ place.tags() }}
+</div>
+<div class="col-sm-10" style="margin-bottom:8px;">
+    {{ form.tags(class="form-control",id="tokenfield",placeholder="节点请以英文逗号隔开.请勿输入超过4个节点") }}
+</div>
+<div class="col-sm-2">
+    {{ form.content.label(class="control-label") }}
+    {{ place.content() }}
+</div>
+<div class="col-sm-10" style="margin-bottom:8px;">
+    {{ form.content(class="form-control",rows="8",onchange="preview()",placeholder="请输入问题描述") }}
+</div>

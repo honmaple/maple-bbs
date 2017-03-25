@@ -1,0 +1,28 @@
+{% extends 'user/base.html' %}
+{% from 'user/_macro.html' import not_allowed %}
+{% block mmm -%}
+{% set orderby =  request.args.get('orderby') %}
+{% set username =  user.username %}
+{% set setting =  user.setting %}
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <span class="pull-right">
+      {{_('Sort:')}}
+      <div class="btn-group btn-group-xs" role="group">
+        <a href="{{ url_for('user.reply',username=username,orderby='publish')}}" class="btn btn-default">{{_('time')}}</a>
+        <a href="{{ url_for('user.reply',username=username,orderby='like')}}" class="btn btn-default active">{{_('likers')}}</a>
+      </div>
+    </span>
+  </div>
+  {% for follower in followers.items %}
+  <div class="panel-body" style="border-bottom:1px solid #eee">
+    {{ link.user(follower) }}
+  </div>
+  {% else %}
+  <div class="panel-body text-center">
+    {{_('No Follower')}}
+  </div>
+  {% endfor  %}
+  {{ p_footer(followers,'user.follower')}}
+</div>
+{%- endblock mmm %}
