@@ -1,21 +1,18 @@
 function SortFuntion(){
-  var data = JSON.stringify({
-    display: $('#display').val(),
-    sort: $('#sort').val(),
-    st: $('#st').val(),
-    type:sortData.type,
-    uid:sortData.uid,
-    page:sortData.page
-  });
-  $.ajax ({
-    type : "POST",
-    url : "/order",
-    data:data,
-    contentType: 'application/json;charset=UTF-8',
-    success: function(result) {
-      $('div.topiclist').html(result);
-    }
-  });
+  var display = $('#display').val();
+  var sort =  $('#sort').val();
+  var st =  $('#st').val();
+  var params = {};
+  if (display != '0'){
+    params.within = display;
+  }
+  if (sort != '0'){
+    params.orderby = sort;
+  }
+  if (st != '0'){
+    params.desc = st;
+  }
+  window.location.href = window.location.pathname + '?' + $.param(params);
 }
 $(document).ready(function(){
   $('#display').change(function() {

@@ -6,25 +6,25 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期六 2017-3-25 22:47:59 (CST)
+# Last Update:星期一 2017-3-27 22:21:2 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import redirect, render_template, request, url_for
 from flask_babelex import gettext as _
 from flask_login import current_user
+
 from flask_maple.auth.forms import form_validate
 from flask_maple.response import HTTPResponse
-
 from forums.api.forums.models import Board
 from forums.api.tag.models import Tags
 from forums.common.serializer import Serializer
+from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import BaseMethodView as MethodView
-from forums.common.utils import (gen_filter_dict, gen_order_by)
 
 from .forms import (CollectForm, ReplyForm, TopicForm, collect_error_callback,
                     error_callback, form_board)
-from .models import Collect, Topic, Reply
+from .models import Collect, Reply, Topic
 
 
 class TopicAskView(MethodView):
@@ -53,7 +53,7 @@ class TopicPreviewView(MethodView):
     def post(self):
         choice = request.values.get('choice')
         content = request.values.get('content')
-        return
+        return ''
 
 
 class TopicListView(MethodView):
@@ -187,6 +187,21 @@ class CollectView(MethodView):
         serializer = Serializer(collect, many=False)
         return HTTPResponse(HTTPResponse.NORMAL_STATUS,
                             **serializer.data).to_response()
+
+
+class AddToCollectView(MethodView):
+    def post(self, topicId):
+        user = request.user
+        form = request.form.getlist('add-to-collect')
+        topic = Topic.query.filter_by(id=topicId).first_or_404()
+        for cid in form:
+            '''This has a problem'''
+            collect = Collect.query.filter_by(id=cid).first_or_404()
+            if not Collect.query.filter_by(
+                    topics__id=topic.id, author_id=user.id).exists():
+                collect.topics.append(topic)
+                collect.save()
+        return redirect(url_for('topic.topic', topicId=topic.id))
 
 
 class ReplyListView(MethodView):

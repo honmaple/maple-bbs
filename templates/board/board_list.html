@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% block content %}
-{% from 'board/_macro.html' import body %}
+{% from 'board/_macro.html' import board_body %}
 {{ breadcrumb(active=_('Board')) }}
 {% for board in boards.items %}
 {% if not board.parents %}
@@ -9,9 +9,9 @@
     <a href="{{ url_for('forums.board',boardId=board.id) }}" style="color:#fff"> {{ board.name }} </a>
   </div>
   {% for child in board.children -%}
-  {{ body(child) }}
+  {{ board_body(child) }}
   {% else %}
-  {{ body(board) }}
+  {{ board_body(board) }}
   {%- endfor %}
 </div>
 {% endif %}

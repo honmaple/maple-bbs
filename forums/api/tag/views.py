@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:04 (CST)
-# Last Update:星期六 2017-3-25 21:27:38 (CST)
+# Last Update:星期一 2017-3-27 21:40:52 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -39,8 +39,11 @@ class TagsListView(MethodView):
 
 class TagsView(MethodView):
     def get(self, name):
+        page, number = self.page_info
         tag = Tags.query.filter_by(name=name).first_or_404()
-        data = {'title': tag.name, 'tag': tag}
+        topics = Topic.query.filter_by(tags__id=tag.id).paginate(page, number,
+                                                                 True)
+        data = {'title': tag.name, 'tag': tag, 'topics': topics}
         return render_template('tag/tag.html', **data)
 
 

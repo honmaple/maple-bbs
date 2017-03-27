@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 20:45:08 (CST)
-# Last Update:星期六 2017-3-25 19:2:23 (CST)
+# Last Update:星期一 2017-3-27 19:47:49 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -53,9 +53,10 @@ class BoardListView(MethodView):
     def get(self):
         query_dict = request.data
         page, number = self.page_info
-        keys = ['name', 'description']
+        keys = ['name']
         order_by = gen_order_by(query_dict, keys)
         filter_dict = gen_filter_dict(query_dict, keys)
+        filter_dict.update(parent_id=None)
         boards = Board.query.filter_by(
             **filter_dict).order_by(*order_by).paginate(page, number, True)
         data = {'title': 'Board', 'boards': boards}

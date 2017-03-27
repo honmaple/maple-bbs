@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:57:10 (CST)
-# Last Update:星期六 2017-3-25 18:15:28 (CST)
+# Last Update:星期一 2017-3-27 20:33:3 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -87,7 +87,7 @@ csrf = CsrfProtect()
 bootstrap = Bootstrap(
     css=('styles/monokai.css', 'styles/mine.css',
          'tags/css/bootstrap-tokenfield.css', 'select2/css/select2.min.css'),
-    js=('styles/upload.js', 'styles/forums.js', 'styles/mine.js',
+    js=('styles/upload.js', 'styles/forums.js', 'styles/following.js',
         'styles/topic.js', 'tags/bootstrap-tokenfield.min.js',
         'select2/js/select2.min.js'),
     use_auth=True)

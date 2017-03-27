@@ -6,16 +6,17 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-01-25 20:10:50 (CST)
-# Last Update:星期六 2017-3-25 18:24:12 (CST)
+# Last Update:星期一 2017-3-27 19:41:1 (CST)
 #          By:
 # Description:
 # **************************************************************************
+import os
 from flask import Flask
 from flask_maple.lazy import LazyExtension
 from forums.admin.urls import admin
-from .logs import register_logging
+
 from .filters import register_jinja2
-import os
+from .logs import register_logging
 
 
 def create_app(config):

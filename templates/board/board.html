@@ -1,29 +1,27 @@
 {% extends 'base/base.html' %}
 {% block content %}
+{% if board.parent %}
+{{ breadcrumb(hrefs={board.parent.name:url_for('forums.board',boardId=board.parent_id)},active=board.name) }}
+{% else %}
 {{ breadcrumb(active=board.name) }}
-{% from 'board/_macro.html' import body %}
-{% from 'topic/_list_macro.html' import form as topic_form %}
-{% from 'topic/_list_macro.html' import body as topic_body %}
-{% from 'topic/_list_macro.html' import no_topics %}
+{% endif %}
+{% from 'board/_macro.html' import board_body %}
 <div class="row">
-    <div class="col-md-9">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <a href="{{ url_for('forums.board',boardId=board.id) }}" style="color:#fff"> {{ board.name }} </a>
-            </div>
-            {{ body(board) }}
-        </div>
-        <div class="panel panel-default">
-            {{ topic_form() }}
-            {% for topic in topics.items %}
-            {{ topic_body(topic) }}
-            {% else %}
-            {{ no_topics() }}
-            {% endfor %}
-        </div>
+  <div class="col-md-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <a href="{{ url_for('forums.board',boardId=board.id) }}" style="color:#fff"> {{ board.name }} </a>
+      </div>
+      {% for child in board.children -%}
+      {{ board_body(child) }}
+      {% else %}
+      {{ board_body(board) }}
+      {%- endfor %}
     </div>
-    <div class="col-md-3" style="padding-left:0">
-        {{ panel_base.board() }}
-    </div>
+    {% include "board/topic.html" %}
+  </div>
+  <div class="col-md-3" style="padding-left:0">
+    {{ panel_base.board() }}
+  </div>
 </div>
 {% endblock %}

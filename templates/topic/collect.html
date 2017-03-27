@@ -1,0 +1,36 @@
+<div class="modal fade" id="sidecollect" tabindex="-1" role="dialog" aria-labelledby="sidecollectLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="sidecollectLabel">收藏夹</h4>
+      </div>
+      {% if not current_user.collects.all() %}
+      <div class="modal-body">
+        <a href="{{ url_for('topic.collectlist') }}" style="text-decoration:none">
+          <i class="fa fa-plus"></i> 创建
+        </a>
+      </div>
+      {% else %}
+      <form action="{{ url_for('topic.add_to_collect',topicId=topic.id) }}" method="POST">
+        <div class="modal-body">
+          <p> 添加到收藏夹 </p>
+          {% for collect in current_user.collects %}
+          <label data-id="{{ collect.id }}"><input name="add-to-collect" type="checkbox" value="{{ collect.id}}" />{{ collect.name }}</label>
+          {% if collect.is_privacy %}
+          <span class="label label-default">私密</span>
+          {% else %}
+          <span class="label label-default">公开</span>
+          {% endif %}
+          <br/>
+          {% endfor %}
+        </div>
+        <div class="modal-footer" style="padding-top:5px;padding-bottom:5px;">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary">提交</button>
+        </div>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:15:34 (CST)
-# Last Update:星期六 2017-3-25 19:36:21 (CST)
+# Last Update:星期一 2017-3-27 22:20:52 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,7 +14,7 @@ from flask import Blueprint
 
 from .views import (CollectListView, CollectView, LikeView, ReplyListView,
                     ReplyView, TopicAskView, TopicEditView, TopicListView,
-                    TopicPreviewView, TopicView)
+                    TopicPreviewView, TopicView, AddToCollectView)
 
 site = Blueprint('topic', __name__)
 
@@ -28,6 +28,7 @@ preview_view = TopicPreviewView.as_view('preview')
 
 collect_list = CollectListView.as_view('collectlist')
 collect = CollectView.as_view('collect')
+add_to_collect = AddToCollectView.as_view('add_to_collect')
 
 reply_list = ReplyListView.as_view('reply_list')
 reply = ReplyView.as_view('reply')
@@ -46,3 +47,4 @@ site.add_url_rule('/replies/<int:replyId>/like', view_func=like_view)
 
 site.add_url_rule('/collect', view_func=collect_list)
 site.add_url_rule('/collect/<int:collectId>', view_func=collect)
+site.add_url_rule('/topic/<int:topicId>/collect', view_func=add_to_collect)
