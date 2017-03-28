@@ -6,14 +6,12 @@
 {% from 'base/head.html' import breadcrumb %}
 {% block script -%}
 {{ super() }}
-<script type="text/javascript" src="{{ url_for('static',filename='assets/home.js')}}"></script>
 <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 {%- endblock script %}
 
 {% block style -%}
 {{ super() }}
 <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static',filename='assets/home.css')}}" type="text/css" media="screen" />
 {%- endblock style %}
 
 {% block main %}

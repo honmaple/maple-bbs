@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-13 13:40:38 (CST)
-# Last Update:星期二 2017-3-14 16:2:24 (CST)
+# Last Update:星期二 2017-3-28 16:59:0 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -22,7 +22,7 @@ def gen_order_by(query_dict=dict(), keys=[], date_key=True):
     if date_key:
         keys += ['created_at', 'updated_at']
     order_by = ['id']
-    descent = query_dict.pop('descent', None)
+    descent = query_dict.pop('orderby', None)
     if descent is not None:
         descent = descent.split(',')
         descent = list(set(keys) & set(descent))

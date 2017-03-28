@@ -59,10 +59,10 @@
 
 
 {% macro collectlist() -%}
-<a href="{{ url_for('topic.collectlist')}}">{{ _('CollectList')}}</a>
+<a href="{{ url_for('collect.list')}}">{{ _('CollectList')}}</a>
 {%- endmacro %}
 
 {% macro collect(c) -%}
-<a href="{{ url_for('topic.collect',collectId=c.id)}}">{{ c.name }}</a>
+<a href="{{ url_for('collect.collect',pk=c.id)}}">{{ c.name }}</a>
 {%- endmacro %}
 

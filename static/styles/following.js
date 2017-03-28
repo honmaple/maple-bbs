@@ -60,37 +60,37 @@ $(document).ready(function(){
     Follow(_$this,data,url);
   });
 });
-function DoCollect(collectData) {
+function DoCollect(collect_url) {
   $(document).ready(function(){
-    $('button#edit-collect-form').click(function() {
+    $('button#edit-collect').click(function() {
       var data = JSON.stringify({
         name:$('#name').val(),
         description:$('#description').val(),
-        is_privacy:$("input[name='is_privacy']:checked").val()
+        is_hidden:$("input[name='is_hidden']:checked").val()
       });
       $.ajax ({
         type : "PUT",
-        url : collectData.collect_action_url,
+        url : collect_url,
         data:data,
         contentType: 'application/json;charset=UTF-8',
-        success: function(result) {
-          if (result.judge === true)
+        success: function(response) {
+          if (response.status === '200')
           {
-            window.location =collectData.collect_action_url ;
+            window.location.href = collect_url;
           }
         }
       });
     });
-    $('button#delete-collect-form').click(function() {
+    $('button#delete-collect').click(function() {
       $.ajax ({
         type : "DELETE",
-        url : collectData.collect_action_url,
+        url : collect_url,
         data:JSON.stringify(),
         contentType: 'application/json;charset=UTF-8',
-        success: function(result) {
-          if (result.judge === true)
+        success: function(response) {
+          if (response.status === '200')
           {
-            window.location = collectData.collect_url;
+            window.location.href = collect_url;
           }
         }
       });
@@ -103,11 +103,11 @@ function DoCollect(collectData) {
       });
       $.ajax ({
         type : "DELETE",
-        url : collectData.delete_detail_action_url,
+        url : '/topic/' + topicId + '/collect',
         data:data,
         contentType: 'application/json;charset=UTF-8',
-        success: function(result) {
-          if (result.judge === true)
+        success: function(response) {
+          if (response.status === '200')
           {
             _$this.parent().remove();
           }

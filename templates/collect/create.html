@@ -1,0 +1,33 @@
+<div class="modal fade" id="addcollect" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addcollectLabel">{{_('Create Collect')}}</h4>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('collect.list')}}" method="POST">
+          {{ form.hidden_tag() }}
+          <div class="form-group">
+            {{ form.name.label }}
+            {{ form.name(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{ form.description.label }}
+            {{ form.description(class="form-control")}}
+          </div>
+          {% for subfield in form.is_hidden %}
+          <div class="form-group" style="display:inline;">
+            {{subfield.label}}
+            {{subfield}}
+          </div>
+          {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{_('cancel')}}</button>
+        <button type="submit" class="btn btn-primary">{{_('confirm')}}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

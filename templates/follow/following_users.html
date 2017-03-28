@@ -3,24 +3,22 @@
 {% from 'follow/_macro.html' import nav_title %}
 {{ breadcrumb(active=_('Following Users'))}}
 <div class="row">
-    <div class="col-md-9">
-        {{ nav_title('user') }}
-        <div class="panel panel-default">
-            {% for user in users.items %}
-            <div class="panel-body" style="border-bottom:1px solid #eee">
-                {{ link.user(user)}}
-                <span style="float:right">
-                    <button class="btn btn-sm btn-default userfollow active" id="{{ user.id}}" style="padding:0 5px">取消关注</button>
-                </span>
-            </div>
-            {% else %}
-            {% include 'follow/none.html' %}
-            {% endfor  %}
-            {{ p_footer(users,'follow.user')}}
-        </div>
+  <div class="col-md-9">
+    {{ nav_title('user') }}
+    <div class="panel panel-default">
+      {% for user in users.items %}
+      <div class="panel-body" style="border-bottom:1px solid #eee">
+        {{ link.user(user)}}
+        <button class="btn btn-sm btn-default user-following pull-right active" data-id="{{ user.id}}" style="padding:0 5px">取消关注</button>
+      </div>
+      {% else %}
+      {% include 'follow/none.html' %}
+      {% endfor  %}
+      {{ p_footer(users,'follow.user')}}
     </div>
-    <div class="col-md-3" style="padding-left:0">
-        {{ panel_base.follow() }}
-    </div>
+  </div>
+  <div class="col-md-3" style="padding-left:0">
+    {{ panel_base.follow() }}
+  </div>
 </div>
 {% endblock %}

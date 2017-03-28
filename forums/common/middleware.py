@@ -6,13 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-12 13:29:17 (CST)
-# Last Update:星期六 2017-3-25 18:57:58 (CST)
+# Last Update:星期二 2017-3-28 16:53:28 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import g, request
 from flask_login import current_user
-from forums.api.forums.forms import SortForm, SearchForm
+from forums.api.forms import SortForm, SearchForm
 
 
 class GlobalMiddleware(object):

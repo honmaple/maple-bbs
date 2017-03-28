@@ -28,8 +28,8 @@
   <span style="color:#666">{{ topic.board.board }}</span>
   {{ link.topic(topic) }}
   <div style="font-size:12px;color:#999;">
-    {{_('create time:')}}{{ topic.publish | timesince }}
-    · {{ _('the last reply published by %(author)s',author=link.user(topic.author.username))}}
+    {{_('create time:')}}{{ topic.created_at | timesince }}
+    · {{ _('the last reply published by %(author)s',author=link.user(topic.author))}}
   </div>
 </div>
 {% else %}

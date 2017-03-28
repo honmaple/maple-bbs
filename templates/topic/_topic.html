@@ -1,0 +1,7 @@
+{% from 'topic/_list_macro.html' import form,body,no_topics %}
+{{ form() }}
+{% for topic in topics.items %}
+{{ body(topic) }}
+{% else %}
+{{ no_topics() }}
+{% endfor %}

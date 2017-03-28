@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update:星期一 2017-3-27 21:45:50 (CST)
+# Last Update:星期二 2017-3-28 21:12:1 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -141,7 +141,7 @@ def user_is_followed(pk):
 
 
 def is_collected(topicId):
-    from forums.api.topic.models import Collect
+    from forums.api.collect.models import Collect
     return Collect.query.filter_by(
         topics__id=topicId, author_id=current_user.id).exists()
 

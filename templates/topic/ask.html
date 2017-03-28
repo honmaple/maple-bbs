@@ -1,10 +1,4 @@
 {% extends 'base/base.html' %}
-{% block script -%}
-{{ super() }}
-<script type="text/javascript">
- AskTopic("{{ url_for('topic.preview') }}")
-</script>
-{%- endblock script %}
 {% block content %}
 <style>
  .tokenfield .token {

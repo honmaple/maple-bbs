@@ -1,5 +1,5 @@
 {% macro other(user) -%}
-{% if g.user.is_authenticated and current_user.username != g.user_url %}
+{% if current_user.is_authenticated and current_user.id != user.id %}
 <div class="list-group-item">
   <span class="text-right" style="display:block">
     {% if user.id | user_is_followed %}
@@ -14,7 +14,7 @@
 {%- endmacro %}
 
 {% macro mine(user) -%}
-{% if g.user.is_authenticated and current_user.username == g.user_url and not user.is_confirmed %}
+{% if g.user.is_authenticated and current_user.id == user.id and not user.is_confirmed %}
 <div class="alert alert-info" style="padding:6px;font-size:12px;margin-top:10px;">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>

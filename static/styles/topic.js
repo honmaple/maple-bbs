@@ -87,51 +87,37 @@ function DoVote(voteData) {
     });
   });
 }
-function PreviewTopic(pre_url) {
+$(document).ready(function(){
   $('#topic-preview').click(function() {
     var content = $('#content').val();
-    $.post(pre_url, {
+    $.post('/topic/preview', {
       content: $("#content").val(),
-      choice: $("#choice").val()
+      content_type: $("#content_type").val()
     }, function(data) {
       $("#show-preview").html(data);
     });
   });
-}
-function AskTopic(pre_url) {
-  $(document).ready(function(){
-    PreviewTopic(pre_url);
-    $('#tokenfield').tokenfield({
-      limit:4
-    });
+  $('#tokenfield').tokenfield({
+    limit:4
   });
-}
-function EditTopic(pre_url,edit_url) {
-  $(document).ready(function(){
-    PreviewTopic(pre_url);
-    $('#tokenfield').tokenfield({
-      limit:4
+  $('#topic-put-btn').click(function() {
+    var _$this = $(this);
+    var form_data = $("form#topic-put").serializeArray();
+    var url = '/topic/' + _$this.attr("data-id");
+    var data = {};
+    $.each(form_data,function() {
+      data[this.name] = this.value;
     });
-    $('#topic-put-btn').click(function() {
-      var form_data = $("form#topic-put").serializeArray();
-      var data = {};
-      $.each(form_data,function() {
-        data[this.name] = this.value;
-      });
-      data = JSON.stringify(data);
-      $.ajax ({
-        type : "PUT",
-        url : edit_url,
-        data:data,
-        contentType: 'application/json;charset=UTF-8',
-        success: function(result) {
-          if (result.judge === true) {
-            window.location.href= edit_url;
-          }else {
-            alert(result.error);
-          }
+    $.ajax ({
+      type : "PUT",
+      url : url,
+      data:JSON.stringify(data),
+      contentType: 'application/json;charset=UTF-8',
+      success: function(response) {
+        if (response.status === '200') {
+          window.location.href= url;
         }
-      });
+      }
     });
   });
-}
+});

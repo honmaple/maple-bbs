@@ -6,16 +6,20 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-20 22:16:04 (CST)
-# Last Update:星期六 2017-3-25 20:22:21 (CST)
+# Last Update:星期二 2017-3-28 15:53:0 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user, logout_user
-from forums.api.setting.forms import (ProfileForm, PasswordForm, PrivacyForm,
-                                      AvatarForm, BabelForm, error_callback)
+from forums.api.forms import (ProfileForm, PasswordForm, PrivacyForm,
+                              AvatarForm, BabelForm)
 from forums.common.views import IsAuthMethodView as MethodView
 from flask_maple.auth.forms import form_validate
+
+
+def error_callback(url):
+    return lambda: redirect(url_for(url))
 
 
 class ProfileView(MethodView):

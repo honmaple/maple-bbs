@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:04 (CST)
-# Last Update:星期一 2017-3-27 21:40:52 (CST)
+# Last Update:星期二 2017-3-28 17:25:34 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -49,7 +49,10 @@ class TagsView(MethodView):
 
 class TagFeedView(MethodView):
     def get(self, name):
-        setting = current_app.config.get('SITE')
+        setting = current_app.config.get('SITE', {
+            'title': 'aaa',
+            'introduce': 'asdadj'
+        })
         title = setting['title']
         introduce = setting['introduce']
         feed = AtomFeed(
@@ -57,7 +60,7 @@ class TagFeedView(MethodView):
             feed_url=request.url,
             url=request.url_root,
             subtitle=introduce)
-        topics = Topic.query.filter_by(tags__name=name).all()
+        topics = Topic.query.filter_by(tags__name=name).limit(10)
         for topic in topics:
             if topic.content_type == Topic.CONTENT_TYPE_MARKDOWN:
                 content = topic.content

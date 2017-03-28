@@ -3,34 +3,25 @@
 {% from 'follow/_macro.html' import nav_title %}
 {{ breadcrumb(active=_('Following Topics'))}}
 <div class="row">
-    <div class="col-md-9">
-        {{ nav_title('topic') }}
-        <div class="panel panel-default">
-            {% for topic in topics.items %}
-            <div class="panel-body" style="border-bottom:1px solid #eee">
-                <span class="pull-right">
-                    <button class="btn btn-sm btn-default topicfollow active" id="{{ topic.id }}" style="padding:0 5px">取消关注</button>
-                </span>
-                <p>{{ link.topic(topic)}}</p>
-                <p class="topic-content">
-                    {% if topic.is_markdown %}
-                    {{ topic.content | truncate(100, True) | markdown }}
-                    {% else %}
-                    {{ topic.content | truncate(100, True) | safe_clean }}
-                    {% endif %}
-                </p>
-                {% for tag in topic.tags %}
-                {{ link.tag(tag)}}
-                {% endfor %}
-            </div>
-            {% else %}
-            {% include 'follow/none.html' %}
-            {% endfor  %}
-            {{ p_footer(topics,'follow.topic')}}
-        </div>
+  <div class="col-md-9">
+    {{ nav_title('topic') }}
+    <div class="panel panel-default">
+      {% for topic in topics.items %}
+      <div class="panel-body" style="border-bottom:1px solid #eee">
+        <h4>{{ link.topic(topic)}}</h4>
+        <button class="btn btn-sm btn-default topic-following pull-right active" data-id="{{ topic.id }}" style="padding:0 5px">取消关注</button>
+        {% for tag in topic.tags %}
+        {{ link.tag(tag)}}
+        {% endfor %}
+      </div>
+      {% else %}
+      {% include 'follow/none.html' %}
+      {% endfor  %}
+      {{ p_footer(topics,'follow.topic')}}
     </div>
-    <div class="col-md-3" style="padding-left:0">
-        {{ panel_base.follow() }}
-    </div>
+  </div>
+  <div class="col-md-3" style="padding-left:0">
+    {{ panel_base.follow() }}
+  </div>
 </div>
 {% endblock %}

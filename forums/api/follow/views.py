@@ -6,14 +6,15 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-22 21:49:05 (CST)
-# Last Update:星期一 2017-3-27 22:0:17 (CST)
+# Last Update:星期二 2017-3-28 18:2:43 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import render_template, request
 
 from forums.api.tag.models import Tags
-from forums.api.topic.models import Collect, Topic
+from forums.api.topic.models import  Topic
+from forums.api.collect.models import Collect
 from forums.api.user.models import User
 from forums.common.response import HTTPResponse
 from forums.common.views import IsAuthMethodView as MethodView

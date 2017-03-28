@@ -6,13 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 13:01:43 (CST)
-# Last Update:星期六 2017-3-25 19:37:7 (CST)
+# Last Update:星期二 2017-3-28 18:0:47 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from .views import BaseView
 from forums.extension import db
-from forums.api.topic.models import Topic, Collect, Reply
+from forums.api.topic.models import Topic, Reply
+from forums.api.collect.models import Collect
 from forums.api.tag.models import Tags
 
 

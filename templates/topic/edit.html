@@ -1,10 +1,4 @@
 {% extends 'base/base.html' %}
-{% block script -%}
-{{ super() }}
-<script type="text/javascript">
- EditTopic("{{ url_for('topic.preview') }}","{{ url_for('topic.topic',topicId=topic.id) }}")
-</script>
-{%- endblock script %}
 {% block content %}
 {{ breadcrumb(active='编辑')}}
 <style>
@@ -24,7 +18,7 @@
         {% include "topic/ask/form.html" %}
         <div class="col-sm-offset-2 col-sm-10">
           {{ form.content_type(class="input-sm pull-right",style="padding:2")}}
-          <button class="btn btn-sm btn-primary" id="topic-put-btn" type="button">提交问题</button>
+          <button class="btn btn-sm btn-primary" id="topic-put-btn" type="button" data-id="{{ topic.id }}">提交问题</button>
           <button class="btn btn-sm btn-primary" id="topic-preview" type="button">预览</button>
         </div>
         <div class="col-sm-offset-2 col-sm-10 topoc-content" id="show-preview"></div>

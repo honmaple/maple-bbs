@@ -1,27 +1,32 @@
+function getQueryParams(k){
+  var p={};
+  location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi,function(s,k,v){p[k]=v;});
+  return k?p[k]:p;
+}
 function SortFuntion(){
-  var display = $('#display').val();
-  var sort =  $('#sort').val();
-  var st =  $('#st').val();
-  var params = {};
-  if (display != '0'){
-    params.within = display;
+  var within = $('select#within').val();
+  var orderby =  $('select#orderby').val();
+  var desc =  $('select#desc').val();
+  var params = getQueryParams();
+  if (within != '0'){
+    params.within = within;
   }
-  if (sort != '0'){
-    params.orderby = sort;
+  if (orderby != '0'){
+    params.orderby = orderby;
   }
-  if (st != '0'){
-    params.desc = st;
+  if (desc != '0'){
+    params.desc = desc;
   }
   window.location.href = window.location.pathname + '?' + $.param(params);
 }
 $(document).ready(function(){
-  $('#display').change(function() {
+  $('select#within').change(function() {
     SortFuntion();
   });
-  $('#sort').change(function() {
+  $('select#orderby').change(function() {
     SortFuntion();
   });
-  $('#st').change(function() {
+  $('select#desc').change(function() {
     SortFuntion();
   });
   $('span#email-confirm').click(function(){

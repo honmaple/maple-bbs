@@ -17,8 +17,10 @@
       {% else %}
       {{ board_body(board) }}
       {%- endfor %}
-    </div>
-    {% include "board/topic.html" %}
+      </div>
+      <div class="panel panel-default">
+        {% include "topic/_topic.html" %}
+      </div>
   </div>
   <div class="col-md-3" style="padding-left:0">
     {{ panel_base.board() }}
