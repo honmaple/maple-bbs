@@ -26,6 +26,7 @@
     Some package is not neccessary
     #+BEGIN_SRC python
    pip install -r requirements.txt
+   pip install flask_wtf --upgrade
     #+END_SRC
 
     Beacause flask_maple.rbac isn't uploaded to pypi

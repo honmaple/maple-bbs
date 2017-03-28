@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-12 20:34:27 (CST)
-# Last Update:星期六 2016-11-12 21:19:18 (CST)
+# Last Update:星期二 2017-3-28 22:47:10 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -17,14 +17,14 @@ from maple.main.records import mark_online
 
 
 class CommonMiddleware(object):
-    def __call__(self, **kwargs):
+    def preprocess_request(self):
         g.user = current_user
         g.sort_form = SortForm()
         g.search_form = SearchForm()
 
 
 class OnlineMiddleware(object):
-    def __call__(self, **kwargs):
+    def preprocess_request(self):
         if g.user.is_authenticated:
             mark_online(g.user.username)
         else:
