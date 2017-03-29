@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期三 2017-3-29 21:18:33 (CST)
+# Last Update:星期三 2017-3-29 22:17:13 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -109,6 +109,11 @@ class TopicListView(MethodView):
         topic.tags = topic_tags
         topic.author = user
         topic.save()
+        # count
+        topic.board.topic_count = 1
+        topic.board.post_count = 1
+        topic.author.topic_count = 1
+        topic.reply_count = 1
         return redirect(url_for('topic.topic', topicId=topic.id))
 
 
@@ -166,6 +171,9 @@ class ReplyListView(MethodView):
         reply = Reply(content=content, topic_id=topic.id)
         reply.author = user
         reply.save()
+        # count
+        topic.board.post_count = 1
+        reply.author.reply_count = 1
         return redirect(url_for('topic.topic', topicId=topic.id))
 
 

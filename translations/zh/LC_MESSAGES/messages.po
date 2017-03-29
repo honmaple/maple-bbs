@@ -1,0 +1,688 @@
+# Chinese translations for PROJECT.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-08-07 13:53+0800\n"
+"PO-Revision-Date: 2016-06-16 14:36+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh\n"
+"Language-Team: zh <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: templates/auth/forget.html:1
+msgid "Forget Password - "
+msgstr "忘记密码 - "
+
+#: templates/auth/forget.html:5 templates/auth/forget.html:8
+msgid "Forget Password"
+msgstr "忘记密码"
+
+#: templates/auth/login.html:1
+msgid "Login - "
+msgstr "登陆 - "
+
+#: templates/auth/login.html:5 templates/auth/login.html:8
+#: templates/base/base.html:75 templates/topic/replies.html:93
+msgid "Login"
+msgstr "登陆"
+
+#: templates/auth/register.html:1
+msgid "Register - "
+msgstr "注册 - "
+
+#: templates/auth/register.html:5 templates/auth/register.html:8
+#: templates/base/base.html:74
+msgid "Register"
+msgstr "注册"
+
+#: templates/base/base.html:29
+msgid "Forums"
+msgstr "社区"
+
+#: templates/base/base.html:30
+msgid "Wiki"
+msgstr "文档"
+
+#: templates/base/base.html:31
+msgid "Blog"
+msgstr "博客"
+
+#: templates/base/base.html:32
+msgid "Good"
+msgstr "精华文章"
+
+#: templates/base/base.html:36
+msgid "search content"
+msgstr "搜索内容"
+
+#: templates/base/base.html:67
+msgid "My Page"
+msgstr "我的主页"
+
+#: templates/base/base.html:68
+msgid "Setting"
+msgstr "帐号设置"
+
+#: templates/base/base.html:70
+msgid "Logout"
+msgstr "注销"
+
+#: templates/base/base.html:77 templates/tag/tag.html:12
+#: templates/tag/tag_list.html:4 templates/tag/tag_list.html:9
+msgid "All Tags"
+msgstr "所有标签"
+
+#: templates/base/base.html:78 templates/forums/userlist.html:3
+#: templates/forums/userlist.html:8
+msgid "Userlist"
+msgstr "用户列表"
+
+#: templates/base/base.html:80 templates/forums/notice.html:3
+#: templates/forums/notice.html:9
+msgid "Notices"
+msgstr "消息通知"
+
+#: templates/base/form.html:14
+msgid "save"
+msgstr "保存"
+
+#: templates/base/head.html:4 templates/base/head.html:6
+#: templates/topic/content.html:16
+msgid "Index"
+msgstr "社区主页"
+
+#: templates/base/link.html:17
+msgid "My Created Collects"
+msgstr "我创建的收藏夹"
+
+#: templates/base/link.html:20 templates/base/link.html:32
+#: templates/follow/following_collect.html:3
+msgid "Following Collects"
+msgstr "关注的收藏"
+
+#: templates/base/link.html:23 templates/follow/following_tag.html:3
+msgid "Following Tags"
+msgstr "关注的节点"
+
+#: templates/base/link.html:26 templates/follow/following_topic.html:3
+msgid "Following Topics"
+msgstr "关注的主题"
+
+#: templates/base/link.html:29 templates/follow/following_user.html:3
+msgid "Following Users"
+msgstr "关注的用户"
+
+#: templates/base/panel.html:5
+msgid "Ask Questions"
+msgstr "提问"
+
+#: templates/base/panel.html:10 templates/mine/collect.html:15
+#: templates/mine/collect_list.html:3
+msgid "My Collects"
+msgstr "我的收藏"
+
+#: templates/base/panel.html:13
+msgid "My Followings"
+msgstr "我的关注"
+
+#: templates/base/panel.html:24
+msgid "now register"
+msgstr "现在注册"
+
+#: templates/base/panel.html:28
+msgid "If you have a account,please"
+msgstr "已经注册"
+
+#: templates/base/panel.html:28
+msgid "login"
+msgstr "登陆"
+
+#: templates/base/panel.html:71
+msgid "Hot Tags"
+msgstr "热门节点"
+
+#: templates/base/panel.html:72
+msgid "Recent Tags"
+msgstr "最近增加的节点"
+
+#: templates/base/panel.html:91
+msgid "Forums Count"
+msgstr "社区统计"
+
+#: templates/base/panel.html:94
+msgid "Total number of registered users:"
+msgstr "社区会员:"
+
+#: templates/base/panel.html:95
+msgid "Total number of topics:"
+msgstr "主题总数:"
+
+#: templates/base/panel.html:96
+msgid "Total number of posts:"
+msgstr "回帖数:"
+
+#: templates/board/board.html:28
+msgid "Today:"
+msgstr "今日:"
+
+#: templates/board/board.html:30 templates/board/board_base.html:10
+msgid "Topics:"
+msgstr "主题:"
+
+#: templates/board/board.html:32
+msgid "Ranking:"
+msgstr "排名:"
+
+#: templates/board/board_base.html:12
+msgid "Posts:"
+msgstr "帖子:"
+
+#: templates/board/board_base.html:22
+#, python-format
+msgid "published by %(author)s"
+msgstr "由%(author)s发表"
+
+#: templates/board/board_base.html:26 templates/topic/topic_list.html:23
+#: templates/user/topic.html:39
+msgid "No Topic"
+msgstr "没有帖子"
+
+#: templates/follow/none.html:3
+msgid "No Following"
+msgstr "暂无关注"
+
+#: templates/forums/forums.html:3
+msgid "Board"
+msgstr "版块"
+
+#: templates/forums/notice.html:8
+msgid "mark all to is read"
+msgstr "全部标记为已读"
+
+#: templates/forums/notice.html:22
+msgid "No Notices"
+msgstr "没有通知"
+
+#: templates/maple/footer.html:23
+msgid "Help"
+msgstr "帮助"
+
+#: templates/maple/footer.html:25
+msgid "About"
+msgstr "关于"
+
+#: templates/maple/footer.html:27
+msgid "Contact me"
+msgstr "联系我"
+
+#: templates/maple/footer.html:33
+msgid "Now users online:"
+msgstr "当前在线用户:"
+
+#: templates/maple/footer.html:34
+msgid "Registered users online:"
+msgstr "注册用户:"
+
+#: templates/maple/footer.html:35
+msgid "Guests online:"
+msgstr "当前访客:"
+
+#: templates/maple/footer.html:39
+msgid "Highest online:"
+msgstr "最高在线:"
+
+#: templates/maple/footer.html:40
+msgid "Time of highest online:"
+msgstr "最高在线时间:"
+
+#: templates/mine/collect.html:21
+msgid "edit"
+msgstr "编辑"
+
+#: templates/mine/collect.html:22 templates/mine/collect.html:30
+msgid "delete"
+msgstr "删除"
+
+#: templates/mine/collect.html:36 templates/user/collect.html:46
+msgid "No Collect"
+msgstr "暂无收藏"
+
+#: templates/mine/collect.html:51
+msgid "Edit the collect"
+msgstr "编辑收藏"
+
+#: templates/mine/collect.html:71 templates/mine/collect.html:90
+#: templates/mine/collect_list.html:57
+msgid "cancel"
+msgstr "取消"
+
+#: templates/mine/collect.html:72 templates/mine/collect.html:91
+#: templates/mine/collect_list.html:58
+msgid "confirm"
+msgstr "确定"
+
+#: templates/mine/collect.html:83
+msgid "Delete this collect"
+msgstr "删除收藏"
+
+#: templates/mine/collect_list.html:12 templates/mine/collect_list.html:36
+msgid "Create Collect"
+msgstr "创建收藏"
+
+#: templates/mine/collect_list.html:18
+msgid "Privacy"
+msgstr "私有"
+
+#: templates/mine/collect_list.html:20
+msgid "Public"
+msgstr "公共"
+
+#: templates/setting/babel.html:4 templates/setting/babel.html:20
+#: templates/setting/babel.html:26 templates/setting/password.html:11
+#: templates/setting/privacy.html:11 templates/setting/setting.html:17
+msgid "Timezone and Locale"
+msgstr "时区及语言设置"
+
+#: templates/setting/babel.html:17 templates/setting/password.html:8
+#: templates/setting/privacy.html:8 templates/setting/setting.html:4
+#: templates/setting/setting.html:14 templates/setting/setting.html:23
+msgid "Profile "
+msgstr "资料设置"
+
+#: templates/setting/babel.html:18 templates/setting/password.html:4
+#: templates/setting/password.html:9 templates/setting/privacy.html:9
+#: templates/setting/setting.html:15
+msgid "Password "
+msgstr "密码修改"
+
+#: templates/setting/babel.html:19 templates/setting/password.html:10
+#: templates/setting/privacy.html:4 templates/setting/privacy.html:10
+#: templates/setting/privacy.html:17 templates/setting/setting.html:16
+msgid "Privacy "
+msgstr "隐私设置"
+
+#: templates/setting/password.html:17
+msgid "Account"
+msgstr "账户修改"
+
+#: templates/setting/setting.html:42
+msgid "confirm upload"
+msgstr "确认上传"
+
+#: templates/tag/tag_list.html:19
+msgid "No Tag"
+msgstr "暂无标签"
+
+#: templates/topic/ask.html:16 templates/topic/ask.html:18
+msgid "Ask"
+msgstr "提问"
+
+#: templates/topic/content.html:36
+#, python-format
+msgid "published at %(time)s"
+msgstr "于%(time)s发布"
+
+#: templates/topic/content.html:38
+#, python-format
+msgid "The last reply published by %(author)s at %(time)s"
+msgstr "最后由%(author)s于%(time)s发布"
+
+#: templates/topic/edit.html:19
+msgid "Edit"
+msgstr "编辑"
+
+#: templates/topic/replies.html:24
+#, python-format
+msgid "Received %(total)s replies"
+msgstr "共收到%(total)s条回复"
+
+#: templates/topic/replies.html:26 templates/user/follower.html:7
+#: templates/user/follower.html:10 templates/user/reply.html:7
+#: templates/user/reply.html:10 templates/user/topic.html:7
+#: templates/user/topic.html:10
+msgid "time"
+msgstr "时间"
+
+#: templates/topic/replies.html:27 templates/user/reply.html:8
+#: templates/user/reply.html:11
+msgid "likers"
+msgstr "点赞"
+
+#: templates/topic/replies.html:74
+msgid "no reply"
+msgstr "暂无回复"
+
+#: templates/topic/replies.html:81
+msgid "Reply this topic"
+msgstr "回帖"
+
+#: templates/topic/replies.html:86
+msgid "Post reply"
+msgstr "发表回复"
+
+#: templates/topic/replies.html:93
+msgid "You need"
+msgstr "你需要"
+
+#: templates/topic/replies.html:93
+msgid "before you can reply."
+msgstr "后才能发表回复"
+
+#: maple/forums/forms.py:23 templates/topic/topic.html:13
+#: templates/topic/topic_good.html:13
+msgid "All Topics"
+msgstr "所有主题"
+
+#: templates/topic/topic_good.html:13 templates/topic/topic_list.html:36
+msgid "Good Topics"
+msgstr "社区精华帖子"
+
+#: maple/forums/forms.py:27 templates/topic/topic_list.html:39
+#: templates/topic/topic_list.html:70
+msgid "Author"
+msgstr "发表作者"
+
+#: templates/topic/topic_list.html:42 templates/topic/topic_list.html:73
+msgid "Replies/Read"
+msgstr "回复/阅读"
+
+#: templates/topic/topic_list.html:45 templates/topic/topic_list.html:76
+msgid "Last reply"
+msgstr "最后回复"
+
+#: templates/topic/topic_list.html:63
+msgid "Choice:"
+msgstr "筛选:"
+
+#: templates/topic/topic_list.html:65
+msgid "Order:"
+msgstr "排序:"
+
+#: templates/user/collect.html:40 templates/user/reply.html:34
+#: templates/user/topic.html:33
+msgid "Due to user's setting,the list have been hidden."
+msgstr "由于用户设置，列表被隐藏。"
+
+#: templates/user/follower.html:4 templates/user/reply.html:4
+#: templates/user/topic.html:4
+msgid "Sort:"
+msgstr "排序:"
+
+#: templates/user/follower.html:8 templates/user/follower.html:11
+msgid "score"
+msgstr "积分"
+
+#: templates/user/follower.html:25
+msgid "No Follower"
+msgstr "暂无关注者"
+
+#: maple/topic/permission.py:29 maple/topic/permission.py:80
+#: maple/topic/permission.py:117 templates/user/infor.html:22
+msgid "You haven't confirm your account,Please confirmed"
+msgstr "你的账户未验证，请尽快验证！"
+
+#: templates/user/infor.html:23
+msgid "Activate  Account"
+msgstr "验证帐户"
+
+#: templates/user/infor.html:39
+msgid "ONLINE"
+msgstr "在线"
+
+#: templates/user/infor.html:41
+msgid "OUTLINE"
+msgstr "离线"
+
+#: templates/user/reply.html:21
+#, python-format
+msgid "replied %(title)s created by %(author)s"
+msgstr "回复了%(author)s创建的主题%(title)s"
+
+#: templates/user/reply.html:25
+msgid "replied time:"
+msgstr "回复时间:"
+
+#: templates/user/reply.html:40
+msgid "No Reply"
+msgstr "暂无回复"
+
+#: templates/user/topic.html:8 templates/user/topic.html:11
+msgid "vote"
+msgstr "投票"
+
+#: templates/user/topic.html:23
+msgid "create time:"
+msgstr "创建时间:"
+
+#: templates/user/topic.html:24
+#, python-format
+msgid "the last reply published by %(author)s"
+msgstr "最后回复来自%(author)s"
+
+#: templates/user/user.html:31
+msgid "me"
+msgstr "我"
+
+#: templates/user/user.html:45
+#, python-format
+msgid "topics of %(n)s"
+msgstr "%(n)s的主题"
+
+#: templates/user/user.html:46
+#, python-format
+msgid "replies of %(n)s"
+msgstr "%(n)s的回复"
+
+#: templates/user/user.html:47
+#, python-format
+msgid "collects of %(n)s"
+msgstr "%(n)s的收藏"
+
+#: templates/user/user.html:48
+#, python-format
+msgid "followers of %(n)s"
+msgstr "%(n)s的粉丝"
+
+#: maple/extensions.py:130
+msgid "Please login to access this page."
+msgstr "这个页面要求登陆，请登陆"
+
+#: maple/settings.py:16
+msgid "I love freedom more than life."
+msgstr "爱生活，更爱自由"
+
+#: maple/auth/views.py:69
+msgid "Your account has been confirmed,don't need again"
+msgstr "你的账户已经验证，不能重复验证"
+
+#: maple/auth/views.py:75
+msgid "An email has been sent to your.Please receive"
+msgstr "验证邮件已发送到你的邮箱，请及时查收！"
+
+#: maple/forums/forms.py:21
+msgid "Choice"
+msgstr "选择"
+
+#: maple/forums/forms.py:23
+msgid "One Day"
+msgstr "一天之内"
+
+#: maple/forums/forms.py:23
+msgid "One Week"
+msgstr "一周之内"
+
+#: maple/forums/forms.py:24
+msgid "One Month"
+msgstr "一月之内"
+
+#: maple/forums/forms.py:27
+msgid "Publish"
+msgstr "发表时间"
+
+#: maple/forums/forms.py:30
+msgid "Desc"
+msgstr "降序"
+
+#: maple/forums/forms.py:30
+msgid "Asc"
+msgstr "升序"
+
+#: maple/forums/forms.py:34
+msgid "search"
+msgstr "搜索"
+
+#: maple/forums/forms.py:38
+msgid "message"
+msgstr "私信"
+
+#: maple/forums/views.py:42
+msgid "Index - "
+msgstr "首页 - "
+
+#: maple/forums/views.py:59
+msgid "Notice - "
+msgstr "消息提醒 - "
+
+#: maple/forums/views.py:68
+msgid "Userlist - "
+msgstr "用户列表 - "
+
+#: maple/forums/views.py:83
+msgid "send succeccfully"
+msgstr "成功发送"
+
+#: maple/forums/views.py:93
+msgid "About - "
+msgstr "关于 - "
+
+#: maple/forums/views.py:99
+msgid "Help - "
+msgstr "帮助 - "
+
+#: maple/forums/views.py:105
+msgid "Contact - "
+msgstr "联系我 - "
+
+#: maple/mine/forms.py:21
+msgid "Name:"
+msgstr "收藏夹名:"
+
+#: maple/mine/forms.py:22
+msgid "Description:"
+msgstr "描述:"
+
+#: maple/setting/forms.py:19
+msgid "Everybody"
+msgstr "所有人"
+
+#: maple/setting/forms.py:19
+msgid "Logined User"
+msgstr "已登录用户"
+
+#: maple/setting/forms.py:19
+msgid "Only Self"
+msgstr "仅自己"
+
+#: maple/setting/forms.py:24
+msgid "Login status:"
+msgstr "登陆状态:"
+
+#: maple/setting/forms.py:26
+msgid "Topic List:"
+msgstr "主题列表:"
+
+#: maple/setting/forms.py:28
+msgid "Reply List:"
+msgstr "回复列表:"
+
+#: maple/setting/forms.py:29
+msgid "Notebook List:"
+msgstr "笔记列表:"
+
+#: maple/setting/forms.py:30
+msgid "Collect List:"
+msgstr "收藏列表:"
+
+#: maple/setting/forms.py:34
+msgid "Introduce:"
+msgstr "个人介绍:"
+
+#: maple/setting/forms.py:35
+msgid "School:"
+msgstr "所在学校:"
+
+#: maple/setting/forms.py:36
+msgid "Signature:"
+msgstr "个性签名:"
+
+#: maple/setting/forms.py:41
+msgid "Old Password:"
+msgstr "原密码:"
+
+#: maple/setting/forms.py:43
+msgid "New Password:"
+msgstr "新密码:"
+
+#: maple/setting/forms.py:45
+msgid "New Password again:"
+msgstr "重复新密码:"
+
+#: maple/setting/forms.py:50
+msgid "Timezone:"
+msgstr "时区设置:"
+
+#: maple/setting/forms.py:52
+msgid "Locale:"
+msgstr "语言设置:"
+
+#: maple/setting/forms.py:53
+msgid "English"
+msgstr "英文"
+
+#: maple/setting/forms.py:53
+msgid "Chinese"
+msgstr "中文"
+
+#: maple/topic/forms.py:21
+msgid "Title:"
+msgstr "标题:"
+
+#: maple/topic/forms.py:22 maple/topic/forms.py:35
+msgid "Content:"
+msgstr "内容:"
+
+#: maple/topic/forms.py:24
+msgid "Category:"
+msgstr "分类:"
+
+#: maple/topic/forms.py:28
+msgid "Tags:"
+msgstr "节点:"
+
+#: maple/topic/permission.py:45 maple/topic/permission.py:94
+msgid "You have no permission"
+msgstr "你没有权限！"
+
+#: maple/topic/views.py:53
+msgid "Edit -"
+msgstr "编辑 - "
+
+#: maple/upload/forms.py:20
+msgid "Upload Avatar:"
+msgstr "上传头像"
+
+#~ msgid "Office Source Code"
+#~ msgstr "官方网站源码"
+
+#~ msgid "more good topics"
+#~ msgstr "查看更多精华文章"
+

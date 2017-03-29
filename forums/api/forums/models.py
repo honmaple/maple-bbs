@@ -6,12 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-25 18:48:33 (CST)
-# Last Update:星期三 2017-3-29 19:41:28 (CST)
+# Last Update:星期三 2017-3-29 22:14:49 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_maple.models import ModelMixin
 from forums.extension import db
+from forums.count import Count
 
 
 class Board(db.Model, ModelMixin):
@@ -41,9 +42,17 @@ class Board(db.Model, ModelMixin):
     def topic_count(self):
         return self.topics.count()
 
+    @topic_count.setter
+    def topic_count(self, value):
+        Count.board_topic_count(self.id, value)
+
     @property
     def post_count(self):
-        return self.topics.count()
+        return Count.board_post_count(self.id)
+
+    @post_count.setter
+    def post_count(self, value):
+        Count.board_post_count(self.id, value)
 
     def __str__(self):
         return self.name

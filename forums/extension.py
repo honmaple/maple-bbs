@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:57:10 (CST)
-# Last Update:星期一 2017-3-27 20:33:3 (CST)
+# Last Update:星期三 2017-3-29 21:25:57 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -32,8 +32,8 @@ import os
 
 
 def register_babel():
-    translations = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.pardir, 'translations'))
+    base_path = os.path.abspath(os.path.dirname(__file__))
+    translations = os.path.join(base_path, os.pardir, 'translations')
     domain = Domain(translations)
     babel = Babel(default_domain=domain)
 

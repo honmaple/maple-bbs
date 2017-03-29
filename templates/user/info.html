@@ -46,8 +46,8 @@
         <span>第{{ user.id }}号会员</span>/
         <span>{{user.register_time | timesince }}</span>
         <br/>
-        <span>{{ user.topics.count() }}篇主题</span> |
-        <span>{{ user.replies.count() }}条回复</span>
+        <span>{{ user.topic_count }}篇主题</span> |
+        <span>{{ user.reply_count }}条回复</span>
       </small>
     </div>
     <blockquote style="font-size:14px;">

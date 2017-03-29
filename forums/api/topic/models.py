@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:52:07 (CST)
-# Last Update:星期三 2017-3-29 19:40:39 (CST)
+# Last Update:星期三 2017-3-29 21:49:10 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -20,6 +20,7 @@ from forums.api.forums.models import Board
 from forums.api.user.models import User
 from forums.common.models import CommonUserMixin
 from forums.extension import db
+from forums.count import Count
 
 topic_follower = db.Table(
     'topic_follower',
@@ -90,6 +91,18 @@ class Topic(db.Model, ModelMixin):
     @property
     def reply_count(self):
         return self.replies.count()
+
+    @reply_count.setter
+    def reply_count(self, value):
+        return Count.topic_reply_count(self.id, value)
+
+    @property
+    def read_count(self):
+        return Count.topic_read_count(self.id)
+
+    @read_count.setter
+    def read_count(self, value):
+        return Count.topic_read_count(self.id, value)
 
     @property
     def read_count(self):

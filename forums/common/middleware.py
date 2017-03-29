@@ -6,13 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-12 13:29:17 (CST)
-# Last Update:星期三 2017-3-29 13:29:17 (CST)
+# Last Update:星期三 2017-3-29 22:26:9 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import g, request
 from flask_login import current_user
 from forums.api.forms import SortForm, SearchForm
+from .records import mark_online, load_online_users
 
 
 def set_form(form):
@@ -38,3 +39,17 @@ class GlobalMiddleware(object):
             request.data = request.json
             if request.data is None:
                 request.data = request.form.to_dict()
+
+
+class OnlineMiddleware(object):
+    def preprocess_request(self):
+        if g.user.is_authenticated:
+            mark_online(g.user.username)
+        else:
+            mark_online(request.remote_addr)
+        g.get_online = get_online()
+
+
+def get_online():
+    return (load_online_users(1), load_online_users(2), load_online_users(3),
+            load_online_users(4), load_online_users(5))

@@ -6,23 +6,25 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期三 2017-3-29 19:11:0 (CST)
+# Last Update:星期三 2017-3-29 21:54:25 (CST)
 #          By:
 # Description:
 # **************************************************************************
+from datetime import datetime
+from threading import Thread
+
 from flask import current_app
 from flask_login import UserMixin, current_user
-from flask_maple.models import ModelMixin
 from flask_mail import Message
-from threading import Thread
-from werkzeug.security import (generate_password_hash, check_password_hash)
-from itsdangerous import (URLSafeTimedSerializer, BadSignature,
-                          SignatureExpired)
+from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
+from pytz import all_timezones
 from sqlalchemy import event
 from sqlalchemy.orm import object_session
+from werkzeug.security import check_password_hash, generate_password_hash
+
+from flask_maple.models import ModelMixin
+from forums.count import Count
 from forums.extension import db, mail
-from pytz import all_timezones
-from datetime import datetime
 
 user_follower = db.Table(
     'user_follower',
@@ -56,6 +58,22 @@ class User(db.Model, UserMixin, ModelMixin):
         return db.session.query(user_follower).filter(
             user_follower.c.user_id == self.id,
             user_follower.c.follower_id == user.id).exists()
+
+    @property
+    def topic_count(self):
+        return self.topics.count()
+
+    @topic_count.setter
+    def topic_count(self, value):
+        return Count.user_topic_count(self.id, value)
+
+    @property
+    def reply_count(self):
+        return self.replies.count()
+
+    @reply_count.setter
+    def reply_count(self, value):
+        return Count.user_reply_count(self.id, value)
 
     def __str__(self):
         return self.username
