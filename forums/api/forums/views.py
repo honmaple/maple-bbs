@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 20:45:08 (CST)
-# Last Update:星期三 2017-3-29 13:46:30 (CST)
+# Last Update:星期三 2017-3-29 21:9:52 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -66,17 +66,24 @@ class BoardListView(MethodView):
 class BoardView(MethodView):
     def get(self, boardId):
         board = Board.query.filter_by(id=boardId).first_or_404()
-        topics = self.topics(boardId)
+        has_children = board.children.exists()
+        topics = self.topics(boardId, has_children)
         data = {'title': 'Board', 'board': board, 'topics': topics}
         return render_template('board/board.html', **data)
 
-    def topics(self, boardId):
+    def topics(self, boardId, has_children):
         query_dict = request.data
         page, number = self.page_info
         keys = ['title']
         order_by = gen_order_by(query_dict, keys)
         filter_dict = gen_filter_dict(query_dict, keys)
-        filter_dict.update(board_id=boardId)
-        topics = Topic.query.filter_by(
-            **filter_dict).order_by(*order_by).paginate(page, number, True)
+        if has_children:
+            topics = Topic.query.outerjoin(Board).filter_by(**filter_dict).or_(
+                Board.parent_id == boardId,
+                Board.id == boardId).order_by(*order_by).paginate(page, number,
+                                                                  True)
+        else:
+            filter_dict.update(board_id=boardId)
+            topics = Topic.query.filter_by(
+                **filter_dict).order_by(*order_by).paginate(page, number, True)
         return topics

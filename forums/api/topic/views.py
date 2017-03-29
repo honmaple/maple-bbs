@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期三 2017-3-29 18:59:44 (CST)
+# Last Update:星期三 2017-3-29 21:18:33 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -85,6 +85,7 @@ class TopicListView(MethodView):
 
     @form_validate(form_board, error=error_callback, f='')
     def post(self):
+        user = request.user
         form = form_board()
         post_data = form.data
         title = post_data.pop('title', None)
@@ -106,7 +107,7 @@ class TopicListView(MethodView):
                 topic_tag.save()
             topic_tags.append(topic_tag)
         topic.tags = topic_tags
-        topic.author = current_user
+        topic.author = user
         topic.save()
         return redirect(url_for('topic.topic', topicId=topic.id))
 
@@ -160,9 +161,10 @@ class ReplyListView(MethodView):
     def post(self, topicId):
         topic = Topic.query.filter_by(id=topicId).first_or_404()
         post_data = request.data
+        user = request.user
         content = post_data.pop('content', None)
         reply = Reply(content=content, topic_id=topic.id)
-        reply.author = current_user
+        reply.author = user
         reply.save()
         return redirect(url_for('topic.topic', topicId=topic.id))
 

@@ -96,3 +96,22 @@ select {
 div.alert ul li {
     list-style-type:none
 }
+.like-active {
+    color:#a40004;
+}
+.like-no-active {
+    color:#ccc;
+}
+.reply-order a{
+    padding: 1px 2px;
+    color: #778087;
+    text-decoration: none;
+    font-size:13px;
+}
+.reply-count {
+    font-size:12px;
+    color:#999;
+}
+.reply-content a {
+    color:#778087;
+}

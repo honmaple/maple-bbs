@@ -19,7 +19,7 @@
           <p> 添加到收藏夹 </p>
           {% for collect in collects %}
           <label data-id="{{ collect.id }}"><input name="add-to-collect" type="checkbox" value="{{ collect.id}}" />{{ collect.name }}</label>
-          {% if collect.is_privacy %}
+          {% if collect.is_hidden %}
           <span class="label label-default">私密</span>
           {% else %}
           <span class="label label-default">公开</span>

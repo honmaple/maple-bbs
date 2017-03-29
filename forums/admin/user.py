@@ -6,13 +6,15 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 11:57:11 (CST)
-# Last Update:星期六 2017-3-25 18:16:24 (CST)
+# Last Update:星期三 2017-3-29 20:21:42 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from .views import BaseView
 from forums.extension import db
 from forums.api.user.models import User, UserInfo, UserSetting
+from wtforms import PasswordField
+from wtforms.validators import DataRequired
 
 STATUS = UserSetting.STATUS
 
@@ -22,7 +24,16 @@ def display_status(column):
 
 
 class UserView(BaseView):
-    pass
+    column_exclude_list = ['password', 'info', 'setting']
+    column_searchable_list = ['username', 'email']
+    column_filters = ['email', 'is_superuser', 'is_confirmed', 'register_time']
+    column_editable_list = ['is_confirmed', 'is_superuser']
+    form_columns = ('username', 'email', 'password', 'is_confirmed',
+                    'is_superuser')
+    inline_models = (UserInfo, UserSetting)
+    form_extra_fields = {
+        'password': PasswordField('Password', [DataRequired()])
+    }
 
 
 class UserInfoView(BaseView):
@@ -39,6 +50,7 @@ class UserSettingView(BaseView):
         locale=lambda v, c, m, p: m.get_choice_display('locale', 'LOCALE'),
         timezone=lambda v, c, m, p: m.get_choice_display('timezone', 'TIMEZONE'),
     )
+    column_editable_list = column_formatters.keys()
     form_choices = {
         'online_status': UserSetting.STATUS,
         'topic_list': UserSetting.STATUS,

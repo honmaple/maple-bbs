@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% block content %}
-{% if board.parent %}
+{% if board.parent_id %}
 {{ breadcrumb(hrefs={board.parent.name:url_for('forums.board',boardId=board.parent_id)},active=board.name) }}
 {% else %}
 {{ breadcrumb(active=board.name) }}
@@ -17,10 +17,10 @@
       {% else %}
       {{ board_body(board) }}
       {%- endfor %}
-      </div>
-      <div class="panel panel-default">
-        {% include "topic/_topic.html" %}
-      </div>
+    </div>
+    <div class="panel panel-default">
+      {% include "topic/_topic.html" %}
+    </div>
   </div>
   <div class="col-md-3" style="padding-left:0">
     {{ panel_base.board() }}

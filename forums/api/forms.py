@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 12:53:02 (CST)
-# Last Update:星期三 2017-3-29 13:39:45 (CST)
+# Last Update:星期三 2017-3-29 20:53:1 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -34,7 +34,7 @@ def collect_error_callback():
 def form_board():
     form = TopicForm()
     results = []
-    for b in Board.query.filter_by(parent_id=None):
+    for b in Board.query.all():
         if b.parent is None:
             results.append((b.id, b.name))
         else:

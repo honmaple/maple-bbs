@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:08:39 (CST)
-# Last Update:星期六 2017-3-25 19:22:55 (CST)
+# Last Update:星期三 2017-3-29 20:22:32 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -84,9 +84,6 @@ def create_user(username, email, password):
     # user.roles = 'Super'
     # user.confirmed_time = datetime.utcnow()
     user.save()
-    info = UserInfo(user=user)
-    setting = UserSetting(user=user)
-    db.session.commit()
 
 
 @manager.option('-h', '--host', dest='host', default='127.0.0.1')

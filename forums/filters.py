@@ -6,21 +6,18 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update:星期三 2017-3-29 19:27:23 (CST)
+# Last Update:星期三 2017-3-29 20:42:23 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from datetime import datetime
+from config import SITE
 
 from bleach import clean
 from flask import Markup, g
 from flask_babelex import format_datetime
 from flask_login import current_user
 from misaka import HtmlRenderer, Markdown
-
-from forums.api.topic.models import Reply, Topic
-from forums.api.user.models import User
-from forums.extension import redis_data
 
 
 def safe_clean(text):
@@ -72,30 +69,6 @@ def show_time():
         return 'UTC:' + format_datetime(datetime.utcnow())
 
 
-def get_user_infor(name):
-    user = User.query.filter(User.username == name).first()
-    return user
-
-
-def get_last_reply(uid):
-    reply = Reply.query.join(Reply.topic).filter(Topic.id == uid).first()
-    return reply
-
-
-def get_read_count(id):
-    read = redis_data.hget('topic:%s' % str(id), 'read')
-    replies = redis_data.hget('topic:%s' % str(id), 'replies')
-    if not read:
-        read = 0
-    else:
-        read = int(read)
-    if not replies:
-        replies = 0
-    else:
-        replies = int(replies)
-    return replies, read
-
-
 def notice_count():
     from forums.api.forums.models import Notice
     if g.user.is_authenticated:
@@ -133,27 +106,16 @@ def is_online(user):
 
 
 def is_not_confirmed(user):
-    return (not user.is_confirmed and
-            user.id == current_user.id)
-
-
-class Title(object):
-    setting = {'title': 'Honmaple', 'picture': '', 'description': '爱生活，更爱自由'}
-    title = setting['title']
-    picture = setting['picture']
-    description = setting['description']
+    return (not user.is_confirmed and user.id == current_user.id)
 
 
 def register_jinja2(app):
 
-    app.jinja_env.globals['Title'] = Title
+    app.jinja_env.globals['SITE'] = SITE
     app.jinja_env.globals['hot_tags'] = hot_tags
     app.jinja_env.globals['recent_tags'] = recent_tags
     app.jinja_env.globals['notice_count'] = notice_count
     app.jinja_env.globals['show_time'] = show_time
-    app.jinja_env.filters['get_last_reply'] = get_last_reply
-    app.jinja_env.filters['get_user_infor'] = get_user_infor
-    app.jinja_env.filters['get_read_count'] = get_read_count
     app.jinja_env.filters['timesince'] = timesince
     app.jinja_env.filters['markdown'] = safe_markdown
     app.jinja_env.filters['safe_clean'] = safe_clean
