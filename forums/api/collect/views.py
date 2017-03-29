@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 16:15:08 (CST)
-# Last Update:星期二 2017-3-28 21:57:24 (CST)
+# Last Update:星期三 2017-3-29 19:1:59 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -37,7 +37,8 @@ class CollectListView(MethodView):
         page, number = self.page_info
         keys = ['name']
         order_by = gen_order_by(query_dict, keys)
-        filter_dict = gen_filter_dict(query_dict, keys, user)
+        filter_dict = gen_filter_dict(query_dict, keys)
+        filter_dict.update(author_id=user.id)
         collects = Collect.query.filter_by(
             **filter_dict).order_by(*order_by).paginate(page, number, True)
         data = {'title': 'Collect', 'collects': collects, 'form': form}

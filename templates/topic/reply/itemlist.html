@@ -1,5 +1,4 @@
 {% from 'topic/reply/_macro.html' import like,no_replies %}
-{% set replies = topic.replies.paginate(1,10) %}
 <style>
  .like-active {
      color:#a40004;
@@ -30,8 +29,9 @@
     </ul>
   </div>
   {% if replies.items %}
-  {% set num = 1 %}
+  {% set num = 0 %}
   {% for reply in replies.items %}
+  {% set num = num + 1 %}
   {% set user = reply.author %}
   <div class="panel-body media" id="reply-{{ reply.id }}" style="border-bottom:1px solid #eee;margin:0">
     <div class="media-left">
@@ -58,7 +58,6 @@
       </a>
     </div>
   </div>
-  {% set num = num + 1 %}
   {% endfor %}
   {{ p_footer(replies,'topic.topic',dict(topicId=topic.id))}}
   {% else %}

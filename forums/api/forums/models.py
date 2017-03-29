@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-25 18:48:33 (CST)
-# Last Update:星期六 2017-3-25 18:48:35 (CST)
+# Last Update:星期三 2017-3-29 19:41:28 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -32,6 +32,18 @@ class Board(db.Model, ModelMixin):
             lazy='dynamic'),
         lazy='joined',
         uselist=False)
+
+    @property
+    def newest_topic(self):
+        return self.topics.order_by('-id').first()
+
+    @property
+    def topic_count(self):
+        return self.topics.count()
+
+    @property
+    def post_count(self):
+        return self.topics.count()
 
     def __str__(self):
         return self.name

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update:星期二 2017-3-28 21:12:1 (CST)
+# Last Update:星期三 2017-3-29 19:27:23 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -118,40 +118,23 @@ def recent_tags():
     return tags
 
 
-def is_liked(replyId):
-    from forums.api.topic.models import Reply
-    return Reply.query.filter_by(
-        likers__id=current_user.id, id=replyId).exists()
-
-
-def topic_is_followed(topicId):
-    from forums.api.topic.models import Topic
-    return Topic.query.filter_by(
-        followers__id=current_user.id, id=topicId).exists()
-
-
-def tag_is_followed(pk):
-    from forums.api.tag.models import Tags
-    return Tags.query.filter_by(followers__id=current_user.id, id=pk).exists()
-
-
-def user_is_followed(pk):
-    from forums.api.user.models import User
-    return User.query.filter_by(followers__id=current_user.id, id=pk).exists()
-
-
-def is_collected(topicId):
-    from forums.api.collect.models import Collect
-    return Collect.query.filter_by(
-        topics__id=topicId, author_id=current_user.id).exists()
-
-
-def is_online(username):
+def is_online(user):
+    from forums.api.user.models import UserSetting
     from forums.common.records import load_online_sign_users
-    online_users = load_online_sign_users()
-    if username in online_users:
-        return True
+    setting = user.setting
+    if setting.online_status == UserSetting.STATUS_ALLOW_ALL:
+        return user.username in load_online_sign_users()
+    elif setting.online_status == UserSetting.STATUS_ALLOW_AUTHENTICATED:
+        return user.username in load_online_sign_users(
+        ) and current_user.is_authenticated
+    elif setting.online_status == UserSetting.STATUS_ALLOW_OWN:
+        return current_user.id == user.id
     return False
+
+
+def is_not_confirmed(user):
+    return (not user.is_confirmed and
+            user.id == current_user.id)
 
 
 class Title(object):
@@ -174,9 +157,5 @@ def register_jinja2(app):
     app.jinja_env.filters['timesince'] = timesince
     app.jinja_env.filters['markdown'] = safe_markdown
     app.jinja_env.filters['safe_clean'] = safe_clean
-    app.jinja_env.filters['is_collected'] = is_collected
     app.jinja_env.filters['is_online'] = is_online
-    app.jinja_env.filters['is_liked'] = is_liked
-    app.jinja_env.filters['topic_is_followed'] = topic_is_followed
-    app.jinja_env.filters['tag_is_followed'] = tag_is_followed
-    app.jinja_env.filters['user_is_followed'] = tag_is_followed
+    app.jinja_env.filters['is_not_confirmed'] = is_not_confirmed

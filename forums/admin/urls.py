@@ -6,17 +6,17 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-28 10:15:42 (CST)
-# Last Update:星期三 2017-1-25 20:18:54 (CST)
+# Last Update:星期三 2017-3-29 13:13:11 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from forums.extension import admin
 from .forums import register_forums
-from .permission import register_permission
+# from .permission import register_permission
 from .user import register_user
 from .topic import register_topic
 
 register_forums(admin)
 register_user(admin)
 register_topic(admin)
-register_permission(admin)
+# register_permission(admin)

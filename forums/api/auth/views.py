@@ -6,20 +6,21 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-28 10:26:10 (CST)
-# Last Update:星期六 2017-3-25 18:26:32 (CST)
+# Last Update:星期三 2017-3-29 11:24:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from random import sample
 from string import ascii_letters, digits
 
-from flask import redirect, render_template, request, url_for
+from flask import current_app, redirect, render_template, request, url_for
 from flask.views import MethodView
 from flask_babelex import gettext as _
 from flask_login import current_user, login_required, login_user, logout_user
+from flask_principal import Identity, identity_changed, AnonymousIdentity
+
 from flask_maple.auth.forms import (ForgetForm, LoginForm, RegisterForm,
                                     form_validate)
-
 from forums.api.user.models import User
 from forums.common.response import HTTPResponse
 from forums.common.serializer import Serializer
@@ -42,6 +43,8 @@ class LoginView(MethodView):
         user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
             login_user(user, remember=remember)
+            identity_changed.send(
+                current_app._get_current_object(), identity=Identity(user.id))
             serializer = Serializer(user, many=False, depth=1)
             return HTTPResponse(
                 HTTPResponse.NORMAL_STATUS, data=serializer.data).to_response()
@@ -53,6 +56,8 @@ class LogoutView(MethodView):
     @login_required
     def get(self):
         logout_user()
+        identity_changed.send(
+            current_app._get_current_object(), identity=AnonymousIdentity())
         return redirect(request.args.get('next') or '/')
 
 

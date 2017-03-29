@@ -6,24 +6,25 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:52:07 (CST)
-# Last Update:星期二 2017-3-28 17:58:52 (CST)
+# Last Update:星期三 2017-3-29 19:40:39 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from datetime import datetime
 
 from flask import current_app
-from flask_maple.models import ModelMixin, ModelTimeMixin, ModelUserMixin
-from forums.common.models import CommonUserMixin
+from flask_login import current_user
 
+from flask_maple.models import ModelMixin, ModelTimeMixin, ModelUserMixin
 from forums.api.forums.models import Board
 from forums.api.user.models import User
+from forums.common.models import CommonUserMixin
 from forums.extension import db
 
-topics_follow_users = db.Table(
-    'topics_follow_users',
-    db.Column('topics_id', db.Integer, db.ForeignKey('topics.id')),
-    db.Column('follow_users_id', db.Integer, db.ForeignKey('users.id')))
+topic_follower = db.Table(
+    'topic_follower',
+    db.Column('topic_id', db.Integer, db.ForeignKey('topics.id')),
+    db.Column('follower_id', db.Integer, db.ForeignKey('users.id')))
 
 
 class Topic(db.Model, ModelMixin):
@@ -65,10 +66,34 @@ class Topic(db.Model, ModelMixin):
         lazy='joined')
     followers = db.relationship(
         User,
-        secondary=topics_follow_users,
+        secondary=topic_follower,
         backref=db.backref(
             'following_topics', lazy='dynamic'),
         lazy='dynamic')
+
+    def is_followed(self, user=None):
+        if user is None:
+            user = current_user
+        return db.session.query(topic_follower).filter(
+            topic_follower.c.topic_id == self.id,
+            topic_follower.c.follower_id == user.id).exists()
+
+    def is_collected(self, user=None):
+        if user is None:
+            user = current_user
+        return self.collects.filter_by(author_id=user.id).exists()
+
+    @property
+    def newest_reply(self):
+        return self.replies.order_by('-id').first()
+
+    @property
+    def reply_count(self):
+        return self.replies.count()
+
+    @property
+    def read_count(self):
+        return self.replies.count()
 
     def __str__(self):
         return self.title
@@ -77,11 +102,10 @@ class Topic(db.Model, ModelMixin):
         return "<Topic %r>" % self.title
 
 
-
-replies_likers = db.Table(
-    'replies_likers',
-    db.Column('replies_id', db.Integer, db.ForeignKey('replies.id')),
-    db.Column('likers_id', db.Integer, db.ForeignKey('users.id')))
+reply_liker = db.Table(
+    'reply_liker',
+    db.Column('reply_id', db.Integer, db.ForeignKey('replies.id')),
+    db.Column('liker_id', db.Integer, db.ForeignKey('users.id')))
 
 
 class Reply(db.Model, ModelMixin):
@@ -108,10 +132,15 @@ class Reply(db.Model, ModelMixin):
 
     likers = db.relationship(
         User,
-        secondary=replies_likers,
+        secondary=reply_liker,
         backref=db.backref(
             'like_replies', lazy='dynamic'),
         lazy='dynamic')
+
+    def is_liked(self, user=None):
+        if user is None:
+            user = current_user
+        return self.likers.filter_by(id=user.id).exists()
 
     def __str__(self):
         return self.content[:10]

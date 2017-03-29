@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-01-25 20:10:50 (CST)
-# Last Update:星期一 2017-3-27 19:41:1 (CST)
+# Last Update:星期三 2017-3-29 11:25:18 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -17,6 +17,7 @@ from forums.admin.urls import admin
 
 from .filters import register_jinja2
 from .logs import register_logging
+from .app import register_app
 
 
 def create_app(config):
@@ -36,6 +37,7 @@ def register(app):
     register_router(app)
     register_logging(app)
     register_jinja2(app)
+    register_app(app)
 
 
 def register_router(app):

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:08:06 (CST)
-# Last Update:星期二 2017-3-28 22:33:11 (CST)
+# Last Update:星期三 2017-3-29 11:53:37 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -88,15 +88,9 @@ class UserReplyListView(MethodView):
 
 class UserFollowerListView(MethodView):
     def get(self, username):
-        query_dict = request.data
         user = User.query.filter_by(username=username).first_or_404()
         page, number = self.page_info
-        keys = ['title']
-        order_by = gen_order_by(query_dict, keys)
-        filter_dict = gen_filter_dict(query_dict, keys)
-        filter_dict.update(author_id=user.id)
-        followers = Collect.query.filter_by(
-            **filter_dict).order_by(*order_by).paginate(page, number, True)
+        followers = user.followers.paginate(page, number, True)
         data = {'followers': followers, 'user': user}
         return render_template('user/followers.html', **data)
 

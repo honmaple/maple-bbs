@@ -30,7 +30,7 @@
   </span>
   <p>{{ reply.content | safe_clean }}</p>
   <span style="font-size:12px;color:#999;">
-    {{_('replied time:')}}{{ reply.publish | timesince }}
+    {{_('replied time:')}}{{ reply.created_at | timesince }}
   </span>
 </div>
 {% else %}

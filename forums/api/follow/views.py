@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-22 21:49:05 (CST)
-# Last Update:星期二 2017-3-28 18:2:43 (CST)
+# Last Update:星期三 2017-3-29 12:40:41 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -97,22 +97,22 @@ class FollowingUsersView(MethodView):
         user = request.user
         post_data = request.data
         user_id = post_data.pop('userId', None)
-        if user_id is not None and not User.query.filter_by(
-                following_users__id=user_id).exists():
+        if user_id is not None:
             f_user = User.query.filter_by(id=user_id).first_or_404()
-            user.following_users.append(f_user)
-            user.save()
+            if not f_user.is_followed(user):
+                user.following_users.append(f_user)
+                user.save()
         return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
 
     def delete(self):
         user = request.user
         post_data = request.data
         user_id = post_data.pop('userId', None)
-        if user_id is not None and User.query.filter_by(
-                following_users__id=user_id).exists():
+        if user_id is not None:
             f_user = User.query.filter_by(id=user_id).first_or_404()
-            user.following_users.remove(f_user)
-            user.save()
+            if f_user.is_followed(user):
+                user.following_users.remove(f_user)
+                user.save()
         return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
 
 

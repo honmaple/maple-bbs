@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 20:45:08 (CST)
-# Last Update:星期一 2017-3-27 19:47:49 (CST)
+# Last Update:星期三 2017-3-29 13:46:30 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -71,7 +71,12 @@ class BoardView(MethodView):
         return render_template('board/board.html', **data)
 
     def topics(self, boardId):
+        query_dict = request.data
         page, number = self.page_info
-        filter_dict = dict(board_id=boardId)
-        topics = Topic.get_list(page, number, filter_dict)
+        keys = ['title']
+        order_by = gen_order_by(query_dict, keys)
+        filter_dict = gen_filter_dict(query_dict, keys)
+        filter_dict.update(board_id=boardId)
+        topics = Topic.query.filter_by(
+            **filter_dict).order_by(*order_by).paginate(page, number, True)
         return topics

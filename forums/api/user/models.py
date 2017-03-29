@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期三 2017-1-25 20:25:9 (CST)
+# Last Update:星期三 2017-3-29 19:11:0 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import current_app
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 from flask_maple.models import ModelMixin
 from flask_mail import Message
 from threading import Thread
@@ -24,10 +24,10 @@ from forums.extension import db, mail
 from pytz import all_timezones
 from datetime import datetime
 
-users_follow_users = db.Table(
-    'users_follow_users',
-    db.Column('users_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('follow_users_id', db.Integer, db.ForeignKey('users.id')))
+user_follower = db.Table(
+    'user_follower',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('follower_id', db.Integer, db.ForeignKey('users.id')))
 
 
 class User(db.Model, UserMixin, ModelMixin):
@@ -43,12 +43,19 @@ class User(db.Model, UserMixin, ModelMixin):
 
     followers = db.relationship(
         'User',
-        secondary=users_follow_users,
-        primaryjoin=(id == users_follow_users.c.users_id),
-        secondaryjoin=(id == users_follow_users.c.follow_users_id),
+        secondary=user_follower,
+        primaryjoin=(id == user_follower.c.user_id),
+        secondaryjoin=(id == user_follower.c.follower_id),
         backref=db.backref(
             'following_users', lazy='dynamic'),
         lazy='dynamic')
+
+    def is_followed(self, user=None):
+        if user is None:
+            user = current_user
+        return db.session.query(user_follower).filter(
+            user_follower.c.user_id == self.id,
+            user_follower.c.follower_id == user.id).exists()
 
     def __str__(self):
         return self.username
@@ -156,7 +163,7 @@ class UserInfo(db.Model, ModelMixin):
         return "<UserInfo %r>" % str(self.id)
 
     def __str__(self):
-        return "%s's info" % self.user.username
+        return "%s's info" % self.user_id
 
 
 class UserSetting(db.Model, ModelMixin):
@@ -203,7 +210,7 @@ class UserSetting(db.Model, ModelMixin):
         return "<UserSetting %r>" % str(self.id)
 
     def __str__(self):
-        return "%s's setting" % self.user.username
+        return "%s's setting" % self.user_id
 
 
 @event.listens_for(User, 'before_insert')

@@ -6,30 +6,34 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期二 2017-3-28 22:24:9 (CST)
+# Last Update:星期三 2017-3-29 18:59:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import redirect, render_template, request, url_for, Markup
+from flask import Markup, redirect, render_template, request, url_for
 from flask_babelex import gettext as _
 from flask_login import current_user, login_required
 
 from flask_maple.auth.forms import form_validate
 from flask_maple.response import HTTPResponse
+from forums.api.forms import (CollectForm, ReplyForm, TopicForm,
+                              collect_error_callback, error_callback,
+                              form_board)
 from forums.api.forums.models import Board
 from forums.api.tag.models import Tags
 from forums.common.serializer import Serializer
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import BaseMethodView as MethodView
+from forums.common.views import IsAuthMethodView, IsConfirmedMethodView
 from forums.filters import safe_markdown
 
-from forums.api.forms import (CollectForm, ReplyForm, TopicForm,
-                              collect_error_callback, error_callback,
-                              form_board)
 from .models import Reply, Topic
+from .permissions import (like_permission, reply_list_permission,
+                          reply_permission, topic_list_permission,
+                          topic_permission)
 
 
-class TopicAskView(MethodView):
+class TopicAskView(IsConfirmedMethodView):
     def get(self):
         boardId = request.args.get('boardId', type=int)
         form = form_board()
@@ -39,7 +43,7 @@ class TopicAskView(MethodView):
         return render_template('topic/ask.html', **data)
 
 
-class TopicEditView(MethodView):
+class TopicEditView(IsConfirmedMethodView):
     def get(self, topicId):
         topic = Topic.query.filter_by(id=topicId).first_or_404()
         form = form_board()
@@ -51,7 +55,7 @@ class TopicEditView(MethodView):
         return render_template('topic/edit.html', **data)
 
 
-class TopicPreviewView(MethodView):
+class TopicPreviewView(IsConfirmedMethodView):
     @login_required
     def post(self):
         post_data = request.data
@@ -63,6 +67,8 @@ class TopicPreviewView(MethodView):
 
 
 class TopicListView(MethodView):
+    decorators = (topic_list_permission, )
+
     def get(self):
         query_dict = request.data
         page, number = self.page_info
@@ -106,10 +112,26 @@ class TopicListView(MethodView):
 
 
 class TopicView(MethodView):
+    per_page = 10
+
+    decorators = (topic_permission, )
+
     def get(self, topicId):
         form = ReplyForm()
+        query_dict = request.data
         topic = Topic.query.filter_by(id=topicId).first_or_404()
-        data = {'title': topic.title, 'form': form, 'topic': topic}
+        page, number = self.page_info
+        keys = ['title']
+        order_by = gen_order_by(query_dict, keys)
+        filter_dict = gen_filter_dict(query_dict, keys)
+        replies = topic.replies.filter_by(
+            **filter_dict).order_by(*order_by).paginate(page, number, True)
+        data = {
+            'title': topic.title,
+            'form': form,
+            'topic': topic,
+            'replies': replies
+        }
         return render_template('topic/topic.html', **data)
 
     # def put(self, topicId):
@@ -132,6 +154,8 @@ class TopicView(MethodView):
 
 
 class ReplyListView(MethodView):
+    decorators = (reply_list_permission, )
+
     @form_validate(ReplyForm, error=error_callback, f='')
     def post(self, topicId):
         topic = Topic.query.filter_by(id=topicId).first_or_404()
@@ -144,6 +168,9 @@ class ReplyListView(MethodView):
 
 
 class ReplyView(MethodView):
+
+    decorators = (reply_permission, )
+
     def put(self, replyId):
         post_data = request.data
         reply = Reply.query.filter_by(id=replyId).first()
@@ -164,6 +191,9 @@ class ReplyView(MethodView):
 
 
 class LikeView(MethodView):
+
+    decorators = (like_permission, )
+
     def post(self, replyId):
         user = request.user
         reply = Reply.query.filter_by(id=replyId).first_or_404()

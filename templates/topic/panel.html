@@ -1,6 +1,6 @@
 {% if g.user.is_authenticated %}
 <ul class="list-group">
-  {% if topic.id | topic_is_followed %}
+  {% if topic.is_followed() %}
   <button type="button" class="btn btn-info btn-block topic-following active" data-id="{{topic.id}}">取消关注</button>
   {% else %}
   <button type="button" class="btn btn-info btn-block topic-following" data-id="{{topic.id}}">关注问题</button>
@@ -10,7 +10,7 @@
     编辑问题
   </a>
   {%- endif %}
-  {% if topic.id | is_collected %}
+  {% if topic.is_collected() %}
   <span class="btn btn-default btn-block">已收藏</span>
   {% else %}
   <span class="btn btn-default btn-block" data-toggle="modal" data-target="#sidecollect">收藏问题</span>

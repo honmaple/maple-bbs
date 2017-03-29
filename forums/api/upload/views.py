@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-21 21:56:41 (CST)
-# Last Update:星期二 2017-3-28 15:58:18 (CST)
+# Last Update:星期三 2017-3-29 18:19:47 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -30,9 +30,9 @@ class AvatarView(MethodView):
         AvatarForm, error=lambda: redirect(url_for('setting.setting')), f='')
     def post(self):
         form = AvatarForm()
+        user = request.user
         file = request.files[form.avatar.name]
-        filename = secure_filename(file.filename)
-        filename = current_user.username + '-' + str(int(time())) + str(
+        filename = user.username + '-' + str(int(time())) + str(
             randint(1000, 9999))
         img = Image.open(file)
         size = 150, 150
@@ -45,7 +45,7 @@ class AvatarView(MethodView):
             os.mkdir(avatar_path)
         img.save(avatar)
         img.close()
-        info = current_user.info
+        info = user.info
         if info.avatar:
             ef = os.path.join(avatar_path, info.avatar)
             if os.path.exists(ef):

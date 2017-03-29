@@ -38,9 +38,9 @@
 {% macro user_avatar(user,width=64) -%}
 {% set info = user.info %}
 {% if not info.avatar -%}
-<img class="media-object img-circle" src="{{ url_for('avatar',text=user.username) }}" style="width:{{ width }}px;height:{{ width }}px">
+<img class="img-circle" src="{{ url_for('avatar',text=user.username) }}" style="width:{{ width }}px;height:{{ width }}px">
 {% else %}
-<img class="media-object img-circle" src="{{ url_for('upload.avatar_file',filename=info.avatar) }}" style="width:{{ width }}px;height:{{ width }}px">
+<img class="img-circle" src="{{ url_for('upload.avatar_file',filename=info.avatar) }}" style="width:{{ width }}px;height:{{ width }}px">
 {%- endif %}
 {%- endmacro %}
 

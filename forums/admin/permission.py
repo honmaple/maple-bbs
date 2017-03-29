@@ -6,13 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 09:39:36 (CST)
-# Last Update:星期六 2017-3-25 18:16:4 (CST)
+# Last Update:星期三 2017-3-29 13:12:47 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from .views import BaseView
 from forums.extension import db
-from forums.api.permission.models import Group, Router, Permission
+from flask_maple.permission.models import Group, Router, Permission
 
 __all__ = ['register_permission']
 

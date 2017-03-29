@@ -1,5 +1,5 @@
 {% macro like(reply) -%}
-{% if reply.id | is_liked %}
+{% if reply.is_liked() %}
 <a href="javascript:void(0);" style="padding:0" class="like-reply btn btn-sm like-active" data-id="{{ reply.id}}" title="取消赞">
   <i class="fa fa-thumbs-up"></i>
   <span class="reply-count">{{ reply.likers.count() }}</span>

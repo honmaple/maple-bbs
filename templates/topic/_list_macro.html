@@ -74,21 +74,18 @@
 
 {% macro body_read(topic) -%}
 <div class="col-md-2  hidden-xs" style="padding:5px 5px 5px 20px;margin:0">
-  {% set rep,read = topic.id,1 %}
-  <span>{{ rep }}</span> /
-  <span style="font-size:12px;color:#999;">
-    {{ read }}
-  </span>
+  <span>{{ topic.reply_count }}</span> /
+  <span style="font-size:12px;color:#999;">{{ topic.read_count }}</span>
 </div>
 {%- endmacro %}
 
 {% macro body_reply(topic) -%}
 <div class="col-md-2 hidden-xs" style="padding:5px;margin:0;">
-  {% set last_reply = topic.replies.first() %}
-  {% if last_reply %}
-  <span style="font-size:12px">{{ link.user(last_reply.author) }}</span>
+  {% set newest_reply = topic.newest_reply %}
+  {% if newest_reply %}
+  <span style="font-size:12px">{{ link.user(newest_reply.author) }}</span>
   <br/>
-  <span style="font-size:12px;color:#999;">{{ last_reply.created_at | timesince }}</span>
+  <span style="font-size:12px;color:#999;">{{ newest_reply.created_at | timesince }}</span>
   {% else %}
   <span style="font-size:12px">{{ link.user(topic.author) }}</span>
   <br/>

@@ -9,10 +9,10 @@
     <div  style="background:#fff;border:1px solid #ddd;border-radius:5px">
       <ul class="nav nav-pills nav-stacked" >
         {% set name = user.username %}
-        <li role="presentation" class="topics"><a href="{{ url_for('user.user',username=user.username)}}">{{ _("topics of %(n)s",n = name) }}</a></li>
-        <li role="presentation" class="replies"><a href="{{ url_for('user.reply',username=user.username)}}">{{ _("replies of %(n)s",n = name) }}</a></li>
-        <li role="presentation" class="collects"><a href="{{ url_for('user.collect',username=user.username)}}">{{ _("collects of %(n)s",n = name) }}</a></li>
-        <li role="presentation" class="followers"><a href="{{ url_for('user.follower',username=user.username)}}">{{ _("followers of %(n)s",n = name) }}</a></li>
+        <li role="presentation" {% if request.path.endswith('topics') %}class="active"{% endif %}><a href="{{ url_for('user.topic',username=user.username)}}">{{ _("topics of %(n)s",n = name) }}</a></li>
+        <li role="presentation" {% if request.path.endswith('replies') %}class="active"{% endif %}><a href="{{ url_for('user.reply',username=user.username)}}">{{ _("replies of %(n)s",n = name) }}</a></li>
+        <li role="presentation" {% if request.path.endswith('collects') %}class="active"{% endif %}><a href="{{ url_for('user.collect',username=user.username)}}">{{ _("collects of %(n)s",n = name) }}</a></li>
+        <li role="presentation" {% if request.path.endswith('followers') %}class="active"{% endif %}><a href="{{ url_for('user.follower',username=user.username)}}">{{ _("followers of %(n)s",n = name) }}</a></li>
       </ul>
     </div>
   </div>

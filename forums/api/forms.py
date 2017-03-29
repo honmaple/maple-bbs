@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 12:53:02 (CST)
-# Last Update:星期二 2017-3-28 17:59:13 (CST)
+# Last Update:星期三 2017-3-29 13:39:45 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -76,16 +76,18 @@ class LoginForm(BaseForm):
     remember = BooleanField(_('Remember me'), default=False)
 
 
+WITHIN = [(0, _('All Topics')), (1, _('One Day')), (2, _('One Week')),
+          (3, _('One Month'))]
+
+ORDERBY = [(0, _('Publish')), (1, _('Author'))]
+
+DESC = [(0, _('Desc')), (1, _('Asc'))]
+
+
 class SortForm(Form):
-    within = SelectField(
-        _('Choice'),
-        coerce=int,
-        choices=[(0, _('All Topics')), (1, _('One Day')), (2, _('One Week')),
-                 (3, _('One Month'))])
-    orderby = SelectField(
-        'orderby', coerce=int, choices=[(0, _('Publish')), (1, _('Author'))])
-    desc = SelectField(
-        'Up and Down', coerce=int, choices=[(0, _('Desc')), (1, _('Asc'))])
+    within = SelectField(_('Choice'), coerce=int, choices=WITHIN)
+    orderby = SelectField('orderby', coerce=int, choices=ORDERBY)
+    desc = SelectField('Up and Down', coerce=int, choices=DESC)
 
 
 class SearchForm(Form):
@@ -130,7 +132,7 @@ class AvatarForm(Form):
 
 class PrivacyForm(Form):
     online_status = SelectField(
-        _('Login status:'), coerce=str, choices=choices)
+        _('Online status:'), coerce=str, choices=choices)
     topic_list = SelectField(_('Topic List:'), coerce=str, choices=choices)
 
     rep_list = SelectField(_('Reply List:'), coerce=str, choices=choices)

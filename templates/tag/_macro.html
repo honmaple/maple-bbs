@@ -19,7 +19,7 @@
       </a>
     </span>
     {% if g.user.is_authenticated %}
-    {% if tag.id | tag_is_followed %}
+    {% if tag.is_followed() %}
     <button class="btn btn-sm btn-default tag-following active" data-id="{{ tag.id}}" style="padding:0 5px">取消关注</button>
     {% else %}
     <button class="btn btn-sm btn-default tag-following" data-id="{{ tag.id}}" style="padding:0 5px">关注</button>

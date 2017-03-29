@@ -8,15 +8,9 @@ function SortFuntion(){
   var orderby =  $('select#orderby').val();
   var desc =  $('select#desc').val();
   var params = getQueryParams();
-  if (within != '0'){
-    params.within = within;
-  }
-  if (orderby != '0'){
-    params.orderby = orderby;
-  }
-  if (desc != '0'){
-    params.desc = desc;
-  }
+  params.within = within;
+  params.orderby = orderby;
+  params.desc = desc;
   window.location.href = window.location.pathname + '?' + $.param(params);
 }
 $(document).ready(function(){

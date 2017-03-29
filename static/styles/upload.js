@@ -10,7 +10,7 @@ function loadFile(event) {
   }else{
     var reader = new FileReader();
     reader.onload = function(){
-      var icon = '<i class="icon-exchange"></i>' + '\n';
+      var icon = '<i class="fa fa-exchange"></i>' + '\n';
       var img = '<img src="' + reader.result + '" title="avatar" class="avatar img-circle">';
       $("#show-avatar").html(icon + img);
     };

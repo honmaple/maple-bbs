@@ -6,13 +6,25 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-13 13:29:37 (CST)
-# Last Update:星期一 2017-3-13 13:31:23 (CST)
+# Last Update:星期三 2017-3-29 13:54:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import request, current_app
+from flask import request, current_app, flash, redirect, url_for
 from flask.views import MethodView
-from flask_login import login_required
+from flask_login import login_required, current_user
+from forums.permission import confirm_permission
+
+
+def is_confirmed(func):
+    def _is_confirmed(*args, **kwargs):
+        if confirm_permission.can():
+            ret = func(*args, **kwargs)
+            return ret
+        flash('请验证你的帐号', 'warning')
+        return redirect(url_for('user.user', username=current_user.username))
+
+    return _is_confirmed
 
 
 class BaseMethodView(MethodView):
@@ -32,3 +44,7 @@ class BaseMethodView(MethodView):
 
 class IsAuthMethodView(BaseMethodView):
     decorators = [login_required]
+
+
+class IsConfirmedMethodView(BaseMethodView):
+    decorators = [is_confirmed, login_required]
