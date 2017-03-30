@@ -20,6 +20,7 @@
     </div>
     <div class="panel panel-default">
       {% include "topic/_topic.html" %}
+      {{ p_footer(topics,'forums.board',dict(boardId=board.id))}}
     </div>
   </div>
   <div class="col-md-3" style="padding-left:0">

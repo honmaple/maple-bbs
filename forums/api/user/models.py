@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期三 2017-3-29 21:54:25 (CST)
+# Last Update:星期四 2017-3-30 15:10:19 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -25,6 +25,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_maple.models import ModelMixin
 from forums.count import Count
 from forums.extension import db, mail
+from forums.common.records import load_online_sign_users
 
 user_follower = db.Table(
     'user_follower',
@@ -41,7 +42,7 @@ class User(db.Model, UserMixin, ModelMixin):
     is_superuser = db.Column(db.Boolean, default=False)
     is_confirmed = db.Column(db.Boolean, default=False)
     register_time = db.Column(db.DateTime, default=datetime.now())
-    last_login = db.Column(db.DateTime, nullable=True)
+    last_login = db.Column(db.DateTime, default=datetime.now())
 
     followers = db.relationship(
         'User',
@@ -58,6 +59,18 @@ class User(db.Model, UserMixin, ModelMixin):
         return db.session.query(user_follower).filter(
             user_follower.c.user_id == self.id,
             user_follower.c.follower_id == user.id).exists()
+
+    @property
+    def is_online(self):
+        setting = self.setting
+        if setting.online_status == UserSetting.STATUS_ALLOW_ALL:
+            return self.username in load_online_sign_users()
+        elif setting.online_status == UserSetting.STATUS_ALLOW_AUTHENTICATED:
+            return self.username in load_online_sign_users(
+            ) and current_user.is_authenticated
+        elif setting.online_status == UserSetting.STATUS_ALLOW_OWN:
+            return current_user.id == self.id
+        return False
 
     @property
     def topic_count(self):
@@ -202,7 +215,7 @@ class UserSetting(db.Model, ModelMixin):
     __tablename__ = 'usersetting'
     id = db.Column(db.Integer, primary_key=True)
     online_status = db.Column(
-        db.Integer, nullable=False, default=STATUS_ALLOW_ALL)
+        db.String(10), nullable=False, default=STATUS_ALLOW_ALL)
     topic_list = db.Column(
         db.String(10), nullable=False, default=STATUS_ALLOW_ALL)
     rep_list = db.Column(

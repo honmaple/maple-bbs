@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update:星期三 2017-3-29 20:42:23 (CST)
+# Last Update:星期四 2017-3-30 15:10:35 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -68,17 +68,6 @@ def show_time():
     else:
         return 'UTC:' + format_datetime(datetime.utcnow())
 
-
-def notice_count():
-    from forums.api.forums.models import Notice
-    if g.user.is_authenticated:
-        count = Notice.query.filter_by(
-            rece_id=g.user.id, is_read=False).count()
-        if count > 0:
-            return count
-    return None
-
-
 def hot_tags():
     from forums.api.tag.models import Tags
     tags = Tags.query.limit(9).all()
@@ -91,20 +80,6 @@ def recent_tags():
     return tags
 
 
-def is_online(user):
-    from forums.api.user.models import UserSetting
-    from forums.common.records import load_online_sign_users
-    setting = user.setting
-    if setting.online_status == UserSetting.STATUS_ALLOW_ALL:
-        return user.username in load_online_sign_users()
-    elif setting.online_status == UserSetting.STATUS_ALLOW_AUTHENTICATED:
-        return user.username in load_online_sign_users(
-        ) and current_user.is_authenticated
-    elif setting.online_status == UserSetting.STATUS_ALLOW_OWN:
-        return current_user.id == user.id
-    return False
-
-
 def is_not_confirmed(user):
     return (not user.is_confirmed and user.id == current_user.id)
 
@@ -114,10 +89,7 @@ def register_jinja2(app):
     app.jinja_env.globals['SITE'] = SITE
     app.jinja_env.globals['hot_tags'] = hot_tags
     app.jinja_env.globals['recent_tags'] = recent_tags
-    app.jinja_env.globals['notice_count'] = notice_count
     app.jinja_env.globals['show_time'] = show_time
     app.jinja_env.filters['timesince'] = timesince
-    app.jinja_env.filters['markdown'] = safe_markdown
     app.jinja_env.filters['safe_clean'] = safe_clean
-    app.jinja_env.filters['is_online'] = is_online
     app.jinja_env.filters['is_not_confirmed'] = is_not_confirmed

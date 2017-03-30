@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-29 21:28:52 (CST)
-# Last Update:星期三 2017-3-29 22:1:2 (CST)
+# Last Update:星期四 2017-3-30 14:59:51 (CST)
 #          By:
 # Description: 一些统计信息
 # **************************************************************************
@@ -49,6 +49,15 @@ class Count(object):
             pipe.hincrby(key, 'read', value)
             pipe.execute()
         return redis_data.hget(key, 'read') or 0
+
+    @classmethod
+    def reply_liker_count(cls, replyId, value=None):
+        key = 'count:reply:%s' % str(replyId)
+        if value is not None:
+            pipe = redis_data.pipeline()
+            pipe.hincrby(key, 'likers', value)
+            pipe.execute()
+        return redis_data.hget(key, 'likers') or 0
 
     @classmethod
     def user_topic_count(cls, userId, value=None):

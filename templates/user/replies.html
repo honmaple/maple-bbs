@@ -15,14 +15,14 @@
     </span>
   </div>
   {% if replies_is_allowed %}
-  {{ itemlist(replies) }}
+  {{ itemlist(replies,user) }}
   {% else %}
   {{ not_allowed() }}
   {% endif %}
 </div>
 {%- endblock mmm %}
 
-{% macro itemlist(replies) -%}
+{% macro itemlist(replies,user) -%}
 {% for reply in replies.items %}
 <div class="panel-body" style="border-bottom:1px solid #eee">
   <span style="font-size:12px;color:#999;">
@@ -38,5 +38,5 @@
   {{_('No Reply')}}
 </div>
 {% endfor  %}
-{{ p_footer(replies,'user.reply')}}
+{{ p_footer(replies,'user.reply',dict(username=user.username))}}
 {%- endmacro %}

@@ -23,6 +23,6 @@
     {{_('No Follower')}}
   </div>
   {% endfor  %}
-  {{ p_footer(followers,'user.follower')}}
+  {{ p_footer(followers,'user.follower',dict(username=user.username)) }}
 </div>
 {%- endblock mmm %}

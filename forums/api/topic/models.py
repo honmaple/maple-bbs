@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:52:07 (CST)
-# Last Update:星期三 2017-3-29 21:49:10 (CST)
+# Last Update:星期四 2017-3-30 15:5:44 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -21,6 +21,7 @@ from forums.api.user.models import User
 from forums.common.models import CommonUserMixin
 from forums.extension import db
 from forums.count import Count
+from forums.filters import safe_markdown, safe_clean, markdown
 
 topic_follower = db.Table(
     'topic_follower',
@@ -85,12 +86,20 @@ class Topic(db.Model, ModelMixin):
         return self.collects.filter_by(author_id=user.id).exists()
 
     @property
+    def text(self):
+        if self.content_type == Topic.CONTENT_TYPE_TEXT:
+            return safe_clean(self.content)
+        elif self.content_type == Topic.CONTENT_TYPE_MARKDOWN:
+            return markdown(self.content)
+        return self.content
+
+    @property
     def newest_reply(self):
         return self.replies.order_by('-id').first()
 
     @property
     def reply_count(self):
-        return self.replies.count()
+        return Count.topic_reply_count(self.id)
 
     @reply_count.setter
     def reply_count(self, value):
@@ -103,10 +112,6 @@ class Topic(db.Model, ModelMixin):
     @read_count.setter
     def read_count(self, value):
         return Count.topic_read_count(self.id, value)
-
-    @property
-    def read_count(self):
-        return self.replies.count()
 
     def __str__(self):
         return self.title
@@ -153,7 +158,17 @@ class Reply(db.Model, ModelMixin):
     def is_liked(self, user=None):
         if user is None:
             user = current_user
+            if not user.is_authenticated:
+                return False
         return self.likers.filter_by(id=user.id).exists()
+
+    @property
+    def liker_count(self):
+        return Count.reply_liker_count(self.id)
+
+    @liker_count.setter
+    def liker_count(self, value):
+        return Count.reply_liker_count(self.id, value)
 
     def __str__(self):
         return self.content[:10]

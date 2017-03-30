@@ -1,7 +1,3 @@
 <div class="panel-body topic-content">
-  {% if topic.is_markdown %}
-  {{ topic.content | markdown }}
-  {% else %}
-  {{ topic.content | safe_clean }}
-  {% endif %}
+  {{ topic.text }}
 </div>

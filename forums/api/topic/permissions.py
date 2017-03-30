@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-29 15:53:37 (CST)
-# Last Update:星期三 2017-3-29 18:38:9 (CST)
+# Last Update:星期四 2017-3-30 16:17:48 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,6 +15,14 @@ from flask_login import login_required
 
 from forums.permission import (ReplyPermission, RestfulView, TopicPermission,
                                is_confirmed)
+
+
+class Edit(RestfulView):
+    def get(self, topicId):
+        permission = TopicPermission(topicId)
+        if not permission.can():
+            return self.callback()
+        return True
 
 
 class TopicList(RestfulView):
@@ -70,3 +78,4 @@ topic_permission = Topic()
 reply_list_permission = ReplyList()
 reply_permission = Reply()
 like_permission = Like()
+edit_permission = Edit()

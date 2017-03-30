@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-21 21:56:41 (CST)
-# Last Update:星期三 2017-3-29 18:19:47 (CST)
+# Last Update:星期四 2017-3-30 21:50:30 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -42,7 +42,7 @@ class AvatarView(MethodView):
         avatar_path = current_app.config['AVATAR_FOLDER']
         avatar = os.path.join(avatar_path, filename + '.png')
         if not os.path.exists(avatar_path):
-            os.mkdir(avatar_path)
+            os.makedirs(avatar_path)
         img.save(avatar)
         img.close()
         info = user.info
@@ -58,10 +58,13 @@ class AvatarView(MethodView):
 
 class AvatarFileView(MethodView):
     def get(self, filename):
-        avatar_path = os.path.join(current_app.static_folder,
-                                   current_app.config.get('AVATAR_FOLDER',
-                                                          'avatars/'))
+        current_app.config.setdefault('AVATAR_FOLDER', os.path.join(
+            current_app.static_folder, 'avatars/'))
+        avatar_path = current_app.config['AVATAR_FOLDER']
+        print(avatar_path)
         if not os.path.exists(os.path.join(avatar_path, filename)):
-            avatar_path = os.path.join(current_app.static_folder, 'images/')
-            filename = 'Moo.png'
+            filename = filename.split('-')[0]
+            return redirect(url_for('avatar', text=filename))
+            # avatar_path = os.path.join(current_app.static_folder, 'images/')
+            # filename = 'Moo.png'
         return send_from_directory(avatar_path, filename)

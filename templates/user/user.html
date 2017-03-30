@@ -15,14 +15,14 @@
     </span>
   </div>
   {% if topic_is_allowed %}
-  {{ itemlist(topics) }}
+  {{ itemlist(topics,user) }}
   {% else %}
   {{ not_allowed() }}
   {% endif %}
 </div>
 {%- endblock mmm %}
 
-{% macro itemlist(topics) -%}
+{% macro itemlist(topics,user) -%}
 {% for topic in topics.items %}
 <div class="panel-body" style="border-bottom:1px solid #eee;font-size:16px;">
   <span style="color:#666">{{ topic.board.board }}</span>
@@ -37,5 +37,5 @@
   {{_('No Topic')}}
 </div>
 {% endfor  %}
-{{ p_footer(topics,'user.topic')}}
+{{ p_footer(topics,'user.topic',dict(username=user.username))}}
 {%- endmacro %}
