@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期三 2017-3-29 22:17:13 (CST)
+# Last Update:星期四 2017-3-30 16:39:56 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -30,7 +30,7 @@ from forums.filters import safe_markdown
 from .models import Reply, Topic
 from .permissions import (like_permission, reply_list_permission,
                           reply_permission, topic_list_permission,
-                          topic_permission)
+                          topic_permission, edit_permission)
 
 
 class TopicAskView(IsConfirmedMethodView):
@@ -44,6 +44,8 @@ class TopicAskView(IsConfirmedMethodView):
 
 
 class TopicEditView(IsConfirmedMethodView):
+    decorators = (edit_permission, )
+
     def get(self, topicId):
         topic = Topic.query.filter_by(id=topicId).first_or_404()
         form = form_board()
@@ -101,6 +103,7 @@ class TopicListView(MethodView):
         tags = tags.split(',')
         topic_tags = []
         for tag in tags:
+            tag = tag.strip()
             topic_tag = Tags.query.filter_by(name=tag).first()
             if topic_tag is None:
                 topic_tag = Tags(name=tag, description=tag)
@@ -118,8 +121,6 @@ class TopicListView(MethodView):
 
 
 class TopicView(MethodView):
-    per_page = 10
-
     decorators = (topic_permission, )
 
     def get(self, topicId):
@@ -140,23 +141,25 @@ class TopicView(MethodView):
         }
         return render_template('topic/topic.html', **data)
 
-    # def put(self, topicId):
-    #     post_data = request.data
-    #     topic = Topic.query.filter_by(id=topicId).first_or_404()
-    #     title = post_data.pop('title', None)
-    #     content = post_data.pop('content', None)
-    #     content_type = post_data.pop('content_type', None)
-    #     board = post_data.pop('board', None)
-    #     if title is not None:
-    #         topic.title = title
-    #     if content is not None:
-    #         topic.content = content
-    #     if content_type is not None:
-    #         topic.content_type = content_type
-    #     if board is not None:
-    #         topic.board = int(board)
-    #     topic.save()
-    #     return redirect(url_for('topic.topic', topicId=topic.id))
+    @form_validate(form_board)
+    def put(self, topicId):
+        form = form_board()
+        post_data = form.data
+        topic = Topic.query.filter_by(id=topicId).first_or_404()
+        title = post_data.pop('title', None)
+        content = post_data.pop('content', None)
+        content_type = post_data.pop('content_type', None)
+        category = post_data.pop('category', None)
+        if title is not None:
+            topic.title = title
+        if content is not None:
+            topic.content = content
+        if content_type is not None:
+            topic.content_type = content_type
+        if category is not None:
+            topic.board_id = int(category)
+        topic.save()
+        return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
 
 
 class ReplyListView(MethodView):
@@ -183,21 +186,17 @@ class ReplyView(MethodView):
 
     def put(self, replyId):
         post_data = request.data
-        reply = Reply.query.filter_by(id=replyId).first()
+        reply = Reply.query.filter_by(id=replyId).first_or_404()
         content = post_data.pop('content', None)
         if content is not None:
             reply.content = content
         reply.save()
-        serializer = Serializer(reply, many=False)
-        return HTTPResponse(HTTPResponse.NORMAL_STATUS,
-                            **serializer.data).to_response()
+        return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
 
     def delete(self, replyId):
-        reply = Reply.query.filter_by(id=replyId).first()
+        reply = Reply.query.filter_by(id=replyId).first_or_404()
         reply.delete()
-        serializer = Serializer(reply, many=False)
-        return HTTPResponse(HTTPResponse.NORMAL_STATUS,
-                            **serializer.data).to_response()
+        return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
 
 
 class LikeView(MethodView):

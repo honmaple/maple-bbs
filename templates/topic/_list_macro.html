@@ -43,7 +43,7 @@
   <div class="media-body">
     <div class="media-heading">
       {% if topic.is_top %}
-      <span><i class="fa fa-pushpin text-danger">&nbsp</i></span>
+      <span><i class="fa fa-thumb-tack text-danger">&nbsp</i></span>
       {% endif %}
       <a href="{{url_for('topic.topic',topicId=topic.id)}}" style="color:#555">{{ topic.title }}</a>
     </div>

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-21 21:56:41 (CST)
-# Last Update:星期三 2017-3-29 18:19:47 (CST)
+# Last Update:星期四 2017-3-30 14:6:32 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -62,6 +62,8 @@ class AvatarFileView(MethodView):
                                    current_app.config.get('AVATAR_FOLDER',
                                                           'avatars/'))
         if not os.path.exists(os.path.join(avatar_path, filename)):
-            avatar_path = os.path.join(current_app.static_folder, 'images/')
-            filename = 'Moo.png'
+            filename = filename.split('-')[0]
+            return redirect(url_for('avatar', text=filename))
+            # avatar_path = os.path.join(current_app.static_folder, 'images/')
+            # filename = 'Moo.png'
         return send_from_directory(avatar_path, filename)

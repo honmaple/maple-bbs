@@ -8,8 +8,6 @@
     </small>
   </div>
   <div class="media-right">
-    <a href="{{ url_for('user.user',username=topic.author.username)}}">
-      <img class="media-object img-circle" src="{{ url_for('avatar',text=author.username)}}" style="width:56px;height:56px">
-    </a>
+    {{ link.user_avatar(topic.author) }}
   </div>
 </div>

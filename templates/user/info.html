@@ -25,7 +25,7 @@
 {%- endmacro %}
 
 {% macro online(user) -%}
-{% if user | is_online %}
+{% if user.is_online %}
 <span class="online">{{ _('ONLINE') }} </span>
 {%- else %}
 <span class="online">{{ _('OUTLINE') }}</span>

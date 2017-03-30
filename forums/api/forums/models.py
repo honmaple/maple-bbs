@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-25 18:48:33 (CST)
-# Last Update:星期三 2017-3-29 22:14:49 (CST)
+# Last Update:星期四 2017-3-30 14:49:19 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -40,11 +40,12 @@ class Board(db.Model, ModelMixin):
 
     @property
     def topic_count(self):
-        return self.topics.count()
+        # return self.topics.count()
+        return Count.board_topic_count(self.id)
 
     @topic_count.setter
     def topic_count(self, value):
-        Count.board_topic_count(self.id, value)
+        return Count.board_topic_count(self.id, value)
 
     @property
     def post_count(self):
@@ -52,7 +53,7 @@ class Board(db.Model, ModelMixin):
 
     @post_count.setter
     def post_count(self, value):
-        Count.board_post_count(self.id, value)
+        return Count.board_post_count(self.id, value)
 
     def __str__(self):
         return self.name

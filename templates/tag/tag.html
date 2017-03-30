@@ -9,6 +9,7 @@
         {{ title(tag) }}
       </div>
       {% include "topic/_topic.html" %}
+      {{ p_footer(topics,'tag.tag',dict(name=tag.name))}}
     </div>
   </div>
   <div class="col-md-3" style="padding-left:0">

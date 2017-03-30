@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-12 13:29:17 (CST)
-# Last Update:星期三 2017-3-29 22:26:9 (CST)
+# Last Update:星期四 2017-3-30 14:46:35 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -48,6 +48,7 @@ class OnlineMiddleware(object):
         else:
             mark_online(request.remote_addr)
         g.get_online = get_online()
+        # g.get_online = (1, 2, 3, 4, 5)
 
 
 def get_online():

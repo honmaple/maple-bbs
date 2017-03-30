@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-22 21:49:08 (CST)
-# Last Update:星期四 2016-12-22 22:20:53 (CST)
+# Last Update:星期四 2017-3-30 15:26:49 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,7 +14,7 @@ from flask import Blueprint
 from .views import (FollowingTagsView, FollowingUsersView, FollowingTopicsView,
                     FollowingCollectsView)
 
-site = Blueprint('follow', __name__, url_prefix='/user/following')
+site = Blueprint('follow', __name__, url_prefix='/following')
 
 topic_view = FollowingTopicsView.as_view('topic')
 tag_view = FollowingTagsView.as_view('tag')
