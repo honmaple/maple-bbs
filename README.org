@@ -69,9 +69,9 @@ python setup.py install
 
 *** Init sql
     #+BEGIN_SRC python
-    python manage.py db init 
-    python manage.py db migrate -m "first migrate"
-    python manage.py db upgrade
+    python manager.py db init 
+    python manager.py db migrate -m "first migrate"
+    python manager.py db upgrade
     #+END_SRC
     *Ok*,please recovery *maple/topic/forms.py*
 
