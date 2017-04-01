@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-28 10:26:10 (CST)
-# Last Update:星期三 2017-3-29 11:24:40 (CST)
+# Last Update:星期六 2017-4-1 21:59:10 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -115,29 +115,31 @@ class ForgetView(MethodView):
         password = ''.join(sample(ascii_letters + digits, 12))
         user.set_password(password)
         user.save()
-        self.email(user)
-        return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
-
-    def email(self, user):
-        html = render_template(
-            'templet/forget.html', confirm_url=user.password)
+        html = render_template('templet/forget.html', confirm_url=password)
         subject = "Please update your password in time"
-        user.send_email(html, subject)
+        user.send_email(html=html, subject=subject)
+        return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
 
 
 class ConfirmView(MethodView):
     @login_required
     def post(self):
-        if current_user.is_confirmed:
+        user = request.user
+        if user.is_confirmed:
             return HTTPResponse(
                 HTTPResponse.AUTH_USER_IS_CONFIRMED).to_response()
-        token = current_user.email_token()
+        if not user.email_is_allowed:
+            msg = "user isn't allowed to send email"
+            return HTTPResponse(
+                HTTPResponse.AUTH_USER_IS_CONFIRMED, message=msg).to_response()
+        token = user.email_token
         confirm_url = url_for(
             'auth.confirm_token', token=token, _external=True)
         html = render_template('templet/email.html', confirm_url=confirm_url)
         subject = _("Please confirm  your email")
-        current_user.send_email(html, subject)
-        return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
+        user.send_email(html=html, subject=subject)
+        return HTTPResponse(
+            HTTPResponse.NORMAL_STATUS, message='send success').to_response()
 
 
 class ConfirmTokenView(MethodView):

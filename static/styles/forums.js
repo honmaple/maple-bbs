@@ -26,17 +26,17 @@ $(document).ready(function(){
   $('span#email-confirm').click(function(){
     $.ajax ({
       type : "POST",
-      url : "/confirm-email",
+      url : "/confirm",
       data:JSON.stringify({
       }),
       contentType: 'application/json;charset=UTF-8',
-      success: function(result) {
-        if (result.judge === true)
+      success: function(response) {
+        if (response.status === '200')
         {
-          alert(result.error);
+          alert(response.message);
         } else
         {
-          alert(result.error);
+          alert(response.message);
         }}
     });
   });

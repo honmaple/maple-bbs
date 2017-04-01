@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:08:39 (CST)
-# Last Update:星期六 2017-4-1 18:47:53 (CST)
+# Last Update:星期六 2017-4-1 21:34:3 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -65,6 +65,12 @@ def babel_update():
 def babel_compile():
     pybabel = 'pybabel'
     os.system(pybabel + ' compile -d translations')
+
+
+@manager.option('-u', '--username', dest='username')
+def delete_user(username):
+    user = User.query.filter_by(username=username).first()
+    user.delete()
 
 
 @manager.option('-u', '--username', dest='username')

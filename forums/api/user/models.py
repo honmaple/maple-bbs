@@ -6,16 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期六 2017-4-1 20:28:26 (CST)
+# Last Update:星期六 2017-4-1 22:4:46 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from datetime import datetime
-from threading import Thread
-
+from datetime import datetime, timedelta
 from flask import current_app
 from flask_login import UserMixin, current_user
-from flask_mail import Message
 from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 from pytz import all_timezones
 from sqlalchemy import event
@@ -23,6 +20,7 @@ from sqlalchemy.orm import object_session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from flask_maple.models import ModelMixin
+from flask_maple.mail import MailMixin
 from forums.count import Count
 from forums.extension import db, mail
 from forums.common.records import load_online_sign_users
@@ -33,7 +31,7 @@ user_follower = db.Table(
     db.Column('follower_id', db.Integer, db.ForeignKey('users.id')))
 
 
-class User(db.Model, UserMixin, ModelMixin):
+class User(db.Model, UserMixin, ModelMixin, MailMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(49), unique=True, nullable=False)
@@ -97,6 +95,25 @@ class User(db.Model, UserMixin, ModelMixin):
     def message_count(self, value):
         return Count.user_message_count(self.id, value)
 
+    @property
+    def send_email_time(self):
+        # return self.receive_messages.filter_by(status='0').count()
+        return Count.user_email_time(self.id)
+
+    @send_email_time.setter
+    def send_email_time(self, value):
+        return Count.user_email_time(self.id, value)
+
+    @property
+    def email_is_allowed(self):
+        t = self.send_email_time
+        t = datetime.strptime(t, '%Y-%m-%d %H:%M:%S')
+        now = datetime.now()
+        if t + timedelta(hours=3) < now:
+            self.send_email_time = now.strftime('%Y-%m-%d %H:%M:%S')
+            return True
+        return False
+
     def __str__(self):
         return self.username
 
@@ -108,51 +125,6 @@ class User(db.Model, UserMixin, ModelMixin):
 
     def check_password(self, raw_password):
         return check_password_hash(self.password, raw_password)
-
-    def send_async_email(self, msg):
-        app = current_app._get_current_object()
-        with app.app_context():
-            mail.send(msg)
-
-    def send_email(self,
-                   subject='',
-                   recipients=None,
-                   body=None,
-                   html=None,
-                   **kwargs):
-        if recipients is None:
-            recipients = self.email
-        if not isinstance(recipients, list):
-            recipients = [recipients]
-        msg = Message(subject=subject, recipients=recipients, html=html)
-        thr = Thread(target=self.send_async_email, args=[msg])
-        thr.start()
-
-    @property
-    def email_token(self):
-        config = current_app.config
-        secret_key = config.setdefault('SECRET_KEY')
-        salt = config.setdefault('SECURITY_PASSWORD_SALT')
-        serializer = URLSafeTimedSerializer(secret_key)
-        token = serializer.dumps(self.email, salt=salt)
-        return token
-
-    @staticmethod
-    def check_email_token(token, max_age=1800):
-        config = current_app.config
-        secret_key = config.setdefault('SECRET_KEY')
-        salt = config.setdefault('SECURITY_PASSWORD_SALT')
-        serializer = URLSafeTimedSerializer(secret_key)
-        try:
-            email = serializer.loads(token, salt=salt, max_age=max_age)
-        except BadSignature:
-            return False
-        except SignatureExpired:
-            return False
-        user = User.query.filter_by(email=email).first()
-        if user is None:
-            return False
-        return user
 
     @property
     def token(self):
@@ -179,6 +151,10 @@ class User(db.Model, UserMixin, ModelMixin):
         if user is None:
             return False
         return user
+
+    def send_email(self, *args, **kwargs):
+        kwargs.update(recipients=[self.email])
+        mail.send_email(*args, **kwargs)
 
 
 class UserInfo(db.Model, ModelMixin):

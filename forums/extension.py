@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:57:10 (CST)
-# Last Update:星期三 2017-3-29 21:25:57 (CST)
+# Last Update:星期六 2017-4-1 21:31:33 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -24,7 +24,7 @@ from flask_maple.bootstrap import Bootstrap
 from flask_maple.error import Error
 from flask_maple.captcha import Captcha
 from flask_maple.redis import Redis
-from flask_mail import Mail
+from flask_maple.mail import Mail
 from flask_cache import Cache
 from flask_principal import Principal
 from flask_login import LoginManager

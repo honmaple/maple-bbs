@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:07:00 (CST)
-# Last Update:星期六 2017-4-1 18:51:49 (CST)
+# Last Update:星期六 2017-4-1 22:6:39 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -52,7 +52,7 @@ class HTTPResponse(object):
                  description='',
                  pageinfo=None):
         self.status = status
-        self.message = self.STATUS_DESCRIPTION.get(status)
+        self.message = message or self.STATUS_DESCRIPTION.get(status)
         self.data = data
         self.description = description
         self.pageinfo = pageinfo

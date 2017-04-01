@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-29 21:28:52 (CST)
-# Last Update:星期六 2017-4-1 20:47:11 (CST)
+# Last Update:星期六 2017-4-1 22:5:53 (CST)
 #          By:
 # Description: 一些统计信息
 # **************************************************************************
@@ -87,3 +87,10 @@ class Count(object):
         if clear:
             redis_data.hset(key, 'message', 0)
         return redis_data.hget(key, 'message') or 0
+
+    @classmethod
+    def user_email_time(cls, userId, value=None):
+        key = 'count:user:%s' % str(userId)
+        if value is not None:
+            redis_data.hset(key, 'email', value)
+        return redis_data.hget(key, 'email') or '2015-1-1 1:1:1'

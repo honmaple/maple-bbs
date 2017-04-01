@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-13 13:29:37 (CST)
-# Last Update:星期三 2017-3-29 13:54:44 (CST)
+# Last Update:星期六 2017-4-1 22:15:52 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,6 +14,12 @@ from flask import request, current_app, flash, redirect, url_for
 from flask.views import MethodView
 from flask_login import login_required, current_user
 from forums.permission import confirm_permission
+from forums.extension import cache
+
+
+def cache_key():
+    key = request.url
+    return 'view:%s' % key
 
 
 def is_confirmed(func):
@@ -40,6 +46,10 @@ class BaseMethodView(MethodView):
         if number > 100:
             number = per_page
         return page, number
+
+    @cache.cached(timeout=180, key_prefix=cache_key)
+    def dispatch_request(self, *args, **kwargs):
+        return super(BaseMethodView, self).dispatch_request(*args, **kwargs)
 
 
 class IsAuthMethodView(BaseMethodView):

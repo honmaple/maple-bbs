@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 11:57:11 (CST)
-# Last Update:星期三 2017-3-29 20:21:42 (CST)
+# Last Update:星期六 2017-4-1 21:21:49 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -30,10 +30,10 @@ class UserView(BaseView):
     column_editable_list = ['is_confirmed', 'is_superuser']
     form_columns = ('username', 'email', 'password', 'is_confirmed',
                     'is_superuser')
-    inline_models = (UserInfo, UserSetting)
-    form_extra_fields = {
-        'password': PasswordField('Password', [DataRequired()])
-    }
+    # inline_models = (UserInfo, UserSetting)
+    # form_extra_fields = {
+    #     'password': PasswordField('Password', [DataRequired()])
+    # }
 
 
 class UserInfoView(BaseView):
