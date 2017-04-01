@@ -1,20 +1,20 @@
 {% extends 'base/base.html' %}
 {% block content %}
-{% from 'tag/_macro.html' import title %}
-{{ breadcrumb(hrefs={_('All Tags'):url_for('tag.list')},active=tag.name)}}
-<div class="row">
-  <div class="col-md-9">
-    <div class="panel panel-default">
-      <div class="panel-body" style="border-bottom: 1px solid #ddd;">
-        {{ title(tag) }}
+  {% from 'tag/_macro.html' import title %}
+  {{ breadcrumb(hrefs={_('All Tags'):url_for('tag.list')},active=tag.name)}}
+  <div class="row">
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-body" style="border-bottom: 1px solid #ddd;">
+          {{ title(tag) }}
+        </div>
+        {% include "topic/_topic.html" %}
+        {{ p_footer(topics,'tag.tag',dict(name=tag.name))}}
       </div>
-      {% include "topic/_topic.html" %}
-      {{ p_footer(topics,'tag.tag',dict(name=tag.name))}}
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+      {% from 'tag/panel.html' import tag as tag_panel %}
+      {{ tag_panel(tag) }}
     </div>
   </div>
-  <div class="col-md-3" style="padding-left:0">
-    {% from 'tag/panel.html' import tag as tag_panel %}
-    {{ tag_panel(tag) }}
-  </div>
-</div>
 {% endblock %}

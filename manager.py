@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:08:39 (CST)
-# Last Update:星期三 2017-3-29 23:38:31 (CST)
+# Last Update:星期六 2017-4-1 18:47:53 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -35,7 +35,7 @@ def init_db():
     """
     Drops and re-creates the SQL schema
     """
-    db.drop_all()
+    # db.drop_all()
     db.configure_mappers()
     db.create_all()
     db.session.commit()

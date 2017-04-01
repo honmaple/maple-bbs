@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 16:15:08 (CST)
-# Last Update:星期三 2017-3-29 19:1:59 (CST)
+# Last Update:星期六 2017-4-1 20:38:59 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -25,6 +25,7 @@ from forums.api.topic.models import Topic
 from forums.common.serializer import Serializer
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import IsAuthMethodView as MethodView
+from forums.api.message.models import MessageClient
 
 from .models import Collect
 
@@ -106,6 +107,7 @@ class AddToCollectView(MethodView):
                     topics__id=topic.id, author_id=user.id).exists():
                 collect.topics.append(topic)
                 collect.save()
+            MessageClient.collect(topic)
         return redirect(url_for('topic.topic', topicId=topic.id))
 
     # def delete(self, topicId):

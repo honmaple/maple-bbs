@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update:星期四 2017-3-30 15:10:35 (CST)
+# Last Update:星期六 2017-4-1 20:16:51 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -21,7 +21,7 @@ from misaka import HtmlRenderer, Markdown
 
 
 def safe_clean(text):
-    tags = ['b', 'i', 'font', 'br', 'blockquote', 'div', 'h2', 'a']
+    tags = ['b', 'i', 'font', 'br', 'blockquote', 'div', 'h2', 'a', 'p']
     attrs = {'*': ['style', 'id', 'class'], 'font': ['color'], 'a': ['href']}
     styles = ['color']
     return Markup(clean(text, tags=tags, attributes=attrs, styles=styles))
@@ -67,6 +67,7 @@ def show_time():
         return 'LOCALE:' + format_datetime(datetime.utcnow())
     else:
         return 'UTC:' + format_datetime(datetime.utcnow())
+
 
 def hot_tags():
     from forums.api.tag.models import Tags

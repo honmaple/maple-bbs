@@ -29,7 +29,7 @@ function Follow(obj,data,url){
 $(document).ready(function(){
   $('button.topic-following').click(function(){
     var _$this = $(this);
-    var url = "/user/following/topics";
+    var url = "/following/topics";
     var data = JSON.stringify({
       topicId:_$this.attr("data-id"),
     });
@@ -37,7 +37,7 @@ $(document).ready(function(){
   });
   $('button.tag-following').click(function(){
     var _$this = $(this);
-    var url = "/user/following/tags";
+    var url = "/following/tags";
     var data = JSON.stringify({
       tagId:_$this.attr("data-id"),
     });
@@ -45,7 +45,7 @@ $(document).ready(function(){
   });
   $('button.user-following').click(function(){
     var _$this = $(this);
-    var url = "/user/following/users";
+    var url = "/following/users";
     var data = JSON.stringify({
       userId:_$this.attr("data-id"),
     });
@@ -53,7 +53,7 @@ $(document).ready(function(){
   });
   $('button.collect-following').click(function(){
     var _$this = $(this);
-    var url = "/user/following/collects";
+    var url = "/following/collects";
     var data = JSON.stringify({
       collectId:_$this.attr("data-id"),
     });

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-29 21:28:52 (CST)
-# Last Update:星期四 2017-3-30 14:59:51 (CST)
+# Last Update:星期六 2017-4-1 20:47:11 (CST)
 #          By:
 # Description: 一些统计信息
 # **************************************************************************
@@ -76,3 +76,14 @@ class Count(object):
             pipe.hincrby(key, 'replies', value)
             pipe.execute()
         return redis_data.hget(key, 'replies') or 0
+
+    @classmethod
+    def user_message_count(cls, userId, value=None, clear=False):
+        key = 'count:user:%s' % str(userId)
+        if value is not None:
+            pipe = redis_data.pipeline()
+            pipe.hincrby(key, 'message', value)
+            pipe.execute()
+        if clear:
+            redis_data.hset(key, 'message', 0)
+        return redis_data.hget(key, 'message') or 0

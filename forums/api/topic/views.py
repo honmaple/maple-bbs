@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期四 2017-3-30 16:39:56 (CST)
+# Last Update:星期六 2017-4-1 19:50:27 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -31,6 +31,7 @@ from .models import Reply, Topic
 from .permissions import (like_permission, reply_list_permission,
                           reply_permission, topic_list_permission,
                           topic_permission, edit_permission)
+from forums.api.message.models import MessageClient
 
 
 class TopicAskView(IsConfirmedMethodView):
@@ -174,6 +175,8 @@ class ReplyListView(MethodView):
         reply = Reply(content=content, topic_id=topic.id)
         reply.author = user
         reply.save()
+        # notice
+        MessageClient.topic(reply)
         # count
         topic.board.post_count = 1
         reply.author.reply_count = 1
@@ -208,6 +211,7 @@ class LikeView(MethodView):
         reply = Reply.query.filter_by(id=replyId).first_or_404()
         reply.likers.append(user)
         reply.save()
+        MessageClient.like(reply)
         serializer = Serializer(reply, many=False)
         return HTTPResponse(
             HTTPResponse.NORMAL_STATUS, data=serializer.data).to_response()

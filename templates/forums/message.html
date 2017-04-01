@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% block content %}
+  {{ breadcrumb(active=_('Notices'))}}
+  <div class="row">
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <button class="pull-right btn btn-sm btn-default ingore-all" style="padding:0 5px">{{ _('mark all to is read')}}</button>
+          {{ _('Notices') }}
+        </div>
+        {% if messages.items %}
+          {% for message in messages.items %}
+            <div class="panel-body" style="border-bottom:1px solid #eee;">
+              <small class="pull-right"> {{ message.created_at | timesince }} </small>
+              <small>{{ message.title }}</small>
+              <p style="margin-bottom:0px">
+                {{ message.content }}
+              </p>
+            </div>
+          {% endfor %}
+          {{ p_footer(messages, 'message.list')}}
+        {% else %}
+          <div class="panel-body">
+            <span class="text-center" style="display:block;width:100%;color:#999">
+              {{ _('No Notices')}}
+            </span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+      {{ panel_base.index() }}
+    </div>
+  </div>
+{% endblock %}

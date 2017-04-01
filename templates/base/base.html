@@ -4,57 +4,71 @@
 {% import 'base/link.html' as link %}
 {% import 'base/panel.html' as panel_base %}
 {% from 'base/head.html' import breadcrumb %}
+
+{% block title -%}
+  {{ title }} {{ SITE['title'] }} - {{ _(SITE['description']) }}
+{%- endblock title %}
+
 {% block script -%}
-{{ super() }}
+  {{ super() }}
 {%- endblock script %}
 
 {% block style -%}
-{{ super() }}
-<link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  {{ super() }}
+  <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 {%- endblock style %}
 
 {% block main %}
-{% include "base/header.html" %}
-<div class="col-md-offset-1 col-md-10" style="padding:0;margin-top:60px">
+  {% include "base/header.html" %}
+  <div class="col-md-offset-1 col-md-10" style="padding:0;margin-top:60px">
     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category,message in messages %}
-    {% if category == 'message' -%}
-    {% set category = 'info' %}
-    {%- endif %}
-    <div class="alert alert-{{ category }}" style="padding:8px">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <ul>
-            <li>{{ message }} </li>
-        </ul>
-    </div>
-    {% endfor %}
-    {% endif %}
+      {% if messages %}
+        {% for category,message in messages %}
+          {% if category == 'message' -%}
+            {% set category = 'info' %}
+          {%- endif %}
+          <div class="alert alert-{{ category }}" style="padding:8px">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <ul>
+              <li>{{ message }} </li>
+            </ul>
+          </div>
+        {% endfor %}
+      {% endif %}
     {% endwith %}
     {{ dropdown() }}
     {% block content %}{% endblock %}
-</div>
+  </div>
 {% endblock %}
 
 {% macro dropdown() -%}
-{% if g.user.is_authenticated %}
-<div class="btn-group pull-right">
-    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  {% if g.user.is_authenticated %}
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         {{ g.user.username }} <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
+      </button>
+      <ul class="dropdown-menu">
         <li><a href="{{ url_for('user.user',username=g.user.username) }}">{{ _('Home Page') }}</a></li>
         <li><a href="{{ url_for('setting.setting') }}">{{ _('Setting')}}</a></li>
         <li role="separator" class="divider"></li>
         <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout')}}</a></li>
-    </ul>
-</div>
-{% else  %}
-<a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-primary pull-right">{{ _('Register') }}</a>
-<a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-primary pull-right">{{ _('Login') }}</a>
-{% endif %}
-<a href="{{ url_for('tag.list') }}" class="btn btn-sm btn-primary pull-right">{{ _('TagList') }}</a>
-<a href="{{ url_for('user.list') }}" class="btn btn-sm btn-primary pull-right">{{ _('UserList') }}</a>
+      </ul>
+    </div>
+    <a href="{{ url_for('message.list') }}" class="btn btn-sm btn-primary pull-right">
+      {{ _('NoticeList') }}
+      {%- set n = current_user.message_count -%}
+      {%- if n and n != '0' -%}
+        <span class="badge" style="padding:2px 5px;">
+          {{ n }}
+        </span>
+      {%- endif -%}
+    </a>
+  {% else  %}
+    <a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-primary pull-right">{{ _('Register') }}</a>
+    <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-primary pull-right">{{ _('Login') }}</a>
+  {% endif %}
+  <a href="{{ url_for('tag.list') }}" class="btn btn-sm btn-primary pull-right">{{ _('TagList') }}</a>
+  <a href="{{ url_for('user.list') }}" class="btn btn-sm btn-primary pull-right">{{ _('UserList') }}</a>
 {%- endmacro %}

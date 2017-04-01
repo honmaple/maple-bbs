@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期四 2017-3-30 15:10:19 (CST)
+# Last Update:星期六 2017-4-1 20:28:26 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -87,6 +87,15 @@ class User(db.Model, UserMixin, ModelMixin):
     @reply_count.setter
     def reply_count(self, value):
         return Count.user_reply_count(self.id, value)
+
+    @property
+    def message_count(self):
+        # return self.receive_messages.filter_by(status='0').count()
+        return Count.user_message_count(self.id)
+
+    @message_count.setter
+    def message_count(self, value):
+        return Count.user_message_count(self.id, value)
 
     def __str__(self):
         return self.username

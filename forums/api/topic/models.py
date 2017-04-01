@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:52:07 (CST)
-# Last Update:星期四 2017-3-30 15:5:44 (CST)
+# Last Update:星期五 2017-3-31 17:30:1 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -31,6 +31,7 @@ topic_follower = db.Table(
 
 class Topic(db.Model, ModelMixin):
     __tablename__ = 'topics'
+    __searchable__ = ['title', 'content']
 
     CONTENT_TYPE_TEXT = '0'
     CONTENT_TYPE_MARKDOWN = '1'
