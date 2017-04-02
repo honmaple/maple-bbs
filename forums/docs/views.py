@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-09 21:06:32 (CST)
-# Last Update:星期三 2017-3-29 20:32:49 (CST)
+# Last Update:星期日 2017-4-2 12:16:48 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,11 +14,7 @@ from flask import (Blueprint, render_template, send_from_directory)
 from flask.views import MethodView
 
 site = Blueprint(
-    'docs',
-    __name__,
-    url_prefix='/docs',
-    template_folder='templates',
-    static_folder='static')
+    'docs', __name__, template_folder='templates', static_folder='static')
 
 
 class DocListView(MethodView):
@@ -33,5 +29,5 @@ class DocView(MethodView):
 
 doclist_view = DocListView.as_view('list')
 doc_view = DocView.as_view('doc')
-site.add_url_rule('', view_func=doclist_view)
+site.add_url_rule('/', view_func=doclist_view)
 site.add_url_rule('/<path:path>', view_func=doc_view)

@@ -6,15 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 13:56:43 (CST)
-# Last Update:星期六 2017-3-25 18:56:12 (CST)
+# Last Update:星期六 2017-4-1 23:43:49 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import current_app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from forums.api.forums.models import Board
-from forums.api.topic.forms import TopicForm
 from logging.handlers import SMTPHandler
 from threading import Thread
 
@@ -24,18 +22,6 @@ def db_session():
     engine = create_engine(url)
     session = sessionmaker(bind=engine)
     return session
-
-
-def form_board():
-    form = TopicForm()
-    results = []
-    for b in Board.query.filter_by(parent_id=None):
-        if b.parent is None:
-            results.append((b.id, b.name))
-        else:
-            results.append((b.id, b.name + '   --' + b.parent.name))
-    form.category.choices = results
-    return form
 
 
 class ThreadedSMTPHandler(SMTPHandler):

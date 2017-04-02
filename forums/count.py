@@ -6,10 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-29 21:28:52 (CST)
-# Last Update:星期六 2017-4-1 22:5:53 (CST)
+# Last Update:星期日 2017-4-2 13:22:19 (CST)
 #          By:
 # Description: 一些统计信息
 # **************************************************************************
+from flask import request
 from .extension import redis_data
 
 
@@ -44,10 +45,13 @@ class Count(object):
     @classmethod
     def topic_read_count(cls, topicId, value=None):
         key = 'count:topic:%s' % str(topicId)
-        if value is not None:
-            pipe = redis_data.pipeline()
-            pipe.hincrby(key, 'read', value)
-            pipe.execute()
+        expire_key = 'expire:topic:read:{}'.format(request.remote_addr)
+        if not redis_data.exists(expire_key):
+            # 设置三分钟之内,阅读次数不增加
+            redis_data.set(expire_key, '1')
+            redis_data.expire(expire_key, 180)
+            if value is not None:
+                redis_data.hincrby(key, 'read', value)
         return redis_data.hget(key, 'read') or 0
 
     @classmethod
@@ -55,9 +59,9 @@ class Count(object):
         key = 'count:reply:%s' % str(replyId)
         if value is not None:
             pipe = redis_data.pipeline()
-            pipe.hincrby(key, 'likers', value)
+            pipe.hincrby(key, 'liker', value)
             pipe.execute()
-        return redis_data.hget(key, 'likers') or 0
+        return redis_data.hget(key, 'liker') or 0
 
     @classmethod
     def user_topic_count(cls, userId, value=None):

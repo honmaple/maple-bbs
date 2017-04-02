@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:08:06 (CST)
-# Last Update:星期三 2017-3-29 11:53:37 (CST)
+# Last Update:星期日 2017-4-2 11:51:33 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import redirect, render_template, request, url_for
-from flask_login import current_user
+from flask_login import current_user, login_required
 from forums.api.forums.models import Board
 from forums.api.tag.models import Tags
 from forums.api.topic.models import Topic, Reply
@@ -23,6 +23,7 @@ from .models import User
 
 
 class UserListView(MethodView):
+    @login_required
     def get(self):
         query_dict = request.data
         page, number = self.page_info
@@ -87,6 +88,7 @@ class UserReplyListView(MethodView):
 
 
 class UserFollowerListView(MethodView):
+    @login_required
     def get(self, username):
         user = User.query.filter_by(username=username).first_or_404()
         page, number = self.page_info

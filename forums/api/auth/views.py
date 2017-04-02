@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-28 10:26:10 (CST)
-# Last Update:星期六 2017-4-1 21:59:10 (CST)
+# Last Update:星期日 2017-4-2 11:49:2 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -24,9 +24,11 @@ from flask_maple.auth.forms import (ForgetForm, LoginForm, RegisterForm,
 from forums.api.user.models import User
 from forums.common.response import HTTPResponse
 from forums.common.serializer import Serializer
+from forums.permission import is_guest
 
 
 class LoginView(MethodView):
+    @is_guest
     def get(self):
         form = LoginForm()
         data = {'form': form}
@@ -62,6 +64,7 @@ class LogoutView(MethodView):
 
 
 class RegisterView(MethodView):
+    @is_guest
     def get(self):
         form = RegisterForm()
         data = {'form': form}
@@ -98,6 +101,7 @@ class RegisterView(MethodView):
 
 
 class ForgetView(MethodView):
+    @is_guest
     def get(self):
         form = ForgetForm()
         data = {'form': form}

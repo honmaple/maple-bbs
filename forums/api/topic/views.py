@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期六 2017-4-1 19:50:27 (CST)
+# Last Update:星期日 2017-4-2 0:23:55 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -140,6 +140,7 @@ class TopicView(MethodView):
             'topic': topic,
             'replies': replies
         }
+        topic.read_count = 1
         return render_template('topic/topic.html', **data)
 
     @form_validate(form_board)

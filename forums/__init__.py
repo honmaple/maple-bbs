@@ -6,18 +6,20 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-01-25 20:10:50 (CST)
-# Last Update:星期五 2017-3-31 17:37:56 (CST)
+# Last Update:星期日 2017-4-2 12:23:43 (CST)
 #          By:
 # Description:
 # **************************************************************************
 import os
+
 from flask import Flask
+
 from flask_maple.lazy import LazyExtension
 from forums.admin.urls import admin
 
+from .app import register_app
 from .filters import register_jinja2
 from .logs import register_logging
-from .app import register_app
 
 
 def create_app(config):
@@ -28,6 +30,15 @@ def create_app(config):
 
     app = Flask(__name__, template_folder=templates, static_folder=static)
     app.config.from_object(config)
+    if app.config['SUBDOMAIN']['forums']:
+        app.url_map._rules.clear()
+        app.url_map._rules_by_endpoint.clear()
+        app.url_map.default_subdomain = 'forums'
+        app.add_url_rule(
+            app.static_url_path + '/<path:filename>',
+            endpoint='static',
+            view_func=app.send_static_file,
+            subdomain='forums')
     register(app)
     return app
 

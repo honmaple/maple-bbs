@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 16:02:43 (CST)
-# Last Update:星期三 2017-3-29 17:49:46 (CST)
+# Last Update:星期日 2017-4-2 11:47:33 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -62,6 +62,17 @@ def is_confirmed(func):
         return redirect(url_for('user.user', username=current_user.username))
 
     return _is_confirmed
+
+
+def is_guest(func):
+    @wraps(func)
+    def _is_guest(*args, **kwargs):
+        if not current_user.is_authenticated:
+            return func(*args, **kwargs)
+        flash('你已登陆，请勿重复登陆')
+        return redirect('/')
+
+    return _is_guest
 
 
 class RestfulView(object):

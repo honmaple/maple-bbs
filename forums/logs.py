@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:43:17 (CST)
-# Last Update:星期四 2016-12-29 21:40:15 (CST)
+# Last Update:星期六 2017-4-1 23:42:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -53,7 +53,7 @@ def register_logging(app):
     app.logger.addHandler(error_file_handler)
 
     if app.config["SEND_LOGS"]:
-        from common.helper import ThreadedSMTPHandler
+        from .common.helper import ThreadedSMTPHandler
         credentials = (config['MAIL_USERNAME'], config['MAIL_PASSWORD'])
         mailhost = (config['MAIL_SERVER'], config['MAIL_PORT'])
         mail_handler = ThreadedSMTPHandler(
