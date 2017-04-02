@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期日 2017-4-2 0:23:55 (CST)
+# Last Update:星期日 2017-4-2 14:49:1 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -78,13 +78,17 @@ class TopicListView(MethodView):
         keys = ['title']
         order_by = gen_order_by(query_dict, keys)
         filter_dict = gen_filter_dict(query_dict, keys)
+        title = _('All Topics')
         if request.path.endswith('good'):
             filter_dict.update(is_good=True)
+            title = _('Good Topics')
         elif request.path.endswith('top'):
             filter_dict.update(is_top=True)
+            title = _('Top Topics')
         topics = Topic.query.filter_by(
             **filter_dict).order_by(*order_by).paginate(page, number, True)
-        return render_template('topic/topic_list.html', topics=topics)
+        data = {'title': title, 'topics': topics}
+        return render_template('topic/topic_list.html', **data)
 
     @form_validate(form_board, error=error_callback, f='')
     def post(self):

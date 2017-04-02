@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-29 21:28:52 (CST)
-# Last Update:星期日 2017-4-2 13:22:19 (CST)
+# Last Update:星期日 2017-4-2 15:24:37 (CST)
 #          By:
 # Description: 一些统计信息
 # **************************************************************************
@@ -70,6 +70,8 @@ class Count(object):
             pipe = redis_data.pipeline()
             pipe.hincrby(key, 'topic', value)
             pipe.execute()
+            cls.forums_post_count(1)
+            cls.forums_topic_count(1)
         return redis_data.hget(key, 'topic') or 0
 
     @classmethod
@@ -79,6 +81,7 @@ class Count(object):
             pipe = redis_data.pipeline()
             pipe.hincrby(key, 'replies', value)
             pipe.execute()
+            cls.forums_post_count(1)
         return redis_data.hget(key, 'replies') or 0
 
     @classmethod
@@ -98,3 +101,24 @@ class Count(object):
         if value is not None:
             redis_data.hset(key, 'email', value)
         return redis_data.hget(key, 'email') or '2015-1-1 1:1:1'
+
+    @classmethod
+    def forums_user_count(cls, value=None):
+        key = 'count:forums'
+        if value is not None:
+            redis_data.hincrby(key, 'user', value)
+        return redis_data.hget(key, 'user') or 0
+
+    @classmethod
+    def forums_topic_count(cls, value=None):
+        key = 'count:forums'
+        if value is not None:
+            redis_data.hincrby(key, 'topic', value)
+        return redis_data.hget(key, 'topic') or 0
+
+    @classmethod
+    def forums_post_count(cls, value=None):
+        key = 'count:forums'
+        if value is not None:
+            redis_data.hincrby(key, 'post', value)
+        return redis_data.hget(key, 'post') or 0

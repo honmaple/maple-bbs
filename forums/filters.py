@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update:星期六 2017-4-1 20:16:51 (CST)
+# Last Update:星期日 2017-4-2 15:30:0 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -81,6 +81,12 @@ def recent_tags():
     return tags
 
 
+def forums_count():
+    from forums.extension import redis_data
+    key = 'count:forums'
+    return redis_data.hgetall(key)
+
+
 def is_not_confirmed(user):
     return (not user.is_confirmed and user.id == current_user.id)
 
@@ -91,6 +97,7 @@ def register_jinja2(app):
     app.jinja_env.globals['hot_tags'] = hot_tags
     app.jinja_env.globals['recent_tags'] = recent_tags
     app.jinja_env.globals['show_time'] = show_time
+    app.jinja_env.globals['forums_count'] = forums_count
     app.jinja_env.filters['timesince'] = timesince
     app.jinja_env.filters['safe_clean'] = safe_clean
     app.jinja_env.filters['is_not_confirmed'] = is_not_confirmed

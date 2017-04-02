@@ -2,7 +2,7 @@ bleach==1.4.3
 cssmin==0.2.0
 Flask==0.11.1
 Flask-Admin==1.4.2
-Flask-Assets==0.11
+Flask-Assets==0.12
 Flask-Avatar==0.1.0
 Flask-BabelEx==0.9.3
 Flask-Cache==0.13.1

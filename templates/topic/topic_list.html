@@ -1,15 +1,21 @@
 {% extends 'base/base.html' %}
 {% block content %}
-{{ breadcrumb(active=_('All Topics')) }}
-<div class="row">
-  <div class="col-md-9">
-    <div class="panel panel-default">
-      {% include "topic/_topic.html" %}
-      {{ p_footer(topics,'topic.list')}}
+  {% if request.path.endswith('top') %}
+    {{ breadcrumb(hrefs={_('All Topics'):url_for('topic.list')},active=_('Top Topics')) }}
+  {% elif request.path.endswith('good') %}
+    {{ breadcrumb(hrefs={_('All Topics'):url_for('topic.list')},active=_('Good Topics')) }}
+  {% else %}
+    {{ breadcrumb(active=_('All Topics')) }}
+  {% endif %}
+  <div class="row">
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        {% include "topic/_topic.html" %}
+        {{ p_footer(topics,'topic.list')}}
+      </div>
+    </div>
+    <div class="col-md-3" style="padding-left:0">
+      {{ panel_base.topic_list() }}
     </div>
   </div>
-  <div class="col-md-3" style="padding-left:0">
-    {{ panel_base.topic_list() }}
-  </div>
-</div>
 {% endblock %}

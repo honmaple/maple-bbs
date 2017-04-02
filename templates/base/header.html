@@ -18,7 +18,7 @@
       <ul class="nav navbar-nav">
         {{ navlist(url_for('forums.forums'),_('Forums')) }}
         {{ navlist(url_for('docs.list'),_('Wiki')) }}
-        {{ navlist('#',_('Blog')) }}
+        {{ navlist('http://honmaple.org',_('Blog')) }}
         {{ navlist(url_for('topic.good'),_('Good')) }}
       </ul>
       <form onsubmit="return dispatch()" class="navbar-form navbar-right" style="margin-top:10px;" >

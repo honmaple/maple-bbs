@@ -1,4 +1,4 @@
-* Honmaple(maplebb)
+* Honmaple
 
   [[license][https://img.shields.io/badge/license-GPL3.0-blue.svg]]
 
@@ -7,6 +7,16 @@
   [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/ask.png]]
 
   This is a free,open-source forums system based on the flask
+  
+  *If you have used honmaple before 2017-4-1,please use upgrade script to upgrade data*
+  
+  *important !* : please modify script to configure as your own database.
+  #+BEGIN_SRC sh
+  # session1:old database
+  # session2:new database
+  python upgrade.py
+  python upgrade_count.py
+  #+END_SRC
 
 ** Features
    + Register & login & forget password
@@ -18,7 +28,6 @@
    + Choice markdown to ask
    + Tags rss
    + Avatar
-   + Topic vote
      
 ** Installation
 
@@ -31,40 +40,16 @@
     Beacause flask_maple.rbac isn't uploaded to pypi
     you should 
     #+BEGIN_SRC shell
-git clone https://github.com/honmaple/flask-maple
-cd flask-maple
-git checkout develop
-pip uninstall flask-maple
-python setup.py install
+      git clone https://github.com/honmaple/flask-maple
+      cd flask-maple
+      pip uninstall flask-maple
+      python setup.py install
     #+END_SRC
     to install flask-maple
 
 *** Config
     #+BEGIN_SRC shell
     mv config.example config
-    #+END_SRC
-    after finished configure
-
-    *For Production*
-    Please set DEBUG = False or change *maple/__init__.py*
-    #+BEGIN_SRC python
-    app.config.from_object('config.config')
-    #+END_SRC
-    to
-    #+BEGIN_SRC python
-    app.config.from_object('config.production')
-    #+END_SRC
-
-
-*** Comment before init db
-
-    place of file: *maple/topic/forms.py*
-    #+BEGIN_SRC python
-    category = SelectField(
-        _('Category:'),
-        choices=[(b.id, b.board + '   --' + b.parent_board)
-                 for b in Board.query.all()],
-        coerce=int)
     #+END_SRC
 
 *** Init sql
@@ -73,11 +58,14 @@ python setup.py install
     python manager.py db migrate -m "first migrate"
     python manager.py db upgrade
     #+END_SRC
-    *Ok*,please recovery *maple/topic/forms.py*
+    Or
+    #+BEGIN_SRC sh
+    python manager.py init_db
+    #+END_SRC
 
 *** Create admin account
     #+BEGIN_SRC shell
-python manager.py create_user
+    python manager.py create_user
     #+END_SRC
 
 *** Login and visit admin 

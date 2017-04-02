@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-28 10:26:10 (CST)
-# Last Update:星期日 2017-4-2 11:49:2 (CST)
+# Last Update:星期日 2017-4-2 15:25:52 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -25,6 +25,7 @@ from forums.api.user.models import User
 from forums.common.response import HTTPResponse
 from forums.common.serializer import Serializer
 from forums.permission import is_guest
+from forums.count import Count
 
 
 class LoginView(MethodView):
@@ -88,6 +89,7 @@ class RegisterView(MethodView):
         user.set_password(password)
         user.save()
         login_user(user)
+        Count.forums_user_count(1)
         self.email(user)
         return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
 

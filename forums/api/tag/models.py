@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:46:13 (CST)
-# Last Update:星期三 2017-3-29 19:17:5 (CST)
+# Last Update:星期日 2017-4-2 15:5:23 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -62,6 +62,14 @@ class Tags(db.Model, ModelMixin):
         return db.session.query(tag_follower).filter(
             tag_follower.c.tag_id == self.id,
             tag_follower.c.follower_id == user.id).exists()
+
+    @property
+    def related_tags(self):
+        parent = self.parent
+        if not parent:
+            return []
+        relateds = parent.children.exclude_by(id=self.id).all()
+        return relateds
 
     def __str__(self):
         return self.name

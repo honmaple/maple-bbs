@@ -6,15 +6,22 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-04-02 13:00:02 (CST)
-# Last Update:星期日 2017-4-2 13:47:2 (CST)
+# Last Update:星期日 2017-4-2 15:52:41 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from runserver import app
 from forums.api.topic.models import Topic, Reply
 from forums.api.forums.models import Board
 from forums.api.user.models import User
 from forums.extension import redis_data
+from runserver import app
+
+
+def forums():
+    key = 'count:forums'
+    redis_data.hset(key, 'user', User.query.count())
+    redis_data.hset(key, 'topic', Topic.query.count())
+    redis_data.hset(key, 'post', Reply.query.count() + Topic.query.count())
 
 
 def topic():
@@ -75,6 +82,7 @@ def board():
 
 def main():
     with app.app_context():
+        forums()
         topic()
         board()
         user()

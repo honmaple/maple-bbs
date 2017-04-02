@@ -9,7 +9,7 @@
         </div>
         <div class="panel-body">
           {% for tag in tags.items %}
-            <a class="tag" href="{{ url_for('tag.tag',name=tag.name)}}">{{ tag.name }}</a>
+            <a class="tag" href="{{ url_for('tag.tag',name=tag.name) }}">{{ tag.name }}</a>
           {% else %}
             <span class="text-center">
               {{ _('No Tags') }}
