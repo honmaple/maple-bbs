@@ -78,7 +78,7 @@ $(document).ready(function(){
         if (response.status === '200') {
           window.location.href= url;
         }else {
-          if (response.description !==""){
+          if (response.description != ""){
             alert(response.description);
           }else {
             alert(response.message);

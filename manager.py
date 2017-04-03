@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:08:39 (CST)
-# Last Update:星期六 2017-4-1 21:34:3 (CST)
+# Last Update:星期日 2017-4-2 16:44:25 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -71,6 +71,14 @@ def babel_compile():
 def delete_user(username):
     user = User.query.filter_by(username=username).first()
     user.delete()
+
+
+@manager.option('-u', '--username', dest='username')
+def password_user(username):
+    password = getpass('Password:')
+    user = User.query.filter_by(username=username).first()
+    user.set_password(password)
+    user.save()
 
 
 @manager.option('-u', '--username', dest='username')

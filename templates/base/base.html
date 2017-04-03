@@ -6,7 +6,7 @@
 {% from 'base/head.html' import breadcrumb %}
 
 {% block title -%}
-  {{ title }} - {{ SITE['title'] }} - {{ _(SITE['description']) }}
+  {{ title }} {{ SITE['title'] }} - {{ _(SITE['description']) }}
 {%- endblock title %}
 
 {% block script -%}

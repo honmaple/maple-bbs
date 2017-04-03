@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:24:23 (CST)
-# Last Update:星期六 2017-4-1 21:36:46 (CST)
+# Last Update:星期日 2017-4-2 21:35:21 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,7 +16,7 @@ from .views import (UserCollectListView, UserFollowingListView,
                     UserFollowerListView, UserListView, UserReplyListView,
                     UserView)
 
-site = Blueprint('user', __name__, url_prefix='/user')
+site = Blueprint('user', __name__, url_prefix='/u')
 
 user_list = UserListView.as_view('list')
 user = UserView.as_view('user')

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期六 2017-4-1 22:4:46 (CST)
+# Last Update:星期日 2017-4-2 16:27:2 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -34,9 +34,9 @@ user_follower = db.Table(
 class User(db.Model, UserMixin, ModelMixin, MailMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(49), unique=True, nullable=False)
+    username = db.Column(db.String(81), unique=True, nullable=False)
     email = db.Column(db.String(81), unique=True, nullable=False)
-    password = db.Column(db.String(81), nullable=False)
+    password = db.Column(db.String(256), nullable=False)
     is_superuser = db.Column(db.Boolean, default=False)
     is_confirmed = db.Column(db.Boolean, default=False)
     register_time = db.Column(db.DateTime, default=datetime.now())

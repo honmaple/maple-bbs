@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:52:07 (CST)
-# Last Update:星期五 2017-3-31 17:30:1 (CST)
+# Last Update:星期日 2017-4-2 16:57:5 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -73,6 +73,8 @@ class Topic(db.Model, ModelMixin):
         backref=db.backref(
             'following_topics', lazy='dynamic'),
         lazy='dynamic')
+
+    __mapper_args__ = {"order_by": created_at.desc()}
 
     def is_followed(self, user=None):
         if user is None:
