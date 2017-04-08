@@ -1,13 +1,19 @@
 * Honmaple
 
-  [[license][https://img.shields.io/badge/license-GPL3.0-blue.svg]]
+  [[LICENSE][https://img.shields.io/badge/license-GPL3.0-blue.svg]]
+  [[https://www.python.org][https://img.shields.io/badge/python-3.4-brightgreen.svg]]
+
+  [[english][English]] | [[chinese][中文]]
 
   [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/index.png]]
   [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/board.png]]
   [[https://raw.githubusercontent.com/honmaple/maple-bbs/master/screenshooter/ask.png]]
+  
 
   This is a free,open-source forums system based on the flask
   
+  #<<english>>
+
   *If you have used honmaple before 2017-4-1,please use upgrade script to upgrade data*
   
   *important !* : please modify script to configure as your own database.
@@ -31,16 +37,16 @@
      
 ** Installation
    
-    #+BEGIN_SRC sh
+   #+BEGIN_SRC sh
     mkvirtualenv forums
-    #+END_SRC
+   #+END_SRC
 
 *** Install necessary package
     #+BEGIN_SRC python
     pip install -r requirements.txt
     #+END_SRC
 
-    Beacause newest flask_maple isn't uploaded to pypi
+    Beacause newest *flask_maple* isn't uploaded to pypi
     you should 
     #+BEGIN_SRC shell
       git clone https://github.com/honmaple/flask-maple
@@ -48,12 +54,13 @@
       pip uninstall flask-maple
       python setup.py install
     #+END_SRC
-    to install flask-maple
+    to install *flask-maple*
 
 *** Config
     #+BEGIN_SRC shell
     mv config.example config.py
     #+END_SRC
+    remember to modify config file.
 
 *** Init sql
     #+BEGIN_SRC python
@@ -73,9 +80,83 @@
 
 *** Login and visit admin 
     *Ok* ,visit forums.localhost:5000/admin to add something
-   
+
 ** Demo
    Please visit [[https://forums.honmaple.org][forums.honmaple.org]] 
+
+   #<<chinese>>
+   *如果你在4月1日之前部署过，请使用升级脚本升级你的数据*
+
+   *重要!*,请修改升级脚本为你自己的数据库
+   #+BEGIN_SRC sh
+    # session1:old database
+    # session2:new database
+    python upgrade.py
+    python upgrade_count.py
+   #+END_SRC
+    
+** 功能
+   + 注册，登陆,忘记密码
+   + 版块及节点分类
+   + 主题收藏
+   + 回复点赞
+   + 关注用户，节点，主题
+   + 隐私设置
+   + 可选markdown提问
+   + 节点rss
+   + 头像...
+     
+** 安装
+   创建虚拟环境
+
+   #+BEGIN_SRC sh
+    mkvirtualenv forums
+   #+END_SRC
+   
+*** 安装需要的包
+    #+BEGIN_SRC python
+    pip install -r requirements.txt
+    #+END_SRC
+
+    因为最新的*flask-maple*还未上传到pypi,所以
+    #+BEGIN_SRC shell
+      git clone https://github.com/honmaple/flask-maple
+      cd flask-maple
+      pip uninstall flask-maple
+      python setup.py install
+    #+END_SRC
+    来安装*flask-maple*
+    
+*** 配置
+    #+BEGIN_SRC shell
+    mv config.example config.py
+    #+END_SRC
+    记得修改配置文件
+    
+*** 初始化数据库
+    #+BEGIN_SRC python
+    python manager.py db init 
+    python manager.py db migrate -m "first migrate"
+    python manager.py db upgrade
+    #+END_SRC
+    或者
+    #+BEGIN_SRC sh
+    python manager.py init_db
+    #+END_SRC
+    
+*** 创建管理员账户
+    #+BEGIN_SRC shell
+    python manager.py create_user
+    #+END_SRC
+    
+*** 登陆并访问后台
+    #+BEGIN_SRC sh
+    python runserver.py
+    #+END_SRC
+    然后访问*forums.localhost:5000/admin*去增加一些东西
+
+** 演示
+   请访问 [[https://forums.honmaple.org][forums.honmaple.org]] 
 
 ** License
    Honmaple is open-sourced software licensed under the GPL3 license
