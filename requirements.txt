@@ -11,8 +11,8 @@ Flask-Mail==0.9.1
 Flask-Migrate==1.8.0
 Flask-Principal==0.4.0
 Flask-Script==2.0.5
-Flask-SQLAlchemy==2.1
-Flask-WTF==0.12
+Flask-SQLAlchemy==2.2
+Flask-WTF==0.14.2
 gevent==1.1.1
 gunicorn==19.4.5
 hiredis==0.2.0

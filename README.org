@@ -30,14 +30,17 @@
    + Avatar
      
 ** Installation
-
-*** Install necessary package
-    Some package is not neccessary
-    #+BEGIN_SRC python
-   pip install -r requirements.txt
+   
+    #+BEGIN_SRC sh
+    mkvirtualenv forums
     #+END_SRC
 
-    Beacause flask_maple.rbac isn't uploaded to pypi
+*** Install necessary package
+    #+BEGIN_SRC python
+    pip install -r requirements.txt
+    #+END_SRC
+
+    Beacause newest flask_maple isn't uploaded to pypi
     you should 
     #+BEGIN_SRC shell
       git clone https://github.com/honmaple/flask-maple
@@ -49,7 +52,7 @@
 
 *** Config
     #+BEGIN_SRC shell
-    mv config.example config
+    mv config.example config.py
     #+END_SRC
 
 *** Init sql
