@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-28 10:26:10 (CST)
-# Last Update:星期日 2017-4-2 15:25:52 (CST)
+# Last Update:星期六 2017-4-8 12:40:29 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -100,6 +100,7 @@ class RegisterView(MethodView):
         html = render_template('templet/email.html', confirm_url=confirm_url)
         subject = _("Please confirm  your email!")
         user.send_email(subject=subject, html=html)
+        user.send_email_to_admin()
 
 
 class ForgetView(MethodView):

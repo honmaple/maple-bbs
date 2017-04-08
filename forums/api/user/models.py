@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期日 2017-4-2 16:27:2 (CST)
+# Last Update:星期六 2017-4-8 12:51:59 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -155,6 +155,16 @@ class User(db.Model, UserMixin, ModelMixin, MailMixin):
     def send_email(self, *args, **kwargs):
         kwargs.update(recipients=[self.email])
         mail.send_email(*args, **kwargs)
+
+    def send_email_to_admin(self):
+        ''''
+        When someone registered an account,send email to admin.
+        '''
+        recipients = current_app.config['RECEIVER']
+        subject = '{} has registered an account.'.format(self.username)
+        html = '<p>username: {}</p><p>email: {}</p>'.format(self.username,
+                                                            self.email)
+        mail.send_email(subject=subject, html=html, recipients=recipients)
 
 
 class UserInfo(db.Model, ModelMixin):
