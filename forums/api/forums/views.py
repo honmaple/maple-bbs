@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 20:45:08 (CST)
-# Last Update:星期日 2017-4-2 11:50:57 (CST)
+# Last Update:星期日 2017-4-9 12:43:42 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,6 +16,7 @@ from flask_babelex import gettext as _
 from forums.api.topic.models import Topic
 from forums.common.views import BaseMethodView as MethodView
 from forums.common.utils import (gen_filter_dict, gen_order_by)
+from forums.api.utils import gen_topic_filter, gen_topic_orderby
 
 from .models import Board
 
@@ -75,8 +76,10 @@ class BoardView(MethodView):
         query_dict = request.data
         page, number = self.page_info
         keys = ['title']
-        order_by = gen_order_by(query_dict, keys)
-        filter_dict = gen_filter_dict(query_dict, keys)
+        # order_by = gen_order_by(query_dict, keys)
+        # filter_dict = gen_filter_dict(query_dict, keys)
+        order_by = gen_topic_orderby(query_dict, keys)
+        filter_dict = gen_topic_filter(query_dict, keys)
         if has_children:
             topics = Topic.query.outerjoin(Board).filter_by(**filter_dict).or_(
                 Board.parent_id == boardId,

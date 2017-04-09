@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期日 2017-4-2 14:49:1 (CST)
+# Last Update:星期日 2017-4-9 12:48:18 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -21,6 +21,7 @@ from forums.api.forms import (CollectForm, ReplyForm, TopicForm,
                               form_board)
 from forums.api.forums.models import Board
 from forums.api.tag.models import Tags
+from forums.api.utils import gen_topic_filter, gen_topic_orderby
 from forums.common.serializer import Serializer
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import BaseMethodView as MethodView
@@ -76,8 +77,10 @@ class TopicListView(MethodView):
         query_dict = request.data
         page, number = self.page_info
         keys = ['title']
-        order_by = gen_order_by(query_dict, keys)
-        filter_dict = gen_filter_dict(query_dict, keys)
+        # order_by = gen_order_by(query_dict, keys)
+        # filter_dict = gen_filter_dict(query_dict, keys)
+        order_by = gen_topic_orderby(query_dict, keys)
+        filter_dict = gen_topic_filter(query_dict, keys)
         title = _('All Topics')
         if request.path.endswith('good'):
             filter_dict.update(is_good=True)

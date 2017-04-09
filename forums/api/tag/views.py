@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:04 (CST)
-# Last Update:星期一 2017-4-3 12:40:9 (CST)
+# Last Update:星期日 2017-4-9 12:46:47 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,6 +16,7 @@ from flask import current_app, render_template, request, url_for
 from werkzeug.contrib.atom import AtomFeed
 
 from forums.api.topic.models import Topic
+from forums.api.utils import gen_topic_filter, gen_topic_orderby
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import BaseMethodView as MethodView
 
@@ -41,10 +42,21 @@ class TagsView(MethodView):
     def get(self, name):
         page, number = self.page_info
         tag = Tags.query.filter_by(name=name).first_or_404()
-        topics = Topic.query.filter_by(tags__id=tag.id).paginate(page, number,
-                                                                 True)
+        topics = self.topics(tag)
         data = {'title': tag.name, 'tag': tag, 'topics': topics}
         return render_template('tag/tag.html', **data)
+
+    def topics(self, tag):
+        query_dict = request.data
+        page, number = self.page_info
+        keys = ['name']
+        # order_by = gen_order_by(query_dict, keys)
+        # filter_dict = gen_filter_dict(query_dict, keys)
+        order_by = gen_topic_orderby(query_dict, keys)
+        filter_dict = gen_topic_filter(query_dict, keys)
+        filter_dict.update(tags__id=tag.id)
+        return Topic.query.filter_by(
+            **filter_dict).order_by(*order_by).paginate(page, number, True)
 
 
 class TagFeedView(MethodView):

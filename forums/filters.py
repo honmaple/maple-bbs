@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update:星期日 2017-4-2 15:30:0 (CST)
+# Last Update:星期日 2017-4-9 12:16:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -87,10 +87,6 @@ def forums_count():
     return redis_data.hgetall(key)
 
 
-def is_not_confirmed(user):
-    return (not user.is_confirmed and user.id == current_user.id)
-
-
 def register_jinja2(app):
 
     app.jinja_env.globals['SITE'] = SITE
@@ -100,4 +96,3 @@ def register_jinja2(app):
     app.jinja_env.globals['forums_count'] = forums_count
     app.jinja_env.filters['timesince'] = timesince
     app.jinja_env.filters['safe_clean'] = safe_clean
-    app.jinja_env.filters['is_not_confirmed'] = is_not_confirmed

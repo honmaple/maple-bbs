@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-08-07 13:53+0800\n"
+"POT-Creation-Date: 2017-04-09 12:50+0800\n"
 "PO-Revision-Date: 2016-06-16 14:36+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
@@ -17,6 +17,248 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
+
+#: forums/extension.py:66
+msgid "Please login to access this page."
+msgstr "这个页面要求登陆，请登陆"
+
+#: forums/api/auth/forms.py:22 forums/api/forms.py:48
+msgid "Username:"
+msgstr "用户名:"
+
+#: forums/api/auth/forms.py:25 forums/api/forms.py:51
+msgid "Password:"
+msgstr "密码:"
+
+#: forums/api/auth/forms.py:28 forums/api/forms.py:54
+msgid "Captcha:"
+msgstr "验证码:"
+
+#: forums/api/auth/forms.py:39 forums/api/forms.py:65
+msgid "The captcha is error"
+msgstr "验证码错误"
+
+#: forums/api/auth/forms.py:46 forums/api/forms.py:72
+msgid "Email:"
+msgstr "邮箱"
+
+#: forums/api/auth/forms.py:50 forums/api/forms.py:76
+msgid "Remember me"
+msgstr "记住我"
+
+#: forums/api/forms.py:79 forums/api/topic/views.py:84
+#: templates/topic/topic_good.html:13 templates/topic/topic_list.html:4
+#: templates/topic/topic_list.html:6 templates/topic/topic_list.html:8
+#: templates/topic/topic_top.html:13
+msgid "All Topics"
+msgstr "所有主题"
+
+#: forums/api/forms.py:79
+msgid "One Day"
+msgstr "一天之内"
+
+#: forums/api/forms.py:79
+msgid "One Week"
+msgstr "一周之内"
+
+#: forums/api/forms.py:80
+msgid "One Month"
+msgstr "一月之内"
+
+#: forums/api/forms.py:80
+msgid "One Year"
+msgstr "一年之内"
+
+#: forums/api/forms.py:82
+msgid "Publish"
+msgstr "发表时间"
+
+#: forums/api/forms.py:82 templates/forums/_macro.html:48
+#: templates/topic/_list_macro.html:13
+msgid "Author"
+msgstr "发表作者"
+
+#: forums/api/forms.py:84
+msgid "Desc"
+msgstr "降序"
+
+#: forums/api/forms.py:84
+msgid "Asc"
+msgstr "升序"
+
+#: forums/api/forms.py:88
+msgid "Choice"
+msgstr "选择"
+
+#: forums/api/forms.py:94
+msgid "search"
+msgstr "搜索"
+
+#: forums/api/forms.py:98
+msgid "message"
+msgstr "私信"
+
+#: forums/api/forms.py:102
+msgid "Title:"
+msgstr "标题:"
+
+#: forums/api/forms.py:103 forums/api/forms.py:111
+msgid "Content:"
+msgstr "内容:"
+
+#: forums/api/forms.py:104
+msgid "Category:"
+msgstr "分类:"
+
+#: forums/api/forms.py:105
+msgid "Tags:"
+msgstr "节点:"
+
+#: forums/api/forms.py:107
+msgid "ContentType"
+msgstr "标记语言"
+
+#: forums/api/forms.py:115
+msgid "Name:"
+msgstr "收藏夹名:"
+
+#: forums/api/forms.py:116
+msgid "Description:"
+msgstr "描述:"
+
+#: forums/api/forms.py:128
+msgid "Upload Avatar:"
+msgstr "上传头像"
+
+#: forums/api/forms.py:135
+msgid "Online status:"
+msgstr "在线状态:"
+
+#: forums/api/forms.py:136
+msgid "Topic List:"
+msgstr "主题列表:"
+
+#: forums/api/forms.py:138
+msgid "Reply List:"
+msgstr "回复列表:"
+
+#: forums/api/forms.py:139
+msgid "Notebook List:"
+msgstr "笔记列表:"
+
+#: forums/api/forms.py:140
+msgid "Collect List:"
+msgstr "收藏列表:"
+
+#: forums/api/forms.py:144
+msgid "Introduce:"
+msgstr "个人介绍:"
+
+#: forums/api/forms.py:145
+msgid "School:"
+msgstr "所在学校:"
+
+#: forums/api/forms.py:146
+msgid "Signature:"
+msgstr "个性签名:"
+
+#: forums/api/forms.py:151
+msgid "Old Password:"
+msgstr "原密码:"
+
+#: forums/api/forms.py:154
+msgid "New Password:"
+msgstr "新密码:"
+
+#: forums/api/forms.py:157
+msgid "New Password again:"
+msgstr "重复新密码:"
+
+#: forums/api/forms.py:161
+msgid "Timezone:"
+msgstr "时区设置:"
+
+#: forums/api/forms.py:162
+msgid "Locale:"
+msgstr "语言设置:"
+
+#: forums/api/auth/views.py:101
+msgid "Please confirm  your email!"
+msgstr "请验证你的邮箱!"
+
+#: forums/api/auth/views.py:146
+msgid "Please confirm  your email"
+msgstr "请验证你的邮箱!"
+
+#: forums/api/forums/views.py:37
+msgid "About - "
+msgstr "关于 - "
+
+#: forums/api/forums/views.py:43
+msgid "Help - "
+msgstr "帮助 - "
+
+#: forums/api/forums/views.py:49
+msgid "Contact - "
+msgstr "联系我 - "
+
+#: forums/api/topic/views.py:44
+msgid "Ask - "
+msgstr "提问 - "
+
+#: forums/api/topic/views.py:58
+msgid "Edit -"
+msgstr "编辑 - "
+
+#: forums/api/topic/views.py:87 templates/topic/topic_good.html:13
+#: templates/topic/topic_list.html:6
+msgid "Good Topics"
+msgstr "社区精华帖子"
+
+#: forums/api/topic/views.py:90 templates/topic/topic_list.html:4
+#: templates/topic/topic_top.html:13
+msgid "Top Topics"
+msgstr "精华文章"
+
+#: forums/common/response.py:34
+msgid "Username or Password Error"
+msgstr ""
+
+#: forums/common/response.py:35
+msgid "Captcha Error"
+msgstr ""
+
+#: forums/common/response.py:36
+msgid "The email has been registered!"
+msgstr ""
+
+#: forums/common/response.py:37
+msgid "The username has been registered!"
+msgstr ""
+
+#: forums/common/response.py:38
+msgid "The email is error"
+msgstr ""
+
+#: forums/common/response.py:40
+msgid "Your account has been confirmed,don't need again!"
+msgstr ""
+
+#: forums/common/response.py:42
+msgid "Token is out of time,please get token again!"
+msgstr ""
+
+#: forums/common/response.py:43
+msgid "Form validate error"
+msgstr ""
+
+#: forums/common/response.py:44
+msgid "You have no permission!"
+msgstr ""
+
+#: forums/common/response.py:45
+msgid "Other error"
+msgstr ""
 
 #: templates/auth/forget.html:1
 msgid "Forget Password - "
@@ -31,7 +273,7 @@ msgid "Login - "
 msgstr "登陆 - "
 
 #: templates/auth/login.html:5 templates/auth/login.html:8
-#: templates/base/base.html:75 templates/topic/replies.html:93
+#: templates/base/base.html:70 templates/topic/reply/form.html:15
 msgid "Login"
 msgstr "登陆"
 
@@ -40,99 +282,101 @@ msgid "Register - "
 msgstr "注册 - "
 
 #: templates/auth/register.html:5 templates/auth/register.html:8
-#: templates/base/base.html:74
+#: templates/base/base.html:69
 msgid "Register"
 msgstr "注册"
 
-#: templates/base/base.html:29
-msgid "Forums"
-msgstr "社区"
+#: templates/base/base.html:53
+msgid "Home Page"
+msgstr "主页"
 
-#: templates/base/base.html:30
-msgid "Wiki"
-msgstr "文档"
-
-#: templates/base/base.html:31
-msgid "Blog"
-msgstr "博客"
-
-#: templates/base/base.html:32
-msgid "Good"
-msgstr "精华文章"
-
-#: templates/base/base.html:36
-msgid "search content"
-msgstr "搜索内容"
-
-#: templates/base/base.html:67
-msgid "My Page"
-msgstr "我的主页"
-
-#: templates/base/base.html:68
+#: templates/base/base.html:54
 msgid "Setting"
 msgstr "帐号设置"
 
-#: templates/base/base.html:70
+#: templates/base/base.html:56
 msgid "Logout"
 msgstr "注销"
 
-#: templates/base/base.html:77 templates/tag/tag.html:12
-#: templates/tag/tag_list.html:4 templates/tag/tag_list.html:9
-msgid "All Tags"
-msgstr "所有标签"
+#: templates/base/base.html:60
+msgid "NoticeList"
+msgstr "通知"
 
-#: templates/base/base.html:78 templates/forums/userlist.html:3
-#: templates/forums/userlist.html:8
-msgid "Userlist"
+#: templates/base/base.html:72 templates/base/link.html:10
+msgid "TagList"
+msgstr "节点"
+
+#: templates/base/base.html:73 templates/base/link.html:2
+msgid "UserList"
 msgstr "用户列表"
-
-#: templates/base/base.html:80 templates/forums/notice.html:3
-#: templates/forums/notice.html:9
-msgid "Notices"
-msgstr "消息通知"
 
 #: templates/base/form.html:14
 msgid "save"
 msgstr "保存"
 
 #: templates/base/head.html:4 templates/base/head.html:6
-#: templates/topic/content.html:16
 msgid "Index"
 msgstr "社区主页"
 
-#: templates/base/link.html:17
-msgid "My Created Collects"
-msgstr "我创建的收藏夹"
+#: templates/base/header.html:19 templates/forums/index.html:10
+msgid "Forums"
+msgstr "社区"
 
-#: templates/base/link.html:20 templates/base/link.html:32
-#: templates/follow/following_collect.html:3
-msgid "Following Collects"
-msgstr "关注的收藏"
+#: templates/base/header.html:20 templates/forums/index.html:11
+msgid "Wiki"
+msgstr "文档"
 
-#: templates/base/link.html:23 templates/follow/following_tag.html:3
+#: templates/base/header.html:21 templates/forums/index.html:12
+msgid "Blog"
+msgstr "博客"
+
+#: templates/base/header.html:22 templates/forums/index.html:13
+msgid "Good"
+msgstr "精华文章"
+
+#: templates/base/header.html:26
+msgid "search content"
+msgstr "搜索内容"
+
+#: templates/base/link.html:18
+msgid "TopicList"
+msgstr "所有主题"
+
+#: templates/base/link.html:27
+msgid "BoardList"
+msgstr ""
+
+#: templates/base/link.html:52 templates/follow/following_tags.html:4
 msgid "Following Tags"
 msgstr "关注的节点"
 
-#: templates/base/link.html:26 templates/follow/following_topic.html:3
+#: templates/base/link.html:55 templates/follow/following_topics.html:4
 msgid "Following Topics"
 msgstr "关注的主题"
 
-#: templates/base/link.html:29 templates/follow/following_user.html:3
+#: templates/base/link.html:58 templates/follow/following_users.html:4
 msgid "Following Users"
 msgstr "关注的用户"
+
+#: templates/base/link.html:61 templates/follow/following_collects.html:4
+msgid "Following Collects"
+msgstr "关注的收藏"
+
+#: templates/base/link.html:66
+msgid "CollectList"
+msgstr "收藏列表"
 
 #: templates/base/panel.html:5
 msgid "Ask Questions"
 msgstr "提问"
 
-#: templates/base/panel.html:10 templates/mine/collect.html:15
-#: templates/mine/collect_list.html:3
-msgid "My Collects"
-msgstr "我的收藏"
+#: templates/base/panel.html:10
+msgid "Collects"
+msgstr "收藏"
 
 #: templates/base/panel.html:13
-msgid "My Followings"
-msgstr "我的关注"
+msgid "Followings"
+msgstr "关注"
 
 #: templates/base/panel.html:24
 msgid "now register"
@@ -158,59 +402,130 @@ msgstr "最近增加的节点"
 msgid "Forums Count"
 msgstr "社区统计"
 
-#: templates/base/panel.html:94
+#: templates/base/panel.html:95
 msgid "Total number of registered users:"
 msgstr "社区会员:"
 
-#: templates/base/panel.html:95
+#: templates/base/panel.html:96
 msgid "Total number of topics:"
 msgstr "主题总数:"
 
-#: templates/base/panel.html:96
+#: templates/base/panel.html:97
 msgid "Total number of posts:"
 msgstr "回帖数:"
 
-#: templates/board/board.html:28
-msgid "Today:"
-msgstr "今日:"
-
-#: templates/board/board.html:30 templates/board/board_base.html:10
+#: templates/board/_macro.html:9
 msgid "Topics:"
 msgstr "主题:"
 
-#: templates/board/board.html:32
-msgid "Ranking:"
-msgstr "排名:"
-
-#: templates/board/board_base.html:12
+#: templates/board/_macro.html:11
 msgid "Posts:"
 msgstr "帖子:"
 
-#: templates/board/board_base.html:22
+#: templates/board/_macro.html:21
 #, python-format
 msgid "published by %(author)s"
 msgstr "由%(author)s发表"
 
-#: templates/board/board_base.html:26 templates/topic/topic_list.html:23
-#: templates/user/topic.html:39
+#: templates/board/_macro.html:25 templates/topic/_list_macro.html:100
+#: templates/user/user.html:37
 msgid "No Topic"
 msgstr "没有帖子"
 
-#: templates/follow/none.html:3
-msgid "No Following"
-msgstr "暂无关注"
-
-#: templates/forums/forums.html:3
+#: templates/board/board_list.html:4
 msgid "Board"
 msgstr "版块"
 
-#: templates/forums/notice.html:8
+#: templates/collect/collect.html:3 templates/collect/collect_list.html:3
+msgid "My Collects"
+msgstr "我的收藏"
+
+#: templates/collect/collect.html:12
+msgid "edit"
+msgstr "编辑"
+
+#: templates/collect/collect.html:13 templates/collect/collect.html:20
+msgid "delete"
+msgstr "删除"
+
+#: templates/collect/collect.html:25
+msgid "No Collect"
+msgstr "暂无收藏"
+
+#: templates/collect/collect_list.html:12 templates/collect/create.html:6
+msgid "Create Collect"
+msgstr "创建收藏"
+
+#: templates/collect/collect_list.html:18
+msgid "Privacy"
+msgstr "私有"
+
+#: templates/collect/collect_list.html:20
+msgid "Public"
+msgstr "公共"
+
+#: templates/collect/create.html:27 templates/collect/delete.html:13
+#: templates/collect/edit.html:26
+msgid "cancel"
+msgstr "取消"
+
+#: templates/collect/create.html:28 templates/collect/delete.html:14
+#: templates/collect/edit.html:27
+msgid "confirm"
+msgstr "确定"
+
+#: templates/collect/delete.html:6
+msgid "Delete this collect"
+msgstr "删除收藏"
+
+#: templates/collect/edit.html:6
+msgid "Edit the collect"
+msgstr "编辑收藏"
+
+#: templates/follow/none.html:3
+msgid "No Followings"
+msgstr ""
+
+#: templates/forums/_macro.html:10
+msgid "Office Source Code"
+msgstr ""
+
+#: templates/forums/_macro.html:41 templates/topic/_list_macro.html:6
+msgid "Choice:"
+msgstr "筛选:"
+
+#: templates/forums/_macro.html:43 templates/topic/_list_macro.html:8
+msgid "Order:"
+msgstr "排序:"
+
+#: templates/forums/_macro.html:51 templates/topic/_list_macro.html:16
+msgid "Replies/Read"
+msgstr "回复/阅读"
+
+#: templates/forums/_macro.html:54 templates/topic/_list_macro.html:19
+msgid "Last reply"
+msgstr "最后回复"
+
+#: templates/forums/index.html:26
+msgid "more good topics"
+msgstr "更多精华文章"
+
+#: templates/forums/message.html:3 templates/forums/message.html:9
+msgid "Notices"
+msgstr "消息通知"
+
+#: templates/forums/message.html:8
 msgid "mark all to is read"
 msgstr "全部标记为已读"
 
-#: templates/forums/notice.html:22
+#: templates/forums/message.html:25
 msgid "No Notices"
 msgstr "没有通知"
+
+#: templates/forums/userlist.html:3 templates/forums/userlist.html:8
+#: templates/user/user_list.html:3 templates/user/user_list.html:8
+msgid "Userlist"
+msgstr "用户列表"
 
 #: templates/maple/footer.html:23
 msgid "Help"
@@ -244,445 +559,242 @@ msgstr "最高在线:"
 msgid "Time of highest online:"
 msgstr "最高在线时间:"
 
-#: templates/mine/collect.html:21
-msgid "edit"
-msgstr "编辑"
-
-#: templates/mine/collect.html:22 templates/mine/collect.html:30
-msgid "delete"
-msgstr "删除"
-
-#: templates/mine/collect.html:36 templates/user/collect.html:46
-msgid "No Collect"
-msgstr "暂无收藏"
-
-#: templates/mine/collect.html:51
-msgid "Edit the collect"
-msgstr "编辑收藏"
-
-#: templates/mine/collect.html:71 templates/mine/collect.html:90
-#: templates/mine/collect_list.html:57
-msgid "cancel"
-msgstr "取消"
-
-#: templates/mine/collect.html:72 templates/mine/collect.html:91
-#: templates/mine/collect_list.html:58
-msgid "confirm"
-msgstr "确定"
-
-#: templates/mine/collect.html:83
-msgid "Delete this collect"
-msgstr "删除收藏"
-
-#: templates/mine/collect_list.html:12 templates/mine/collect_list.html:36
-msgid "Create Collect"
-msgstr "创建收藏"
-
-#: templates/mine/collect_list.html:18
-msgid "Privacy"
-msgstr "私有"
-
-#: templates/mine/collect_list.html:20
-msgid "Public"
-msgstr "公共"
-
-#: templates/setting/babel.html:4 templates/setting/babel.html:20
-#: templates/setting/babel.html:26 templates/setting/password.html:11
-#: templates/setting/privacy.html:11 templates/setting/setting.html:17
-msgid "Timezone and Locale"
-msgstr "时区及语言设置"
-
-#: templates/setting/babel.html:17 templates/setting/password.html:8
-#: templates/setting/privacy.html:8 templates/setting/setting.html:4
-#: templates/setting/setting.html:14 templates/setting/setting.html:23
+#: templates/setting/_macro.html:4 templates/setting/setting.html:5
+#: templates/setting/setting.html:19
 msgid "Profile "
 msgstr "资料设置"
 
-#: templates/setting/babel.html:18 templates/setting/password.html:4
-#: templates/setting/password.html:9 templates/setting/privacy.html:9
-#: templates/setting/setting.html:15
+#: templates/setting/_macro.html:5 templates/setting/password.html:5
 msgid "Password "
 msgstr "密码修改"
 
-#: templates/setting/babel.html:19 templates/setting/password.html:10
-#: templates/setting/privacy.html:4 templates/setting/privacy.html:10
-#: templates/setting/privacy.html:17 templates/setting/setting.html:16
+#: templates/setting/_macro.html:6 templates/setting/privacy.html:5
+#: templates/setting/privacy.html:13
 msgid "Privacy "
 msgstr "隐私设置"
 
-#: templates/setting/password.html:17
-msgid "Account"
-msgstr "账户修改"
+#: templates/setting/_macro.html:7 templates/setting/babel.html:5
+#: templates/setting/babel.html:22
+msgid "Timezone and Locale"
+msgstr "时区及语言设置"
 
-#: templates/setting/setting.html:42
+#: templates/setting/_macro.html:26
 msgid "confirm upload"
 msgstr "确认上传"
 
-#: templates/tag/tag_list.html:19
-msgid "No Tag"
+#: templates/setting/password.html:13
+msgid "Account"
+msgstr "账户修改"
+
+#: templates/tag/tag.html:4 templates/tag/tag_list.html:3
+#: templates/tag/tag_list.html:8
+msgid "All Tags"
+msgstr "所有标签"
+
+#: templates/tag/tag_list.html:15
+msgid "No Tags"
 msgstr "暂无标签"
 
-#: templates/topic/ask.html:16 templates/topic/ask.html:18
+#: templates/topic/ask.html:10 templates/topic/ask.html:12
 msgid "Ask"
 msgstr "提问"
 
-#: templates/topic/content.html:36
+#: templates/topic/edit.html:13
+msgid "Edit"
+msgstr "编辑"
+
+#: templates/topic/item/_macro.html:14
 #, python-format
 msgid "published at %(time)s"
 msgstr "于%(time)s发布"
 
-#: templates/topic/content.html:38
+#: templates/topic/item/_macro.html:16
 #, python-format
 msgid "The last reply published by %(author)s at %(time)s"
 msgstr "最后由%(author)s于%(time)s发布"
 
-#: templates/topic/edit.html:19
-msgid "Edit"
-msgstr "编辑"
+#: templates/topic/reply/_macro.html:18
+msgid "no reply"
+msgstr "暂无回复"
 
-#: templates/topic/replies.html:24
+#: templates/topic/reply/form.html:3
+msgid "Reply this topic"
+msgstr "回帖"
+
+#: templates/topic/reply/form.html:8
+msgid "Post reply"
+msgstr "发表回复"
+
+#: templates/topic/reply/form.html:15
+msgid "You need"
+msgstr "你需要"
+
+#: templates/topic/reply/form.html:15
+msgid "before you can reply."
+msgstr "后才能发表回复"
+
+#: templates/topic/reply/itemlist.html:4
 #, python-format
 msgid "Received %(total)s replies"
 msgstr "共收到%(total)s条回复"
 
-#: templates/topic/replies.html:26 templates/user/follower.html:7
-#: templates/user/follower.html:10 templates/user/reply.html:7
-#: templates/user/reply.html:10 templates/user/topic.html:7
-#: templates/user/topic.html:10
+#: templates/topic/reply/itemlist.html:6 templates/user/followers.html:12
+#: templates/user/replies.html:12 templates/user/user.html:12
 msgid "time"
 msgstr "时间"
 
-#: templates/topic/replies.html:27 templates/user/reply.html:8
-#: templates/user/reply.html:11
+#: templates/topic/reply/itemlist.html:7 templates/user/followers.html:13
+#: templates/user/replies.html:13
 msgid "likers"
 msgstr "点赞"
 
-#: templates/topic/replies.html:74
-msgid "no reply"
-msgstr "暂无回复"
-
-#: templates/topic/replies.html:81
-msgid "Reply this topic"
-msgstr "回帖"
-
-#: templates/topic/replies.html:86
-msgid "Post reply"
-msgstr "发表回复"
-
-#: templates/topic/replies.html:93
-msgid "You need"
-msgstr "你需要"
-
-#: templates/topic/replies.html:93
-msgid "before you can reply."
-msgstr "后才能发表回复"
-
-#: maple/forums/forms.py:23 templates/topic/topic.html:13
-#: templates/topic/topic_good.html:13
-msgid "All Topics"
-msgstr "所有主题"
-
-#: templates/topic/topic_good.html:13 templates/topic/topic_list.html:36
-msgid "Good Topics"
-msgstr "社区精华帖子"
-
-#: maple/forums/forms.py:27 templates/topic/topic_list.html:39
-#: templates/topic/topic_list.html:70
-msgid "Author"
-msgstr "发表作者"
-
-#: templates/topic/topic_list.html:42 templates/topic/topic_list.html:73
-msgid "Replies/Read"
-msgstr "回复/阅读"
-
-#: templates/topic/topic_list.html:45 templates/topic/topic_list.html:76
-msgid "Last reply"
-msgstr "最后回复"
-
-#: templates/topic/topic_list.html:63
-msgid "Choice:"
-msgstr "筛选:"
-
-#: templates/topic/topic_list.html:65
-msgid "Order:"
-msgstr "排序:"
-
-#: templates/user/collect.html:40 templates/user/reply.html:34
-#: templates/user/topic.html:33
+#: templates/user/_macro.html:5
 msgid "Due to user's setting,the list have been hidden."
 msgstr "由于用户设置，列表被隐藏。"
 
-#: templates/user/follower.html:4 templates/user/reply.html:4
-#: templates/user/topic.html:4
-msgid "Sort:"
-msgstr "排序:"
-
-#: templates/user/follower.html:8 templates/user/follower.html:11
-msgid "score"
-msgstr "积分"
-
-#: templates/user/follower.html:25
-msgid "No Follower"
-msgstr "暂无关注者"
-
-#: maple/topic/permission.py:29 maple/topic/permission.py:80
-#: maple/topic/permission.py:117 templates/user/infor.html:22
-msgid "You haven't confirm your account,Please confirmed"
-msgstr "你的账户未验证，请尽快验证！"
-
-#: templates/user/infor.html:23
-msgid "Activate  Account"
-msgstr "验证帐户"
-
-#: templates/user/infor.html:39
-msgid "ONLINE"
-msgstr "在线"
-
-#: templates/user/infor.html:41
-msgid "OUTLINE"
-msgstr "离线"
-
-#: templates/user/reply.html:21
-#, python-format
-msgid "replied %(title)s created by %(author)s"
-msgstr "回复了%(author)s创建的主题%(title)s"
-
-#: templates/user/reply.html:25
-msgid "replied time:"
-msgstr "回复时间:"
-
-#: templates/user/reply.html:40
-msgid "No Reply"
-msgstr "暂无回复"
-
-#: templates/user/topic.html:8 templates/user/topic.html:11
-msgid "vote"
-msgstr "投票"
-
-#: templates/user/topic.html:23
-msgid "create time:"
-msgstr "创建时间:"
-
-#: templates/user/topic.html:24
-#, python-format
-msgid "the last reply published by %(author)s"
-msgstr "最后回复来自%(author)s"
-
-#: templates/user/user.html:31
-msgid "me"
-msgstr "我"
-
-#: templates/user/user.html:45
+#: templates/user/base.html:12
 #, python-format
 msgid "topics of %(n)s"
 msgstr "%(n)s的主题"
 
-#: templates/user/user.html:46
+#: templates/user/base.html:13
 #, python-format
 msgid "replies of %(n)s"
 msgstr "%(n)s的回复"
 
-#: templates/user/user.html:47
+#: templates/user/base.html:14
 #, python-format
 msgid "collects of %(n)s"
 msgstr "%(n)s的收藏"
 
-#: templates/user/user.html:48
+#: templates/user/base.html:15
 #, python-format
 msgid "followers of %(n)s"
 msgstr "%(n)s的粉丝"
 
-#: maple/extensions.py:130
-msgid "Please login to access this page."
-msgstr "这个页面要求登陆，请登陆"
+#: templates/user/followers.html:10 templates/user/replies.html:10
+#: templates/user/user.html:10
+msgid "Sort:"
+msgstr "排序:"
 
-#: maple/settings.py:16
-msgid "I love freedom more than life."
-msgstr "爱生活，更爱自由"
+#: templates/user/followers.html:23
+msgid "No Follower"
+msgstr "暂无关注者"
 
-#: maple/auth/views.py:69
-msgid "Your account has been confirmed,don't need again"
-msgstr "你的账户已经验证，不能重复验证"
+#: templates/user/info.html:21
+msgid "You haven't confirm your account,Please confirmed"
+msgstr "你的账户未验证，请尽快验证！"
 
-#: maple/auth/views.py:75
-msgid "An email has been sent to your.Please receive"
-msgstr "验证邮件已发送到你的邮箱，请及时查收！"
+#: templates/user/info.html:22
+msgid "Activate  Account"
+msgstr "验证帐户"
 
-#: maple/forums/forms.py:21
-msgid "Choice"
-msgstr "选择"
+#: templates/user/info.html:29
+msgid "ONLINE"
+msgstr "在线"
 
-#: maple/forums/forms.py:23
-msgid "One Day"
-msgstr "一天之内"
+#: templates/user/info.html:31
+msgid "OUTLINE"
+msgstr "离线"
 
-#: maple/forums/forms.py:23
-msgid "One Week"
-msgstr "一周之内"
+#: templates/user/replies.html:29
+#, python-format
+msgid "replied %(title)s created by %(author)s"
+msgstr "回复了%(author)s创建的主题%(title)s"
 
-#: maple/forums/forms.py:24
-msgid "One Month"
-msgstr "一月之内"
+#: templates/user/replies.html:33
+msgid "replied time:"
+msgstr "回复时间:"
 
-#: maple/forums/forms.py:27
-msgid "Publish"
-msgstr "发表时间"
+#: templates/user/replies.html:38
+msgid "No Reply"
+msgstr "暂无回复"
 
-#: maple/forums/forms.py:30
-msgid "Desc"
-msgstr "降序"
+#: templates/user/user.html:13
+msgid "vote"
+msgstr "投票"
 
-#: maple/forums/forms.py:30
-msgid "Asc"
-msgstr "升序"
+#: templates/user/user.html:31
+msgid "create time:"
+msgstr "创建时间:"
 
-#: maple/forums/forms.py:34
-msgid "search"
-msgstr "搜索"
-
-#: maple/forums/forms.py:38
-msgid "message"
-msgstr "私信"
-
-#: maple/forums/views.py:42
-msgid "Index - "
-msgstr "首页 - "
-
-#: maple/forums/views.py:59
-msgid "Notice - "
-msgstr "消息提醒 - "
-
-#: maple/forums/views.py:68
-msgid "Userlist - "
-msgstr "用户列表 - "
-
-#: maple/forums/views.py:83
-msgid "send succeccfully"
-msgstr "成功发送"
-
-#: maple/forums/views.py:93
-msgid "About - "
-msgstr "关于 - "
-
-#: maple/forums/views.py:99
-msgid "Help - "
-msgstr "帮助 - "
-
-#: maple/forums/views.py:105
-msgid "Contact - "
-msgstr "联系我 - "
-
-#: maple/mine/forms.py:21
-msgid "Name:"
-msgstr "收藏夹名:"
-
-#: maple/mine/forms.py:22
-msgid "Description:"
-msgstr "描述:"
-
-#: maple/setting/forms.py:19
-msgid "Everybody"
-msgstr "所有人"
-
-#: maple/setting/forms.py:19
-msgid "Logined User"
-msgstr "已登录用户"
-
-#: maple/setting/forms.py:19
-msgid "Only Self"
-msgstr "仅自己"
-
-#: maple/setting/forms.py:24
-msgid "Login status:"
-msgstr "登陆状态:"
-
-#: maple/setting/forms.py:26
-msgid "Topic List:"
-msgstr "主题列表:"
-
-#: maple/setting/forms.py:28
-msgid "Reply List:"
-msgstr "回复列表:"
-
-#: maple/setting/forms.py:29
-msgid "Notebook List:"
-msgstr "笔记列表:"
-
-#: maple/setting/forms.py:30
-msgid "Collect List:"
-msgstr "收藏列表:"
-
-#: maple/setting/forms.py:34
-msgid "Introduce:"
-msgstr "个人介绍:"
-
-#: maple/setting/forms.py:35
-msgid "School:"
-msgstr "所在学校:"
-
-#: maple/setting/forms.py:36
-msgid "Signature:"
-msgstr "个性签名:"
-
-#: maple/setting/forms.py:41
-msgid "Old Password:"
-msgstr "原密码:"
-
-#: maple/setting/forms.py:43
-msgid "New Password:"
-msgstr "新密码:"
-
-#: maple/setting/forms.py:45
-msgid "New Password again:"
-msgstr "重复新密码:"
-
-#: maple/setting/forms.py:50
-msgid "Timezone:"
-msgstr "时区设置:"
-
-#: maple/setting/forms.py:52
-msgid "Locale:"
-msgstr "语言设置:"
-
-#: maple/setting/forms.py:53
-msgid "English"
-msgstr "英文"
-
-#: maple/setting/forms.py:53
-msgid "Chinese"
-msgstr "中文"
-
-#: maple/topic/forms.py:21
-msgid "Title:"
-msgstr "标题:"
-
-#: maple/topic/forms.py:22 maple/topic/forms.py:35
-msgid "Content:"
-msgstr "内容:"
-
-#: maple/topic/forms.py:24
-msgid "Category:"
-msgstr "分类:"
-
-#: maple/topic/forms.py:28
-msgid "Tags:"
-msgstr "节点:"
-
-#: maple/topic/permission.py:45 maple/topic/permission.py:94
-msgid "You have no permission"
-msgstr "你没有权限！"
-
-#: maple/topic/views.py:53
-msgid "Edit -"
-msgstr "编辑 - "
-
-#: maple/upload/forms.py:20
-msgid "Upload Avatar:"
-msgstr "上传头像"
+#: templates/user/user.html:32
+#, python-format
+msgid "the last reply published by %(author)s"
+msgstr "最后回复来自%(author)s"
 
 #~ msgid "Office Source Code"
 #~ msgstr "官方网站源码"
 
 #~ msgid "more good topics"
 #~ msgstr "查看更多精华文章"
+
+#~ msgid "My Page"
+#~ msgstr "我的主页"
+
+#~ msgid "My Created Collects"
+#~ msgstr "我创建的收藏夹"
+
+#~ msgid "My Followings"
+#~ msgstr "我的关注"
+
+#~ msgid "Today:"
+#~ msgstr "今日:"
+
+#~ msgid "Ranking:"
+#~ msgstr "排名:"
+
+#~ msgid "No Following"
+#~ msgstr "暂无关注"
+
+#~ msgid "No Tag"
+#~ msgstr "暂无标签"
+
+#~ msgid "score"
+#~ msgstr "积分"
+
+#~ msgid "me"
+#~ msgstr "我"
+
+#~ msgid "I love freedom more than life."
+#~ msgstr "爱生活，更爱自由"
+
+#~ msgid "Your account has been confirmed,don't need again"
+#~ msgstr "你的账户已经验证，不能重复验证"
+
+#~ msgid "An email has been sent to your.Please receive"
+#~ msgstr "验证邮件已发送到你的邮箱，请及时查收！"
+
+#~ msgid "Index - "
+#~ msgstr "首页 - "
+
+#~ msgid "Notice - "
+#~ msgstr "消息提醒 - "
+
+#~ msgid "Userlist - "
+#~ msgstr "用户列表 - "
+
+#~ msgid "send succeccfully"
+#~ msgstr "成功发送"
+
+#~ msgid "Everybody"
+#~ msgstr "所有人"
+
+#~ msgid "Logined User"
+#~ msgstr "已登录用户"
+
+#~ msgid "Only Self"
+#~ msgstr "仅自己"
+
+#~ msgid "Login status:"
+#~ msgstr "登陆状态:"
+
+#~ msgid "English"
+#~ msgstr "英文"
+
+#~ msgid "Chinese"
+#~ msgstr "中文"
+
+#~ msgid "You have no permission"
+#~ msgstr "你没有权限！"
 

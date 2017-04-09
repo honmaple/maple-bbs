@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 12:53:02 (CST)
-# Last Update:星期三 2017-3-29 22:51:17 (CST)
+# Last Update:星期日 2017-4-9 12:41:11 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -77,7 +77,7 @@ class LoginForm(BaseForm):
 
 
 WITHIN = [(0, _('All Topics')), (1, _('One Day')), (2, _('One Week')),
-          (3, _('One Month'))]
+          (3, _('One Month')), (4, _('One Year'))]
 
 ORDERBY = [(0, _('Publish')), (1, _('Author'))]
 

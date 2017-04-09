@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期六 2017-4-8 12:51:59 (CST)
+# Last Update:星期日 2017-4-9 12:16:21 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -57,6 +57,10 @@ class User(db.Model, UserMixin, ModelMixin, MailMixin):
         return db.session.query(user_follower).filter(
             user_follower.c.user_id == self.id,
             user_follower.c.follower_id == user.id).exists()
+
+    @property
+    def is_not_confirmed(self):
+        return (not self.is_confirmed and self.id == current_user.id)
 
     @property
     def is_online(self):
