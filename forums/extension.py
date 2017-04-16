@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:57:10 (CST)
-# Last Update:星期日 2017-4-16 13:58:45 (CST)
+# Last Update:星期日 2017-4-16 17:37:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -28,7 +28,7 @@ from flask_maple.mail import Mail
 from flask_cache import Cache
 from flask_principal import Principal
 from flask_login import LoginManager
-from flask_search import Search
+from flask_msearch import Search
 import os
 
 
