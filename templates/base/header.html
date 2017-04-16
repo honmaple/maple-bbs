@@ -1,5 +1,5 @@
 {% macro navlist(url,title) -%}
-<li><a href="{{ url }}">{{ title }}</a></li>
+  <li><a href="{{ url }}">{{ title }}</a></li>
 {%- endmacro %}
 
 <nav class="navbar navbar-default navbar-fixed-top" style="background:#fff">
@@ -21,9 +21,9 @@
         {{ navlist('http://honmaple.org',_('Blog')) }}
         {{ navlist(url_for('topic.good'),_('Good')) }}
       </ul>
-      <form onsubmit="return dispatch()" class="navbar-form navbar-right" style="margin-top:10px;" >
+      <form action="{{ url_for('search.search') }}" class="navbar-form navbar-right" style="margin-top:10px;" >
         <div class="form-group has-feedback">
-          {{ g.search_form.search(class="form-control input-sm",placeholder=_("search content")) }}
+          <input class="form-control input-sm" name="keyword" placeholder="搜索内容" type="text" value="">
           <i class="fa fa-search form-control-feedback"></i>
         </div>
       </form>

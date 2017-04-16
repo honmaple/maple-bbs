@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% block content %}
+  {{ breadcrumb(hrefs={_('Search'):url_for('search.search')},active=keyword)}}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      {{ _('Search') }}
+    </div>
+    <div class="panel-body" style="border-bottom:1px solid #eee">
+      {% include "search/form.html" %}
+    </div>
+    {% for result in results %}
+      <div class="panel-body text-center" style="padding:6px;border-bottom:1px solid #eee">
+        <a href="{{ url_for('topic.topic',topicId=result['id']) }}">{{ result['title'] }}</a>
+      </div>
+    {% else %}
+      <div class="panel-body text-center">
+        您的搜索没有返回结果。
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

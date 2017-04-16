@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+{% block content %}
+  {{ breadcrumb(active=_('Search')) }}
+  {% cache 300 %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        {{ _('Search') }}
+      </div>
+      <div class="panel-body">
+        {% include "search/form.html" %}
+      </div>
+    </div>
+  {% endcache %}
+{% endblock %}

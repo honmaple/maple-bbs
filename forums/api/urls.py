@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-01-25 20:12:58 (CST)
-# Last Update:星期六 2017-4-1 18:45:19 (CST)
+# Last Update:星期日 2017-4-16 13:59:3 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -20,8 +20,7 @@ from .follow.urls import site as follow_site
 from .upload.urls import site as upload_site
 from .collect.urls import site as collect_site
 from .message.urls import site as message_site
-
-# from .search.urls import site as search_site
+from .search.urls import site as search_site
 # from .permission.urls import site as perm_site
 
 
@@ -36,5 +35,5 @@ def api_routers(app):
     app.register_blueprint(upload_site)
     app.register_blueprint(collect_site)
     app.register_blueprint(message_site)
-    # app.register_blueprint(search_site)
     # app.register_blueprint(perm_site)
+    app.register_blueprint(search_site)

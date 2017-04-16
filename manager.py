@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:08:39 (CST)
-# Last Update:星期日 2017-4-2 16:44:25 (CST)
+# Last Update:星期日 2017-4-16 13:54:53 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -23,6 +23,65 @@ import os
 app = create_app('config')
 migrate = Migrate(app, db)
 manager = Manager(app)
+
+
+@manager.command
+def index():
+    from forums.extension import search
+    return search.create_index()
+
+
+@manager.command
+def ss():
+    from forums.extension import search
+    from forums.api.topic.models import Topic
+    results = search.whoosh_search(Topic, '河海大学', ['title'], 3)
+    print('results:')
+    print(results)
+    for i in results:
+        print(i)
+        print(i.highlights("title"))  # 高亮标题中的检索词
+
+
+@manager.command
+def test():
+    from forums.extension import search
+    from whoosh.index import open_dir
+    from whoosh.index import create_in
+    from whoosh.fields import Schema, TEXT, ID
+    from jieba.analyse import ChineseAnalyzer
+    from forums.api.topic.models import Topic
+    analyzer = ChineseAnalyzer()
+
+    # 创建schema, stored为True表示能够被检索
+    schema = search._schema(Topic)
+    ix = search._index(Topic)
+    # schema = Schema(
+    #     title=TEXT(
+    #         stored=True, analyzer=analyzer),
+    #     id=ID(stored=False),
+    #     content=TEXT(
+    #         stored=True, analyzer=analyzer))
+    # 存储schema信息至'indexdir'目录下
+    # indexdir = 'whoosh_index/Topic'
+    # if not os.path.exists(indexdir):
+    #     os.mkdir(indexdir)
+    # ix = create_in(indexdir, schema)
+    # ix = open_dir(indexdir)
+    writer = ix.writer()
+    instances = Topic.query.enable_eagerloads(False).yield_per(100)
+    for instance in instances:
+        print(instance)
+        writer.add_document(
+            title=instance.title,
+            id=str(instance.id),
+            content=instance.content)
+    writer.commit()
+    searcher = ix.searcher()
+    results = searcher.find("title", "河海大学")
+    print(results)
+    for i in results:
+        print(i)
 
 
 @manager.command

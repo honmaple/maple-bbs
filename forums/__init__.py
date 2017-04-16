@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-01-25 20:10:50 (CST)
-# Last Update:星期日 2017-4-9 12:8:22 (CST)
+# Last Update:星期六 2017-4-15 22:50:0 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -63,6 +63,7 @@ def register_extension(app):
         module='forums.extension.',
         extension=['db', 'avatar', 'cache', 'csrf', 'bootstrap', 'captcha',
                    'error', 'redis_data', 'principal', 'babel',
-                   'login_manager', 'maple_app', 'mail', 'middleware'])
+                   'login_manager', 'maple_app', 'mail', 'middleware',
+                   'search'])
     extension.init_app(app)
     admin.init_app(app)
