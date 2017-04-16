@@ -34,6 +34,7 @@
    + Choice markdown to ask
    + Tags rss
    + Avatar
+   + Full text search with whoosh
      
 ** Installation
    
@@ -73,6 +74,10 @@
     python manager.py init_db
     #+END_SRC
 
+*** create full text index
+    #+BEGIN_SRC sh
+    python manager.py create_index
+    #+END_SRC
 *** Create admin account
     #+BEGIN_SRC shell
     python manager.py create_user
@@ -105,6 +110,7 @@
    + 可选markdown提问
    + 节点rss
    + 头像...
+   + 全文搜索(基于whoosh)
      
 ** 安装
    创建虚拟环境
@@ -144,6 +150,11 @@
     python manager.py init_db
     #+END_SRC
     
+*** 创建全文搜索索引
+    #+BEGIN_SRC sh
+    python manager.py create_index
+    #+END_SRC
+
 *** 创建管理员账户
     #+BEGIN_SRC shell
     python manager.py create_user
