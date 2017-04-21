@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-29 13:33:03 (CST)
-# Last Update:星期日 2017-4-9 12:42:56 (CST)
+# Last Update:星期五 2017-4-21 17:25:11 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -43,7 +43,8 @@ def gen_topic_filter(query_dict=dict(), keys=[], equal_key=[], user=None):
 
 def gen_topic_orderby(query_dict=dict(), keys=[], date_key=True):
     keys.append('id')
-    order_by = ['id']
+    # order_by = ['id']
+    order_by = ['-is_top', 'id']
     orderby = query_dict.pop('orderby', None)
     desc = query_dict.pop('desc', None)
     if orderby == '0':

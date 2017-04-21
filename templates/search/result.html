@@ -8,14 +8,17 @@
     <div class="panel-body" style="border-bottom:1px solid #eee">
       {% include "search/form.html" %}
     </div>
-    {% for result in results %}
+    {% for result in results.items %}
       <div class="panel-body text-center" style="padding:6px;border-bottom:1px solid #eee">
-        <a href="{{ url_for('topic.topic',topicId=result['id']) }}">{{ result['title'] }}</a>
+        <a href="{{ url_for('topic.topic',topicId=result.id) }}">{{ result.title }}</a>
       </div>
     {% else %}
       <div class="panel-body text-center">
         您的搜索没有返回结果。
       </div>
-    {% endfor %}
+      {% endfor %}
+      {% set params = request.args.to_dict() %}
+      {% set page = params.pop('page',None) %}
+      {{ p_footer(results,'search.search',params)}}
   </div>
 {% endblock %}

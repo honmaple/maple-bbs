@@ -20,7 +20,7 @@
     </div>
     <div class="media-body">
       <small class="media-heading" style="color:#999">
-        <span>{{ link.user(reply.author.username)}}</span>
+        <span>{{ link.user(reply.author)}}</span>
         <span>{{ reply.created_at | timesince }}</span>
         <a name="reply{{ reply.id }}" class="anchor" href="#reply{{ num }}" aria-hidden="true">#{{ num }}</a>
       </small>

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:57:10 (CST)
-# Last Update:星期日 2017-4-16 17:37:40 (CST)
+# Last Update:星期五 2017-4-21 17:49:34 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -101,4 +101,4 @@ principal = Principal()
 login_manager = register_login()
 maple_app = App(json=CustomJSONEncoder)
 middleware = Middleware()
-search = Search()
+search = Search(db=db)

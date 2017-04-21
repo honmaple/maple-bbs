@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-31 17:26:28 (CST)
-# Last Update:星期日 2017-4-16 15:4:55 (CST)
+# Last Update:星期四 2017-4-20 17:19:6 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -19,6 +19,7 @@ from forums.extension import search
 class SearchView(MethodView):
     def get(self):
         query_dict = request.data
+        page, number = self.page_info
         keyword = query_dict.pop('keyword', None)
         include = query_dict.pop('include', '0')
         if keyword and len(keyword) >= 2:
@@ -29,7 +30,8 @@ class SearchView(MethodView):
                 fields = ['title']
             elif include == '2':
                 fields = ['content']
-            results = search.whoosh_search(Topic, keyword, fields=fields)
+            results = Topic.query.whoosh_search(
+                keyword, fields=fields).paginate(page, number, True)
             data = {'title': 'Search', 'results': results, 'keyword': keyword}
             return render_template('search/result.html', **data)
         data = {'title': 'Search'}

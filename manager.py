@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:08:39 (CST)
-# Last Update:星期日 2017-4-16 15:38:22 (CST)
+# Last Update:星期五 2017-4-21 17:56:42 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -47,11 +47,11 @@ def delete_index():
 def test_index():
     from forums.extension import search
     from forums.api.topic.models import Topic
-    results = search.whoosh_search(Topic, '河海大学', ['title'], 3)
+    results = search.whoosh_search(Topic, '河海', ['title'], 1)
     print('results:')
     print(results)
     for i in results:
-        print(i)
+        print(i['title'])
         print(i.highlights("title"))  # 高亮标题中的检索词
 
 

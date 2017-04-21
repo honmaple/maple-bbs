@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-13 13:29:37 (CST)
-# Last Update:星期六 2017-4-1 22:15:52 (CST)
+# Last Update:星期五 2017-4-21 17:54:23 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -18,8 +18,7 @@ from forums.extension import cache
 
 
 def cache_key():
-    key = request.url
-    return 'view:%s' % key
+    return 'view:{}:{}'.format(request.remote_addr, request.url)
 
 
 def is_confirmed(func):

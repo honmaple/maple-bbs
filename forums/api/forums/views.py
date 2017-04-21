@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 20:45:08 (CST)
-# Last Update:星期日 2017-4-9 12:43:42 (CST)
+# Last Update:星期五 2017-4-21 17:35:51 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -81,10 +81,15 @@ class BoardView(MethodView):
         order_by = gen_topic_orderby(query_dict, keys)
         filter_dict = gen_topic_filter(query_dict, keys)
         if has_children:
+            o = []
+            for i in order_by:
+                if i.startswith('-'):
+                    o.append(getattr(Topic, i.split('-')[1]).desc())
+                else:
+                    o.append(getattr(Topic, i))
             topics = Topic.query.outerjoin(Board).filter_by(**filter_dict).or_(
                 Board.parent_id == boardId,
-                Board.id == boardId).order_by(*order_by).paginate(page, number,
-                                                                  True)
+                Board.id == boardId).order_by(*o).paginate(page, number, True)
         else:
             filter_dict.update(board_id=boardId)
             topics = Topic.query.filter_by(
