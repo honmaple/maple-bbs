@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-04-09 12:50+0800\n"
+"POT-Creation-Date: 2017-04-21 19:08+0800\n"
 "PO-Revision-Date: 2016-06-16 14:36+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
@@ -16,9 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.4.0\n"
 
-#: forums/extension.py:66
+#: forums/extension.py:67
 msgid "Please login to access this page."
 msgstr "这个页面要求登陆，请登陆"
 
@@ -220,6 +220,26 @@ msgstr "社区精华帖子"
 msgid "Top Topics"
 msgstr "精华文章"
 
+#: forums/api/user/models.py:206
+msgid "ALLOW ALL USER"
+msgstr "允许所有人"
+
+#: forums/api/user/models.py:206
+msgid "ALLOW AUTHENTICATED USER"
+msgstr "只允许登陆用户"
+
+#: forums/api/user/models.py:207
+msgid "ALLOW OWN"
+msgstr "仅自己"
+
+#: forums/api/user/models.py:211
+msgid "Chinese"
+msgstr "中文"
+
+#: forums/api/user/models.py:211
+msgid "English"
+msgstr "英文"
+
 #: forums/common/response.py:34
 msgid "Username or Password Error"
 msgstr ""
@@ -333,10 +353,6 @@ msgstr "博客"
 #: templates/base/header.html:22 templates/forums/index.html:13
 msgid "Good"
 msgstr "精华文章"
-
-#: templates/base/header.html:26
-msgid "search content"
-msgstr "搜索内容"
 
 #: templates/base/link.html:18
 msgid "TopicList"
@@ -558,6 +574,10 @@ msgstr "最高在线:"
 #: templates/maple/footer.html:40
 msgid "Time of highest online:"
 msgstr "最高在线时间:"
+
+#: templates/search/result.html:3 templates/search/result.html:6
+msgid "Search"
+msgstr ""
 
 #: templates/setting/_macro.html:4 templates/setting/setting.html:5
 #: templates/setting/setting.html:19
@@ -797,4 +817,7 @@ msgstr "最后回复来自%(author)s"
 
 #~ msgid "You have no permission"
 #~ msgstr "你没有权限！"
+
+#~ msgid "search content"
+#~ msgstr "搜索内容"
 

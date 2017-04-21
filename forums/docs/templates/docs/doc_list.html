@@ -1,28 +1,30 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<ol class="breadcrumb" style="margin-bottom:0;">
+  <ol class="breadcrumb" style="margin-bottom:0;">
     <li><a href="{{ url_for('forums.forums') }}"><i class="fa fa-home"></i>社区首页</a></li>
     <li class="active">文档</li>
-</ol>
-{% macro item(name,url,icon,color="#337ab7") %}
-<div class="col-md-3">
-    <div class="panel panel-default">
+  </ol>
+  {% macro item(name,url,icon,color="#337ab7") %}
+    <div class="col-md-3">
+      <div class="panel panel-default">
         <a href="{{ url }}">
-            <div class="panel-body text-center">
-                <i class="fa {{ icon }}" style="font-size:55px;color:{{ color }}"></i>
-            </div>
+          <div class="panel-body text-center">
+            <i class="fa {{ icon }}" style="font-size:55px;color:{{ color }}"></i>
+          </div>
         </a>
         <a href="{{ url }}">
-            <div class="panel-footer">
-                {{ name }}
-                <i class="pull-right icon-arrow-right"></i>
-            </div>
+          <div class="panel-footer">
+            {{ name }}
+            <i class="pull-right icon-arrow-right"></i>
+          </div>
         </a>
+      </div>
     </div>
-</div>
-{%- endmacro %}
-<div class="row">
-    {{ item("Flask-Maple",url_for('docs.doc',path='flask-maple/index.html'),"fa-comments","#F86334")}}
-    {{ item("Flask-Avatar",url_for('docs.doc',path='flask-avatar/index.html'),"fa-book","#F86334")}}
-</div>
+  {%- endmacro %}
+  {% set icons = ['fa-book','fa-commenting-o','fa-cubes','fa-comments-o','fa-globe'] %}
+  <div class="row">
+    {% for doc in docs %}
+      {{ item(doc,url_for('docs.doc',path=doc + '/index.html'),icons | random,"#F86334")}}
+    {% endfor %}
+  </div>
 {% endblock %}

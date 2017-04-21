@@ -6,12 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-09 21:06:32 (CST)
-# Last Update:星期日 2017-4-2 12:16:48 (CST)
+# Last Update:星期五 2017-4-21 19:17:46 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import (Blueprint, render_template, send_from_directory)
 from flask.views import MethodView
+import os
 
 site = Blueprint(
     'docs', __name__, template_folder='templates', static_folder='static')
@@ -19,7 +20,8 @@ site = Blueprint(
 
 class DocListView(MethodView):
     def get(self):
-        return render_template('docs/doc_list.html')
+        docs = [i for i in os.listdir(site.static_folder)]
+        return render_template('docs/doc_list.html', docs=docs)
 
 
 class DocView(MethodView):

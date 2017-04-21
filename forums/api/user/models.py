@@ -6,12 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期日 2017-4-9 12:16:21 (CST)
+# Last Update:星期五 2017-4-21 19:8:22 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from datetime import datetime, timedelta
+
 from flask import current_app
+from flask_babelex import lazy_gettext as _
 from flask_login import UserMixin, current_user
 from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 from pytz import all_timezones
@@ -19,11 +21,11 @@ from sqlalchemy import event
 from sqlalchemy.orm import object_session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from flask_maple.models import ModelMixin
 from flask_maple.mail import MailMixin
+from flask_maple.models import ModelMixin
+from forums.common.records import load_online_sign_users
 from forums.count import Count
 from forums.extension import db, mail
-from forums.common.records import load_online_sign_users
 
 user_follower = db.Table(
     'user_follower',
@@ -201,12 +203,12 @@ class UserSetting(db.Model, ModelMixin):
     STATUS_ALLOW_AUTHENTICATED = '1'
     STATUS_ALLOW_OWN = '2'
 
-    STATUS = (('0', 'ALLOW ALL USER'), ('1', 'ALLOW AUTHENTICATED USER'),
-              ('2', 'ALLOW OWN'))
+    STATUS = (('0', _('ALLOW ALL USER')), ('1', _('ALLOW AUTHENTICATED USER')),
+              ('2', _('ALLOW OWN')))
 
     LOCALE_CHINESE = 'zh'
     LOCALE_ENGLISH = 'en'
-    LOCALE = (('zh', 'Chinese'), ('en', 'English'))
+    LOCALE = (('zh', _('Chinese')), ('en', _('English')))
 
     TIMEZONE_UTC = 'UTC'
     TIMEZONE = [(i, i) for i in all_timezones]
