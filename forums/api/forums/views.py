@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 20:45:08 (CST)
-# Last Update:星期五 2017-4-21 17:35:51 (CST)
+# Last Update:星期二 2017-5-2 11:52:28 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -87,11 +87,11 @@ class BoardView(MethodView):
                     o.append(getattr(Topic, i.split('-')[1]).desc())
                 else:
                     o.append(getattr(Topic, i))
-            topics = Topic.query.outerjoin(Board).filter_by(**filter_dict).or_(
+            topics = Topic.query.filter_by(**filter_dict).outerjoin(Board).or_(
                 Board.parent_id == boardId,
                 Board.id == boardId).order_by(*o).paginate(page, number, True)
-        else:
-            filter_dict.update(board_id=boardId)
-            topics = Topic.query.filter_by(
-                **filter_dict).order_by(*order_by).paginate(page, number, True)
+            return topics
+        filter_dict.update(board_id=boardId)
+        topics = Topic.query.filter_by(
+            **filter_dict).order_by(*order_by).paginate(page, number, True)
         return topics
