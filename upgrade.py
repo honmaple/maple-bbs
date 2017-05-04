@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-29 23:28:43 (CST)
-# Last Update:星期四 2017-3-30 14:42:34 (CST)
+# Last Update:星期四 2017-5-4 11:22:48 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -259,41 +259,6 @@ def upgrade_follow():
 
 
 def upgrade_setval():
-    '''
-    psql (9.6.1)
-    输入 "help" 来获取帮助信息.
-
-    forums=# \d
-                        关联列表
-    架构模式 |        名称        |  类型  |  拥有者
-    ----------+--------------------+--------+----------
-    public   | boards             | 数据表 | postgres
-    public   | boards_id_seq      | 序列数 | postgres
-    public   | collect_follower   | 数据表 | postgres
-    public   | collects           | 数据表 | postgres
-    public   | collects_id_seq    | 序列数 | postgres
-    public   | replies            | 数据表 | postgres
-    public   | replies_id_seq     | 序列数 | postgres
-    public   | reply_liker        | 数据表 | postgres
-    public   | tag_follower       | 数据表 | postgres
-    public   | tag_topic          | 数据表 | postgres
-    public   | tags               | 数据表 | postgres
-    public   | tags_id_seq        | 序列数 | postgres
-    public   | topic_collect      | 数据表 | postgres
-    public   | topic_follower     | 数据表 | postgres
-    public   | topics             | 数据表 | postgres
-    public   | topics_id_seq      | 序列数 | postgres
-    public   | user_follower      | 数据表 | postgres
-    public   | userinfo           | 数据表 | postgres
-    public   | userinfo_id_seq    | 序列数 | postgres
-    public   | users              | 数据表 | postgres
-    public   | users_id_seq       | 序列数 | postgres
-    public   | usersetting        | 数据表 | postgres
-    public   | usersetting_id_seq | 序列数 | postgres
-    (23 行记录)
-
-    forums=#
-    '''
     session2.execute(
         "select setval('boards_id_seq',(select max(id) from boards))")
     session2.execute(
