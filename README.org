@@ -47,16 +47,6 @@
     pip install -r requirements.txt
     #+END_SRC
 
-    Beacause newest *flask_maple* isn't uploaded to pypi
-    you should 
-    #+BEGIN_SRC shell
-      git clone https://github.com/honmaple/flask-maple
-      cd flask-maple
-      pip uninstall flask-maple
-      python setup.py install
-    #+END_SRC
-    to install *flask-maple*
-
 *** Config
     #+BEGIN_SRC shell
     mv config.example config.py
@@ -124,15 +114,6 @@
     pip install -r requirements.txt
     #+END_SRC
 
-    因为最新的*flask-maple*还未上传到pypi,所以
-    #+BEGIN_SRC shell
-      git clone https://github.com/honmaple/flask-maple
-      cd flask-maple
-      pip uninstall flask-maple
-      python setup.py install
-    #+END_SRC
-    来安装*flask-maple*
-    
 *** 配置
     #+BEGIN_SRC shell
     mv config.example config.py

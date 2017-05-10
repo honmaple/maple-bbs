@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 16:15:08 (CST)
-# Last Update:星期六 2017-4-1 20:38:59 (CST)
+# Last Update:星期三 2017-5-10 16:35:10 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,7 +14,7 @@ from flask import redirect, render_template, request, url_for
 from flask_babelex import gettext as _
 from flask_login import current_user
 
-from flask_maple.auth.forms import form_validate
+from flask_maple.form import form_validate
 from flask_maple.response import HTTPResponse
 from forums.api.forms import (CollectForm, ReplyForm, TopicForm,
                               collect_error_callback, error_callback,

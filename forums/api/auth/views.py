@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-28 10:26:10 (CST)
-# Last Update:星期六 2017-4-8 12:40:29 (CST)
+# Last Update:星期三 2017-5-10 16:34:50 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -19,8 +19,8 @@ from flask_babelex import gettext as _
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_principal import Identity, identity_changed, AnonymousIdentity
 
-from flask_maple.auth.forms import (ForgetForm, LoginForm, RegisterForm,
-                                    form_validate)
+from flask_maple.auth.forms import (ForgetForm, LoginForm, RegisterForm)
+from flask_maple.form import form_validate
 from forums.api.user.models import User
 from forums.common.response import HTTPResponse
 from forums.common.serializer import Serializer

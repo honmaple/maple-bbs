@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-20 22:16:04 (CST)
-# Last Update:星期三 2017-3-29 18:17:0 (CST)
+# Last Update:星期三 2017-5-10 16:35:45 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,7 +15,7 @@ from flask_login import current_user, logout_user
 from forums.api.forms import (ProfileForm, PasswordForm, PrivacyForm,
                               AvatarForm, BabelForm)
 from forums.common.views import IsConfirmedMethodView as MethodView
-from flask_maple.auth.forms import form_validate
+from flask_maple.form import form_validate
 
 
 def error_callback(url):

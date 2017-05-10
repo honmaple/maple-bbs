@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-21 21:56:41 (CST)
-# Last Update:星期五 2017-4-21 17:48:26 (CST)
+# Last Update:星期三 2017-5-10 16:35:21 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,7 +14,7 @@ from flask import (url_for, redirect, send_from_directory, current_app,
                    request)
 from flask.views import MethodView
 from flask_login import login_required, current_user
-from flask_maple.auth.forms import form_validate
+from flask_maple.form import form_validate
 from forums.api.forms import AvatarForm
 from werkzeug import secure_filename
 from time import time
