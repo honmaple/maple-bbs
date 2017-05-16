@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:31:46 (CST)
-# Last Update:星期日 2017-4-2 15:39:4 (CST)
+# Last Update:星期二 2017-5-16 12:26:59 (CST)
 #          By: jianglin
 # Description:
 # **************************************************************************
@@ -72,13 +72,12 @@ SUBDOMAIN = {'forums': True, 'docs': True}
 
 # Sql
 SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:password@localhost/your_db'
-WHOOSH_BASE = 'search.db'
+
+MSEARCH_INDEX_NAME = 'whoosh_index'
+MSEARCH_BACKEND = 'whoosh'
 # SQLALCHEMY_ECHO = True
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
 # SQLALCHEMY_DATABASE_URI = 'mysql://username:password@server/db'
-
-# avatar upload folder
-AVATAR_FOLDER = 'avatars/'
 
 # Locale
 LANGUAGES = {'en': 'English', 'zh': 'Chinese'}
