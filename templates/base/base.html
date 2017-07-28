@@ -9,10 +9,6 @@
   {{ title }} {{ SITE['title'] }} - {{ _(SITE['description']) }}
 {%- endblock title %}
 
-{% block script -%}
-  {{ super() }}
-{%- endblock script %}
-
 {% block style -%}
   {{ super() }}
   <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -38,7 +34,6 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
-    {{ dropdown() }}
     {% block content %}{% endblock %}
   </div>
 {% endblock %}
@@ -69,6 +64,4 @@
     <a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-primary pull-right">{{ _('Register') }}</a>
     <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-primary pull-right">{{ _('Login') }}</a>
   {% endif %}
-  <a href="{{ url_for('tag.list') }}" class="btn btn-sm btn-primary pull-right">{{ _('TagList') }}</a>
-  <a href="{{ url_for('user.list') }}" class="btn btn-sm btn-primary pull-right">{{ _('UserList') }}</a>
 {%- endmacro %}

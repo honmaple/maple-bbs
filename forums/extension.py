@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:57:10 (CST)
-# Last Update:星期五 2017-4-21 17:49:34 (CST)
+# Last Update:星期五 2017-7-28 13:49:33 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import request, g, current_app
-from flask_wtf.csrf import CsrfProtect
+from flask_wtf.csrf import CSRFProtect
 from flask_admin import Admin
 from flask_babelex import Babel, Domain
 from flask_babelex import lazy_gettext as _
@@ -25,10 +25,10 @@ from flask_maple.error import Error
 from flask_maple.captcha import Captcha
 from flask_maple.redis import Redis
 from flask_maple.mail import Mail
-from flask_cache import Cache
 from flask_principal import Principal
 from flask_login import LoginManager
 from flask_msearch import Search
+from flask_cache import Cache
 import os
 
 
@@ -83,8 +83,7 @@ def register_login():
 babel = register_babel()
 db = db
 admin = Admin(name='HonMaple', template_mode='bootstrap3')
-avatar = Avatar()
-csrf = CsrfProtect()
+csrf = CSRFProtect()
 bootstrap = Bootstrap(
     css=('styles/monokai.css', 'styles/mine.css',
          'tags/css/bootstrap-tokenfield.css', 'select2/css/select2.min.css'),
@@ -102,3 +101,14 @@ login_manager = register_login()
 maple_app = App(json=CustomJSONEncoder)
 middleware = Middleware()
 search = Search(db=db)
+
+
+class AvatarCache(Avatar):
+    @cache.cached(
+        timeout=180, key_prefix=lambda: "avatar:{}".format(request.path))
+    def avatar(self, text, width):
+        response = super(AvatarCache, self).avatar(text, width)
+        return response
+
+
+avatar = AvatarCache()

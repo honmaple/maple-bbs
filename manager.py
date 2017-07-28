@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:08:39 (CST)
-# Last Update:星期五 2017-4-21 17:56:42 (CST)
+# Last Update:星期五 2017-7-28 10:43:51 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from forums import create_app
-from forums.extension import db
+from forums.extension import db,cache
 from forums.api.user.models import User, UserInfo, UserSetting
 from getpass import getpass
 from werkzeug.security import generate_password_hash
@@ -41,6 +41,11 @@ def update_index():
 def delete_index():
     from forums.extension import search
     return search.create_index(delete=True)
+
+@manager.command
+def clear_cache():
+    with app.app_context():
+        cache.clear()
 
 
 @manager.command

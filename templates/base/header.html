@@ -2,6 +2,48 @@
   <li><a href="{{ url }}">{{ title }}</a></li>
 {%- endmacro %}
 
+
+{% macro dropdown() -%}
+  <style>
+   .navbar-right .dropdown-menu {
+       left: 0;
+   }
+   .navbar .nav > li:hover .dropdown-menu {
+       display: block;
+   }
+   .dropdown-menu {
+       min-width: 120px !important;
+   }
+  </style>
+  {% if current_user.is_authenticated %}
+    <li>
+      <a href="{{ url_for('message.list') }}" style="padding:15px 5px;">
+        <i class="fa fa-bell-o"></i>
+        {%- set n = current_user.message_count -%}
+        {%- if n and n != '0' -%}
+          <span class="badge" style="padding:2px 5px;">
+            {{ n }}
+          </span>
+        {%- endif -%}
+      </a>
+    </li>
+    <li class="dropdown">
+      <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border:none;">
+        {{ current_user.username }} <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="{{ url_for('user.user',username=current_user.username) }}">{{ _('Home Page') }}</a></li>
+        <li><a href="{{ url_for('setting.setting') }}">{{ _('Setting')}}</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout')}}</a></li>
+      </ul>
+    </li>
+  {% else  %}
+    <a class="btn btn-default btn-sm navbar-btn" href="{{ url_for('auth.register') }}">注册</a>
+    <a class="btn btn-default btn-sm navbar-btn" href="{{ url_for('auth.login') }}">登录</a>
+  {% endif %}
+{%- endmacro %}
+
 <nav class="navbar navbar-default navbar-fixed-top" style="background:#fff">
   <div class="container-fluid col-md-offset-1 col-md-10">
     <div class="navbar-header" style="padding-top:5px;">
@@ -13,13 +55,23 @@
         <br/>
         <small style="font-size:10px">{{ _(SITE['description']) }}</small>
       </div>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-header" aria-expanded="false">
+        <span class="sr-only"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
     </div>
-    <div class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" id="collapse-header">
       <ul class="nav navbar-nav">
         {{ navlist(url_for('forums.forums'),_('Forums')) }}
         {{ navlist(url_for('docs.list'),_('Wiki')) }}
         {{ navlist('http://honmaple.org',_('Blog')) }}
+        {{ navlist(url_for('tag.list'),_('TagList')) }}
         {{ navlist(url_for('topic.good'),_('Good')) }}
+      </ul>
+      <ul class="nav navbar-nav navbar-right" style="margin-left:0px;">
+        {{ dropdown() }}
       </ul>
       <form action="{{ url_for('search.search') }}" class="navbar-form navbar-right" style="margin-top:10px;" >
         <div class="form-group has-feedback">

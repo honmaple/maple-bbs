@@ -6,11 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-13 13:29:37 (CST)
-# Last Update:星期五 2017-4-21 17:54:23 (CST)
+# Last Update:星期五 2017-7-28 11:35:19 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import request, current_app, flash, redirect, url_for
+from flask import (request, current_app, flash, redirect, url_for,
+                   render_template)
 from flask.views import MethodView
 from flask_login import login_required, current_user
 from forums.permission import confirm_permission
@@ -18,7 +19,9 @@ from forums.extension import cache
 
 
 def cache_key():
-    return 'view:{}:{}'.format(request.remote_addr, request.url)
+    if current_user.is_authenticated:
+        return 'view:{}:{}'.format(current_user.id, request.url)
+    return 'view:{}'.format(request.url)
 
 
 def is_confirmed(func):
@@ -49,6 +52,9 @@ class BaseMethodView(MethodView):
     @cache.cached(timeout=180, key_prefix=cache_key)
     def dispatch_request(self, *args, **kwargs):
         return super(BaseMethodView, self).dispatch_request(*args, **kwargs)
+
+    def render_template(self, template, **kwargs):
+        return render_template(template, **kwargs)
 
 
 class IsAuthMethodView(BaseMethodView):
