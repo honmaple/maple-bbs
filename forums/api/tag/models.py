@@ -6,14 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:46:13 (CST)
-# Last Update:星期日 2017-4-2 15:5:23 (CST)
+# Last Update:星期五 2017-11-10 10:27:27 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_login import current_user
 from flask_maple.models import ModelMixin
-from forums.api.topic.models import Topic
-from forums.api.user.models import User
 from forums.extension import db
 
 tag_follower = db.Table(
@@ -44,13 +42,13 @@ class Tags(db.Model, ModelMixin):
         lazy='joined',
         uselist=False)
     topics = db.relationship(
-        Topic,
+        'Topic',
         secondary=tag_topic,
         backref=db.backref(
             'tags', lazy='dynamic'),
         lazy='dynamic')
     followers = db.relationship(
-        User,
+        'User',
         secondary=tag_follower,
         backref=db.backref(
             'following_tags', lazy='dynamic'),

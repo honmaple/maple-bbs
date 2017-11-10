@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 11:57:11 (CST)
-# Last Update:星期六 2017-4-1 21:21:49 (CST)
+# Last Update:星期五 2017-11-10 11:05:56 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -62,7 +62,7 @@ class UserSettingView(BaseView):
     }
 
 
-def register_user(admin):
+def init_admin(admin):
     admin.add_view(
         UserView(
             User,

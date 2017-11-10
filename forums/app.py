@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 16:11:07 (CST)
-# Last Update:星期四 2017-3-30 15:7:20 (CST)
+# Last Update:星期二 2017-9-19 12:49:24 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,7 +15,7 @@ from flask_login import current_user
 from .permission import TopicNeed, ReplyNeed, CollectNeed
 
 
-def register_app(app):
+def init_app(app):
     @identity_loaded.connect_via(app)
     def on_identity_loaded(sender, identity):
         '''基础权限'''

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update:星期日 2017-4-9 12:16:40 (CST)
+# Last Update:星期二 2017-9-19 12:50:24 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -87,7 +87,7 @@ def forums_count():
     return redis_data.hgetall(key)
 
 
-def register_jinja2(app):
+def init_app(app):
 
     app.jinja_env.globals['SITE'] = SITE
     app.jinja_env.globals['hot_tags'] = hot_tags

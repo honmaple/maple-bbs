@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:15:34 (CST)
-# Last Update:星期二 2017-3-28 18:1:54 (CST)
+# Last Update:星期五 2017-11-10 10:57:47 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -39,3 +39,7 @@ site.add_url_rule('/topic/<int:topicId>/edit', view_func=edit_view)
 site.add_url_rule('/topic/<int:topicId>/replies', view_func=reply_list)
 site.add_url_rule('/replies/<int:replyId>', view_func=reply)
 site.add_url_rule('/replies/<int:replyId>/like', view_func=like_view)
+
+
+def init_app(app):
+    app.register_blueprint(site)

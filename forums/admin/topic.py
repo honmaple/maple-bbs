@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 13:01:43 (CST)
-# Last Update:星期三 2017-3-29 20:15:59 (CST)
+# Last Update:星期五 2017-11-10 11:06:21 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -43,7 +43,7 @@ class ReplyView(BaseView):
     form_widget_args = {'content': {'rows': 10}}
 
 
-def register_topic(admin):
+def init_admin(admin):
     admin.add_view(
         TopicView(
             Topic,

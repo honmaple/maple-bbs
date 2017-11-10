@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 13:12:23 (CST)
-# Last Update:星期三 2017-3-29 21:5:42 (CST)
+# Last Update:星期五 2017-11-10 11:04:16 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -25,7 +25,7 @@ class TagView(BaseView):
     form_excluded_columns = ('topics', 'followers')
 
 
-def register_forums(admin):
+def init_admin(admin):
     admin.add_view(
         BoardView(
             Board,

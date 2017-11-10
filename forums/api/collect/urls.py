@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 16:15:16 (CST)
-# Last Update:星期二 2017-3-28 21:27:14 (CST)
+# Last Update:星期五 2017-11-10 10:57:01 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -21,3 +21,7 @@ site.add_url_rule(
 site.add_url_rule(
     '/topic/<int:topicId>/collect',
     view_func=AddToCollectView.as_view('add_to_collect'))
+
+
+def init_app(app):
+    app.register_blueprint(site)

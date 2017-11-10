@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 09:39:36 (CST)
-# Last Update:星期三 2017-3-29 13:12:47 (CST)
+# Last Update:星期五 2017-11-10 11:09:37 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,7 +14,6 @@ from .views import BaseView
 from forums.extension import db
 from flask_maple.permission.models import Group, Router, Permission
 
-__all__ = ['register_permission']
 
 
 class GroupView(BaseView):
@@ -40,7 +39,7 @@ class PermissionView(BaseView):
     }
 
 
-def register_permission(admin):
+def init_admin(admin):
     admin.add_view(
         GroupView(
             Group,

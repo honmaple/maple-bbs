@@ -6,13 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:57:10 (CST)
-# Last Update:星期五 2017-7-28 13:49:33 (CST)
+# Last Update:星期五 2017-11-10 11:03:06 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import request, g, current_app
 from flask_wtf.csrf import CSRFProtect
-from flask_admin import Admin
 from flask_babelex import Babel, Domain
 from flask_babelex import lazy_gettext as _
 from flask_avatar import Avatar
@@ -28,7 +27,7 @@ from flask_maple.mail import Mail
 from flask_principal import Principal
 from flask_login import LoginManager
 from flask_msearch import Search
-from flask_cache import Cache
+from flask_caching import Cache
 import os
 
 
@@ -82,7 +81,6 @@ def register_login():
 
 babel = register_babel()
 db = db
-admin = Admin(name='HonMaple', template_mode='bootstrap3')
 csrf = CSRFProtect()
 bootstrap = Bootstrap(
     css=('styles/monokai.css', 'styles/mine.css',
@@ -105,10 +103,25 @@ search = Search(db=db)
 
 class AvatarCache(Avatar):
     @cache.cached(
-        timeout=180, key_prefix=lambda: "avatar:{}".format(request.path))
-    def avatar(self, text, width):
-        response = super(AvatarCache, self).avatar(text, width)
+        timeout=180, key_prefix=lambda: "avatar:{}".format(request.url))
+    def avatar(self, text, width=128):
+        from flask import abort, make_response
+        from flask_avatar.avatar import GenAvatar
+        width_range = current_app.config.get('AVATAR_RANGE', [0, 512])
+        if width < width_range[0] or width > width_range[1]:
+            abort(404)
+        stream = GenAvatar.generate(width, text)
+        buf_value = stream.getvalue()
+        response = make_response(buf_value)
+        response.headers['Content-Type'] = 'image/jpeg'
         return response
 
 
 avatar = AvatarCache()
+
+
+def init_app(app):
+    for e in [db, avatar, cache, csrf, bootstrap, captcha, error, redis_data,
+              principal, babel, login_manager, maple_app, mail, middleware,
+              search]:
+        e.init_app(app)

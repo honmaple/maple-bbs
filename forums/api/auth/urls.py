@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-28 10:26:16 (CST)
-# Last Update:星期六 2016-12-17 10:42:48 (CST)
+# Last Update:星期五 2017-11-10 10:43:20 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -31,3 +31,7 @@ site.add_url_rule('/register', view_func=register_view)
 site.add_url_rule('/forget', view_func=forget_view)
 site.add_url_rule('/confirm', view_func=confirm_view)
 site.add_url_rule('/confirm/<token>', view_func=confirm_token_view)
+
+
+def init_app(app):
+    app.register_blueprint(site)

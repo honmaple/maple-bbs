@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-21 21:56:49 (CST)
-# Last Update:星期三 2016-12-21 21:56:56 (CST)
+# Last Update:星期五 2017-11-10 10:57:55 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -19,3 +19,7 @@ avatar_view = AvatarView.as_view('avatar')
 
 site.add_url_rule('/avatar', view_func=avatar_view)
 site.add_url_rule('/avatars/<filename>', view_func=avatar_file_view)
+
+
+def init_app(app):
+    app.register_blueprint(site)

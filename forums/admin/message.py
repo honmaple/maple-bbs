@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-04-01 18:52:43 (CST)
-# Last Update:星期六 2017-4-1 18:55:37 (CST)
+# Last Update:星期五 2017-11-10 11:06:11 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -25,7 +25,7 @@ class MessageView(BaseView):
     # form_excluded_columns = ('topics', 'followers')
 
 
-def register_message(admin):
+def init_admin(admin):
     admin.add_view(
         MessageView(
             Message,

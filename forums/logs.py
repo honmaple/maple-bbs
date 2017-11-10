@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:43:17 (CST)
-# Last Update:星期六 2017-4-1 23:42:40 (CST)
+# Last Update:星期二 2017-9-19 12:55:28 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,7 +16,7 @@ from logging.handlers import SMTPHandler
 from logging import Formatter
 
 
-def register_logging(app):
+def init_app(app):
     config = app.config
     logs_folder = os.path.abspath(
         os.path.join(os.path.dirname(__file__), os.pardir, 'logs'))

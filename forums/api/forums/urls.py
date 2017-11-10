@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 22:03:40 (CST)
-# Last Update:星期六 2017-3-25 18:54:51 (CST)
+# Last Update:星期五 2017-11-10 10:42:19 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -26,3 +26,7 @@ site.add_url_rule('/index', view_func=forums_view)
 site.add_url_rule('/forums', view_func=forums_view)
 site.add_url_rule(
     '/forums/<int:boardId>', view_func=BoardView.as_view('board'))
+
+
+def init_app(app):
+    app.register_blueprint(site)

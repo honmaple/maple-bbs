@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:20:55 (CST)
-# Last Update:星期六 2017-3-25 19:9:0 (CST)
+# Last Update:星期五 2017-11-10 10:43:36 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -23,3 +23,7 @@ site.add_url_rule('', view_func=tag_list)
 site.add_url_rule('', view_func=tag_list)
 site.add_url_rule('/<name>', view_func=tag)
 site.add_url_rule('/<name>/feed', view_func=tag_feed)
+
+
+def init_app(app):
+    app.register_blueprint(site)
