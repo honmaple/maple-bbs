@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期五 2017-4-21 19:8:22 (CST)
+# Last Update:星期五 2018-01-05 00:25:26 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,35 +14,35 @@ from datetime import datetime, timedelta
 
 from flask import current_app
 from flask_babelex import lazy_gettext as _
-from flask_login import UserMixin, current_user
-from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
+from flask_login import current_user, login_user, logout_user
+from flask_principal import Identity, identity_changed, AnonymousIdentity
 from pytz import all_timezones
 from sqlalchemy import event
 from sqlalchemy.orm import object_session
-from werkzeug.security import check_password_hash, generate_password_hash
-
-from flask_maple.mail import MailMixin
 from flask_maple.models import ModelMixin
+from flask_maple.auth.models import UserMixin, GroupMixin
+from flask_maple.permission.models import PermissionMixin
 from forums.common.records import load_online_sign_users
 from forums.count import Count
 from forums.extension import db, mail
 
 user_follower = db.Table(
     'user_follower',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('follower_id', db.Integer, db.ForeignKey('users.id')))
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')))
 
 
-class User(db.Model, UserMixin, ModelMixin, MailMixin):
-    __tablename__ = 'users'
+class Permission(db.Model, PermissionMixin):
+    __tablename__ = 'permission'
+
+
+class Group(db.Model, GroupMixin):
+    __tablename__ = 'group'
+
+
+class User(db.Model, UserMixin):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(81), unique=True, nullable=False)
-    email = db.Column(db.String(81), unique=True, nullable=False)
-    password = db.Column(db.String(256), nullable=False)
-    is_superuser = db.Column(db.Boolean, default=False)
-    is_confirmed = db.Column(db.Boolean, default=False)
-    register_time = db.Column(db.DateTime, default=datetime.now())
-    last_login = db.Column(db.DateTime, default=datetime.now())
 
     followers = db.relationship(
         'User',
@@ -59,6 +59,16 @@ class User(db.Model, UserMixin, ModelMixin, MailMixin):
         return db.session.query(user_follower).filter(
             user_follower.c.user_id == self.id,
             user_follower.c.follower_id == user.id).exists()
+
+    def login(self, remember=True):
+        login_user(self, remember)
+        identity_changed.send(
+            current_app._get_current_object(), identity=Identity(self.id))
+
+    def logout(self):
+        logout_user()
+        identity_changed.send(
+            current_app._get_current_object(), identity=AnonymousIdentity())
 
     @property
     def is_not_confirmed(self):
@@ -120,44 +130,6 @@ class User(db.Model, UserMixin, ModelMixin, MailMixin):
             return True
         return False
 
-    def __str__(self):
-        return self.username
-
-    def __repr__(self):
-        return '<User %r>' % self.username
-
-    def set_password(self, raw_password):
-        self.password = generate_password_hash(raw_password)
-
-    def check_password(self, raw_password):
-        return check_password_hash(self.password, raw_password)
-
-    @property
-    def token(self):
-        config = current_app.config
-        secret_key = config.setdefault('SECRET_KEY')
-        salt = config.setdefault('SECURITY_PASSWORD_SALT')
-        serializer = URLSafeTimedSerializer(secret_key)
-        token = serializer.dumps(self.username, salt=salt)
-        return token
-
-    @staticmethod
-    def check_token(token, max_age=86400):
-        config = current_app.config
-        secret_key = config.setdefault('SECRET_KEY')
-        salt = config.setdefault('SECURITY_PASSWORD_SALT')
-        serializer = URLSafeTimedSerializer(secret_key)
-        try:
-            username = serializer.loads(token, salt=salt, max_age=max_age)
-        except BadSignature:
-            return False
-        except SignatureExpired:
-            return False
-        user = User.query.filter_by(username=username).first()
-        if user is None:
-            return False
-        return user
-
     def send_email(self, *args, **kwargs):
         kwargs.update(recipients=[self.email])
         mail.send_email(*args, **kwargs)
@@ -183,7 +155,7 @@ class UserInfo(db.Model, ModelMixin):
 
     user_id = db.Column(
         db.Integer, db.ForeignKey(
-            'users.id', ondelete="CASCADE"))
+            'user.id', ondelete="CASCADE"))
     user = db.relationship(
         User,
         backref=db.backref(
@@ -230,7 +202,7 @@ class UserSetting(db.Model, ModelMixin):
 
     user_id = db.Column(
         db.Integer, db.ForeignKey(
-            'users.id', ondelete="CASCADE"))
+            'user.id', ondelete="CASCADE"))
     user = db.relationship(
         User,
         backref=db.backref(

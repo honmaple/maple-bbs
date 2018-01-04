@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 17:58:59 (CST)
-# Last Update:星期三 2017-3-29 19:10:23 (CST)
+# Last Update:星期三 2017-12-13 16:06:36 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -24,7 +24,7 @@ topic_collect = db.Table(
 collect_follower = db.Table(
     'collect_follower',
     db.Column('collect_id', db.Integer, db.ForeignKey('collects.id')),
-    db.Column('follower_id', db.Integer, db.ForeignKey('users.id')))
+    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')))
 
 
 class Collect(db.Model, ModelMixin):
@@ -39,7 +39,7 @@ class Collect(db.Model, ModelMixin):
         db.DateTime, default=datetime.utcnow(), onupdate=datetime.utcnow())
     author_id = db.Column(
         db.Integer, db.ForeignKey(
-            'users.id', ondelete="CASCADE"))
+            'user.id', ondelete="CASCADE"))
     author = db.relationship(
         User,
         backref=db.backref(

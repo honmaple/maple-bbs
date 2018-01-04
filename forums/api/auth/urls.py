@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-28 10:26:16 (CST)
-# Last Update:星期五 2017-11-10 10:43:20 (CST)
+# Last Update:星期三 2017-12-13 11:40:54 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -34,4 +34,6 @@ site.add_url_rule('/confirm/<token>', view_func=confirm_token_view)
 
 
 def init_app(app):
-    app.register_blueprint(site)
+    from flask_maple.auth.views import Auth
+    Auth(app)
+    # app.register_blueprint(site)

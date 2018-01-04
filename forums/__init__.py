@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-01-25 20:10:50 (CST)
-# Last Update:星期五 2017-11-10 11:04:58 (CST)
+# Last Update:星期五 2018-01-05 00:19:34 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -17,6 +17,7 @@ from flask import Flask
 from forums import app as ap, extension
 from forums import filters, logs, subdomain
 from forums import api, docs, admin
+from flask_maple import auth
 
 
 def create_app(config):
@@ -35,6 +36,7 @@ def create_app(config):
     extension.init_app(app)
     admin.init_app(app)
     # router
+    auth.init_app(app)
     api.init_app(app)
     docs.init_app(app)
     return app

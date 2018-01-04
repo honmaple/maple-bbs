@@ -6,17 +6,16 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:08:39 (CST)
-# Last Update:星期五 2017-7-28 10:43:51 (CST)
+# Last Update:星期五 2018-01-05 00:35:45 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from forums import create_app
-from forums.extension import db,cache
+from forums.extension import db, cache
 from forums.api.user.models import User, UserInfo, UserSetting
 from getpass import getpass
-from werkzeug.security import generate_password_hash
 from datetime import datetime
 import os
 
@@ -42,6 +41,7 @@ def delete_index():
     from forums.extension import search
     return search.create_index(delete=True)
 
+
 @manager.command
 def clear_cache():
     with app.app_context():
@@ -66,11 +66,40 @@ def runserver():
 
 
 @manager.command
+def init_perm():
+    from forums.api.user.models import Group
+    anonymous = Group.query.filter_by(name='anonymous').first()
+    if not anonymous:
+        anonymous = Group(name='anonymous')
+        anonymous.save()
+    logined = Group.query.filter_by(name='logined').first()
+    if not logined:
+        logined = Group(name='logined')
+        logined.save()
+    for rule in app.url_map.iter_rules():
+        # print(rule.rule, rule.subdomain, rule.methods, rule.endpoint)
+        print(rule.endpoint)
+        methods = []
+        for method in rule.methods:
+            methods.append(method)
+            method = 'get' if method in ['HEAD', 'OPTIONS'] else method.lower()
+            if not rule.endpoint.startswith('admin'):
+                anonymous.add_perm(
+                    method,
+                    rule.endpoint,
+                    description='anonymous组允许{}'.format(methods))
+                logined.add_perm(
+                    method,
+                    rule.endpoint,
+                    description='logined组允许{}'.format(methods))
+
+
+@manager.command
 def init_db():
     """
     Drops and re-creates the SQL schema
     """
-    # db.drop_all()
+    db.drop_all()
     db.configure_mappers()
     db.create_all()
     db.session.commit()
@@ -130,8 +159,6 @@ def create_user(username, email, password):
     user.set_password(password)
     user.is_superuser = True
     user.is_confirmed = True
-    # user.roles = 'Super'
-    # user.confirmed_time = datetime.utcnow()
     user.save()
 
 

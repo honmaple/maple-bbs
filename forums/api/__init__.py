@@ -6,12 +6,11 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-20 15:49:33 (CST)
-# Last Update:星期五 2017-11-10 11:54:03 (CST)
+# Last Update:星期五 2018-01-05 00:21:42 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from forums.api.forums import urls as forums_url
-from forums.api.auth import urls as auth_url
 from forums.api.user import urls as user_url
 from forums.api.tag import urls as tag_url
 from forums.api.topic import urls as topic_url
@@ -21,7 +20,6 @@ from forums.api.setting import urls as setting_url
 from forums.api.upload import urls as upload_url
 from forums.api.follow import urls as follow_url
 from forums.api.search import urls as search_url
-from importlib import import_module
 
 
 def init_app(app):
@@ -29,7 +27,6 @@ def init_app(app):
     user_url.init_app(app)
     tag_url.init_app(app)
     topic_url.init_app(app)
-    auth_url.init_app(app)
     collect_url.init_app(app)
     message_url.init_app(app)
     follow_url.init_app(app)

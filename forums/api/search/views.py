@@ -6,14 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-31 17:26:28 (CST)
-# Last Update:星期六 2017-5-6 13:59:14 (CST)
+# Last Update:星期三 2017-12-13 13:50:15 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import request, render_template
 from forums.common.views import BaseMethodView as MethodView
 from forums.api.topic.models import Topic
-from forums.extension import search
 
 
 class SearchView(MethodView):

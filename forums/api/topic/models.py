@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:52:07 (CST)
-# Last Update:星期日 2017-4-16 11:39:48 (CST)
+# Last Update:星期三 2017-12-13 16:06:36 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -26,7 +26,7 @@ from forums.filters import safe_markdown, safe_clean, markdown
 topic_follower = db.Table(
     'topic_follower',
     db.Column('topic_id', db.Integer, db.ForeignKey('topics.id')),
-    db.Column('follower_id', db.Integer, db.ForeignKey('users.id')))
+    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')))
 
 
 class Topic(db.Model, ModelMixin):
@@ -53,7 +53,7 @@ class Topic(db.Model, ModelMixin):
     is_top = db.Column(db.Boolean, default=False)
     author_id = db.Column(
         db.Integer, db.ForeignKey(
-            'users.id', ondelete="CASCADE"))
+            'user.id', ondelete="CASCADE"))
     author = db.relationship(
         User,
         backref=db.backref(
@@ -126,7 +126,7 @@ class Topic(db.Model, ModelMixin):
 reply_liker = db.Table(
     'reply_liker',
     db.Column('reply_id', db.Integer, db.ForeignKey('replies.id')),
-    db.Column('liker_id', db.Integer, db.ForeignKey('users.id')))
+    db.Column('liker_id', db.Integer, db.ForeignKey('user.id')))
 
 
 class Reply(db.Model, ModelMixin):
@@ -146,7 +146,7 @@ class Reply(db.Model, ModelMixin):
             'replies', cascade='all,delete-orphan', lazy='dynamic'),
         lazy='joined')
 
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship(
         User, backref=db.backref(
             'replies', lazy='dynamic'), lazy='joined')

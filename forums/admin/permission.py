@@ -6,37 +6,23 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 09:39:36 (CST)
-# Last Update:星期五 2017-11-10 11:09:37 (CST)
+# Last Update:星期一 2017-12-25 17:48:59 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from .views import BaseView
 from forums.extension import db
-from flask_maple.permission.models import Group, Router, Permission
-
+from forums.api.user.models import Group, Permission
 
 
 class GroupView(BaseView):
     column_editable_list = ['name']
 
 
-class RouterView(BaseView):
-    column_editable_list = ['url', 'url_type']
-    column_formatters = dict(
-        url_type=lambda v, c, m, p: m.get_choice_display('url_type', 'URL_TYPE')
-    )
-    form_choices = {'url_type': Router.URL_TYPE}
-
-
 class PermissionView(BaseView):
-    column_editable_list = ['allow', 'method']
-    column_formatters = dict(
-        allow=lambda v, c, m, p: m.get_choice_display('allow', 'PERMISSION'),
-        method=lambda v, c, m, p: m.get_choice_display('method', 'METHOD'), )
-    form_choices = {
-        'allow': Permission.PERMISSION,
-        'method': Permission.METHOD
-    }
+    column_searchable_list = ('resource', 'groups.name')
+    column_filters = ['groups.name', 'resource_type']
+    column_editable_list = ['code']
 
 
 def init_admin(admin):
@@ -46,13 +32,6 @@ def init_admin(admin):
             db.session,
             name='管理用户组',
             endpoint='admin_groups',
-            category='管理权限'))
-    admin.add_view(
-        RouterView(
-            Router,
-            db.session,
-            name='管理路由',
-            endpoint='admin_routers',
             category='管理权限'))
     admin.add_view(
         PermissionView(

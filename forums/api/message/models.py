@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-04-01 18:33:37 (CST)
-# Last Update:星期六 2017-4-1 20:49:46 (CST)
+# Last Update:星期三 2017-12-13 16:06:36 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -46,7 +46,7 @@ class MessageText(CommonTimeMixin, db.Model):
         nullable=False,
         default=MESSAGE_TYPE_PUBLIC,
         doc='站内信类型')
-    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     sender = db.relationship(
         'User',
         backref=db.backref(
@@ -96,7 +96,7 @@ class Message(CommonTimeMixin, db.Model):
             "messages", cascade='all,delete', lazy='dynamic'),
         uselist=False,
         lazy='joined')
-    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     receiver = db.relationship(
         'User',
         backref=db.backref(

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:46:13 (CST)
-# Last Update:星期五 2017-11-10 10:27:27 (CST)
+# Last Update:星期三 2017-12-13 16:06:36 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,7 +16,7 @@ from forums.extension import db
 
 tag_follower = db.Table(
     'tag_follower', db.Column('tag_id', db.Integer, db.ForeignKey('tags.id')),
-    db.Column('follower_id', db.Integer, db.ForeignKey('users.id')))
+    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')))
 
 tag_topic = db.Table(
     'tag_topic', db.Column('tag_id', db.Integer, db.ForeignKey('tags.id')),
