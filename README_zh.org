@@ -72,7 +72,7 @@
     #+BEGIN_SRC sh
     python runserver.py
     #+END_SRC
-    然后访问*forums.localhost:5000/admin*去增加一些东西
+    然后访问*forums.localhost:8000/admin*去增加一些东西
 
 ** 演示
    请访问 [[https://forums.honmaple.org][forums.honmaple.org]]

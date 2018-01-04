@@ -72,7 +72,7 @@
     #+END_SRC
 
 *** Login and visit admin 
-    *Ok* ,visit forums.localhost:5000/admin to add something
+    *Ok* ,visit forums.localhost:8000/admin to add something
 
 ** Demo
    Please visit [[https://forums.honmaple.org][forums.honmaple.org]] 

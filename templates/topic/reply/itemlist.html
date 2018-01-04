@@ -1,4 +1,6 @@
 {% from 'topic/reply/_macro.html' import like,no_replies %}
+{% import 'base/link.html' as link %}
+{% from 'base/paginate.html' import footer as p_footer %}
 <div class="panel panel-default">
   <div class="panel-heading">
     {{ _('Received %(total)s replies',total=replies.total) }}
