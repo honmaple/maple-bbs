@@ -18,6 +18,7 @@ admin = Admin(name='HonMaple', template_mode='bootstrap3')
 
 
 def init_app(app):
+    admin.init_app(app)
     forums.init_admin(admin)
     user.init_admin(admin)
     topic.init_admin(admin)
