@@ -10,9 +10,17 @@
 {%- endblock title %}
 
 {% block style -%}
-  {{ super() }}
   <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/select2/4.0.6-rc.1/css/select2.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css" rel="stylesheet">
+  {{ super() }}
 {%- endblock style %}
+
+{% block script -%}
+  {{ super() }}
+  <script src="https://cdn.bootcss.com/select2/4.0.6-rc.1/js/select2.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
+{%- endblock script %}
 
 {% block main %}
   {% include "base/header.html" %}

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 13:15:10 (CST)
-# Last Update:星期一 2017-12-25 17:47:00 (CST)
+# Last Update:星期日 2018-01-07 22:06:09 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -29,8 +29,8 @@ class BaseView(ModelView):
     can_view_details = True
     form_base_class = BaseForm
 
-    # def is_accessible(self):
-    #     return super_permission.can()
+    def is_accessible(self):
+        return super_permission.can()
 
-    # def inaccessible_callback(self, name, **kwargs):
-    #     abort(404)
+    def inaccessible_callback(self, name, **kwargs):
+        abort(404)

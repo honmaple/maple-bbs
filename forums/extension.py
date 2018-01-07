@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 21:57:10 (CST)
-# Last Update:星期五 2017-11-10 11:03:06 (CST)
+# Last Update:星期日 2018-01-07 22:18:41 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -83,11 +83,9 @@ babel = register_babel()
 db = db
 csrf = CSRFProtect()
 bootstrap = Bootstrap(
-    css=('styles/monokai.css', 'styles/mine.css',
-         'tags/css/bootstrap-tokenfield.css', 'select2/css/select2.min.css'),
+    css=('styles/monokai.css', 'styles/mine.css'),
     js=('styles/upload.js', 'styles/forums.js', 'styles/following.js',
-        'styles/topic.js', 'tags/bootstrap-tokenfield.min.js',
-        'select2/js/select2.min.js'),
+        'styles/topic.js'),
     use_auth=True)
 captcha = Captcha()
 error = Error()

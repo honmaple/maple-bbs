@@ -10,10 +10,9 @@
     </ul>
   </div>
   {% if replies.items %}
-  {% set num = 0 %}
   {% for reply in replies.items %}
-  {% set num = num + 1 %}
   {% set user = reply.author %}
+  {% set floor = loop.index + 12 * (replies.page - 1) %}
   <div class="panel-body media" id="reply-{{ reply.id }}" style="border-bottom:1px solid #eee;margin:0">
     <div class="media-left">
       <a href="{{ url_for('user.user',username=reply.author.username) }}">
@@ -24,7 +23,7 @@
       <small class="media-heading" style="color:#999">
         <span>{{ link.user(reply.author)}}</span>
         <span>{{ reply.created_at | timesince }}</span>
-        <a name="reply{{ reply.id }}" class="anchor" href="#reply{{ num }}" aria-hidden="true">#{{ num }}</a>
+        <a name="reply{{ reply.id }}" class="anchor" href="#reply{{ floor }}" aria-hidden="true">#{{ floor }}</a>
       </small>
       <div  class="reply-content">
         {{ reply.content | safe_clean }}
