@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-01-25 20:10:50 (CST)
-# Last Update:星期五 2018-01-05 00:19:34 (CST)
+# Last Update: 星期日 2018-02-11 15:05:26 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,7 +15,7 @@ import os
 from flask import Flask
 
 from forums import app as ap, extension
-from forums import filters, logs, subdomain
+from forums import jinja, subdomain
 from forums import api, docs, admin
 from flask_maple import auth
 
@@ -31,8 +31,7 @@ def create_app(config):
 
     subdomain.init_app(app)
     ap.init_app(app)
-    filters.init_app(app)
-    logs.init_app(app)
+    jinja.init_app(app)
     extension.init_app(app)
     admin.init_app(app)
     # router

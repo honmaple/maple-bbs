@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-04-01 18:33:37 (CST)
-# Last Update:星期三 2017-12-13 16:06:36 (CST)
+# Last Update: 星期日 2018-02-11 15:06:58 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import url_for
 from flask_login import current_user
 from forums.extension import db
-from forums.filters import safe_markdown
+from forums.jinja import safe_markdown
 from forums.common.models import CommonTimeMixin
 
 

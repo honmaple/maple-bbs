@@ -49,26 +49,26 @@
     #+BEGIN_SRC shell
     mv config.example config.py
     #+END_SRC
-    remember to modify config file.
+    *remember to modify config file.*
 
 *** Init sql
     #+BEGIN_SRC python
-    python manager.py db init 
-    python manager.py db migrate -m "first migrate"
-    python manager.py db upgrade
+    python runserver.py db init 
+    python runserver.py db migrate -m "first migrate"
+    python runserver.py db upgrade
     #+END_SRC
     Or
     #+BEGIN_SRC sh
-    python manager.py init_db
+    python runserver.py initdb
     #+END_SRC
 
 *** create full text index
     #+BEGIN_SRC sh
-    python manager.py create_index
+    python runserver.py create_index
     #+END_SRC
 *** Create admin account
     #+BEGIN_SRC shell
-    python manager.py create_user
+    python runserver.py create_user
     #+END_SRC
 
 *** Login and visit admin 

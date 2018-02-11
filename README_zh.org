@@ -45,27 +45,27 @@
     #+BEGIN_SRC shell
     mv config.example config.py
     #+END_SRC
-    记得修改配置文件
+    *记得修改配置文件*
 
 *** 初始化数据库
     #+BEGIN_SRC python
-    python manager.py db init
-    python manager.py db migrate -m "first migrate"
-    python manager.py db upgrade
+    python runserver.py db init
+    python runserver.py db migrate -m "first migrate"
+    python runserver.py db upgrade
     #+END_SRC
     或者
     #+BEGIN_SRC sh
-    python manager.py init_db
+    python runserver.py initdb
     #+END_SRC
 
 *** 创建全文搜索索引
     #+BEGIN_SRC sh
-    python manager.py create_index
+    python runserver.py create_index
     #+END_SRC
 
 *** 创建管理员账户
     #+BEGIN_SRC shell
-    python manager.py create_user
+    python runserver.py create_user
     #+END_SRC
 
 *** 登陆并访问后台

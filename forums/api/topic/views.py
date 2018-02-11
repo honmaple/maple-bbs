@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update:星期三 2017-5-10 16:35:37 (CST)
+# Last Update: 星期日 2018-02-11 15:07:05 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -26,7 +26,7 @@ from forums.common.serializer import Serializer
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import BaseMethodView as MethodView
 from forums.common.views import IsAuthMethodView, IsConfirmedMethodView
-from forums.filters import safe_markdown
+from forums.jinja import safe_markdown
 
 from .models import Reply, Topic
 from .permissions import (like_permission, reply_list_permission,

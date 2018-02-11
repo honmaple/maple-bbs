@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 # **************************************************************************
 # Copyright © 2016 jianglin
-# File Name: filters.py
+# File Name: jinja.py
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update:星期二 2017-9-19 12:50:24 (CST)
+# Last Update: 星期日 2018-02-11 15:06:58 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,7 +16,6 @@ from config import SITE
 from bleach import clean
 from flask import Markup, g
 from flask_babelex import format_datetime
-from flask_login import current_user
 from misaka import HtmlRenderer, Markdown
 
 

@@ -16,7 +16,7 @@
   <div class="panel-body media" id="reply-{{ reply.id }}" style="border-bottom:1px solid #eee;margin:0">
     <div class="media-left">
       <a href="{{ url_for('user.user',username=reply.author.username) }}">
-        <img class="media-object img-circle" src="{{ url_for('avatar',text=user.username) }}" alt="avatar" style="width:64px;height:64px"/>
+        <img class="media-object img-circle" src="{{ url_for('avatar',text=user.username) }}" alt="avatar" style="width:48px;height:48px"/>
       </a>
     </div>
     <div class="media-body">

@@ -2,11 +2,11 @@
 # -*- coding=UTF-8 -*-
 # **************************************************************************
 # Copyright © 2016 jianglin
-# File Name: config.py
+# File Name: config.example
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-05-20 12:31:46 (CST)
-# Last Update:星期五 2018-01-05 00:48:08 (CST)
+# Last Update: 星期日 2018-02-11 15:43:26 (CST)
 #          By: jianglin
 # Description:
 # **************************************************************************
@@ -61,14 +61,28 @@ MAIL_PASSWORD = "your password"
 MAIL_DEFAULT_SENDER = 'your email'
 # MAIL_SUPPRESS_SEND = True
 
-# Log,if SEND_LOGS is True when web app has some error happen(500)
-# the email will be sent to RECEIVER
-SEND_LOGS = True
-RECEIVER = ["yourname@gmail.com"]
-INFO_LOG = "info.log"
-ERROR_LOG = "error.log"
 SERVER_NAME = 'localhost:8000'
 SUBDOMAIN = {'forums': True, 'docs': True}
+
+# logging setting
+LOGGING = {
+    'info': 'logs/info.log',
+    'error': 'logs/error.log',
+    'send_mail': False,
+    'toaddrs': [],
+    'subject': 'Your Application Failed',
+    'formatter': '''
+            Message type:       %(levelname)s
+            Location:           %(pathname)s:%(lineno)d
+            Module:             %(module)s
+            Function:           %(funcName)s
+            Time:               %(asctime)s
+
+            Message:
+
+            %(message)s
+            '''
+}
 
 # Sql
 SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:password@localhost/your_db'
