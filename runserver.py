@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-10-25 22:01:29 (CST)
-# Last Update: 星期日 2018-02-11 15:24:50 (CST)
+# Last Update: 星期五 2018-02-23 10:43:07 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,8 +16,8 @@ from werkzeug.contrib.fixers import ProxyFix
 from code import interact
 from getpass import getpass
 
-from forums.extension import db, cache, search
 from forums import create_app
+from forums.extension import db, cache, search
 from forums.api.user.models import User
 
 import click

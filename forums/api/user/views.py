@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:08:06 (CST)
-# Last Update:星期日 2017-4-2 11:51:33 (CST)
+# Last Update: Thursday 2018-03-01 17:58:50 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -98,7 +98,8 @@ class UserFollowerListView(MethodView):
 
 
 class UserFollowingListView(MethodView):
-    def get(self):
+    @login_required
+    def get(self, username):
         return redirect(url_for('follow.topic'))
 
 
