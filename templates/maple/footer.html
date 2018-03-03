@@ -1,49 +1,65 @@
 <style>
+ .main {
+     padding-bottom:100px;
+ }
  .footer {
-     margin-top: -30px;
+     margin-top: -100px;
      height: 100px;
      background-color:#fff;
-     padding:16px 0 10 10;
+     padding:12px 15px;
      border:1px solid #ddd;
-     border-radius:5px;
+     border-radius:5px 5px 0 0;
  }
- p.heading a{
+ .footer blockquote {
+     font-size:14px;
+ }
+ .footer blockquote p {
+     font-size:14px;
+ }
+ .footer-heading a{
      color: #aaa;
      text-decoration: none;
      border-bottom: 1px dotted #999;
  }
- .pipe {
+ .footer-desc{
+     font-size:12px;
+     color:#777;
+ }
+ .footer-desc span{
+     margin-left:10px;
+ }
+ .footer-pipe {
      margin: 0 5px;
      color: #ccc;
  }
 </style>
 <div class="footer col-md-offset-1 col-md-10">
-  <div class="pull-right" style="margin-right:30px;margin-top:10px">
-    <p class="heading text-right">
+  <div class="pull-right">
+    <p class="footer-heading text-right">
       <a href="{{ url_for('forums.help')}}">{{ _('Help')}}</a>
-      <span class="pipe"> | </span>
+      <span class="footer-pipe"> | </span>
       <a href="{{ url_for('forums.about')}}">{{ _('About')}}</a>
-      <span class="pipe"> | </span>
+      <span class="footer-pipe"> | </span>
       <a href="{{ url_for('forums.contact')}}">{{ _('Contact me')}}</a>
-      <span class="pipe"> | </span>
+      <span class="footer-pipe"> | </span>
       <a href="https://github.com/honmaple/maple-bbs" target="_blank">GitHub</a>
     </p>
-    <p class="text-right hidden-xs" style="font-size:12px;color:#777">
+    <p class="footer-desc text-right hidden-xs">
       {% set footer_count = g.get_online %}
       <span>{{ _('Now users online:')}}<strong>{{ footer_count[0] }}</strong></span>
-      <span style="margin-left:10px">{{ _('Registered users online:') }}<strong>{{ footer_count[1] }}</strong></span>
-      <span style="margin-left:10px">{{ _('Guests online:')}}<strong>{{ footer_count[2] }}</strong></span>
+      <span>{{ _('Registered users online:') }}<strong>{{ footer_count[1] }}</strong></span>
+      <span>{{ _('Guests online:')}}<strong>{{ footer_count[2] }}</strong></span>
     </p>
-    <p class="text-right hidden-xs" style="font-size:12px;color:#777">
+    <p class="footer-desc text-right hidden-xs">
       <span>{{ show_time() }}</span>
-      <span style="margin-left:10px">{{ _('Highest online:')}}<strong>{{ footer_count[3] }}</strong></span>
-      <span style="margin-left:10px">{{ _('Time of highest online:')}}<strong>{{ footer_count[4] }}</strong></span>
+      <span>{{ _('Highest online:')}}<strong>{{ footer_count[3] }}</strong></span>
+      <span>{{ _('Time of highest online:')}}<strong>{{ footer_count[4] }}</strong></span>
     </p>
   </div>
   <blockquote>
-    <p style="font-size:14px;">{{ _(SITE['description']) }}</p>
+    <p>{{ _(SITE['description']) }}</p>
     <footer>
-      <span> Copyright © 2015-2016 honmaple.</span>
+      © 2015-2018 honmaple.
     </footer>
   </blockquote>
 </div>
