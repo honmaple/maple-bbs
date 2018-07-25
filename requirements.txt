@@ -15,7 +15,7 @@ flask-msearch==0.1.5
 Flask-Principal==0.4.0
 Flask-SQLAlchemy==2.2
 Flask-WTF==0.14.2
-gunicorn==19.4.5
+gunicorn==19.9.0
 hiredis==0.2.0
 Jinja2==2.10
 jsmin==2.2.0
