@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-22 21:49:05 (CST)
-# Last Update:星期六 2017-4-1 19:52:14 (CST)
+# Last Update: Thursday 2018-07-26 10:45:39 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -24,7 +24,7 @@ from forums.api.message.models import MessageClient
 class FollowingTagsView(MethodView):
     def get(self):
         user = request.user
-        page, number = self.page_info
+        page, number = self.pageinfo
         filter_dict = {'followers__username': user.username}
         tags = Tags.query.filter_by(**filter_dict).paginate(page, number, True)
         data = {'tags': tags}
@@ -56,7 +56,7 @@ class FollowingTagsView(MethodView):
 class FollowingTopicsView(MethodView):
     def get(self):
         user = request.user
-        page, number = self.page_info
+        page, number = self.pageinfo
         filter_dict = {'followers__username': user.username}
         topics = Topic.query.filter_by(**filter_dict).paginate(page, number,
                                                                True)
@@ -91,7 +91,7 @@ class FollowingTopicsView(MethodView):
 class FollowingUsersView(MethodView):
     def get(self):
         user = request.user
-        page, number = self.page_info
+        page, number = self.pageinfo
         users = user.following_users.paginate(page, number, True)
         data = {'users': users}
         return render_template('follow/following_users.html', **data)
@@ -123,7 +123,7 @@ class FollowingUsersView(MethodView):
 class FollowingCollectsView(MethodView):
     def get(self):
         user = request.user
-        page, number = self.page_info
+        page, number = self.pageinfo
         filter_dict = {'followers__username': user.username}
         collects = Collect.query.filter_by(**filter_dict).paginate(
             page, number, True)

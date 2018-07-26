@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 12:53:02 (CST)
-# Last Update:星期日 2017-4-9 12:41:11 (CST)
+# Last Update: Thursday 2018-07-26 10:51:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import redirect, session, url_for
-from flask_babelex import lazy_gettext as _
+from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm as Form
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 from wtforms import (BooleanField, PasswordField, RadioField, SelectField,
@@ -45,14 +45,11 @@ def form_board():
 
 class BaseForm(Form):
     username = StringField(
-        _('Username:'), [DataRequired(), Length(
-            min=4, max=20)])
+        _('Username:'), [DataRequired(), Length(min=4, max=20)])
     password = PasswordField(
-        _('Password:'), [DataRequired(), Length(
-            min=4, max=20)])
+        _('Password:'), [DataRequired(), Length(min=4, max=20)])
     captcha = StringField(
-        _('Captcha:'), [DataRequired(), Length(
-            min=4, max=4)])
+        _('Captcha:'), [DataRequired(), Length(min=4, max=4)])
 
     def validate(self):
         rv = Form.validate(self)
@@ -90,10 +87,6 @@ class SortForm(Form):
     desc = SelectField('Up and Down', coerce=int, choices=DESC)
 
 
-class SearchForm(Form):
-    search = StringField(_('search'), validators=[DataRequired()])
-
-
 class MessageForm(Form):
     message = TextAreaField(_('message'), validators=[DataRequired()])
 
@@ -115,7 +108,9 @@ class CollectForm(Form):
     name = StringField(_('Name:'), [DataRequired()])
     description = TextAreaField(_('Description:'))
     is_hidden = RadioField(
-        'Is_hidden:', choices=[(0, 'is_hidden'), (1, 'is_public')], coerce=int)
+        'Is_hidden:',
+        choices=[(0, _('is_hidden')), (1, _('is_public'))],
+        coerce=int)
 
 
 choices = UserSetting.STATUS
@@ -126,8 +121,10 @@ locale = UserSetting.LOCALE
 class AvatarForm(Form):
     avatar = FileField(
         _('Upload Avatar:'),
-        validators=[FileRequired(), FileAllowed(['jpg', 'png'],
-                                                '上传文件只能为图片且图片格式为jpg,png')])
+        validators=[
+            FileRequired(),
+            FileAllowed(['jpg', 'png'], '上传文件只能为图片且图片格式为jpg,png')
+        ])
 
 
 class PrivacyForm(Form):
@@ -148,13 +145,14 @@ class ProfileForm(Form):
 
 class PasswordForm(Form):
     old_password = PasswordField(
-        _('Old Password:'), [DataRequired(), Length(
-            min=4, max=20)])
+        _('Old Password:'),
+        [DataRequired(), Length(min=4, max=20)])
     new_password = PasswordField(
-        _('New Password:'), [DataRequired(), Length(
-            min=4, max=20)])
+        _('New Password:'),
+        [DataRequired(), Length(min=4, max=20)])
     rnew_password = PasswordField(
-        _('New Password again:'), [DataRequired(), EqualTo('new_password')])
+        _('New Password again:'),
+        [DataRequired(), EqualTo('new_password')])
 
 
 class BabelForm(Form):

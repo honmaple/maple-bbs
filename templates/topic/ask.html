@@ -1,5 +1,13 @@
 {% extends 'base/base.html' %}
-{% block content %}
+
+{%- block script %}
+{{ super() }}
+<script src="https://cdn.bootcss.com/marked/0.4.0/marked.min.js"></script>
+<script src="{{ url_for("static",filename="libs/js/org.js") }}"></script>
+{%- endblock -%}
+
+{%- block style %}
+{{ super() }}
 <style>
  .tokenfield .token {
      border: 1px solid #5cb85c;
@@ -7,6 +15,9 @@
      color:#eee;
  }
 </style>
+{%- endblock -%}
+
+{% block content %}
 {{ breadcrumb(active=_('Ask'))}}
 <div class="panel panel-primary">
   <div class="panel-heading">{{ _('Ask') }}</div>

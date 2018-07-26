@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-04-21 19:08+0800\n"
+"POT-Creation-Date: 2018-07-26 11:31+0800\n"
 "PO-Revision-Date: 2016-06-16 14:36+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
@@ -16,179 +16,171 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.4.0\n"
+"Generated-By: Babel 2.6.0\n"
 
-#: forums/extension.py:67
-msgid "Please login to access this page."
-msgstr "这个页面要求登陆，请登陆"
-
-#: forums/api/auth/forms.py:22 forums/api/forms.py:48
+#: forums/api/forms.py:48
 msgid "Username:"
 msgstr "用户名:"
 
-#: forums/api/auth/forms.py:25 forums/api/forms.py:51
+#: forums/api/forms.py:50
 msgid "Password:"
 msgstr "密码:"
 
-#: forums/api/auth/forms.py:28 forums/api/forms.py:54
+#: forums/api/forms.py:52
 msgid "Captcha:"
 msgstr "验证码:"
 
-#: forums/api/auth/forms.py:39 forums/api/forms.py:65
+#: forums/api/forms.py:62
 msgid "The captcha is error"
 msgstr "验证码错误"
 
-#: forums/api/auth/forms.py:46 forums/api/forms.py:72
+#: forums/api/forms.py:69
 msgid "Email:"
 msgstr "邮箱"
 
-#: forums/api/auth/forms.py:50 forums/api/forms.py:76
+#: forums/api/forms.py:73
 msgid "Remember me"
 msgstr "记住我"
 
-#: forums/api/forms.py:79 forums/api/topic/views.py:84
+#: forums/api/forms.py:76 forums/api/topic/views.py:73
 #: templates/topic/topic_good.html:13 templates/topic/topic_list.html:4
 #: templates/topic/topic_list.html:6 templates/topic/topic_list.html:8
 #: templates/topic/topic_top.html:13
 msgid "All Topics"
 msgstr "所有主题"
 
-#: forums/api/forms.py:79
+#: forums/api/forms.py:76
 msgid "One Day"
 msgstr "一天之内"
 
-#: forums/api/forms.py:79
+#: forums/api/forms.py:76
 msgid "One Week"
 msgstr "一周之内"
 
-#: forums/api/forms.py:80
+#: forums/api/forms.py:77
 msgid "One Month"
 msgstr "一月之内"
 
-#: forums/api/forms.py:80
+#: forums/api/forms.py:77
 msgid "One Year"
 msgstr "一年之内"
 
-#: forums/api/forms.py:82
+#: forums/api/forms.py:79
 msgid "Publish"
 msgstr "发表时间"
 
-#: forums/api/forms.py:82 templates/forums/_macro.html:48
+#: forums/api/forms.py:79 templates/forums/_macro.html:48
 #: templates/topic/_list_macro.html:13
 msgid "Author"
 msgstr "发表作者"
 
-#: forums/api/forms.py:84
+#: forums/api/forms.py:81
 msgid "Desc"
 msgstr "降序"
 
-#: forums/api/forms.py:84
+#: forums/api/forms.py:81
 msgid "Asc"
 msgstr "升序"
 
-#: forums/api/forms.py:88
+#: forums/api/forms.py:85
 msgid "Choice"
 msgstr "选择"
 
-#: forums/api/forms.py:94
-msgid "search"
-msgstr "搜索"
-
-#: forums/api/forms.py:98
+#: forums/api/forms.py:91
 msgid "message"
 msgstr "私信"
 
-#: forums/api/forms.py:102
+#: forums/api/forms.py:95
 msgid "Title:"
 msgstr "标题:"
 
-#: forums/api/forms.py:103 forums/api/forms.py:111
+#: forums/api/forms.py:96 forums/api/forms.py:104
 msgid "Content:"
 msgstr "内容:"
 
-#: forums/api/forms.py:104
+#: forums/api/forms.py:97
 msgid "Category:"
 msgstr "分类:"
 
-#: forums/api/forms.py:105
+#: forums/api/forms.py:98
 msgid "Tags:"
 msgstr "节点:"
 
-#: forums/api/forms.py:107
+#: forums/api/forms.py:100
 msgid "ContentType"
 msgstr "标记语言"
 
-#: forums/api/forms.py:115
+#: forums/api/forms.py:108
 msgid "Name:"
 msgstr "收藏夹名:"
 
-#: forums/api/forms.py:116
+#: forums/api/forms.py:109
 msgid "Description:"
 msgstr "描述:"
 
-#: forums/api/forms.py:128
+#: forums/api/forms.py:112
+msgid "is_hidden"
+msgstr "私密"
+
+#: forums/api/forms.py:112
+msgid "is_public"
+msgstr "公开"
+
+#: forums/api/forms.py:123
 msgid "Upload Avatar:"
 msgstr "上传头像"
 
-#: forums/api/forms.py:135
+#: forums/api/forms.py:132
 msgid "Online status:"
 msgstr "在线状态:"
 
-#: forums/api/forms.py:136
+#: forums/api/forms.py:133
 msgid "Topic List:"
 msgstr "主题列表:"
 
-#: forums/api/forms.py:138
+#: forums/api/forms.py:135
 msgid "Reply List:"
 msgstr "回复列表:"
 
-#: forums/api/forms.py:139
+#: forums/api/forms.py:136
 msgid "Notebook List:"
 msgstr "笔记列表:"
 
-#: forums/api/forms.py:140
+#: forums/api/forms.py:137
 msgid "Collect List:"
 msgstr "收藏列表:"
 
-#: forums/api/forms.py:144
+#: forums/api/forms.py:141
 msgid "Introduce:"
 msgstr "个人介绍:"
 
-#: forums/api/forms.py:145
+#: forums/api/forms.py:142
 msgid "School:"
 msgstr "所在学校:"
 
-#: forums/api/forms.py:146
+#: forums/api/forms.py:143
 msgid "Signature:"
 msgstr "个性签名:"
 
-#: forums/api/forms.py:151
+#: forums/api/forms.py:148
 msgid "Old Password:"
 msgstr "原密码:"
 
-#: forums/api/forms.py:154
+#: forums/api/forms.py:151
 msgid "New Password:"
 msgstr "新密码:"
 
-#: forums/api/forms.py:157
+#: forums/api/forms.py:154
 msgid "New Password again:"
 msgstr "重复新密码:"
 
-#: forums/api/forms.py:161
+#: forums/api/forms.py:159
 msgid "Timezone:"
 msgstr "时区设置:"
 
-#: forums/api/forms.py:162
+#: forums/api/forms.py:160
 msgid "Locale:"
 msgstr "语言设置:"
-
-#: forums/api/auth/views.py:101
-msgid "Please confirm  your email!"
-msgstr "请验证你的邮箱!"
-
-#: forums/api/auth/views.py:146
-msgid "Please confirm  your email"
-msgstr "请验证你的邮箱!"
 
 #: forums/api/forums/views.py:37
 msgid "About - "
@@ -210,33 +202,33 @@ msgstr "提问 - "
 msgid "Edit -"
 msgstr "编辑 - "
 
-#: forums/api/topic/views.py:87 templates/topic/topic_good.html:13
+#: forums/api/topic/views.py:76 templates/topic/topic_good.html:13
 #: templates/topic/topic_list.html:6
 msgid "Good Topics"
 msgstr "社区精华帖子"
 
-#: forums/api/topic/views.py:90 templates/topic/topic_list.html:4
+#: forums/api/topic/views.py:79 templates/topic/topic_list.html:4
 #: templates/topic/topic_top.html:13
 msgid "Top Topics"
 msgstr "精华文章"
 
-#: forums/api/user/models.py:206
+#: forums/api/user/models.py:178
 msgid "ALLOW ALL USER"
 msgstr "允许所有人"
 
-#: forums/api/user/models.py:206
+#: forums/api/user/models.py:178
 msgid "ALLOW AUTHENTICATED USER"
 msgstr "只允许登陆用户"
 
-#: forums/api/user/models.py:207
+#: forums/api/user/models.py:179
 msgid "ALLOW OWN"
 msgstr "仅自己"
 
-#: forums/api/user/models.py:211
+#: forums/api/user/models.py:183
 msgid "Chinese"
 msgstr "中文"
 
-#: forums/api/user/models.py:211
+#: forums/api/user/models.py:183
 msgid "English"
 msgstr "英文"
 
@@ -280,6 +272,10 @@ msgstr ""
 msgid "Other error"
 msgstr ""
 
+#: forums/extension/login.py:30
+msgid "Please login to access this page."
+msgstr "这个页面要求登陆，请登陆"
+
 #: templates/auth/forget.html:1
 msgid "Forget Password - "
 msgstr "忘记密码 - "
@@ -293,7 +289,7 @@ msgid "Login - "
 msgstr "登陆 - "
 
 #: templates/auth/login.html:5 templates/auth/login.html:8
-#: templates/base/base.html:70 templates/topic/reply/form.html:15
+#: templates/base/base.html:73 templates/topic/reply/form.html:15
 msgid "Login"
 msgstr "登陆"
 
@@ -302,33 +298,25 @@ msgid "Register - "
 msgstr "注册 - "
 
 #: templates/auth/register.html:5 templates/auth/register.html:8
-#: templates/base/base.html:69
+#: templates/base/base.html:72
 msgid "Register"
 msgstr "注册"
 
-#: templates/base/base.html:53
+#: templates/base/base.html:56 templates/base/header.html:35
 msgid "Home Page"
 msgstr "主页"
 
-#: templates/base/base.html:54
+#: templates/base/base.html:57 templates/base/header.html:36
 msgid "Setting"
 msgstr "帐号设置"
 
-#: templates/base/base.html:56
+#: templates/base/base.html:59 templates/base/header.html:38
 msgid "Logout"
 msgstr "注销"
 
-#: templates/base/base.html:60
+#: templates/base/base.html:63
 msgid "NoticeList"
 msgstr "通知"
-
-#: templates/base/base.html:72 templates/base/link.html:10
-msgid "TagList"
-msgstr "节点"
-
-#: templates/base/base.html:73 templates/base/link.html:2
-msgid "UserList"
-msgstr "用户列表"
 
 #: templates/base/form.html:14
 msgid "save"
@@ -338,21 +326,29 @@ msgstr "保存"
 msgid "Index"
 msgstr "社区主页"
 
-#: templates/base/header.html:19 templates/forums/index.html:10
+#: templates/base/header.html:67 templates/forums/index.html:10
 msgid "Forums"
 msgstr "社区"
 
-#: templates/base/header.html:20 templates/forums/index.html:11
+#: templates/base/header.html:68 templates/forums/index.html:11
 msgid "Wiki"
 msgstr "文档"
 
-#: templates/base/header.html:21 templates/forums/index.html:12
+#: templates/base/header.html:69 templates/forums/index.html:12
 msgid "Blog"
 msgstr "博客"
 
-#: templates/base/header.html:22 templates/forums/index.html:13
+#: templates/base/header.html:70 templates/base/link.html:10
+msgid "TagList"
+msgstr "节点"
+
+#: templates/base/header.html:71 templates/forums/index.html:13
 msgid "Good"
 msgstr "精华文章"
+
+#: templates/base/link.html:2
+msgid "UserList"
+msgstr "用户列表"
 
 #: templates/base/link.html:18
 msgid "TopicList"
@@ -543,35 +539,35 @@ msgstr "没有通知"
 msgid "Userlist"
 msgstr "用户列表"
 
-#: templates/maple/footer.html:23
+#: templates/maple/footer.html:39
 msgid "Help"
 msgstr "帮助"
 
-#: templates/maple/footer.html:25
+#: templates/maple/footer.html:41
 msgid "About"
 msgstr "关于"
 
-#: templates/maple/footer.html:27
+#: templates/maple/footer.html:43
 msgid "Contact me"
 msgstr "联系我"
 
-#: templates/maple/footer.html:33
+#: templates/maple/footer.html:49
 msgid "Now users online:"
 msgstr "当前在线用户:"
 
-#: templates/maple/footer.html:34
+#: templates/maple/footer.html:50
 msgid "Registered users online:"
 msgstr "注册用户:"
 
-#: templates/maple/footer.html:35
+#: templates/maple/footer.html:51
 msgid "Guests online:"
 msgstr "当前访客:"
 
-#: templates/maple/footer.html:39
+#: templates/maple/footer.html:55
 msgid "Highest online:"
 msgstr "最高在线:"
 
-#: templates/maple/footer.html:40
+#: templates/maple/footer.html:56
 msgid "Time of highest online:"
 msgstr "最高在线时间:"
 
@@ -615,7 +611,7 @@ msgstr "所有标签"
 msgid "No Tags"
 msgstr "暂无标签"
 
-#: templates/topic/ask.html:10 templates/topic/ask.html:12
+#: templates/topic/ask.html:21 templates/topic/ask.html:23
 msgid "Ask"
 msgstr "提问"
 
@@ -653,17 +649,17 @@ msgstr "你需要"
 msgid "before you can reply."
 msgstr "后才能发表回复"
 
-#: templates/topic/reply/itemlist.html:4
+#: templates/topic/reply/itemlist.html:6
 #, python-format
 msgid "Received %(total)s replies"
 msgstr "共收到%(total)s条回复"
 
-#: templates/topic/reply/itemlist.html:6 templates/user/followers.html:12
+#: templates/topic/reply/itemlist.html:8 templates/user/followers.html:12
 #: templates/user/replies.html:12 templates/user/user.html:12
 msgid "time"
 msgstr "时间"
 
-#: templates/topic/reply/itemlist.html:7 templates/user/followers.html:13
+#: templates/topic/reply/itemlist.html:9 templates/user/followers.html:13
 #: templates/user/replies.html:13
 msgid "likers"
 msgstr "点赞"
@@ -821,3 +817,11 @@ msgstr "最后回复来自%(author)s"
 #~ msgid "search content"
 #~ msgstr "搜索内容"
 
+#~ msgid "search"
+#~ msgstr "搜索"
+
+#~ msgid "Please confirm  your email!"
+#~ msgstr "请验证你的邮箱!"
+
+#~ msgid "Please confirm  your email"
+#~ msgstr "请验证你的邮箱!"

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update: 星期日 2018-02-11 15:06:58 (CST)
+# Last Update: Thursday 2018-07-26 09:54:53 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,7 +15,7 @@ from config import SITE
 
 from bleach import clean
 from flask import Markup, g
-from flask_babelex import format_datetime
+from flask_babel import format_datetime
 from misaka import HtmlRenderer, Markdown
 
 
@@ -26,16 +26,12 @@ def safe_clean(text):
     return Markup(clean(text, tags=tags, attributes=attrs, styles=styles))
 
 
-def markdown(text):
+def markdown(text, clean=True):
     renderer = HtmlRenderer()
     md = Markdown(renderer, extensions=('fenced-code', ))
+    if clean:
+        return Markup(safe_clean(md(text)))
     return Markup(md(text))
-
-
-def safe_markdown(text):
-    renderer = HtmlRenderer()
-    md = Markdown(renderer, extensions=('fenced-code', ))
-    return Markup(safe_clean(md(text)))
 
 
 def timesince(dt, default="just now"):
@@ -61,11 +57,9 @@ def timesince(dt, default="just now"):
 
 
 def show_time():
-    from flask_babelex import format_datetime
     if g.user.is_authenticated:
         return 'LOCALE:' + format_datetime(datetime.utcnow())
-    else:
-        return 'UTC:' + format_datetime(datetime.utcnow())
+    return 'UTC:' + format_datetime(datetime.utcnow())
 
 
 def hot_tags():

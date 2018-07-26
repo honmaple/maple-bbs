@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:08:06 (CST)
-# Last Update: Thursday 2018-03-01 17:58:50 (CST)
+# Last Update: Thursday 2018-07-26 10:45:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -26,7 +26,7 @@ class UserListView(MethodView):
     @login_required
     def get(self):
         query_dict = request.data
-        page, number = self.page_info
+        page, number = self.pageinfo
         keys = ['username']
         order_by = gen_order_by(query_dict, keys)
         filter_dict = gen_filter_dict(query_dict, keys)
@@ -39,7 +39,7 @@ class UserView(MethodView):
     def get(self, username):
         query_dict = request.data
         user = User.query.filter_by(username=username).first_or_404()
-        page, number = self.page_info
+        page, number = self.pageinfo
         keys = ['title']
         order_by = gen_order_by(query_dict, keys)
         filter_dict = gen_filter_dict(query_dict, keys)
@@ -65,7 +65,7 @@ class UserReplyListView(MethodView):
     def get(self, username):
         query_dict = request.data
         user = User.query.filter_by(username=username).first_or_404()
-        page, number = self.page_info
+        page, number = self.pageinfo
         keys = ['title']
         order_by = gen_order_by(query_dict, keys)
         filter_dict = gen_filter_dict(query_dict, keys)
@@ -91,7 +91,7 @@ class UserFollowerListView(MethodView):
     @login_required
     def get(self, username):
         user = User.query.filter_by(username=username).first_or_404()
-        page, number = self.page_info
+        page, number = self.pageinfo
         followers = user.followers.paginate(page, number, True)
         data = {'followers': followers, 'user': user}
         return render_template('user/followers.html', **data)

@@ -6,14 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-13 13:29:37 (CST)
-# Last Update:星期五 2017-7-28 11:35:19 (CST)
+# Last Update: Sunday 2018-03-04 22:37:00 (CST)
 #          By:
 # Description:
 # **************************************************************************
-from flask import (request, current_app, flash, redirect, url_for,
-                   render_template)
-from flask.views import MethodView
+from flask import (request, flash, redirect, url_for, render_template)
 from flask_login import login_required, current_user
+from flask_maple.views import MethodView
 from forums.permission import confirm_permission
 from forums.extension import cache
 
@@ -36,19 +35,6 @@ def is_confirmed(func):
 
 
 class BaseMethodView(MethodView):
-    @property
-    def page_info(self):
-        page = request.args.get('page', 1, type=int)
-        if hasattr(self, 'per_page'):
-            per_page = getattr(self, 'per_page')
-        else:
-            per_page = current_app.config.setdefault('PER_PAGE', 20)
-
-        number = request.args.get('number', per_page, type=int)
-        if number > 100:
-            number = per_page
-        return page, number
-
     @cache.cached(timeout=180, key_prefix=cache_key)
     def dispatch_request(self, *args, **kwargs):
         return super(BaseMethodView, self).dispatch_request(*args, **kwargs)

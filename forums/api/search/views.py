@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-31 17:26:28 (CST)
-# Last Update:星期三 2017-12-13 13:50:15 (CST)
+# Last Update: Thursday 2018-07-26 10:45:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -18,7 +18,7 @@ from forums.api.topic.models import Topic
 class SearchView(MethodView):
     def get(self):
         query_dict = request.data
-        page, number = self.page_info
+        page, number = self.pageinfo
         keyword = query_dict.pop('keyword', None)
         include = query_dict.pop('include', '0')
         if keyword and len(keyword) >= 2:

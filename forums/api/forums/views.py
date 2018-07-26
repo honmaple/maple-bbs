@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 20:45:08 (CST)
-# Last Update:星期二 2017-5-2 11:52:28 (CST)
+# Last Update: Thursday 2018-07-26 10:45:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import render_template, request
-from flask_babelex import gettext as _
+from flask_babel import gettext as _
 
 from forums.api.topic.models import Topic
 from forums.common.views import BaseMethodView as MethodView
@@ -53,7 +53,7 @@ class ContactView(MethodView):
 class BoardListView(MethodView):
     def get(self):
         query_dict = request.data
-        page, number = self.page_info
+        page, number = self.pageinfo
         keys = ['name']
         order_by = gen_order_by(query_dict, keys)
         filter_dict = gen_filter_dict(query_dict, keys)
@@ -74,7 +74,7 @@ class BoardView(MethodView):
 
     def topics(self, boardId, has_children):
         query_dict = request.data
-        page, number = self.page_info
+        page, number = self.pageinfo
         keys = ['title']
         # order_by = gen_order_by(query_dict, keys)
         # filter_dict = gen_filter_dict(query_dict, keys)

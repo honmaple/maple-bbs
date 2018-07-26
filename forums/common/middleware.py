@@ -6,13 +6,13 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-12 13:29:17 (CST)
-# Last Update:星期五 2018-01-05 00:44:56 (CST)
+# Last Update: Sunday 2018-03-04 22:38:33 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import g, request, abort
 from flask_login import current_user
-from forums.api.forms import SortForm, SearchForm
+from forums.api.forms import SortForm
 from .records import mark_online, load_online_users
 
 
@@ -31,7 +31,6 @@ class GlobalMiddleware(object):
         g.user = current_user
         g.sort_form = SortForm()
         g.sort_form = set_form(g.sort_form)
-        g.search_form = SearchForm()
         request.user = current_user._get_current_object()
         if request.method == 'GET':
             request.data = request.args.to_dict()

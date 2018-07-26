@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 21:09:08 (CST)
-# Last Update:星期五 2018-01-05 00:25:26 (CST)
+# Last Update: Wednesday 2018-07-25 18:54:54 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from datetime import datetime, timedelta
 
 from flask import current_app
-from flask_babelex import lazy_gettext as _
+from flask_babel import lazy_gettext as _
 from flask_login import current_user, login_user, logout_user
 from flask_principal import Identity, identity_changed, AnonymousIdentity
 from pytz import all_timezones

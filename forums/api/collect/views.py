@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 16:15:08 (CST)
-# Last Update:星期三 2017-5-10 16:35:10 (CST)
+# Last Update: Thursday 2018-07-26 10:45:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import redirect, render_template, request, url_for
-from flask_babelex import gettext as _
+from flask_babel import gettext as _
 from flask_login import current_user
 
 from flask_maple.form import form_validate
@@ -22,7 +22,7 @@ from forums.api.forms import (CollectForm, ReplyForm, TopicForm,
 from forums.api.forums.models import Board
 from forums.api.tag.models import Tags
 from forums.api.topic.models import Topic
-from forums.common.serializer import Serializer
+from flask_maple.serializer import Serializer
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import IsAuthMethodView as MethodView
 from forums.api.message.models import MessageClient
@@ -35,7 +35,7 @@ class CollectListView(MethodView):
         query_dict = request.data
         user = request.user
         form = CollectForm()
-        page, number = self.page_info
+        page, number = self.pageinfo
         keys = ['name']
         order_by = gen_order_by(query_dict, keys)
         filter_dict = gen_filter_dict(query_dict, keys)
@@ -63,7 +63,7 @@ class CollectListView(MethodView):
 class CollectView(MethodView):
     def get(self, pk):
         user = request.user
-        page, number = self.page_info
+        page, number = self.pageinfo
         collect = Collect.query.filter_by(
             id=pk, author_id=user.id).first_or_404()
         form = CollectForm()

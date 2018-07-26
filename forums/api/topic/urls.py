@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:15:34 (CST)
-# Last Update:星期五 2017-11-10 10:57:47 (CST)
+# Last Update: Thursday 2018-07-26 10:07:07 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Blueprint
 
 from .views import (LikeView, ReplyListView, ReplyView, TopicAskView,
-                    TopicEditView, TopicListView, TopicPreviewView, TopicView)
+                    TopicEditView, TopicListView, TopicView)
 
 site = Blueprint('topic', __name__)
 
@@ -23,14 +23,12 @@ topic_top_list = TopicListView.as_view('top')
 topic = TopicView.as_view('topic')
 ask_view = TopicAskView.as_view('ask')
 edit_view = TopicEditView.as_view('edit')
-preview_view = TopicPreviewView.as_view('preview')
 
 reply_list = ReplyListView.as_view('reply_list')
 reply = ReplyView.as_view('reply')
 like_view = LikeView.as_view('reply_like')
 
 site.add_url_rule('/topic/ask', view_func=ask_view)
-site.add_url_rule('/topic/preview', view_func=preview_view)
 site.add_url_rule('/topic', view_func=topic_list)
 site.add_url_rule('/topic/top', view_func=topic_top_list)
 site.add_url_rule('/topic/good', view_func=topic_good_list)

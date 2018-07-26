@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-01-25 20:10:50 (CST)
-# Last Update: 星期日 2018-02-11 15:05:26 (CST)
+# Last Update: Thursday 2018-07-26 09:57:28 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -21,10 +21,9 @@ from flask_maple import auth
 
 
 def create_app(config):
-    templates = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.pardir, 'templates'))
-    static = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.pardir, 'static'))
+    path = os.path.dirname(__file__)
+    templates = os.path.abspath(os.path.join(path, os.pardir, 'templates'))
+    static = os.path.abspath(os.path.join(path, os.pardir, 'static'))
 
     app = Flask(__name__, template_folder=templates, static_folder=static)
     app.config.from_object(config)

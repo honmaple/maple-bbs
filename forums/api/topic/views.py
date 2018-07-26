@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update: 星期日 2018-02-11 15:07:05 (CST)
+# Last Update: Thursday 2018-07-26 11:36:27 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import Markup, redirect, render_template, request, url_for
-from flask_babelex import gettext as _
+from flask_babel import gettext as _
 from flask_login import current_user, login_required
 
 from flask_maple.form import form_validate
@@ -22,11 +22,10 @@ from forums.api.forms import (CollectForm, ReplyForm, TopicForm,
 from forums.api.forums.models import Board
 from forums.api.tag.models import Tags
 from forums.api.utils import gen_topic_filter, gen_topic_orderby
-from forums.common.serializer import Serializer
+from flask_maple.serializer import Serializer
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import BaseMethodView as MethodView
 from forums.common.views import IsAuthMethodView, IsConfirmedMethodView
-from forums.jinja import safe_markdown
 
 from .models import Reply, Topic
 from .permissions import (like_permission, reply_list_permission,
@@ -59,23 +58,12 @@ class TopicEditView(IsConfirmedMethodView):
         return render_template('topic/edit.html', **data)
 
 
-class TopicPreviewView(IsConfirmedMethodView):
-    @login_required
-    def post(self):
-        post_data = request.data
-        content_type = post_data.pop('content_type', None)
-        content = post_data.pop('content', None)
-        if content_type == Topic.CONTENT_TYPE_MARKDOWN:
-            return safe_markdown(content)
-        return content
-
-
 class TopicListView(MethodView):
     decorators = (topic_list_permission, )
 
     def get(self):
         query_dict = request.data
-        page, number = self.page_info
+        page, number = self.pageinfo
         keys = ['title']
         # order_by = gen_order_by(query_dict, keys)
         # filter_dict = gen_filter_dict(query_dict, keys)
@@ -135,7 +123,7 @@ class TopicView(MethodView):
         form = ReplyForm()
         query_dict = request.data
         topic = Topic.query.filter_by(id=topicId).first_or_404()
-        page, number = self.page_info
+        page, number = self.pageinfo
         keys = ['title']
         order_by = gen_order_by(query_dict, keys)
         filter_dict = gen_filter_dict(query_dict, keys)

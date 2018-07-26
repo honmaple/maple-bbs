@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:04 (CST)
-# Last Update:星期日 2017-4-9 12:46:47 (CST)
+# Last Update: Thursday 2018-07-26 10:45:40 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -28,7 +28,7 @@ class TagsListView(MethodView):
 
     def get(self):
         query_dict = request.data
-        page, number = self.page_info
+        page, number = self.pageinfo
         keys = ['name']
         order_by = gen_order_by(query_dict, keys)
         filter_dict = gen_filter_dict(query_dict, keys)
@@ -40,7 +40,7 @@ class TagsListView(MethodView):
 
 class TagsView(MethodView):
     def get(self, name):
-        page, number = self.page_info
+        page, number = self.pageinfo
         tag = Tags.query.filter_by(name=name).first_or_404()
         topics = self.topics(tag)
         data = {'title': tag.name, 'tag': tag, 'topics': topics}
@@ -48,7 +48,7 @@ class TagsView(MethodView):
 
     def topics(self, tag):
         query_dict = request.data
-        page, number = self.page_info
+        page, number = self.pageinfo
         keys = ['name']
         # order_by = gen_order_by(query_dict, keys)
         # filter_dict = gen_filter_dict(query_dict, keys)

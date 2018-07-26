@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-04-01 18:33:37 (CST)
-# Last Update: 星期日 2018-02-11 15:06:58 (CST)
+# Last Update: Thursday 2018-07-26 10:05:23 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import url_for
 from flask_login import current_user
 from forums.extension import db
-from forums.jinja import safe_markdown
+from forums.jinja import markdown
 from forums.common.models import CommonTimeMixin
 
 
@@ -112,7 +112,7 @@ class Message(CommonTimeMixin, db.Model):
 
     @property
     def title(self):
-        return safe_markdown(self.message_text.title)
+        return markdown(self.message_text.title)
         # return self.message_text.title
 
     @property

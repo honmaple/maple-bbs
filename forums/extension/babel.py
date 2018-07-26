@@ -6,19 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2018-02-11 14:52:25 (CST)
-# Last Update: 星期日 2018-02-11 15:31:25 (CST)
+# Last Update: Wednesday 2018-07-25 18:54:25 (CST)
 #          By:
 # Description:
 # ********************************************************************************
 from flask import request, g, current_app
-from flask_babelex import Babel, Domain
-import os
+from flask_babel import Babel
 
-translations = os.path.abspath(
-    os.path.join(
-        os.path.dirname(__file__), os.pardir, os.pardir, 'translations'))
-domain = Domain(translations)
-babel = Babel(default_domain=domain)
+babel = Babel()
 
 
 @babel.localeselector

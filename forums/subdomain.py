@@ -6,13 +6,15 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-11-10 10:52:47 (CST)
-# Last Update:星期五 2018-01-05 01:15:15 (CST)
+# Last Update: Thursday 2018-07-26 10:02:02 (CST)
 #          By:
 # Description:
 # **************************************************************************
+from forums import default
 
 
 def init_app(app):
+    app.config.setdefault("SUBDOMAIN", default.SUBDOMAIN)
     if app.config['SUBDOMAIN']['forums']:
         app.url_map._rules.clear()
         app.url_map._rules_by_endpoint.clear()

@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:52:07 (CST)
-# Last Update: 星期日 2018-02-11 15:06:01 (CST)
+# Last Update: Thursday 2018-07-26 11:35:50 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -21,7 +21,7 @@ from forums.api.user.models import User
 from forums.common.models import CommonUserMixin
 from forums.extension import db
 from forums.count import Count
-from forums.jinja import safe_markdown, safe_clean, markdown
+from forums.jinja import safe_clean, markdown
 
 topic_follower = db.Table(
     'topic_follower',
@@ -93,7 +93,7 @@ class Topic(db.Model, ModelMixin):
         if self.content_type == Topic.CONTENT_TYPE_TEXT:
             return safe_clean(self.content)
         elif self.content_type == Topic.CONTENT_TYPE_MARKDOWN:
-            return markdown(self.content)
+            return markdown(self.content, False)
         return self.content
 
     @property
