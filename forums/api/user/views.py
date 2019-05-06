@@ -6,20 +6,17 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:08:06 (CST)
-# Last Update: Thursday 2018-07-26 10:45:40 (CST)
+# Last Update: Monday 2019-05-06 23:36:53 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import redirect, render_template, request, url_for
 from flask_login import current_user, login_required
-from forums.api.forums.models import Board
-from forums.api.tag.models import Tags
-from forums.api.topic.models import Topic, Reply
-from forums.api.collect.models import Collect
+from forums.api.topic.db import Topic, Reply
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import BaseMethodView as MethodView
 
-from .models import User
+from .db import User
 
 
 class UserListView(MethodView):
@@ -48,8 +45,8 @@ class UserView(MethodView):
             **filter_dict).order_by(*order_by).paginate(page, number, True)
         setting = user.setting
         topic_is_allowed = False
-        if setting.topic_list == 1 or (setting.topic_list == 2 and
-                                       current_user.is_authenticated):
+        if setting.topic_list == 1 or (setting.topic_list == 2
+                                       and current_user.is_authenticated):
             topic_is_allowed = True
         if current_user.is_authenticated and current_user.id == user.id:
             topic_is_allowed = True
@@ -74,8 +71,8 @@ class UserReplyListView(MethodView):
             **filter_dict).order_by(*order_by).paginate(page, number, True)
         setting = user.setting
         replies_is_allowed = False
-        if setting.rep_list == 1 or (current_user.is_authenticated and
-                                     setting.rep_list == 2):
+        if setting.rep_list == 1 or (current_user.is_authenticated
+                                     and setting.rep_list == 2):
             replies_is_allowed = True
         if current_user.is_authenticated and current_user.id == user.id:
             replies_is_allowed = True

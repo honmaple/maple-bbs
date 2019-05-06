@@ -63,13 +63,13 @@ def show_time():
 
 
 def hot_tags():
-    from forums.api.tag.models import Tags
+    from forums.api.tag.db import Tags
     tags = Tags.query.limit(9).all()
     return tags
 
 
 def recent_tags():
-    from forums.api.tag.models import Tags
+    from forums.api.tag.db import Tags
     tags = Tags.query.limit(12).all()
     return tags
 

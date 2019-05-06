@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update: Thursday 2018-07-26 11:36:27 (CST)
+# Last Update: Monday 2019-05-06 23:36:54 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -19,27 +19,26 @@ from flask_maple.response import HTTPResponse
 from forums.api.forms import (CollectForm, ReplyForm, TopicForm,
                               collect_error_callback, error_callback,
                               form_board)
-from forums.api.forums.models import Board
-from forums.api.tag.models import Tags
+from forums.api.tag.db import Tags
 from forums.api.utils import gen_topic_filter, gen_topic_orderby
 from flask_maple.serializer import Serializer
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import BaseMethodView as MethodView
 from forums.common.views import IsAuthMethodView, IsConfirmedMethodView
 
-from .models import Reply, Topic
+from .db import Reply, Topic
 from .permissions import (like_permission, reply_list_permission,
                           reply_permission, topic_list_permission,
                           topic_permission, edit_permission)
-from forums.api.message.models import MessageClient
+from forums.api.message.db import MessageClient
 
 
 class TopicAskView(IsConfirmedMethodView):
     def get(self):
-        boardId = request.args.get('boardId', type=int)
+        pk = request.args.get('pk', type=int)
         form = form_board()
-        if boardId is not None:
-            form.category.data = boardId
+        if pk is not None:
+            form.category.data = pk
         data = {'title': _('Ask - '), 'form': form}
         return render_template('topic/ask.html', **data)
 

@@ -2,10 +2,10 @@
 {% block content %}
 {% set board = topic.board %}
 {% if board.parent_id %}
-{{ breadcrumb(hrefs={board.parent.name:url_for('forums.board',boardId=board.parent_id),
-                     board.name:url_for('forums.board',boardId=board.id)},active=topic.title) }}
+{{ breadcrumb(hrefs={board.parent.name:url_for('forums.board',pk=board.parent_id),
+                     board.name:url_for('forums.board',pk=board.id)},active=topic.title) }}
 {% else %}
-{{ breadcrumb(hrefs={board.name:url_for('forums.board',boardId=board.id)},active=topic.title) }}
+{{ breadcrumb(hrefs={board.name:url_for('forums.board',pk=board.id)},active=topic.title) }}
 {% endif %}
 <div class="row">
   <div class="col-md-9">
@@ -19,7 +19,7 @@
   </div>
   <div class="col-md-3" style="padding-left:0">
     {% include "topic/panel.html" %}
-    {% set ask_url = url_for('topic.ask',boardId=topic.board_id) %}
+    {% set ask_url = url_for('topic.ask',pk=topic.board_id) %}
     {{ panel_base.board() }}
   </div>
 </div>

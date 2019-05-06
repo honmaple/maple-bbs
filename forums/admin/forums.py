@@ -6,14 +6,14 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 13:12:23 (CST)
-# Last Update:星期五 2017-11-10 11:04:16 (CST)
+# Last Update: Monday 2019-05-06 23:37:00 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from .views import BaseView
 from forums.extension import db
-from forums.api.forums.models import Board
-from forums.api.tag.models import Tags
+from forums.api.forums.db import Board
+from forums.api.tag.db import Tags
 
 
 class BoardView(BaseView):

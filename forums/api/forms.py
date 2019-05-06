@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 12:53:02 (CST)
-# Last Update: Thursday 2018-07-26 10:51:40 (CST)
+# Last Update: Monday 2019-05-06 23:36:53 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -18,9 +18,9 @@ from wtforms import (BooleanField, PasswordField, RadioField, SelectField,
                      StringField, TextAreaField)
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
-from forums.api.forums.models import Board
-from forums.api.topic.models import Topic
-from forums.api.user.models import UserSetting
+from forums.api.forums.db import Board
+from forums.api.topic.db import Topic
+from forums.api.user.db import UserSetting
 
 
 def error_callback():

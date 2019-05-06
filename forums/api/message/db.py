@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 # **************************************************************************
 # Copyright © 2017 jianglin
-# File Name: models.py
+# File Name: db.py
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-04-01 18:33:37 (CST)
-# Last Update: Thursday 2018-07-26 10:05:23 (CST)
+# Last Update: Tuesday 2019-05-07 01:19:46 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -49,17 +49,17 @@ class MessageText(CommonTimeMixin, db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     sender = db.relationship(
         'User',
-        backref=db.backref(
-            'send_messages', lazy='dynamic'),
+        backref=db.backref('send_messages', lazy='dynamic'),
         lazy='joined',
         uselist=False)
 
     @classmethod
     def get_choice_dict(cls):
-        return dict(messagetext=dict(
-            status=dict(cls.STATUS),
-            message_type=dict(cls.MESSAGE_TYPE),
-            read_status=dict(cls.READ_STATUS)))
+        return dict(
+            messagetext=dict(
+                status=dict(cls.STATUS),
+                message_type=dict(cls.MESSAGE_TYPE),
+                read_status=dict(cls.READ_STATUS)))
 
     def __str__(self):
         return self.title
@@ -92,15 +92,13 @@ class Message(CommonTimeMixin, db.Model):
     message_text_id = db.Column(db.Integer, db.ForeignKey('message_text.id'))
     message_text = db.relationship(
         MessageText,
-        backref=db.backref(
-            "messages", cascade='all,delete', lazy='dynamic'),
+        backref=db.backref("messages", cascade='all,delete', lazy='dynamic'),
         uselist=False,
         lazy='joined')
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     receiver = db.relationship(
         'User',
-        backref=db.backref(
-            'receive_messages', lazy='dynamic'),
+        backref=db.backref('receive_messages', lazy='dynamic'),
         lazy='joined',
         uselist=False)
 
@@ -142,12 +140,8 @@ class MessageClient(object):
         if sender.id == receiver.id:
             return
         title = '[{}]({})回复了你创建的主题:[{}]({})'.format(
-            sender.username,
-            url_for(
-                'user.user', username=sender.username),
-            topic.title,
-            url_for(
-                'topic.topic', topicId=topic.id))
+            sender.username, url_for('user.user', username=sender.username),
+            topic.title, url_for('topic.topic', topicId=topic.id))
         content = reply.content
         message_text = MessageText(
             sender_id=sender.id, title=title, content=content)
@@ -167,12 +161,8 @@ class MessageClient(object):
         if sender.id == receiver.id:
             return
         title = '[{}]({})收藏了你创建的主题:[{}]({})'.format(
-            sender.username,
-            url_for(
-                'user.user', username=sender.username),
-            topic.title,
-            url_for(
-                'topic.topic', topicId=topic.id))
+            sender.username, url_for('user.user', username=sender.username),
+            topic.title, url_for('topic.topic', topicId=topic.id))
         content = 'a'
         message_text = MessageText(
             sender_id=sender.id, title=title, content=content)
@@ -191,26 +181,19 @@ class MessageClient(object):
         if following.__class__.__name__ == 'Topic':
             receiver = following.author
             title = '[{}]({})关注了你创建的主题:[{}]({})'.format(
-                sender.username,
-                url_for(
-                    'user.user', username=sender.username),
-                following.title,
-                url_for(
-                    'topic.topic', topicId=following.id))
+                sender.username, url_for(
+                    'user.user', username=sender.username), following.title,
+                url_for('topic.topic', topicId=following.id))
         elif following.__class__.__name__ == 'Collect':
             receiver = following.author
             title = '[{}]({})关注了你创建的收藏:[{}]({})'.format(
-                sender.username,
-                url_for(
-                    'user.user', username=sender.username),
-                following.title,
-                url_for(
-                    'collect.collect', pk=following.id))
+                sender.username, url_for(
+                    'user.user', username=sender.username), following.title,
+                url_for('collect.collect', pk=following.id))
         elif following.__class__.__name__ == 'User':
             receiver = following
             title = '[{}]({})关注了你'.format(
-                sender.username,
-                url_for(
+                sender.username, url_for(
                     'user.user', username=sender.username))
         if sender.id == receiver.id:
             return
@@ -234,12 +217,8 @@ class MessageClient(object):
             return
         topic = reply.topic
         title = '[{}]({})在[{}]({})回复了你'.format(
-            sender.username,
-            url_for(
-                'user.user', username=sender.username),
-            topic.title,
-            url_for(
-                'topic.topic', topicId=topic.id))
+            sender.username, url_for('user.user', username=sender.username),
+            topic.title, url_for('topic.topic', topicId=topic.id))
         content = reply.content
         message_text = MessageText(
             sender_id=sender.id, title=title, content=content)
@@ -260,12 +239,8 @@ class MessageClient(object):
             return
         topic = reply.topic
         title = '[{}]({})在[{}]({})赞了你的回复'.format(
-            sender.username,
-            url_for(
-                'user.user', username=sender.username),
-            topic.title,
-            url_for(
-                'topic.topic', topicId=topic.id))
+            sender.username, url_for('user.user', username=sender.username),
+            topic.title, url_for('topic.topic', topicId=topic.id))
         content = reply.content
         message_text = MessageText(
             sender_id=sender.id, title=title, content=content)

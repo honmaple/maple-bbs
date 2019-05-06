@@ -12,7 +12,7 @@
 # **************************************************************************
 from flask import request, render_template
 from forums.common.views import BaseMethodView as MethodView
-from forums.api.topic.models import Topic
+from forums.api.topic.db import Topic
 
 
 class SearchView(MethodView):

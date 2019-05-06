@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-28 16:15:08 (CST)
-# Last Update: Thursday 2018-07-26 10:45:40 (CST)
+# Last Update: Monday 2019-05-06 23:36:54 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -19,15 +19,12 @@ from flask_maple.response import HTTPResponse
 from forums.api.forms import (CollectForm, ReplyForm, TopicForm,
                               collect_error_callback, error_callback,
                               form_board)
-from forums.api.forums.models import Board
-from forums.api.tag.models import Tags
-from forums.api.topic.models import Topic
-from flask_maple.serializer import Serializer
+from forums.api.topic.db import Topic
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import IsAuthMethodView as MethodView
-from forums.api.message.models import MessageClient
+from forums.api.message.db import MessageClient
 
-from .models import Collect
+from .db import Collect
 
 
 class CollectListView(MethodView):

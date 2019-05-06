@@ -212,23 +212,23 @@ msgstr "社区精华帖子"
 msgid "Top Topics"
 msgstr "精华文章"
 
-#: forums/api/user/models.py:178
+#: forums/api/user/db.py:178
 msgid "ALLOW ALL USER"
 msgstr "允许所有人"
 
-#: forums/api/user/models.py:178
+#: forums/api/user/db.py:178
 msgid "ALLOW AUTHENTICATED USER"
 msgstr "只允许登陆用户"
 
-#: forums/api/user/models.py:179
+#: forums/api/user/db.py:179
 msgid "ALLOW OWN"
 msgstr "仅自己"
 
-#: forums/api/user/models.py:183
+#: forums/api/user/db.py:183
 msgid "Chinese"
 msgstr "中文"
 
-#: forums/api/user/models.py:183
+#: forums/api/user/db.py:183
 msgid "English"
 msgstr "英文"
 

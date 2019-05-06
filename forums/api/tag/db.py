@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 20:46:13 (CST)
-# Last Update:星期三 2017-12-13 16:06:36 (CST)
+# Last Update: Monday 2019-05-06 23:37:21 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -28,9 +28,8 @@ class Tags(db.Model, ModelMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
     description = db.Column(db.String(128), nullable=False)
-    parent_id = db.Column(
-        db.Integer, db.ForeignKey(
-            'tags.id', ondelete="CASCADE"))
+    parent_id = db.Column(db.Integer,
+                          db.ForeignKey('tags.id', ondelete="CASCADE"))
     parent = db.relationship(
         'Tags',
         remote_side=[id],
@@ -44,14 +43,12 @@ class Tags(db.Model, ModelMixin):
     topics = db.relationship(
         'Topic',
         secondary=tag_topic,
-        backref=db.backref(
-            'tags', lazy='dynamic'),
+        backref=db.backref('tags', lazy='dynamic'),
         lazy='dynamic')
     followers = db.relationship(
         'User',
         secondary=tag_follower,
-        backref=db.backref(
-            'following_tags', lazy='dynamic'),
+        backref=db.backref('following_tags', lazy='dynamic'),
         lazy='dynamic')
 
     def is_followed(self, user=None):
@@ -60,6 +57,14 @@ class Tags(db.Model, ModelMixin):
         return db.session.query(tag_follower).filter(
             tag_follower.c.tag_id == self.id,
             tag_follower.c.follower_id == user.id).exists()
+
+    @property
+    def parent_tag(self):
+        return self.parent
+
+    @property
+    def child_tags(self):
+        return self.children
 
     @property
     def related_tags(self):

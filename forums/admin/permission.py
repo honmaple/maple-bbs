@@ -12,7 +12,7 @@
 # **************************************************************************
 from .views import BaseView
 from forums.extension import db
-from forums.api.user.models import Group, Permission
+from forums.api.user.db import Group, Permission
 
 
 class GroupView(BaseView):

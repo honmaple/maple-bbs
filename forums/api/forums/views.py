@@ -6,19 +6,19 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-17 20:45:08 (CST)
-# Last Update: Thursday 2018-07-26 10:45:40 (CST)
+# Last Update: Monday 2019-05-06 23:36:54 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from flask import render_template, request
 from flask_babel import gettext as _
 
-from forums.api.topic.models import Topic
+from forums.api.topic.db import Topic
 from forums.common.views import BaseMethodView as MethodView
 from forums.common.utils import (gen_filter_dict, gen_order_by)
 from forums.api.utils import gen_topic_filter, gen_topic_orderby
 
-from .models import Board
+from .db import Board
 
 
 class IndexView(MethodView):
@@ -65,14 +65,14 @@ class BoardListView(MethodView):
 
 
 class BoardView(MethodView):
-    def get(self, boardId):
-        board = Board.query.filter_by(id=boardId).first_or_404()
-        has_children = board.children.exists()
-        topics = self.topics(boardId, has_children)
+    def get(self, pk):
+        board = Board.query.filter_by(id=pk).first_or_404()
+        has_children = board.child_boards.exists()
+        topics = self.topics(pk, has_children)
         data = {'title': 'Board', 'board': board, 'topics': topics}
         return render_template('board/board.html', **data)
 
-    def topics(self, boardId, has_children):
+    def topics(self, pk, has_children):
         query_dict = request.data
         page, number = self.pageinfo
         keys = ['title']
@@ -88,10 +88,10 @@ class BoardView(MethodView):
                 else:
                     o.append(getattr(Topic, i))
             topics = Topic.query.filter_by(**filter_dict).outerjoin(Board).or_(
-                Board.parent_id == boardId,
-                Board.id == boardId).order_by(*o).paginate(page, number, True)
+                Board.parent_id == pk,
+                Board.id == pk).order_by(*o).paginate(page, number, True)
             return topics
-        filter_dict.update(board_id=boardId)
+        filter_dict.update(board_id=pk)
         topics = Topic.query.filter_by(
             **filter_dict).order_by(*order_by).paginate(page, number, True)
         return topics

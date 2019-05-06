@@ -6,7 +6,7 @@
 {% if not board.parents %}
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <a href="{{ url_for('forums.board',boardId=board.id) }}" style="color:#fff"> {{ board.name }} </a>
+    <a href="{{ url_for('forums.board',pk=board.id) }}" style="color:#fff"> {{ board.name }} </a>
   </div>
   {% for child in board.children -%}
   {{ board_body(child) }}

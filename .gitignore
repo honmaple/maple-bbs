@@ -2,6 +2,7 @@ venv/
 **/config/
 migrations/
 backup/
+forums1/
 fabfile.py
 **/__pycache__/
 **/avatar/

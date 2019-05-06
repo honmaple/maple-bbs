@@ -28,7 +28,7 @@
 {%- endmacro %}
 
 {% macro board(board) -%}
-<a href="{{ url_for('forums.board',boardId=board.id) }}">{{ board.name }}</a>
+<a href="{{ url_for('forums.board',pk=board.id) }}">{{ board.name }}</a>
 {%- endmacro %}
 
 {% macro avatar(text,width=64) -%}

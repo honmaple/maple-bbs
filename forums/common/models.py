@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # **************************************************************************
 # Copyright © 2017 jianglin
-# File Name: models.py
+# File Name: db.py
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-01-25 21:33:09 (CST)

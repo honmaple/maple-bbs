@@ -4,9 +4,9 @@
 # Copyright © 2018 jianglin
 # File Name: __init__.py
 # Author: jianglin
-# Email: xiyang0807@gmail.com
+# Email: mail@honmaple.com
 # Created: 2018-02-11 14:52:12 (CST)
-# Last Update: Saturday 2018-03-03 21:53:59 (CST)
+# Last Update: Tuesday 2019-05-07 01:05:29 (CST)
 #          By:
 # Description:
 # ********************************************************************************
@@ -28,8 +28,9 @@ cache = Cache()
 mail = Mail()
 principal = Principal()
 search = Search(db=db)
-avatar = Avatar(cache=cache.cached(
-    timeout=259200, key_prefix=lambda: "avatar:{}".format(request.url)))
+avatar = Avatar(
+    cache=cache.cached(
+        timeout=259200, key_prefix=lambda: "avatar:{}".format(request.url)))
 
 
 def init_app(app):

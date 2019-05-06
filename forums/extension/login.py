@@ -18,7 +18,7 @@ login_manager = LoginManager()
 
 @login_manager.user_loader
 def user_loader(id):
-    from forums.api.user.models import User
+    from forums.api.user.db import User
     user = User.query.get(int(id))
     return user
 

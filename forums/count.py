@@ -16,8 +16,8 @@ from .extension import redis_data
 
 class Count(object):
     @classmethod
-    def board_topic_count(cls, boardId, value=None):
-        key = 'count:board:%s' % str(boardId)
+    def board_topic_count(cls, pk, value=None):
+        key = 'count:board:%s' % str(pk)
         if value is not None:
             pipe = redis_data.pipeline()
             pipe.hincrby(key, 'topic', value)
@@ -25,8 +25,8 @@ class Count(object):
         return redis_data.hget(key, 'topic') or 0
 
     @classmethod
-    def board_post_count(cls, boardId, value=None):
-        key = 'count:board:%s' % str(boardId)
+    def board_post_count(cls, pk, value=None):
+        key = 'count:board:%s' % str(pk)
         if value is not None:
             pipe = redis_data.pipeline()
             pipe.hincrby(key, 'post', value)

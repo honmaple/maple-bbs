@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # **************************************************************************
-# Copyright © 2016 jianglin
+# Copyright © 2016-2019 jianglin
 # File Name: runserver.py
 # Author: jianglin
-# Email: xiyang0807@gmail.com
+# Email: mail@honmaple.com
 # Created: 2016-10-25 22:01:29 (CST)
-# Last Update: 星期五 2018-02-23 10:43:07 (CST)
+# Last Update: Monday 2019-05-06 23:36:53 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -14,11 +14,10 @@ from flask import current_app
 from flask.cli import FlaskGroup, run_command
 from werkzeug.contrib.fixers import ProxyFix
 from code import interact
-from getpass import getpass
 
 from forums import create_app
 from forums.extension import db, cache, search
-from forums.api.user.models import User
+from forums.api.user.db import User
 
 import click
 import os
@@ -44,8 +43,9 @@ def shell_command():
 
 
 @cli.command()
-def runserver():
-    app.run()
+@click.option('-p', '--port', default=8000)
+def runserver(port):
+    app.run(port=port)
 
 
 @cli.command()
@@ -70,7 +70,7 @@ def clear_cache():
 
 @cli.command()
 def init_perm():
-    from forums.api.user.models import Group
+    from forums.api.user.db import Group
     anonymous = Group.query.filter_by(name='anonymous').first()
     if not anonymous:
         anonymous = Group(name='anonymous')
@@ -113,10 +113,11 @@ def initdb():
 def babel_init(lang):
     babel_conf = "translations/babel.cfg"
     src_path = ["forums", "templates"]
-    os.system('pybabel extract -F {0} -k lazy_gettext -o messages.pot {1}'.
-              format(babel_conf, ' '.join(src_path)))
-    os.system('pybabel init -i messages.pot -d translations -l {0}'.format(
-        lang))
+    os.system(
+        'pybabel extract -F {0} -k lazy_gettext -o messages.pot {1}'.format(
+            babel_conf, ' '.join(src_path)))
+    os.system(
+        'pybabel init -i messages.pot -d translations -l {0}'.format(lang))
     os.unlink('messages.pot')
 
 
@@ -124,8 +125,9 @@ def babel_init(lang):
 def babel_update():
     babel_conf = "translations/babel.cfg"
     src_path = ["forums", "templates"]
-    os.system('pybabel extract -F {0} -k lazy_gettext -o messages.pot {1}'.
-              format(babel_conf, ' '.join(src_path)))
+    os.system(
+        'pybabel extract -F {0} -k lazy_gettext -o messages.pot {1}'.format(
+            babel_conf, ' '.join(src_path)))
     os.system('pybabel update -i messages.pot -d translations')
     os.unlink('messages.pot')
 
@@ -144,26 +146,24 @@ def delete_user(username):
 
 @cli.command()
 @click.option('-u', '--username')
-def password_user(username):
-    password = getpass('Password:')
+@click.password_option('-p', '--password')
+def password_user(username, password):
     user = User.query.filter_by(username=username).first()
     user.set_password(password)
     user.save()
 
 
-@cli.command()
-@click.option('-u', '--username')
-@click.option('-e', '--email')
-@click.option('-w', '--password')
+@cli.command(short_help='Create user.')
+@click.option('-u', '--username', prompt=True, default="admin")
+@click.option('-e', '--email', prompt=True)
+@click.password_option('-p', '--password')
 def create_user(username, email, password):
-    if username is None:
-        username = input('Username(default admin):') or 'admin'
-    if email is None:
-        email = input('Email:')
-    if password is None:
-        password = getpass('Password:')
     user = User(
-        username=username, email=email, is_superuser=True, is_confirmed=True)
+        username=username,
+        email=email,
+        is_superuser=True,
+        is_confirmed=True,
+    )
     user.set_password(password)
     user.save()
 

@@ -12,13 +12,13 @@
 # **************************************************************************
 from flask import render_template, request
 
-from forums.api.tag.models import Tags
-from forums.api.topic.models import Topic
-from forums.api.collect.models import Collect
-from forums.api.user.models import User
+from forums.api.tag.db import Tags
+from forums.api.topic.db import Topic
+from forums.api.collect.db import Collect
+from forums.api.user.db import User
 from forums.common.response import HTTPResponse
 from forums.common.views import IsAuthMethodView as MethodView
-from forums.api.message.models import MessageClient
+from forums.api.message.db import MessageClient
 
 
 class FollowingTagsView(MethodView):

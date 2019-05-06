@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-03-25 18:48:33 (CST)
-# Last Update:星期五 2017-3-31 15:53:1 (CST)
+# Last Update: Monday 2019-05-06 23:37:21 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -20,9 +20,8 @@ class Board(db.Model, ModelMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(81), nullable=False)
     description = db.Column(db.String(128), nullable=False)
-    parent_id = db.Column(
-        db.Integer, db.ForeignKey(
-            'boards.id', ondelete="CASCADE"))
+    parent_id = db.Column(db.Integer,
+                          db.ForeignKey('boards.id', ondelete="CASCADE"))
     parent = db.relationship(
         'Board',
         remote_side=[id],
@@ -33,6 +32,14 @@ class Board(db.Model, ModelMixin):
             lazy='dynamic'),
         lazy='joined',
         uselist=False)
+
+    @property
+    def parent_board(self):
+        return self.parent
+
+    @property
+    def child_boards(self):
+        return self.children
 
     @property
     def newest_topic(self):

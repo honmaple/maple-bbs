@@ -12,7 +12,7 @@
 # **************************************************************************
 from .views import BaseView
 from forums.extension import db
-from forums.api.user.models import User, UserInfo, UserSetting
+from forums.api.user.db import User, UserInfo, UserSetting
 from wtforms import PasswordField
 from wtforms.validators import DataRequired
 
@@ -30,7 +30,7 @@ class UserView(BaseView):
     column_editable_list = ['is_confirmed', 'is_superuser']
     form_columns = ('username', 'email', 'password', 'is_confirmed',
                     'is_superuser')
-    # inline_models = (UserInfo, UserSetting)
+    # inline_db = (UserInfo, UserSetting)
     # form_extra_fields = {
     #     'password': PasswordField('Password', [DataRequired()])
     # }

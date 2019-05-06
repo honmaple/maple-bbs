@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:04 (CST)
-# Last Update: Thursday 2018-07-26 10:45:40 (CST)
+# Last Update: Monday 2019-05-06 23:36:54 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -15,12 +15,12 @@ from urllib.parse import urljoin
 from flask import current_app, render_template, request, url_for
 from werkzeug.contrib.atom import AtomFeed
 
-from forums.api.topic.models import Topic
+from forums.api.topic.db import Topic
 from forums.api.utils import gen_topic_filter, gen_topic_orderby
 from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import BaseMethodView as MethodView
 
-from .models import Tags
+from .db import Tags
 
 
 class TagsListView(MethodView):

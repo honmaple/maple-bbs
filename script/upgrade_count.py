@@ -10,9 +10,9 @@
 #          By:
 # Description:
 # **************************************************************************
-from forums.api.topic.models import Topic, Reply
-from forums.api.forums.models import Board
-from forums.api.user.models import User
+from forums.api.topic.db import Topic, Reply
+from forums.api.forums.db import Board
+from forums.api.user.db import User
 from forums.extension import redis_data
 from runserver import app
 

@@ -12,8 +12,8 @@
 # **************************************************************************
 from .views import BaseView
 from forums.extension import db
-from forums.api.topic.models import Topic, Reply
-from forums.api.collect.models import Collect
+from forums.api.topic.db import Topic, Reply
+from forums.api.collect.db import Collect
 
 
 class TopicView(BaseView):

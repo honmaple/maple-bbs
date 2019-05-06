@@ -12,7 +12,7 @@
 # **************************************************************************
 from .views import BaseView
 from forums.extension import db
-from forums.api.message.models import MessageText, Message
+from forums.api.message.db import MessageText, Message
 
 
 class MessageTextView(BaseView):

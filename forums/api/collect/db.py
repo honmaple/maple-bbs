@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# **************************************************************************
-# Copyright © 2017 jianglin
-# File Name: models.py
+# ********************************************************************************
+# Copyright © 2019 jianglin
+# File Name: db.py
 # Author: jianglin
-# Email: xiyang0807@gmail.com
-# Created: 2017-03-28 17:58:59 (CST)
-# Last Update:星期三 2017-12-13 16:06:36 (CST)
+# Email: mail@honmaple.com
+# Created: 2019-05-07 00:41:33 (CST)
+# Last Update: Wednesday 2019-05-08 13:21:02 (CST)
 #          By:
 # Description:
-# **************************************************************************
+# ********************************************************************************
 from datetime import datetime
-from flask_maple.models import ModelMixin, ModelTimeMixin, ModelUserMixin
+from flask_maple.models import ModelMixin
 from flask_login import current_user
-from forums.api.user.models import User
+from forums.api.user.db import User
 from forums.extension import db
 
 topic_collect = db.Table(
@@ -37,9 +37,8 @@ class Collect(db.Model, ModelMixin):
         db.DateTime, default=datetime.utcnow(), nullable=False)
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow(), onupdate=datetime.utcnow())
-    author_id = db.Column(
-        db.Integer, db.ForeignKey(
-            'user.id', ondelete="CASCADE"))
+    author_id = db.Column(db.Integer,
+                          db.ForeignKey('user.id', ondelete="CASCADE"))
     author = db.relationship(
         User,
         backref=db.backref(
@@ -49,15 +48,13 @@ class Collect(db.Model, ModelMixin):
     topics = db.relationship(
         'Topic',
         secondary=topic_collect,
-        backref=db.backref(
-            'collects', lazy='dynamic'),
+        backref=db.backref('collects', lazy='dynamic'),
         lazy='dynamic')
 
     followers = db.relationship(
         'User',
         secondary=collect_follower,
-        backref=db.backref(
-            'following_collects', lazy='dynamic'),
+        backref=db.backref('following_collects', lazy='dynamic'),
         lazy='dynamic')
 
     def is_followed(self, user=None):

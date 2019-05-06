@@ -1,38 +1,38 @@
 {% extends 'base/base.html' %}
 
 {%- block script %}
-{{ super() }}
-<script src="https://cdn.bootcss.com/marked/0.4.0/marked.min.js"></script>
-<script src="{{ url_for("static",filename="libs/js/org.js") }}"></script>
+  {{ super() }}
+  <script src="https://cdn.bootcss.com/marked/0.4.0/marked.min.js"></script>
+  <script src="{{ url_for("static",filename="libs/js/org.js") }}"></script>
 {%- endblock -%}
 
 {%- block style %}
-{{ super() }}
-<style>
- .tokenfield .token {
-     border: 1px solid #5cb85c;
-     background-color: #5cb85c;
-     color:#eee;
- }
-</style>
+  {{ super() }}
+  <style>
+   .tokenfield .token {
+       border: 1px solid #5cb85c;
+       background-color: #5cb85c;
+       color:#eee;
+   }
+  </style>
 {%- endblock -%}
 
 {% block content %}
-{{ breadcrumb(active=_('Ask'))}}
-<div class="panel panel-primary">
-  <div class="panel-heading">{{ _('Ask') }}</div>
-  <div class="panel-body" style="border-bottom:1px solid #f6e1e1;padding:10px 0;">
-    <div class="row" style="margin:0;padding:0;">
-      <form action="{{ url_for('topic.list') }}" method="POST">
-        {% include "topic/ask/form.html" %}
-        <div class="col-sm-offset-2 col-sm-10">
-          {{ form.content_type(class="input-sm pull-right",style="padding:2")}}
-          <button class="btn btn-sm btn-primary" type="submit">提交问题</button>
-          <button class="btn btn-sm btn-primary" id="topic-preview" type="button">预览</button>
-        </div>
-        <div class="col-sm-offset-2 col-sm-10 topic-content" id="show-preview"></div>
-      </form>
+  {{ breadcrumb(active=_('Ask'))}}
+  <div class="panel panel-primary">
+    <div class="panel-heading">{{ _('Ask') }}</div>
+    <div class="panel-body" style="border-bottom:1px solid #f6e1e1;padding:10px 0;">
+      <div class="row" style="margin:0;padding:0;">
+        <form action="{{ url_for('topic.list') }}" method="POST">
+          {% include "topic/ask/form.html" %}
+          <div class="col-sm-offset-2 col-sm-10">
+            {{ form.content_type(class="input-sm pull-right",style="padding:2")}}
+            <button class="btn btn-sm btn-primary" type="submit">提交问题</button>
+            <button class="btn btn-sm btn-primary" id="topic-preview" type="button">预览</button>
+          </div>
+          <div class="col-sm-offset-2 col-sm-10 topic-content" id="show-preview"></div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
 {% endblock %}
