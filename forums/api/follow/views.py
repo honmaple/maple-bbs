@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-22 21:49:05 (CST)
-# Last Update: Thursday 2018-07-26 10:45:39 (CST)
+# Last Update: Wednesday 2019-05-08 15:09:18 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -66,7 +66,7 @@ class FollowingTopicsView(MethodView):
     def post(self):
         user = request.user
         post_data = request.data
-        topic_id = post_data.pop('topicId', None)
+        topic_id = post_data.pop('pk', None)
         if topic_id is not None and not User.query.filter_by(
                 following_topics__id=topic_id).exists():
             topic = Topic.query.filter_by(id=topic_id).first_or_404()
@@ -79,7 +79,7 @@ class FollowingTopicsView(MethodView):
     def delete(self):
         user = request.user
         post_data = request.data
-        topic_id = post_data.pop('topicId', None)
+        topic_id = post_data.pop('pk', None)
         if topic_id is not None and User.query.filter_by(
                 following_topics__id=topic_id).exists():
             topic = Topic.query.filter_by(id=topic_id).first_or_404()

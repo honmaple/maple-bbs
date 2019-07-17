@@ -34,8 +34,8 @@ class Count(object):
         return redis_data.hget(key, 'post') or 0
 
     @classmethod
-    def topic_reply_count(cls, topicId, value=None):
-        key = 'count:topic:%s' % str(topicId)
+    def topic_reply_count(cls, pk, value=None):
+        key = 'count:topic:%s' % str(pk)
         if value is not None:
             pipe = redis_data.pipeline()
             pipe.hincrby(key, 'replies', value)
@@ -43,8 +43,8 @@ class Count(object):
         return redis_data.hget(key, 'replies') or 0
 
     @classmethod
-    def topic_read_count(cls, topicId, value=None):
-        key = 'count:topic:%s' % str(topicId)
+    def topic_read_count(cls, pk, value=None):
+        key = 'count:topic:%s' % str(pk)
         expire_key = 'expire:topic:read:{}'.format(request.remote_addr)
         if not redis_data.exists(expire_key):
             # 设置三分钟之内,阅读次数不增加
@@ -55,8 +55,8 @@ class Count(object):
         return redis_data.hget(key, 'read') or 0
 
     @classmethod
-    def reply_liker_count(cls, replyId, value=None):
-        key = 'count:reply:%s' % str(replyId)
+    def reply_liker_count(cls, pk, value=None):
+        key = 'count:reply:%s' % str(pk)
         if value is not None:
             pipe = redis_data.pipeline()
             pipe.hincrby(key, 'liker', value)

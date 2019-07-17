@@ -1,14 +1,17 @@
 {% extends 'base/base.html' %}
+
+{% block title -%}{{ _("Contact") }} · {{ super() }}{%- endblock title %}
+
 {% block content %}
-{{ breadcrumb(active=_('Contact me')) }}
-{% cache 300 %}
-<div class="panel panel-primary">
-    <div class="panel-heading">
+  {{ breadcrumb(active=_('Contact me')) }}
+  {% cache 300 %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
         {{ _('Contact me') }}
+      </div>
+      <div class="panel-body">
+        root@honmaple.com
+      </div>
     </div>
-    <div class="panel-body">
-          root@honmaple.com
-    </div>
-</div>
-{% endcache %}
+  {% endcache %}
 {% endblock %}

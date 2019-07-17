@@ -6,7 +6,7 @@
   <button type="button" class="btn btn-info btn-block topic-following" data-id="{{topic.id}}">关注问题</button>
   {% endif %}
   {% if g.user == topic.author %}
-  <a class="btn btn-success btn-block" href="{{ url_for('topic.edit',topicId=topic.id)}}">
+  <a class="btn btn-success btn-block" href="{{ url_for('topic.edit',pk=topic.id)}}">
     编辑问题
   </a>
   {%- endif %}

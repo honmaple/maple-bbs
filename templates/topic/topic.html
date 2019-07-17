@@ -1,26 +1,26 @@
 {% extends 'base/base.html' %}
 {% block content %}
-{% set board = topic.board %}
-{% if board.parent_id %}
-{{ breadcrumb(hrefs={board.parent.name:url_for('forums.board',pk=board.parent_id),
-                     board.name:url_for('forums.board',pk=board.id)},active=topic.title) }}
-{% else %}
-{{ breadcrumb(hrefs={board.name:url_for('forums.board',pk=board.id)},active=topic.title) }}
-{% endif %}
-<div class="row">
-  <div class="col-md-9">
-    <div class="panel panel-default">
-      {% include "topic/item/heading.html" %}
-      {% include "topic/item/body.html" %}
+  {% set board = topic.board %}
+  {% if board.parent_id %}
+    {{ breadcrumb(hrefs={board.parent.name:url_for('forums.board',pk=board.parent_id),
+        board.name:url_for('forums.board',pk=board.id)},active=topic.title) }}
+  {% else %}
+    {{ breadcrumb(hrefs={board.name:url_for('forums.board',pk=board.id)},active=topic.title) }}
+  {% endif %}
+  <div class="row">
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        {% include "topic/item/heading.html" %}
+        {% include "topic/item/body.html" %}
+      </div>
+      <div id="replies">
+        {% include "topic/reply/itemlist.html" %}
+      </div>
     </div>
-    <div id="replies">
-      {% include "topic/reply/itemlist.html" %}
+    <div class="col-md-3" style="padding-left:0">
+      {% include "topic/panel.html" %}
+      {% set ask_url = url_for('topic.ask',pk=topic.board_id) %}
+      {{ panel_base.board() }}
     </div>
   </div>
-  <div class="col-md-3" style="padding-left:0">
-    {% include "topic/panel.html" %}
-    {% set ask_url = url_for('topic.ask',pk=topic.board_id) %}
-    {{ panel_base.board() }}
-  </div>
-</div>
 {% endblock %}

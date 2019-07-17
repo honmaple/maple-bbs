@@ -31,7 +31,7 @@ $(document).ready(function(){
     var _$this = $(this);
     var url = "/following/topics";
     var data = JSON.stringify({
-      topicId:_$this.attr("data-id"),
+      pk:_$this.attr("data-id"),
     });
     Follow(_$this,data,url);
   });
@@ -97,13 +97,13 @@ function DoCollect(collect_url) {
     });
     $('#delete-from-collect').click(function() {
       var _$this = $(this);
-      var topicId = _$this.attr('data-id');
+      var pk = _$this.attr('data-id');
       var data = JSON.stringify({
-        topicId:topicId
+        pk:pk
       });
       $.ajax ({
         type : "DELETE",
-        url : '/topic/' + topicId + '/collect',
+        url : '/topic/' + pk + '/collect',
         data:data,
         contentType: 'application/json;charset=UTF-8',
         success: function(response) {

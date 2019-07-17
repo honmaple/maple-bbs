@@ -18,8 +18,8 @@ from forums.permission import (ReplyPermission, RestfulView, TopicPermission,
 
 
 class Edit(RestfulView):
-    def get(self, topicId):
-        permission = TopicPermission(topicId)
+    def get(self, pk):
+        permission = TopicPermission(pk)
         if not permission.can():
             return self.callback()
         return True
@@ -33,15 +33,15 @@ class TopicList(RestfulView):
 
 class Topic(RestfulView):
     @is_confirmed
-    def put(self, topicId):
-        permission = TopicPermission(topicId)
+    def put(self, pk):
+        permission = TopicPermission(pk)
         if not permission.can():
             return self.callback()
         return True
 
     @is_confirmed
-    def delete(self, topicId):
-        permission = TopicPermission(topicId)
+    def delete(self, pk):
+        permission = TopicPermission(pk)
         if not permission.can():
             return self.callback()
         return True
@@ -49,27 +49,27 @@ class Topic(RestfulView):
 
 class ReplyList(RestfulView):
     @is_confirmed
-    def post(self, topicId):
+    def post(self, pk):
         return True
 
 
 class Reply(RestfulView):
     @is_confirmed
-    def put(self, replyId):
+    def put(self, pk):
         return True
 
     @is_confirmed
-    def delete(self, replyId):
+    def delete(self, pk):
         return True
 
 
 class Like(RestfulView):
     @is_confirmed
-    def post(self, replyId):
+    def post(self, pk):
         return True
 
     @is_confirmed
-    def delete(self, replyId):
+    def delete(self, pk):
         return True
 
 

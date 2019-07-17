@@ -1,58 +1,62 @@
 {% macro forums_title() -%}
-<div class="panel panel-default hidden-xs">
+  <div class="panel panel-default hidden-xs">
     <div class="panel-body" style="text-align: center;">
-        <div class="media" style="width: 480px; margin:0px auto; text-align: left;">
-            <div class="media-left">
-                <i class="icon-gift media-object" style="font-size: 55px; width: 55px; color: #333;"></i>
-            </div>
-            <div class="media-body" style="line-height: 200%; text-align: center;">
-                <div style="font-size: 15px">
-                    Honmaple {{ _('Office Source Code')}} <a href="https://github.com/honmaple/maple-bbs" target="_blank">Honmaple</a>
-                </div>
-                <code style="padding: 4px 10px;">git clone git@github.com:honmaple/maple-bbs.git</code>
-            </div>
+      <div class="media" style="width: 480px; margin:0px auto; text-align: left;">
+        <div class="media-left">
+          <i class="icon-gift media-object" style="font-size: 55px; width: 55px; color: #333;"></i>
         </div>
+        <div class="media-body" style="line-height: 200%; text-align: center;">
+          <div style="font-size: 15px">
+            Honmaple {{ _('Office Source Code')}} <a href="https://github.com/honmaple/maple-bbs" target="_blank">Honmaple</a>
+          </div>
+          <code style="padding: 4px 10px;">git clone git@github.com:honmaple/maple-bbs.git</code>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 {%- endmacro %}
 
-{% macro forums_item(name,url,icon,color="#337ab7") %}
-<div class="col-md-3">
-    <div class="panel panel-default">
-        <a href="{{ url }}">
+{% macro forums_item() %}
+  <div class="row hidden-sm hidden-xs">
+    {% for item in DEFAULT.INDEX %}
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <a href="{% if item.url.startswith("http") %}{{ item.url }}{% else %}{{ url_for(item.url) }}{% endif %}">
             <div class="panel-body text-center">
-                <i class="fa {{ icon }}" style="font-size:55px;color:{{ color }}"></i>
+              <i class="fa {{ item.icon }}" style="font-size:55px;color:{{ item.color }}"></i>
             </div>
-        </a>
-        <a href="{{ url }}">
+          </a>
+          <a href="{% if item.url.startswith("http") %}{{ item.url }}{% else %}{{ url_for(item.url) }}{% endif %}">
             <div class="panel-footer">
-                {{ name }}
-                <i class="pull-right fa fa-arrow-right"></i>
+              {{ _(item.name) }}
+              <i class="pull-right fa fa-arrow-right"></i>
             </div>
-        </a>
-    </div>
-</div>
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {%- endmacro %}
 
 {% macro topic_form() -%}
-<div class="panel-heading" style="font-size:12px;">
+  <div class="panel-heading" style="font-size:12px;">
     <div class="row">
-        <div class="col-sm-6">
-            {{_('Choice:')}}
-            {{ g.sort_form.display() }}
-            {{ _('Order:')}}
-            {{ g.sort_form.sort() }}
-            {{ g.sort_form.st() }}
-        </div>
-        <div class="col-sm-2 hidden-xs">
-            {{ _('Author') }}
-        </div>
-        <div class="col-sm-2 hidden-xs">
-            {{_('Replies/Read')}}
-        </div>
-        <div class="col-sm-2 hidden-xs">
-            {{_('Last reply')}}
-        </div>
+      <div class="col-sm-6">
+        {{_('Choice:')}}
+        {{ g.sort_form.display() }}
+        {{ _('Order:')}}
+        {{ g.sort_form.sort() }}
+        {{ g.sort_form.st() }}
+      </div>
+      <div class="col-sm-2 hidden-xs">
+        {{ _('Author') }}
+      </div>
+      <div class="col-sm-2 hidden-xs">
+        {{_('Replies/Read')}}
+      </div>
+      <div class="col-sm-2 hidden-xs">
+        {{_('Last reply')}}
+      </div>
     </div>
-</div>
+  </div>
 {%- endmacro %}

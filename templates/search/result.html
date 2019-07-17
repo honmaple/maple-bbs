@@ -10,7 +10,7 @@
     </div>
     {% for result in results.items %}
       <div class="panel-body text-center" style="padding:6px;border-bottom:1px solid #eee">
-        <a href="{{ url_for('topic.topic',topicId=result.id) }}">{{ result.title }}</a>
+        <a href="{{ url_for('topic.topic',pk=result.id) }}">{{ result.title }}</a>
       </div>
     {% else %}
       <div class="panel-body text-center">

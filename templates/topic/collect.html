@@ -14,7 +14,7 @@
       </div>
       {% else %}
       <div class="modal-body">
-        <form action="{{ url_for('collect.add_to_collect',topicId=topic.id) }}" method="POST">
+        <form action="{{ url_for('collect.add_to_collect',pk=topic.id) }}" method="POST">
           {{ form.hidden_tag() }}
           <p> 添加到收藏夹 </p>
           {% for collect in collects %}

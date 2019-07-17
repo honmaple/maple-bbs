@@ -5,8 +5,8 @@
   <div class="panel-heading">
     {{ _('Received %(total)s replies',total=replies.total) }}
     <ul class="pull-right list-inline reply-order">
-      <li><a href="{{ url_for('topic.topic',topicId=topic.id,orderby='time')}}"> <i class="icon icon-time"></i>{{_('time')}}</a></li>
-      <li><a href="{{ url_for('topic.topic',topicId=topic.id,orderby='like')}}"> <i class="icon icon-thumbs-up"></i>{{_('likers')}}</a></li>
+      <li><a href="{{ url_for('topic.topic',pk=topic.id,orderby='time')}}"> <i class="icon icon-time"></i>{{_('time')}}</a></li>
+      <li><a href="{{ url_for('topic.topic',pk=topic.id,orderby='like')}}"> <i class="icon icon-thumbs-up"></i>{{_('likers')}}</a></li>
     </ul>
   </div>
   {% if replies.items %}
@@ -39,7 +39,7 @@
     </div>
   </div>
   {% endfor %}
-  {{ p_footer(replies,'topic.topic',dict(topicId=topic.id))}}
+  {{ p_footer(replies,'topic.topic',dict(pk=topic.id))}}
   {% else %}
   {{ no_replies() }}
   {% endif %}

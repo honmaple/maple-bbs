@@ -5,9 +5,7 @@
 {% import 'base/panel.html' as panel_base %}
 {% from 'base/head.html' import breadcrumb %}
 
-{% block title -%}
-  {{ title }} {{ SITE['title'] }} - {{ _(SITE['description']) }}
-{%- endblock title %}
+{% block title -%}{{ DEFAULT.SITE['title'] }} - {{ _(DEFAULT.SITE['subtitle']) }}{%- endblock title %}
 
 {% block style -%}
   <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">

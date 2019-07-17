@@ -45,7 +45,7 @@
       {% if topic.is_top %}
       <span><i class="fa fa-thumb-tack text-danger">&nbsp</i></span>
       {% endif %}
-      <a href="{{url_for('topic.topic',topicId=topic.id)}}" style="color:#555">{{ topic.title }}</a>
+      <a href="{{url_for('topic.topic',pk=topic.id)}}" style="color:#555">{{ topic.title }}</a>
     </div>
     <span class="visible-xs-inline">
       <small style="font-size:10px;">由{{ link.user(author) }}</small>

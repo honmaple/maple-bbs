@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:04 (CST)
-# Last Update: Monday 2019-05-06 23:36:54 (CST)
+# Last Update: Wednesday 2019-05-08 16:27:50 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -17,8 +17,9 @@ from werkzeug.contrib.atom import AtomFeed
 
 from forums.api.topic.db import Topic
 from forums.api.utils import gen_topic_filter, gen_topic_orderby
-from forums.common.utils import gen_filter_dict, gen_order_by
 from forums.common.views import BaseMethodView as MethodView
+from forums.utils import filter_maybe, orderby_maybe
+from forums.default import SITE
 
 from .db import Tags
 
@@ -27,65 +28,51 @@ class TagsListView(MethodView):
     per_page = 99
 
     def get(self):
-        query_dict = request.data
+        request_data = request.data
         page, number = self.pageinfo
-        keys = ['name']
-        order_by = gen_order_by(query_dict, keys)
-        filter_dict = gen_filter_dict(query_dict, keys)
-        tags = Tags.query.filter_by(
-            **filter_dict).order_by(*order_by).paginate(page, number, True)
-        data = {'title': 'Tags', 'tags': tags}
+        params = filter_maybe(request_data, ["name"])
+        orderby = orderby_maybe(request_data, ["name"])
+        tags = Tags.query.filter_by(**params).order_by(*orderby).paginate(
+            page, number, True)
+        data = {'tags': tags}
         return render_template('tag/tag_list.html', **data)
 
 
 class TagsView(MethodView):
     def get(self, name):
+        request_data = request.data
         page, number = self.pageinfo
         tag = Tags.query.filter_by(name=name).first_or_404()
-        topics = self.topics(tag)
-        data = {'title': tag.name, 'tag': tag, 'topics': topics}
-        return render_template('tag/tag.html', **data)
 
-    def topics(self, tag):
-        query_dict = request.data
-        page, number = self.pageinfo
         keys = ['name']
-        # order_by = gen_order_by(query_dict, keys)
-        # filter_dict = gen_filter_dict(query_dict, keys)
-        order_by = gen_topic_orderby(query_dict, keys)
-        filter_dict = gen_topic_filter(query_dict, keys)
-        filter_dict.update(tags__id=tag.id)
-        return Topic.query.filter_by(
-            **filter_dict).order_by(*order_by).paginate(page, number, True)
+        params = gen_topic_filter(request_data, keys)
+        params.update(tags__id=tag.id)
+        orderby = gen_topic_orderby(request_data, keys)
+        topics = Topic.query.filter_by(**params).order_by(*orderby).paginate(
+            page, number, True)
+
+        data = {'tag': tag, 'topics': topics}
+        return render_template('tag/tag.html', **data)
 
 
 class TagFeedView(MethodView):
     def get(self, name):
-        setting = current_app.config.get('SITE', {
-            'title': '',
-            'description': ''
-        })
-        title = setting['title']
-        description = setting['description']
+        title = SITE['title']
+        subtitle = SITE['subtitle']
         feed = AtomFeed(
             '%s·%s' % (name, title),
             feed_url=request.url,
             url=request.url_root,
-            subtitle=description)
+            subtitle=subtitle)
         topics = Topic.query.filter_by(tags__name=name).limit(10)
         for topic in topics:
-            if topic.content_type == Topic.CONTENT_TYPE_MARKDOWN:
-                content = topic.content
-            else:
-                content = topic.content
-            feed.add(topic.title,
-                     content,
-                     content_type='html',
-                     author=topic.author.username,
-                     url=urljoin(
-                         request.url_root,
-                         url_for(
-                             'topic.topic', topicId=topic.id)),
-                     updated=topic.updated_at,
-                     published=topic.created_at)
+            feed.add(
+                topic.title,
+                topic.text,
+                content_type='html',
+                author=topic.author.username,
+                url=urljoin(request.url_root,
+                            url_for('topic.topic', pk=topic.id)),
+                updated=topic.updated_at,
+                published=topic.created_at)
         return feed.get_response()

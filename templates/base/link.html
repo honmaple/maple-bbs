@@ -1,72 +1,71 @@
 {% macro userlist() -%}
-<a href="{{ url_for('user.list') }}">{{ _('UserList') }}</a>
+  <a href="{{ url_for('user.list') }}">{{ _('UserList') }}</a>
 {%- endmacro %}
 
 {% macro user(user) -%}
-<a href="{{ url_for('user.user',username=user.username) }}">{{ user.username }}</a>
+  <a href="{{ url_for('user.user',username=user.username) }}">{{ user.username }}</a>
 {%- endmacro %}
 
 {% macro taglist() -%}
-<a href="{{ url_for('tag.list') }}">{{ _('TagList') }}</a>
+  <a href="{{ url_for('tag.list') }}">{{ _('TagList') }}</a>
 {%- endmacro %}
 
 {% macro tag(tag) -%}
-<a class="tag" href="{{ url_for('tag.tag',name=tag.name) }}">{{ tag.name }}</a>
+  <a class="tag" href="{{ url_for('tag.tag',name=tag.name) }}">{{ tag.name }}</a>
 {%- endmacro %}
 
 {% macro topiclist() -%}
-<a href="{{ url_for('topic.list') }}">{{ _('TopicList') }}</a>
+  <a href="{{ url_for('topic.list') }}">{{ _('TopicList') }}</a>
 {%- endmacro %}
 
 {% macro topic(topic) -%}
-<a href="{{ url_for('topic.topic',topicId=topic.id)}}">{{ topic.title }}</a>
+  <a href="{{ url_for('topic.topic',pk=topic.id)}}">{{ topic.title }}</a>
 {%- endmacro %}
 
 
 {% macro boardlist() -%}
-<a href="{{ url_for('board.list') }}">{{ _('BoardList') }}</a>
+  <a href="{{ url_for('board.list') }}">{{ _('BoardList') }}</a>
 {%- endmacro %}
 
 {% macro board(board) -%}
-<a href="{{ url_for('forums.board',pk=board.id) }}">{{ board.name }}</a>
+  <a href="{{ url_for('forums.board',pk=board.id) }}">{{ board.name }}</a>
 {%- endmacro %}
 
 {% macro avatar(text,width=64) -%}
-<img class="media-object img-circle" src="{{ url_for('avatar',text=text) }}" style="width:{{ width }}px;height:{{ width }}px">
+  <img class="media-object img-circle" src="{{ url_for('avatar',text=text) }}" style="width:{{ width }}px;height:{{ width }}px">
 {%- endmacro %}
 
 {% macro user_avatar(user,width=64) -%}
-{% set info = user.info %}
-{% if not info.avatar -%}
-<a href="{{ url_for('user.user',username=user.username) }}">
-  <img class="img-circle" src="{{ url_for('avatar',text=user.username) }}" style="width:{{ width }}px;height:{{ width }}px">
-</a>
-{% else %}
-<a href="{{ url_for('user.user',username=user.username) }}">
-  <img class="img-circle" src="{{ url_for('upload.avatar_file',filename=info.avatar) }}" style="width:{{ width }}px;height:{{ width }}px">
-</a>
-{%- endif %}
+  {% set info = user.info %}
+  {% if not info.avatar -%}
+    <a href="{{ url_for('user.user',username=user.username) }}">
+      <img class="img-circle" src="{{ url_for('avatar',text=user.username) }}" style="width:{{ width }}px;height:{{ width }}px">
+    </a>
+  {% else %}
+    <a href="{{ url_for('user.user',username=user.username) }}">
+      <img class="img-circle" src="{{ url_for('upload.avatar_file',filename=info.avatar) }}" style="width:{{ width }}px;height:{{ width }}px">
+    </a>
+  {%- endif %}
 {%- endmacro %}
 
 {% macro following_tag() -%}
-<a href="{{ url_for('follow.tag')}}">{{ _('Following Tags') }}</a>
+  <a href="{{ url_for('follow.tag')}}">{{ _('Following Tags') }}</a>
 {%- endmacro %}
 {% macro following_topic() -%}
-<a href="{{ url_for('follow.topic')}}">{{ _('Following Topics')}}</a>
+  <a href="{{ url_for('follow.topic')}}">{{ _('Following Topics')}}</a>
 {%- endmacro %}
 {% macro following_user() -%}
-<a href="{{ url_for('follow.user')}}">{{ _('Following Users')}}</a>
+  <a href="{{ url_for('follow.user')}}">{{ _('Following Users')}}</a>
 {%- endmacro %}
 {% macro following_collect() -%}
-<a href="{{ url_for('follow.collect')}}">{{ _('Following Collects')}}</a>
+  <a href="{{ url_for('follow.collect')}}">{{ _('Following Collects')}}</a>
 {%- endmacro %}
 
 
 {% macro collectlist() -%}
-<a href="{{ url_for('collect.list')}}">{{ _('CollectList')}}</a>
+  <a href="{{ url_for('collect.list')}}">{{ _('CollectList')}}</a>
 {%- endmacro %}
 
 {% macro collect(c) -%}
-<a href="{{ url_for('collect.collect',pk=c.id)}}">{{ c.name }}</a>
+  <a href="{{ url_for('collect.collect',pk=c.id)}}">{{ c.name }}</a>
 {%- endmacro %}
-

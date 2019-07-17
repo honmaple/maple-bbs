@@ -1,4 +1,7 @@
 {% extends 'base/base.html' %}
+
+{% block title -%}{{ _("Tags") }} · {{ super() }}{%- endblock title %}
+
 {% block content %}
   {{ breadcrumb(active=_('All Tags'))}}
   <div class="row">

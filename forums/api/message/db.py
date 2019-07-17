@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2017-04-01 18:33:37 (CST)
-# Last Update: Tuesday 2019-05-07 01:19:46 (CST)
+# Last Update: Wednesday 2019-05-08 15:09:17 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -141,7 +141,7 @@ class MessageClient(object):
             return
         title = '[{}]({})回复了你创建的主题:[{}]({})'.format(
             sender.username, url_for('user.user', username=sender.username),
-            topic.title, url_for('topic.topic', topicId=topic.id))
+            topic.title, url_for('topic.topic', pk=topic.id))
         content = reply.content
         message_text = MessageText(
             sender_id=sender.id, title=title, content=content)
@@ -162,7 +162,7 @@ class MessageClient(object):
             return
         title = '[{}]({})收藏了你创建的主题:[{}]({})'.format(
             sender.username, url_for('user.user', username=sender.username),
-            topic.title, url_for('topic.topic', topicId=topic.id))
+            topic.title, url_for('topic.topic', pk=topic.id))
         content = 'a'
         message_text = MessageText(
             sender_id=sender.id, title=title, content=content)
@@ -183,7 +183,7 @@ class MessageClient(object):
             title = '[{}]({})关注了你创建的主题:[{}]({})'.format(
                 sender.username, url_for(
                     'user.user', username=sender.username), following.title,
-                url_for('topic.topic', topicId=following.id))
+                url_for('topic.topic', pk=following.id))
         elif following.__class__.__name__ == 'Collect':
             receiver = following.author
             title = '[{}]({})关注了你创建的收藏:[{}]({})'.format(
@@ -218,7 +218,7 @@ class MessageClient(object):
         topic = reply.topic
         title = '[{}]({})在[{}]({})回复了你'.format(
             sender.username, url_for('user.user', username=sender.username),
-            topic.title, url_for('topic.topic', topicId=topic.id))
+            topic.title, url_for('topic.topic', pk=topic.id))
         content = reply.content
         message_text = MessageText(
             sender_id=sender.id, title=title, content=content)
@@ -240,7 +240,7 @@ class MessageClient(object):
         topic = reply.topic
         title = '[{}]({})在[{}]({})赞了你的回复'.format(
             sender.username, url_for('user.user', username=sender.username),
-            topic.title, url_for('topic.topic', topicId=topic.id))
+            topic.title, url_for('topic.topic', pk=topic.id))
         content = reply.content
         message_text = MessageText(
             sender_id=sender.id, title=title, content=content)

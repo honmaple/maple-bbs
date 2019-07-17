@@ -1,19 +1,22 @@
 {% extends 'base/base.html' %}
+
+{% block title -%}{{ _("Board") }} · {{ super() }}{%- endblock title %}
+
 {% block content %}
-{% from 'board/_macro.html' import board_body %}
-{{ breadcrumb(active=_('Board')) }}
-{% for board in boards.items %}
-{% if not board.parents %}
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <a href="{{ url_for('forums.board',pk=board.id) }}" style="color:#fff"> {{ board.name }} </a>
-  </div>
-  {% for child in board.children -%}
-  {{ board_body(child) }}
-  {% else %}
-  {{ board_body(board) }}
-  {%- endfor %}
-</div>
-{% endif %}
-{% endfor %}
+  {% from 'board/_macro.html' import board_body %}
+  {{ breadcrumb(active=_('Board')) }}
+  {% for board in boards %}
+    {% if not board.parents %}
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <a href="{{ url_for('forums.board',pk=board.id) }}" style="color:#fff"> {{ board.name }} </a>
+        </div>
+        {% for child in board.children -%}
+          {{ board_body(child) }}
+    {% else %}
+          {{ board_body(board) }}
+        {%- endfor %}
+      </div>
+    {% endif %}
+  {% endfor %}
 {% endblock %}

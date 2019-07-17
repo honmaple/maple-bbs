@@ -1,4 +1,7 @@
 {% extends 'base/base.html' %}
+
+{% block title -%}{{ tag.name }} · {{ super() }}{%- endblock title %}
+
 {% block content %}
   {% from 'tag/_macro.html' import title %}
   {{ breadcrumb(hrefs={_('All Tags'):url_for('tag.list')},active=tag.name)}}

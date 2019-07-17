@@ -16,7 +16,7 @@
       </div>
       {% for topic in topics.items %}
       <div class="panel-body" style="border-bottom:1px solid #eee">
-        <a href="{{ url_for('topic.topic',topicId=topic.id)}}">{{ topic.title}}</a>
+        <a href="{{ url_for('topic.topic',pk=topic.id)}}">{{ topic.title}}</a>
         <span id="delete-from-collect" class="pull-right btn btn-sm btn-danger" data-id="{{ topic.id }}">{{_('delete')}}</span>
       </div>
       {% else %}

@@ -1,14 +1,17 @@
 {% extends 'base/base.html' %}
+
+{% block title -%}{{ _("Help") }} · {{ super() }}{%- endblock title %}
+
 {% block content %}
-{{ breadcrumb(active=_('Help')) }}
-{% cache 300 %}
-<div class="panel panel-primary">
-    <div class="panel-heading">
+  {{ breadcrumb(active=_('Help')) }}
+  {% cache 300 %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
         {{ _('Help') }}
-    </div>
-    <div class="panel-body">
+      </div>
+      <div class="panel-body">
         help
+      </div>
     </div>
-</div>
-{% endcache %}
+  {% endcache %}
 {% endblock %}

@@ -93,10 +93,10 @@ class CollectView(MethodView):
 
 
 class AddToCollectView(MethodView):
-    def post(self, topicId):
+    def post(self, pk):
         user = request.user
         form = request.form.getlist('add-to-collect')
-        topic = Topic.query.filter_by(id=topicId).first_or_404()
+        topic = Topic.query.filter_by(id=pk).first_or_404()
         for cid in form:
             '''This has a problem'''
             collect = Collect.query.filter_by(id=cid).first_or_404()
@@ -105,12 +105,12 @@ class AddToCollectView(MethodView):
                 collect.topics.append(topic)
                 collect.save()
             MessageClient.collect(topic)
-        return redirect(url_for('topic.topic', topicId=topic.id))
+        return redirect(url_for('topic.topic', pk=topic.id))
 
-    # def delete(self, topicId):
+    # def delete(self, pk):
     #     user = request.user
     #     form = request.form.getlist('add-to-collect')
-    #     topic = Topic.query.filter_by(id=topicId).first_or_404()
+    #     topic = Topic.query.filter_by(id=pk).first_or_404()
     #     for cid in form:
     #         '''This has a problem'''
     #         collect = Collect.query.filter_by(id=cid).first_or_404()
@@ -118,4 +118,4 @@ class AddToCollectView(MethodView):
     #                 topics__id=topic.id, author_id=user.id).exists():
     #             collect.topics.append(topic)
     #             collect.save()
-    #     return redirect(url_for('topic.topic', topicId=topic.id))
+    #     return redirect(url_for('topic.topic', pk=topic.id))

@@ -2,7 +2,7 @@
   {% if g.user.is_authenticated %}
   <div class="panel-heading"> {{ _('Reply this topic') }} </div>
   <div class="panel-body">
-    <form action="{{ url_for('topic.reply_list',topicId=topic.id)}}" method="POST">
+    <form action="{{ url_for('topic.reply_list',pk=topic.id)}}" method="POST">
       {{ form.hidden_tag() }}
       {{ form.content(class='form-control',rows=4)}}
       <button class="btn btn-sm btn-primary" type="submit" style="margin-top:10px;">{{ _('Post reply') }}</button>

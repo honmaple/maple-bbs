@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: mail@honmaple.com
 # Created: 2016-05-20 12:31:46 (CST)
-# Last Update: Thursday 2018-07-26 11:41:00 (CST)
+# Last Update: Wednesday 2019-05-08 16:28:02 (CST)
 #          By: jianglin
 # Description:
 # **************************************************************************
@@ -97,7 +97,3 @@ MSEARCH_BACKEND = 'whoosh'
 BABEL_DEFAULT_LOCALE = 'en'
 BABEL_DEFAULT_TIMEZONE = 'UTC'
 BABEL_TRANSLATION_DIRECTORIES = path.join(PATH, 'translations')
-
-# Locale
-LANGUAGES = {'en': 'English', 'zh': 'Chinese'}
-SITE = {'title': 'Honmaple', 'description': '爱生活，更爱自由', 'avatar': ''}

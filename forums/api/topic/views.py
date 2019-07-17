@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-12-15 22:07:39 (CST)
-# Last Update: Monday 2019-05-06 23:36:54 (CST)
+# Last Update: Wednesday 2019-05-08 15:18:15 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -46,8 +46,8 @@ class TopicAskView(IsConfirmedMethodView):
 class TopicEditView(IsConfirmedMethodView):
     decorators = (edit_permission, )
 
-    def get(self, topicId):
-        topic = Topic.query.filter_by(id=topicId).first_or_404()
+    def get(self, pk):
+        topic = Topic.query.filter_by(id=pk).first_or_404()
         form = form_board()
         form.title.data = topic.title
         form.category.data = topic.board_id
@@ -61,22 +61,20 @@ class TopicListView(MethodView):
     decorators = (topic_list_permission, )
 
     def get(self):
-        query_dict = request.data
+        request_data = request.data
         page, number = self.pageinfo
         keys = ['title']
-        # order_by = gen_order_by(query_dict, keys)
-        # filter_dict = gen_filter_dict(query_dict, keys)
-        order_by = gen_topic_orderby(query_dict, keys)
-        filter_dict = gen_topic_filter(query_dict, keys)
+        orderby = gen_topic_orderby(request_data, keys)
+        params = gen_topic_filter(request_data, keys)
         title = _('All Topics')
         if request.path.endswith('good'):
-            filter_dict.update(is_good=True)
+            params.update(is_good=True)
             title = _('Good Topics')
         elif request.path.endswith('top'):
-            filter_dict.update(is_top=True)
+            params.update(is_top=True)
             title = _('Top Topics')
-        topics = Topic.query.filter_by(
-            **filter_dict).order_by(*order_by).paginate(page, number, True)
+        topics = Topic.query.filter_by(**params).order_by(*orderby).paginate(
+            page, number, True)
         data = {'title': title, 'topics': topics}
         return render_template('topic/topic_list.html', **data)
 
@@ -112,22 +110,22 @@ class TopicListView(MethodView):
         topic.board.post_count = 1
         topic.author.topic_count = 1
         topic.reply_count = 1
-        return redirect(url_for('topic.topic', topicId=topic.id))
+        return redirect(url_for('topic.topic', pk=topic.id))
 
 
 class TopicView(MethodView):
     decorators = (topic_permission, )
 
-    def get(self, topicId):
+    def get(self, pk):
         form = ReplyForm()
-        query_dict = request.data
-        topic = Topic.query.filter_by(id=topicId).first_or_404()
+        request_data = request.data
+        topic = Topic.query.filter_by(id=pk).first_or_404()
         page, number = self.pageinfo
         keys = ['title']
-        order_by = gen_order_by(query_dict, keys)
-        filter_dict = gen_filter_dict(query_dict, keys)
+        order_by = gen_order_by(request_data, keys)
+        params = gen_filter_dict(request_data, keys)
         replies = topic.replies.filter_by(
-            **filter_dict).order_by(*order_by).paginate(page, number, True)
+            **params).order_by(*order_by).paginate(page, number, True)
         data = {
             'title': topic.title,
             'form': form,
@@ -138,10 +136,10 @@ class TopicView(MethodView):
         return render_template('topic/topic.html', **data)
 
     @form_validate(form_board)
-    def put(self, topicId):
+    def put(self, pk):
         form = form_board()
         post_data = form.data
-        topic = Topic.query.filter_by(id=topicId).first_or_404()
+        topic = Topic.query.filter_by(id=pk).first_or_404()
         title = post_data.pop('title', None)
         content = post_data.pop('content', None)
         content_type = post_data.pop('content_type', None)
@@ -162,8 +160,8 @@ class ReplyListView(MethodView):
     decorators = (reply_list_permission, )
 
     @form_validate(ReplyForm, error=error_callback, f='')
-    def post(self, topicId):
-        topic = Topic.query.filter_by(id=topicId).first_or_404()
+    def post(self, pk):
+        topic = Topic.query.filter_by(id=pk).first_or_404()
         post_data = request.data
         user = request.user
         content = post_data.pop('content', None)
@@ -175,24 +173,24 @@ class ReplyListView(MethodView):
         # count
         topic.board.post_count = 1
         reply.author.reply_count = 1
-        return redirect(url_for('topic.topic', topicId=topic.id))
+        return redirect(url_for('topic.topic', pk=topic.id))
 
 
 class ReplyView(MethodView):
 
     decorators = (reply_permission, )
 
-    def put(self, replyId):
+    def put(self, pk):
         post_data = request.data
-        reply = Reply.query.filter_by(id=replyId).first_or_404()
+        reply = Reply.query.filter_by(id=pk).first_or_404()
         content = post_data.pop('content', None)
         if content is not None:
             reply.content = content
         reply.save()
         return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
 
-    def delete(self, replyId):
-        reply = Reply.query.filter_by(id=replyId).first_or_404()
+    def delete(self, pk):
+        reply = Reply.query.filter_by(id=pk).first_or_404()
         reply.delete()
         return HTTPResponse(HTTPResponse.NORMAL_STATUS).to_response()
 
@@ -201,9 +199,9 @@ class LikeView(MethodView):
 
     decorators = (like_permission, )
 
-    def post(self, replyId):
+    def post(self, pk):
         user = request.user
-        reply = Reply.query.filter_by(id=replyId).first_or_404()
+        reply = Reply.query.filter_by(id=pk).first_or_404()
         reply.likers.append(user)
         reply.save()
         MessageClient.like(reply)
@@ -211,9 +209,9 @@ class LikeView(MethodView):
         return HTTPResponse(
             HTTPResponse.NORMAL_STATUS, data=serializer.data).to_response()
 
-    def delete(self, replyId):
+    def delete(self, pk):
         user = request.user
-        reply = Reply.query.filter_by(id=replyId).first_or_404()
+        reply = Reply.query.filter_by(id=pk).first_or_404()
         reply.likers.remove(user)
         reply.save()
         serializer = Serializer(reply, many=False)

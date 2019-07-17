@@ -51,9 +51,9 @@
         <img alt="Honmaple" src="{{url_for('static',filename='images/header.png')}}" style="width:48px;">
       </a>
       <div class="navbar-brand" style="padding-top:2;padding-left:16px;margin-top:-12px;">
-        <span style="font-size:20px;color:#EB5424"><b class="text-capitalize">{{ SITE['title'] }}</b></span>
+        <span style="font-size:20px;color:#EB5424"><b class="text-capitalize">{{ DEFAULT.SITE['title'] }}</b></span>
         <br/>
-        <small style="font-size:10px">{{ _(SITE['description']) }}</small>
+        <small style="font-size:10px">{{ _(DEFAULT.SITE['subtitle']) }}</small>
       </div>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-header" aria-expanded="false">
         <span class="sr-only"></span>
@@ -64,11 +64,9 @@
     </div>
     <div class="collapse navbar-collapse" id="collapse-header">
       <ul class="nav navbar-nav">
-        {{ navlist(url_for('forums.forums'),_('Forums')) }}
-        {{ navlist(url_for('docs.list'),_('Wiki')) }}
-        {{ navlist('https://honmaple.me',_('Blog')) }}
-        {{ navlist(url_for('tag.list'),_('TagList')) }}
-        {{ navlist(url_for('topic.good'),_('Good')) }}
+        {% for item in DEFAULT.HEADER %}
+          <li><a href="{% if item.url.startswith("http") %}{{ item.url }}{% else %}{{ url_for(item.url) }}{% endif %}">{{ _(item.name) }}</a></li>
+        {% endfor %}
       </ul>
       <ul class="nav navbar-nav navbar-right" style="margin-left:0px;">
         {{ dropdown() }}

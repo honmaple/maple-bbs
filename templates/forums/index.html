@@ -1,36 +1,34 @@
 {% extends 'base/base.html' %}
+
 {% block content %}
-{% from 'forums/_macro.html' import forums_title,forums_item %}
-{% from 'topic/_list_macro.html' import form as topic_form %}
-{% from 'topic/_list_macro.html' import body as topic_body %}
-{% from 'topic/_list_macro.html' import no_topics %}
-{{ breadcrumb() }}
-{{ forums_title() }}
-<div class="row hidden-sm hidden-xs">
-    {{ forums_item(_('Forums'),url_for('forums.forums'),"fa-comments","#F86334")}}
-    {{ forums_item(_('Wiki'),url_for('docs.list'),"fa-book","#eeccaa")}}
-    {{ forums_item(_('Blog'),'http://honmaple.org',"fa-tasks")}}
-    {{ forums_item(_('Good'),url_for('topic.good'),"fa-globe","#017e66")}}
-</div>
-<div class="row">
+  {% from 'forums/_macro.html' import forums_title,forums_item %}
+  {% from 'topic/_list_macro.html' import form as topic_form %}
+  {% from 'topic/_list_macro.html' import body as topic_body %}
+  {% from 'topic/_list_macro.html' import no_topics %}
+  {{ breadcrumb() }}
+  {{ forums_title() }}
+  {{ forums_item() }}
+  <div class="row">
     <div class="col-md-9">
-        <div class="panel panel-default">
-            {{ topic_form() }}
-            {% for topic in topics.items %}
+      <div class="panel panel-default">
+        {{ topic_form() }}
+        {% if topics.items  %}
+          {% for topic in topics.items %}
             {{ topic_body(topic) }}
-            {% else %}
-            {{ no_topics() }}
-            {% endfor %}
-            <div class="panel-footer clearfix">
-                <a class="pull-right" href="{{ url_for('topic.good')}}">
-                    {{ _('more good topics') }}
-                    <i class="icon-arrow-right"></i>
-                </a>
-            </div>
+          {% endfor %}
+        {% else %}
+          {{ no_topics() }}
+        {% endif %}
+        <div class="panel-footer clearfix">
+          <a class="pull-right" href="{{ url_for('topic.good')}}">
+            {{ _('more good topics') }}
+            <i class="icon-arrow-right"></i>
+          </a>
         </div>
+      </div>
     </div>
     <div class="col-md-3" style="padding-left:0">
-        {{ panel_base.index() }}
+      {{ panel_base.index() }}
     </div>
-</div>
+  </div>
 {% endblock %}

@@ -1,8 +1,8 @@
 $(document).ready(function(){
     $('.like-reply').click(function() {
         var _$this = $(this);
-        var replyId = _$this.attr('data-id');
-        var like_url = "/replies/" + replyId + '/like';
+        var pk = _$this.attr('data-id');
+        var like_url = "/replies/" + pk + '/like';
         var data = JSON.stringify({
         });
         if(_$this.hasClass('like-active')){

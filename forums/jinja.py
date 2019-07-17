@@ -6,12 +6,12 @@
 # Author: jianglin
 # Email: xiyang0807@gmail.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update: Thursday 2018-07-26 09:54:53 (CST)
+# Last Update: Wednesday 2019-05-08 16:26:18 (CST)
 #          By:
 # Description:
 # **************************************************************************
 from datetime import datetime
-from config import SITE
+from forums import default
 
 from bleach import clean
 from flask import Markup, g
@@ -82,7 +82,7 @@ def forums_count():
 
 def init_app(app):
 
-    app.jinja_env.globals['SITE'] = SITE
+    app.jinja_env.globals['DEFAULT'] = default
     app.jinja_env.globals['hot_tags'] = hot_tags
     app.jinja_env.globals['recent_tags'] = recent_tags
     app.jinja_env.globals['show_time'] = show_time
