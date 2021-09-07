@@ -17,7 +17,7 @@ Flask-Principal==0.4.0
 Flask-SQLAlchemy==2.2
 Flask-WTF==0.14.2
 speaklater==1.3
-Pillow==3.2.0
+Pillow==8.3.2
 misaka==2.0.0
 Pygments==2.1
 pytz==2018.3
