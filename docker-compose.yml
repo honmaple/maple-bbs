@@ -1,0 +1,26 @@
+version: "2.2"
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+  postgres:
+    image: postgres:10
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_PASSWORD=test
+  forums:
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    links:
+      - redis
+      - postgres
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - ./config.py:/web/config.py

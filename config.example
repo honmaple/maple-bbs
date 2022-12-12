@@ -6,7 +6,7 @@
 # Author: jianglin
 # Email: mail@honmaple.com
 # Created: 2016-05-20 12:31:46 (CST)
-# Last Update: Wednesday 2019-05-08 16:28:02 (CST)
+# Last Update: Monday 2022-12-12 16:40:46 (CST)
 #          By: jianglin
 # Description:
 # **************************************************************************
@@ -46,11 +46,18 @@ CACHE_REDIS_PASSWORD = 'your password'
 CACHE_REDIS_DB = 2
 
 # Redis setting
-REDIS = {'db': 1, 'password': 'your password', 'decode_responses': True}
+REDIS = {
+    'host': 'redis',
+    'db': 1,
+    'password': 'your password',
+    'decode_responses': True
+}
 
 # some middleware
-MIDDLEWARE = ['forums.common.middleware.GlobalMiddleware',
-              'forums.common.middleware.OnlineMiddleware']
+MIDDLEWARE = [
+    'forums.common.middleware.GlobalMiddleware',
+    'forums.common.middleware.OnlineMiddleware'
+]
 
 # Mail such as qq
 MAIL_SERVER = 'smtp.qq.com'

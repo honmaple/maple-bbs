@@ -4,9 +4,9 @@
 # Copyright © 2016 jianglin
 # File Name: jinja.py
 # Author: jianglin
-# Email: xiyang0807@gmail.com
+# Email: mail@honmaple.com
 # Created: 2016-11-07 21:00:32 (CST)
-# Last Update: Wednesday 2019-05-08 16:26:18 (CST)
+# Last Update: Monday 2022-12-12 16:11:32 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -16,7 +16,7 @@ from forums import default
 from bleach import clean
 from flask import Markup, g
 from flask_babel import format_datetime
-from misaka import HtmlRenderer, Markdown
+from markdown import markdown as m
 
 
 def safe_clean(text):
@@ -27,11 +27,10 @@ def safe_clean(text):
 
 
 def markdown(text, clean=True):
-    renderer = HtmlRenderer()
-    md = Markdown(renderer, extensions=('fenced-code', ))
+    html = m(text, extensions=['markdown.extensions.fenced_code'])
     if clean:
-        return Markup(safe_clean(md(text)))
-    return Markup(md(text))
+        return Markup(safe_clean(html))
+    return Markup(html)
 
 
 def timesince(dt, default="just now"):
