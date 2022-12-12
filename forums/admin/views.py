@@ -4,9 +4,9 @@
 # Copyright © 2016 jianglin
 # File Name: views.py
 # Author: jianglin
-# Email: xiyang0807@gmail.com
+# Email: mail@honmaple.com
 # Created: 2016-12-17 13:15:10 (CST)
-# Last Update: Wednesday 2019-05-08 14:32:26 (CST)
+# Last Update: Monday 2022-12-12 16:51:58 (CST)
 #          By:
 # Description:
 # **************************************************************************
@@ -29,8 +29,8 @@ class BaseView(ModelView):
     can_view_details = True
     form_base_class = BaseForm
 
-    # def is_accessible(self):
-    #     return super_permission.can()
+    def is_accessible(self):
+        return super_permission.can()
 
-    # def inaccessible_callback(self, name, **kwargs):
-    #     abort(404)
+    def inaccessible_callback(self, name, **kwargs):
+        abort(404)
